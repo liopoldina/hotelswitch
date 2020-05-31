@@ -1,0 +1,1328 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>HotelHooping.com</title>
+    <link rel="stylesheet" href="./css/main.css" />
+    <script src="./js/jquery.min.js"></script>
+    <script src="./js/main.js"></script>
+    <script
+      src="https://kit.fontawesome.com/93e6a1962d.js"
+      crossorigin="anonymous"
+    ></script>
+  </head>
+  <body>
+    <div class="header">
+      <div class="logo_wrapper">
+        <!-- <img src="images/header/logo.png" alt="logo" /> -->
+        <span class="hotel">Hotel</span><span class="hopping">Hopping</span
+        ><span class="com">.com</span>
+      </div>
+      <div class="user_wrapper">
+        <div class="user_items">
+          <div id="currency_wrapper"><a id="currency" href="#">€</a></div>
+        </div>
+        <div class="user_items">
+          <img id="flag" src="./images/header/bandeira.png" alt="idioma" />
+        </div>
+        <div class="user_items header_buttons">
+          <button>Register</button>
+        </div>
+        <div class="user_items header_buttons">
+          <button>Sign in</button>
+        </div>
+      </div>
+    </div>
+    <div class="internal">
+      <div class="internal_wrapper">
+        <div class="left">
+          <div class="search">
+            <form class="search_form" action="">
+              <div class="search_title">Search</div>
+              <div class="search_label">
+                <span>Destination</span>
+              </div>
+              <div class="search_select search_select_destination">
+                <select type="text" id="destination" name="destination">
+                  <option value="Lisbon" selected="">
+                    Lisbon
+                  </option>
+                </select>
+              </div>
+
+              <div class="search_label">
+                <label for="check-in">Check-in date</label>
+              </div>
+              <div class="search_input">
+                <input type="date" id="check-in" name="check-in"/>
+              </div>
+              <div class="search_label">
+                <label for="check-out">Check-out date</label>
+              </div>
+              <div class="search_input">
+                <input type="date" id="check-out" name="check-out" />
+              </div>
+
+              <div class="nights">3-night stay</div>
+
+              <div class="search_select">
+                <select type="text" id="adults" name="adults">
+                  <option value="2" selected="">
+                    2 adults
+                  </option>
+                </select>
+              </div>
+              <div class="search_select">
+                <select type="text" id="children" name="children">
+                  <option value="0" selected="">
+                    No children
+                  </option>
+                </select>
+                <select type="text" id="rooms" name="rooms">
+                  <option value="1" selected="">
+                    1 room
+                  </option>
+                </select>
+              </div>
+              <div class="search_button">
+                <button type="submit">Search</button>
+              </div>
+            </form>
+          </div>
+          <div class="hopping_wrapper">
+            <div class="hopping_toggle">
+              <div class="hooping_title tooltip">
+                <span>Hotel Hopping</span>
+                <span class="tooltiptext change_hotels"
+                  >Change Hotels mid trip to get the best deal!</span
+                >
+              </div>
+              <div class="toogle_wrapper">
+                <label class="switch">
+                  <input type="checkbox" checked />
+                  <span class="slider round"></span>
+                </label>
+              </div>
+            </div>
+            <div class="hopping_filter">
+              <div class="hopping_filter_name_wrapper tooltip">
+                <span>Min. saving per hopp:</span>
+                <span class="tooltiptext min_saving"
+                  >Would you change hotels mid trip for €40? What about for
+                  €100?</span
+                >
+              </div>
+              <div class="hopping_select_wrapper">
+                <select
+                  type="text"
+                  id="minimum_hopp_saving"
+                  name="minimum_hopp_saving"
+                  class="hopping_select"
+                >
+                  <option value="25€">
+                    25€
+                  </option>
+                  <option value="40€" selected>
+                    40€
+                  </option>
+                  <option value="60€"> 60€ </option
+                  ><option value="80€">
+                    80€
+                  </option>
+                  <option value="100€">
+                    100€
+                  </option>
+                </select>
+              </div>
+            </div>
+
+            <div class="hopping_filter">
+              <div class="hopping_filter_name_wrapper tooltip">
+                <span>Max. hopp distance:</span>
+                <span class="tooltiptext max_hopp"
+                  >Choose the maximum distance between two consecutives
+                  hotels</span
+                >
+              </div>
+              <div class="hopping_select_wrapper">
+                <select
+                  type="text"
+                  id="minimum_hopp_saving"
+                  name="minimum_hopp_saving"
+                  class="hopping_select"
+                >
+                  <option value="250m">
+                    100m
+                  </option>
+                  <option value="250m" selected>
+                    250m
+                  </option>
+                  <option value="500m">
+                    500m
+                  </option>
+                  <option value="1km">
+                    1km
+                  </option>
+                  <option value="2km">
+                    2km
+                  </option>
+                  <option value="5km">
+                    5km
+                  </option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="filter_wrapper">
+            <div class="filter_title">Filter by:</div>
+
+            <div class="filter_section">
+              <div class="section_title">Your Budget</div>
+              <div class="section_item">
+                <input type="checkbox" id="0-50" class="check_box" />
+                <div class="check_box"></div>
+                <div class="label_wrapper">
+                  <label for="0-50">€ 0 - € 50 per night</label>
+                </div>
+              </div>
+              <div class="section_item">
+                <input type="checkbox" id="50-100" class="check_box" />
+                <div class="check_box"></div>
+                <div class="label_wrapper">
+                  <label for="50-100">€ 50 - € 100 per night</label>
+                </div>
+              </div>
+              <div class="section_item">
+                <input type="checkbox" id="100-150" class="check_box" />
+                <div class="check_box"></div>
+                <div class="label_wrapper">
+                  <label for="100-150">€ 100 - € 150 per night</label>
+                </div>
+              </div>
+              <div class="section_item">
+                <input type="checkbox" id="+150" class="check_box" />
+                <div class="check_box"></div>
+                <div class="label_wrapper">
+                  <label for="+150">€ 150 + per night</label>
+                </div>
+              </div>
+            </div>
+
+            <div class="filter_section">
+              <div class="section_title">Star Rating</div>
+              <div class="section_item">
+                <input type="checkbox" id="1_star" class="check_box" />
+                <div class="check_box"></div>
+                <div class="label_wrapper">
+                  <label for="1_star">1 star</label>
+                </div>
+              </div>
+              <div class="section_item">
+                <input type="checkbox" id="2_stars" class="check_box" />
+                <div class="check_box"></div>
+                <div class="label_wrapper">
+                  <label for="2_stars">2 stars</label>
+                </div>
+              </div>
+              <div class="section_item">
+                <input type="checkbox" id="3_stars" class="check_box" />
+                <div class="check_box"></div>
+                <div class="label_wrapper">
+                  <label for="3_stars">3 stars</label>
+                </div>
+              </div>
+              <div class="section_item">
+                <input type="checkbox" id="4_stars" class="check_box" checked />
+                <div class="check_box"></div>
+                <div class="label_wrapper">
+                  <label for="4_stars">4 stars</label>
+                </div>
+              </div>
+              <div class="section_item">
+                <input type="checkbox" id="5_stars" class="check_box" />
+                <div class="check_box"></div>
+                <div class="label_wrapper">
+                  <label for="5_stars">5 stars</label>
+                </div>
+              </div>
+              <div class="section_item">
+                <input type="checkbox" id="unrated" class="check_box" />
+                <div class="check_box"></div>
+                <div class="label_wrapper">
+                  <label for="unrated">Unrated</label>
+                </div>
+              </div>
+            </div>
+
+            <div class="filter_section">
+              <div class="section_title">Distance from center</div>
+              <div class="section_item">
+                <input type="checkbox" id="1km" class="check_box" checked />
+                <div class="check_box"></div>
+                <div class="label_wrapper">
+                  <label for="1km">Less than 1km</label>
+                </div>
+              </div>
+              <div class="section_item">
+                <input type="checkbox" id="3km" class="check_box" />
+                <div class="check_box"></div>
+                <div class="label_wrapper">
+                  <label for="3km">Less than 3km</label>
+                </div>
+              </div>
+              <div class="section_item">
+                <input type="checkbox" id="5km" class="check_box" />
+                <div class="check_box"></div>
+                <div class="label_wrapper">
+                  <label for="5km">Less than 5km</label>
+                </div>
+              </div>
+            </div>
+
+            <div class="filter_section">
+              <div class="section_title">Reservation Policy</div>
+              <div class="section_item">
+                <input
+                  type="checkbox"
+                  id="free_cancellation"
+                  class="check_box"
+                />
+                <div class="check_box"></div>
+                <div class="label_wrapper">
+                  <label for="free_cancellation">Free cancellation</label>
+                </div>
+              </div>
+              <div class="section_item">
+                <input type="checkbox" id="no_creditcard" class="check_box" />
+                <div class="check_box"></div>
+                <div class="label_wrapper">
+                  <label for="no_creditcard">Book without credit card</label>
+                </div>
+              </div>
+              <div class="section_item">
+                <input type="checkbox" id="no_prepayment" class="check_box" />
+                <div class="check_box"></div>
+                <div class="label_wrapper">
+                  <label for="no_prepayment">No prepayment</label>
+                </div>
+              </div>
+            </div>
+
+            <div class="filter_section">
+              <div class="section_title">Review Score</div>
+              <div class="section_item">
+                <input type="checkbox" id="wonderful" class="check_box" />
+                <div class="check_box"></div>
+                <div class="label_wrapper">
+                  <label for="wonderful">Wonderful: 9+</label>
+                </div>
+              </div>
+              <div class="section_item">
+                <input
+                  type="checkbox"
+                  id="very_good"
+                  class="check_box"
+                  checked
+                />
+                <div class="check_box"></div>
+                <div class="label_wrapper">
+                  <label for="very_good">Very Good: 8+</label>
+                </div>
+              </div>
+              <div class="section_item">
+                <input type="checkbox" id="good" class="check_box" />
+                <div class="check_box"></div>
+                <div class="label_wrapper">
+                  <label for="good">Good: 7+</label>
+                </div>
+              </div>
+              <div class="section_item">
+                <input type="checkbox" id="pleasant" class="check_box" />
+                <div class="check_box"></div>
+                <div class="label_wrapper">
+                  <label for="pleasant">Pleasant: 6+</label>
+                </div>
+              </div>
+              <div class="section_item">
+                <input type="checkbox" id="no_rating" class="check_box" />
+                <div class="check_box"></div>
+                <div class="label_wrapper">
+                  <label for="no_rating">No rating</label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="right">
+          <div class="search_top">
+            <div class="property_numbers">
+              <span>Lisbon: 147 hotels found </span>
+            </div>
+            <div class="sort_by">
+              <span>Sort by:</span>
+            </div>
+            <div class="map_wrapper">
+              <div class="position_icon">
+                <i class="fas fa-map-marker-alt fa-lg"></i>
+              </div>
+              <div class="map_text">
+                <span>Map</span>
+              </div>
+            </div>
+          </div>
+          <div class="sort_wrapper">
+            <div id="test" class="sort_item sort_selected">
+              <span>Our Top Picks</span>
+            </div>
+            <div class="sort_item">
+              <span>Lowest Price First</span>
+            </div>
+            <div class="sort_item">
+              <span>Stars</span>
+            </div>
+            <div class="sort_item">
+              <span>Distance from center</span>
+            </div>
+            <div class="sort_item sort_item_last_border">
+              <span>Review Score</span>
+            </div>
+          </div>
+          <div class="hotel_boxes">
+            <div class="hotelbox_wrapper">
+              <div class="hotelbox">
+                <div class="hotel_photo">
+                  <img
+                    src="./images/search/hotel_cover.jpg"
+                    alt="hotel_cover"
+                  />
+                </div>
+                <div class="hotel_content">
+                  <div class="hotel_head">
+                    <span class="hotel_name">Hotel Royal Sample</span>
+                    <div class="hotel_stars_wrapper">
+                      <span class="hotel_stars">★★★★★</span>
+                    </div>
+                  </div>
+                  <div class="hotel_review">
+                    <div class="quality_number">
+                      <div class="quality">
+                        <span>Exceptional</span>
+                      </div>
+                      <div class="number">
+                        <span>1,654 reviews</span>
+                      </div>
+                    </div>
+                    <div class="score_wrapper">
+                      <div class="score">
+                        <span>9.5</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="hotel_address">
+                    <div class="address">
+                      <span>District, City</span>
+                    </div>
+                    <div class="address_separator">
+                      <span>.</span>
+                    </div>
+                    <div class="distance_center">
+                      <span>250m from center</span>
+                    </div>
+                  </div>
+                  <div class="hotel_room">
+                    <div class="room_title">
+                      <div class="room_name">
+                        <span>Standard Double Room</span>
+                      </div>
+                      <div class="room_separator">
+                        <span>-</span>
+                      </div>
+                      <div class="room_guests_icon">
+                        <img
+                          src="./images/search/guest_icon.png"
+                          alt="guest_icon"
+                        />
+                        <img
+                          src="./images/search/guest_icon.png"
+                          alt="guest_icon"
+                        />
+                      </div>
+                      <div class="nights_guests">
+                        <span>2 nights, 2 adults</span>
+                      </div>
+                    </div>
+                    <div class="bed_type">
+                      <span>1 Double Bed</span>
+                    </div>
+                    <div class="policy_price_wrapper">
+                      <div class="room_policy">
+                        <div class="cancellation_policy">
+                          <span>Free cancellation</span>
+                        </div>
+                        <div class="policy_separator">
+                          <span>.</span>
+                        </div>
+                        <div class="payment_policy">
+                          <span>No prepayment needed</span>
+                        </div>
+                      </div>
+                      <div class="price">
+                        <span>€ 99</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="hotel_book">
+                  <button>Select Room</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="hotelbox_wrapper">
+              <div class="hotelbox">
+                <div class="hotel_photo">
+                  <img
+                    src="./images/search/hotel_cover.jpg"
+                    alt="hotel_cover"
+                  />
+                </div>
+                <div class="hotel_content">
+                  <div class="hotel_head">
+                    <span class="hotel_name">Hotel Royal Sample</span>
+                    <div class="hotel_stars_wrapper">
+                      <span class="hotel_stars">★★★★★</span>
+                    </div>
+                  </div>
+                  <div class="hotel_review">
+                    <div class="quality_number">
+                      <div class="quality">
+                        <span>Exceptional</span>
+                      </div>
+                      <div class="number">
+                        <span>1,654 reviews</span>
+                      </div>
+                    </div>
+                    <div class="score_wrapper">
+                      <div class="score">
+                        <span>9.5</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="hotel_address">
+                    <div class="address">
+                      <span>District, City</span>
+                    </div>
+                    <div class="address_separator">
+                      <span>.</span>
+                    </div>
+                    <div class="distance_center">
+                      <span>250m from center</span>
+                    </div>
+                  </div>
+                  <div class="hotel_room">
+                    <div class="room_title">
+                      <div class="room_name">
+                        <span>Standard Double Room</span>
+                      </div>
+                      <div class="room_separator">
+                        <span>-</span>
+                      </div>
+                      <div class="room_guests_icon">
+                        <img
+                          src="./images/search/guest_icon.png"
+                          alt="guest_icon"
+                        />
+                        <img
+                          src="./images/search/guest_icon.png"
+                          alt="guest_icon"
+                        />
+                      </div>
+                      <div class="nights_guests">
+                        <span>2 nights, 2 adults</span>
+                      </div>
+                    </div>
+                    <div class="bed_type">
+                      <span>1 Double Bed</span>
+                    </div>
+                    <div class="policy_price_wrapper">
+                      <div class="room_policy">
+                        <div class="cancellation_policy">
+                          <span>Free cancellation</span>
+                        </div>
+                        <div class="policy_separator">
+                          <span>.</span>
+                        </div>
+                        <div class="payment_policy">
+                          <span>No prepayment needed</span>
+                        </div>
+                      </div>
+                      <div class="price">
+                        <span>€ 99</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="hotel_book">
+                  <button>Select Room</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="hotelbox_wrapper">
+              <div class="hotelbox">
+                <div class="hotel_photo">
+                  <img
+                    src="./images/search/hotel_cover.jpg"
+                    alt="hotel_cover"
+                  />
+                </div>
+                <div class="hotel_content">
+                  <div class="hotel_head">
+                    <span class="hotel_name">Hotel Royal Sample</span>
+                    <div class="hotel_stars_wrapper">
+                      <span class="hotel_stars">★★★★★</span>
+                    </div>
+                  </div>
+                  <div class="hotel_review">
+                    <div class="quality_number">
+                      <div class="quality">
+                        <span>Exceptional</span>
+                      </div>
+                      <div class="number">
+                        <span>1,654 reviews</span>
+                      </div>
+                    </div>
+                    <div class="score_wrapper">
+                      <div class="score">
+                        <span>9.5</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="hotel_address">
+                    <div class="address">
+                      <span>District, City</span>
+                    </div>
+                    <div class="address_separator">
+                      <span>.</span>
+                    </div>
+                    <div class="distance_center">
+                      <span>250m from center</span>
+                    </div>
+                  </div>
+                  <div class="hotel_room">
+                    <div class="room_title">
+                      <div class="room_name">
+                        <span>Standard Double Room</span>
+                      </div>
+                      <div class="room_separator">
+                        <span>-</span>
+                      </div>
+                      <div class="room_guests_icon">
+                        <img
+                          src="./images/search/guest_icon.png"
+                          alt="guest_icon"
+                        />
+                        <img
+                          src="./images/search/guest_icon.png"
+                          alt="guest_icon"
+                        />
+                      </div>
+                      <div class="nights_guests">
+                        <span>2 nights, 2 adults</span>
+                      </div>
+                    </div>
+                    <div class="bed_type">
+                      <span>1 Double Bed</span>
+                    </div>
+                    <div class="policy_price_wrapper">
+                      <div class="room_policy">
+                        <div class="cancellation_policy">
+                          <span>Free cancellation</span>
+                        </div>
+                        <div class="policy_separator">
+                          <span>.</span>
+                        </div>
+                        <div class="payment_policy">
+                          <span>No prepayment needed</span>
+                        </div>
+                      </div>
+                      <div class="price">
+                        <span>€ 99</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="hotel_book">
+                  <button>Select Room</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="hotelbox_wrapper">
+              <div class="hotelbox">
+                <div class="hotel_photo">
+                  <img
+                    src="./images/search/hotel_cover.jpg"
+                    alt="hotel_cover"
+                  />
+                </div>
+                <div class="hotel_content">
+                  <div class="hotel_head">
+                    <span class="hotel_name">Hotel Royal Sample</span>
+                    <div class="hotel_stars_wrapper">
+                      <span class="hotel_stars">★★★★★</span>
+                    </div>
+                  </div>
+                  <div class="hotel_review">
+                    <div class="quality_number">
+                      <div class="quality">
+                        <span>Exceptional</span>
+                      </div>
+                      <div class="number">
+                        <span>1,654 reviews</span>
+                      </div>
+                    </div>
+                    <div class="score_wrapper">
+                      <div class="score">
+                        <span>9.5</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="hotel_address">
+                    <div class="address">
+                      <span>District, City</span>
+                    </div>
+                    <div class="address_separator">
+                      <span>.</span>
+                    </div>
+                    <div class="distance_center">
+                      <span>250m from center</span>
+                    </div>
+                  </div>
+                  <div class="hotel_room">
+                    <div class="room_title">
+                      <div class="room_name">
+                        <span>Standard Double Room</span>
+                      </div>
+                      <div class="room_separator">
+                        <span>-</span>
+                      </div>
+                      <div class="room_guests_icon">
+                        <img
+                          src="./images/search/guest_icon.png"
+                          alt="guest_icon"
+                        />
+                        <img
+                          src="./images/search/guest_icon.png"
+                          alt="guest_icon"
+                        />
+                      </div>
+                      <div class="nights_guests">
+                        <span>2 nights, 2 adults</span>
+                      </div>
+                    </div>
+                    <div class="bed_type">
+                      <span>1 Double Bed</span>
+                    </div>
+                    <div class="policy_price_wrapper">
+                      <div class="room_policy">
+                        <div class="cancellation_policy">
+                          <span>Free cancellation</span>
+                        </div>
+                        <div class="policy_separator">
+                          <span>.</span>
+                        </div>
+                        <div class="payment_policy">
+                          <span>No prepayment needed</span>
+                        </div>
+                      </div>
+                      <div class="price">
+                        <span>€ 99</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="hotel_book">
+                  <button>Select Room</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="hotelbox_wrapper">
+              <div class="hotelbox">
+                <div class="hotel_photo">
+                  <img
+                    src="./images/search/hotel_cover.jpg"
+                    alt="hotel_cover"
+                  />
+                </div>
+                <div class="hotel_content">
+                  <div class="hotel_head">
+                    <span class="hotel_name">Hotel Royal Sample</span>
+                    <div class="hotel_stars_wrapper">
+                      <span class="hotel_stars">★★★★★</span>
+                    </div>
+                  </div>
+                  <div class="hotel_review">
+                    <div class="quality_number">
+                      <div class="quality">
+                        <span>Exceptional</span>
+                      </div>
+                      <div class="number">
+                        <span>1,654 reviews</span>
+                      </div>
+                    </div>
+                    <div class="score_wrapper">
+                      <div class="score">
+                        <span>9.5</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="hotel_address">
+                    <div class="address">
+                      <span>District, City</span>
+                    </div>
+                    <div class="address_separator">
+                      <span>.</span>
+                    </div>
+                    <div class="distance_center">
+                      <span>250m from center</span>
+                    </div>
+                  </div>
+                  <div class="hotel_room">
+                    <div class="room_title">
+                      <div class="room_name">
+                        <span>Standard Double Room</span>
+                      </div>
+                      <div class="room_separator">
+                        <span>-</span>
+                      </div>
+                      <div class="room_guests_icon">
+                        <img
+                          src="./images/search/guest_icon.png"
+                          alt="guest_icon"
+                        />
+                        <img
+                          src="./images/search/guest_icon.png"
+                          alt="guest_icon"
+                        />
+                      </div>
+                      <div class="nights_guests">
+                        <span>2 nights, 2 adults</span>
+                      </div>
+                    </div>
+                    <div class="bed_type">
+                      <span>1 Double Bed</span>
+                    </div>
+                    <div class="policy_price_wrapper">
+                      <div class="room_policy">
+                        <div class="cancellation_policy">
+                          <span>Free cancellation</span>
+                        </div>
+                        <div class="policy_separator">
+                          <span>.</span>
+                        </div>
+                        <div class="payment_policy">
+                          <span>No prepayment needed</span>
+                        </div>
+                      </div>
+                      <div class="price">
+                        <span>€ 99</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="hotel_book">
+                  <button>Select Room</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="hotelbox_wrapper">
+              <div class="hotelbox">
+                <div class="hotel_photo">
+                  <img
+                    src="./images/search/hotel_cover.jpg"
+                    alt="hotel_cover"
+                  />
+                </div>
+                <div class="hotel_content">
+                  <div class="hotel_head">
+                    <span class="hotel_name">Hotel Royal Sample</span>
+                    <div class="hotel_stars_wrapper">
+                      <span class="hotel_stars">★★★★★</span>
+                    </div>
+                  </div>
+                  <div class="hotel_review">
+                    <div class="quality_number">
+                      <div class="quality">
+                        <span>Exceptional</span>
+                      </div>
+                      <div class="number">
+                        <span>1,654 reviews</span>
+                      </div>
+                    </div>
+                    <div class="score_wrapper">
+                      <div class="score">
+                        <span>9.5</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="hotel_address">
+                    <div class="address">
+                      <span>District, City</span>
+                    </div>
+                    <div class="address_separator">
+                      <span>.</span>
+                    </div>
+                    <div class="distance_center">
+                      <span>250m from center</span>
+                    </div>
+                  </div>
+                  <div class="hotel_room">
+                    <div class="room_title">
+                      <div class="room_name">
+                        <span>Standard Double Room</span>
+                      </div>
+                      <div class="room_separator">
+                        <span>-</span>
+                      </div>
+                      <div class="room_guests_icon">
+                        <img
+                          src="./images/search/guest_icon.png"
+                          alt="guest_icon"
+                        />
+                        <img
+                          src="./images/search/guest_icon.png"
+                          alt="guest_icon"
+                        />
+                      </div>
+                      <div class="nights_guests">
+                        <span>2 nights, 2 adults</span>
+                      </div>
+                    </div>
+                    <div class="bed_type">
+                      <span>1 Double Bed</span>
+                    </div>
+                    <div class="policy_price_wrapper">
+                      <div class="room_policy">
+                        <div class="cancellation_policy">
+                          <span>Free cancellation</span>
+                        </div>
+                        <div class="policy_separator">
+                          <span>.</span>
+                        </div>
+                        <div class="payment_policy">
+                          <span>No prepayment needed</span>
+                        </div>
+                      </div>
+                      <div class="price">
+                        <span>€ 99</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="hotel_book">
+                  <button>Select Room</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="hotelbox_wrapper">
+              <div class="hotelbox">
+                <div class="hotel_photo">
+                  <img
+                    src="./images/search/hotel_cover.jpg"
+                    alt="hotel_cover"
+                  />
+                </div>
+                <div class="hotel_content">
+                  <div class="hotel_head">
+                    <span class="hotel_name">Hotel Royal Sample</span>
+                    <div class="hotel_stars_wrapper">
+                      <span class="hotel_stars">★★★★★</span>
+                    </div>
+                  </div>
+                  <div class="hotel_review">
+                    <div class="quality_number">
+                      <div class="quality">
+                        <span>Exceptional</span>
+                      </div>
+                      <div class="number">
+                        <span>1,654 reviews</span>
+                      </div>
+                    </div>
+                    <div class="score_wrapper">
+                      <div class="score">
+                        <span>9.5</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="hotel_address">
+                    <div class="address">
+                      <span>District, City</span>
+                    </div>
+                    <div class="address_separator">
+                      <span>.</span>
+                    </div>
+                    <div class="distance_center">
+                      <span>250m from center</span>
+                    </div>
+                  </div>
+                  <div class="hotel_room">
+                    <div class="room_title">
+                      <div class="room_name">
+                        <span>Standard Double Room</span>
+                      </div>
+                      <div class="room_separator">
+                        <span>-</span>
+                      </div>
+                      <div class="room_guests_icon">
+                        <img
+                          src="./images/search/guest_icon.png"
+                          alt="guest_icon"
+                        />
+                        <img
+                          src="./images/search/guest_icon.png"
+                          alt="guest_icon"
+                        />
+                      </div>
+                      <div class="nights_guests">
+                        <span>2 nights, 2 adults</span>
+                      </div>
+                    </div>
+                    <div class="bed_type">
+                      <span>1 Double Bed</span>
+                    </div>
+                    <div class="policy_price_wrapper">
+                      <div class="room_policy">
+                        <div class="cancellation_policy">
+                          <span>Free cancellation</span>
+                        </div>
+                        <div class="policy_separator">
+                          <span>.</span>
+                        </div>
+                        <div class="payment_policy">
+                          <span>No prepayment needed</span>
+                        </div>
+                      </div>
+                      <div class="price">
+                        <span>€ 99</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="hotel_book">
+                  <button>Select Room</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="hotelbox_wrapper">
+              <div class="hotelbox">
+                <div class="hotel_photo">
+                  <img
+                    src="./images/search/hotel_cover.jpg"
+                    alt="hotel_cover"
+                  />
+                </div>
+                <div class="hotel_content">
+                  <div class="hotel_head">
+                    <span class="hotel_name">Hotel Royal Sample</span>
+                    <div class="hotel_stars_wrapper">
+                      <span class="hotel_stars">★★★★★</span>
+                    </div>
+                  </div>
+                  <div class="hotel_review">
+                    <div class="quality_number">
+                      <div class="quality">
+                        <span>Exceptional</span>
+                      </div>
+                      <div class="number">
+                        <span>1,654 reviews</span>
+                      </div>
+                    </div>
+                    <div class="score_wrapper">
+                      <div class="score">
+                        <span>9.5</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="hotel_address">
+                    <div class="address">
+                      <span>District, City</span>
+                    </div>
+                    <div class="address_separator">
+                      <span>.</span>
+                    </div>
+                    <div class="distance_center">
+                      <span>250m from center</span>
+                    </div>
+                  </div>
+                  <div class="hotel_room">
+                    <div class="room_title">
+                      <div class="room_name">
+                        <span>Standard Double Room</span>
+                      </div>
+                      <div class="room_separator">
+                        <span>-</span>
+                      </div>
+                      <div class="room_guests_icon">
+                        <img
+                          src="./images/search/guest_icon.png"
+                          alt="guest_icon"
+                        />
+                        <img
+                          src="./images/search/guest_icon.png"
+                          alt="guest_icon"
+                        />
+                      </div>
+                      <div class="nights_guests">
+                        <span>2 nights, 2 adults</span>
+                      </div>
+                    </div>
+                    <div class="bed_type">
+                      <span>1 Double Bed</span>
+                    </div>
+                    <div class="policy_price_wrapper">
+                      <div class="room_policy">
+                        <div class="cancellation_policy">
+                          <span>Free cancellation</span>
+                        </div>
+                        <div class="policy_separator">
+                          <span>.</span>
+                        </div>
+                        <div class="payment_policy">
+                          <span>No prepayment needed</span>
+                        </div>
+                      </div>
+                      <div class="price">
+                        <span>€ 99</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="hotel_book">
+                  <button>Select Room</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="hotelbox_wrapper">
+              <div class="hotelbox">
+                <div class="hotel_photo">
+                  <img
+                    src="./images/search/hotel_cover.jpg"
+                    alt="hotel_cover"
+                  />
+                </div>
+                <div class="hotel_content">
+                  <div class="hotel_head">
+                    <span class="hotel_name">Hotel Royal Sample</span>
+                    <div class="hotel_stars_wrapper">
+                      <span class="hotel_stars">★★★★★</span>
+                    </div>
+                  </div>
+                  <div class="hotel_review">
+                    <div class="quality_number">
+                      <div class="quality">
+                        <span>Exceptional</span>
+                      </div>
+                      <div class="number">
+                        <span>1,654 reviews</span>
+                      </div>
+                    </div>
+                    <div class="score_wrapper">
+                      <div class="score">
+                        <span>9.5</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="hotel_address">
+                    <div class="address">
+                      <span>District, City</span>
+                    </div>
+                    <div class="address_separator">
+                      <span>.</span>
+                    </div>
+                    <div class="distance_center">
+                      <span>250m from center</span>
+                    </div>
+                  </div>
+                  <div class="hotel_room">
+                    <div class="room_title">
+                      <div class="room_name">
+                        <span>Standard Double Room</span>
+                      </div>
+                      <div class="room_separator">
+                        <span>-</span>
+                      </div>
+                      <div class="room_guests_icon">
+                        <img
+                          src="./images/search/guest_icon.png"
+                          alt="guest_icon"
+                        />
+                        <img
+                          src="./images/search/guest_icon.png"
+                          alt="guest_icon"
+                        />
+                      </div>
+                      <div class="nights_guests">
+                        <span>2 nights, 2 adults</span>
+                      </div>
+                    </div>
+                    <div class="bed_type">
+                      <span>1 Double Bed</span>
+                    </div>
+                    <div class="policy_price_wrapper">
+                      <div class="room_policy">
+                        <div class="cancellation_policy">
+                          <span>Free cancellation</span>
+                        </div>
+                        <div class="policy_separator">
+                          <span>.</span>
+                        </div>
+                        <div class="payment_policy">
+                          <span>No prepayment needed</span>
+                        </div>
+                      </div>
+                      <div class="price">
+                        <span>€ 99</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="hotel_book">
+                  <button>Select Room</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="hotelbox_wrapper">
+              <div class="hotelbox">
+                <div class="hotel_photo">
+                  <img
+                    src="./images/search/hotel_cover.jpg"
+                    alt="hotel_cover"
+                  />
+                </div>
+                <div class="hotel_content">
+                  <div class="hotel_head">
+                    <span class="hotel_name">Hotel Royal Sample</span>
+                    <div class="hotel_stars_wrapper">
+                      <span class="hotel_stars">★★★★★</span>
+                    </div>
+                  </div>
+                  <div class="hotel_review">
+                    <div class="quality_number">
+                      <div class="quality">
+                        <span>Exceptional</span>
+                      </div>
+                      <div class="number">
+                        <span>1,654 reviews</span>
+                      </div>
+                    </div>
+                    <div class="score_wrapper">
+                      <div class="score">
+                        <span>9.5</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="hotel_address">
+                    <div class="address">
+                      <span>District, City</span>
+                    </div>
+                    <div class="address_separator">
+                      <span>.</span>
+                    </div>
+                    <div class="distance_center">
+                      <span>250m from center</span>
+                    </div>
+                  </div>
+                  <div class="hotel_room">
+                    <div class="room_title">
+                      <div class="room_name">
+                        <span>Standard Double Room</span>
+                      </div>
+                      <div class="room_separator">
+                        <span>-</span>
+                      </div>
+                      <div class="room_guests_icon">
+                        <img
+                          src="./images/search/guest_icon.png"
+                          alt="guest_icon"
+                        />
+                        <img
+                          src="./images/search/guest_icon.png"
+                          alt="guest_icon"
+                        />
+                      </div>
+                      <div class="nights_guests">
+                        <span>2 nights, 2 adults</span>
+                      </div>
+                    </div>
+                    <div class="bed_type">
+                      <span>1 Double Bed</span>
+                    </div>
+                    <div class="policy_price_wrapper">
+                      <div class="room_policy">
+                        <div class="cancellation_policy">
+                          <span>Free cancellation</span>
+                        </div>
+                        <div class="policy_separator">
+                          <span>.</span>
+                        </div>
+                        <div class="payment_policy">
+                          <span>No prepayment needed</span>
+                        </div>
+                      </div>
+                      <div class="price">
+                        <span>€ 99</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="hotel_book">
+                  <button>Select Room</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer">
+      <div class="first_footer">
+        <div class="footer_items_wrapper">
+          <div class="first_footer_item">
+            <button>Manage your Booking</button>
+          </div>
+          <div class="first_footer_item">
+            <button>Customer Service Help</button>
+          </div>
+        </div>
+      </div>
+      <div class="second_footer">
+        <div class="copyright_wrapper">
+          <span>Copyright &#169 2020 HotelHopping.com&#174. All rights reserved.</span>
+        </div>
+        <div class="footer_items_wrapper">
+          <div class="second_footer_item">
+            <a href="#">Investor Relationships</a>
+          </div>
+          <div class="second_footer_item">
+            <a href="#">Careers</a>
+          </div>
+          <div class="second_footer_item">
+            <a href="#">About HotelHopping.com</a>
+          </div>
+          <div class="second_footer_item">
+            <a href="#">Terms & Conditions</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
