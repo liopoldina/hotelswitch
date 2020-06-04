@@ -155,7 +155,7 @@ form {
   border-radius: 4px;
 }
 
-.search_form {
+.search_wrapper {
   font-size: 14px;
   margin: 18px;
   overflow: auto;
@@ -618,24 +618,24 @@ input:checked + .slider:before {
   color: white;
 }
 
-.hotel_boxes {
+.hotel_boxes_wrapper {
   border: none;
 }
 .hotelbox_loading {
   filter: opacity(40%);
 }
-.hotelbox_wrapper {
+.hotelbox {
   margin: 15px;
   overflow: auto;
   border: 1px solid #c6c6c6;
   border-radius: 3px;
 }
 
-.hotelbox_wrapper:hover {
+.hotelbox:hover {
   background-color: rgba(var(--color), 0.05);
 }
 
-.hotelbox {
+.hotelbox_inside {
   margin: 17px;
   overflow: auto;
 }
@@ -692,7 +692,7 @@ input:checked + .slider:before {
   overflow: auto;
   width: fit-content;
 }
-.hotel_name {
+.name {
   float: left;
   font-size: 20px;
   font-weight: bold;
@@ -700,16 +700,16 @@ input:checked + .slider:before {
   cursor: pointer;
 }
 
-.hotel_name:hover {
+.name:hover {
   color: var(--main-color);
 }
 
-.hotel_stars_wrapper {
+.stars_wrapper {
   float: left;
   margin-left: 5px;
   transform: translateY(-4px);
 }
-.hotel_stars {
+.stars {
   color: var(--secondary-color);
   margin-top: 0px;
   font-size: 14px;
@@ -726,18 +726,21 @@ input:checked + .slider:before {
   float: left;
   margin-right: 5px;
 }
-.quality {
+.quality_wrapper {
+  margin-left: auto;
+  margin-right: 0;
   font-size: 16px;
   color: var(--main-color);
   width: fit-content;
 }
-.number {
+
+.nr_reviews_wrapper {
   font-size: 12px;
   color: #6b6b6b;
   width: fit-content;
   float: right;
 }
-.score_wrapper {
+.score_outer_wrapper {
   float: right;
   height: 35px;
   width: 35px;
@@ -748,10 +751,10 @@ input:checked + .slider:before {
   font-weight: bold;
 }
 
-.score_wrapper:hover {
+.score_outer_wrapper:hover {
   background-color: var(--main-color-light);
 }
-.score {
+.score_inner_wrapper {
   color: white;
   font-size: 17px;
   font-weight: bold;
@@ -760,7 +763,7 @@ input:checked + .slider:before {
   margin-top: 50%;
   transform: translateY(-50%);
 }
-.hotel_address {
+.address_wrapper {
   margin-top: 17px;
   width: fit-content;
   overflow: auto;
@@ -778,7 +781,7 @@ input:checked + .slider:before {
   font-weight: bolder;
 }
 
-.distance_center {
+.distance_center_wrapper {
   float: left;
   margin-left: 3px;
   line-height: 15px;
@@ -807,7 +810,7 @@ input:checked + .slider:before {
   overflow: auto;
 }
 
-.room_name,
+.room_name_wrapper,
 .room_separator,
 .room_guests_icon,
 .nights_guests {
@@ -833,7 +836,7 @@ input:checked + .slider:before {
   font-weight: lighter;
 }
 
-.bed_type {
+.bed_type_wrapper {
   color: #333;
   font-size: 13px;
   width: fit-content;
@@ -854,7 +857,7 @@ input:checked + .slider:before {
   overflow: auto;
 }
 
-.price {
+.price_wrapper {
   float: right;
   font-size: 20px;
   font-weight: bold;

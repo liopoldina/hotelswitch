@@ -10,12 +10,20 @@
       "request": "launch",
       "hostname": "localhost",
       "port": 9000
-    }
+    },
     {
+      "name": "Launch Program",
       "type": "node",
       "request": "launch",
-      "name": "Launch Program",
       "program": "${file}"
+    },
+
+    {
+      "name": "Python: Current File",
+      "type": "python",
+      "request": "launch",
+      "program": "${file}",
+      "console": "integratedTerminal"
     }
   ]
 }
