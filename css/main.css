@@ -6,7 +6,6 @@
   --main-color-light: #008c6c;
   --secondary-color: #c6c013;
   --main-background: white;
-  /* main color light rgb */
   --color: 0, 113, 194;
   --min_width: 1125px;
 }
@@ -576,7 +575,6 @@ input:checked + .slider:before {
 }
 
 .sort_wrapper {
-  display: inline-block;
   margin: 15px;
   margin-top: 10px;
   margin-bottom: 0px;
@@ -594,7 +592,6 @@ input:checked + .slider:before {
   cursor: pointer;
   margin: 0px;
   padding: 0px 30.7px;
-  display: inline-block;
   white-space: nowrap;
 }
 

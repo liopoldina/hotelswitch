@@ -20,6 +20,21 @@ class Hotel {
 
     var $price;
 
+    function __construct($x)
+    { $this->name = $x["name"];
+      $this->stars = $x["stars"];
+      $this->score = $x["score"];
+      $this->nr_reviews= $x["nr_reviews"];
+      $this->city = $x["city"];
+      $this->district = $x["district"];
+      $this->distance_center = $x["distance_center"];
+      $this->room_name = $x["room_name"];
+      $this->bed_type = $x["room_bed_type"];
+      $this->cancellation_policy = $x["room_cancellation_policy"];
+      $this->payment_policy = $x["room_payment_policy"];
+      $this->set_stars_symbol();
+      $this->set_quality();
+    }
     function set_stars_symbol() {
         switch ($this->stars) {
             case 1:
@@ -39,25 +54,25 @@ class Hotel {
                 break;  }
             }
 
-            function set_quality() {
-                switch (true) {
-                    case $this->score>=9.5:
-                        $this->quality="Exceptional";
-                        break;
-                    case $this->score>=9:
-                        $this->quality="Wonderful";
-                        break;
-                    case $this->score>=8:
-                        $this->quality="Very Good";
-                        break;
-                    case $this->score>=7:
-                        $this->quality="Good";
-                        break;
-                    case $this->score<7:
-                        $this->quality="Plesant";
-                        break;;  }
-                    }
+    function set_quality() {
+        switch (true) {
+            case $this->score>=9.5:
+                $this->quality="Exceptional";
+                break;
+            case $this->score>=9:
+                $this->quality="Wonderful";
+                break;
+            case $this->score>=8:
+                $this->quality="Very Good";
+                break;
+            case $this->score>=7:
+                $this->quality="Good";
+                break;
+            case $this->score<7:
+                $this->quality="Plesant";
+                break;;  }
+            }
 
- 
+
 }
 ?>

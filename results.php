@@ -1,51 +1,30 @@
 
 <?php
+
+// custom variables if anything else is set to avoid no variables error
+if (count($_GET)==0) {
+    $destination ="Lisbon";
+    $date_range= date('m/d/yy') . " - " . date("m/d/yy", strtotime(date('m/d/yy') . "+1 days"));
+    $adults = 2;
+    $children = 0;
+    $rooms = 1;}
+
 //search items
+else  {
 $destination = $_GET["destination"];
-$check_in = $_GET["check-in"];
-$check_out = $_GET["check-out"];
+$date_range=$_GET["date_range"];
 $adults = $_GET["adults"];
 $children = $_GET["children"];
 $rooms = $_GET["rooms"];
+};
+
+$date_range_array = explode(' ',trim($date_range));
+$check_in=$date_range_array[0];
+$check_out=$date_range_array[2];
 $nights = (strtotime($check_out) - strtotime($check_in))/86400;
 
-
 //create objects
-include "tools.php";
-
-$hotel = array();    
-$hotel[] = new Hotel();   // add first object
-$hotel[] = new Hotel();
-
-$hotel[0]->name = "Rossio Garden Hotel";
-$hotel[0]->stars = 3;
-$hotel[0]->set_stars_symbol();
-$hotel[0]->score = 7.9;
-$hotel[0]->set_quality();
-$hotel[0]->nr_reviews = "1,300";
-$hotel[0]->city = "Lisbon";
-$hotel[0]->district = "Santo António";
-$hotel[0]->distance_center = "0.5 km";
-$hotel[0]->room_name = "Double Room";
-$hotel[0]->bed_type = "Double Bed";
-$hotel[0]->cancellation_policy= "Free cancellation";
-$hotel[0]->payment_policy= "No prepayment needed";
-$hotel[0]->price = "49€";
-
-$hotel[1]->name = "Rossio Boutique Hotel";
-$hotel[1]->stars = 4;
-$hotel[1]->set_stars_symbol();
-$hotel[1]->score = 9.7;
-$hotel[1]->set_quality();
-$hotel[1]->nr_reviews = "756";
-$hotel[1]->city = "Madrid";
-$hotel[1]->district = "Santo António";
-$hotel[1]->distance_center = "0.4 km";
-$hotel[1]->room_name = "Twin Room";
-$hotel[1]->bed_type = "Two Single Beds";
-$hotel[1]->cancellation_policy= "Non Refundable";
-$hotel[1]->payment_policy= "Prepayment needed";
-$hotel[1]->price = "59€";
+include "hotel_results.php";
 
 //create dom document with template
 $dom = new DOMDocument();
@@ -102,9 +81,10 @@ $nodes_price->item($i)->nodeValue= $hotel[$i]->price;
 }
 
 // keep searchbox input
-$dom-> getElementById("check-in")->setAttribute("value",$check_in);
-$dom-> getElementById("check-out")->setAttribute("value",$check_out);
+$dom-> getElementById("date_range")->setAttribute("value",$date_range);
 
+if ($nights==1) {$dom-> getElementById("nights")->nodeValue=$nights."-night stay";}
+else  {$dom-> getElementById("nights")->nodeValue=$nights."-nights stay";}
 
 switch ($adults) {
     case 1:
@@ -143,14 +123,6 @@ switch ($rooms) {
         break;
     }
     
-
-
-
-// switch 
-// $dom-> getElementById("1_adult")->setAttribute("value",$adults);
-
-//selected="selected"
-
 // keep filter checked
 $nodes_filter_checkboxes = $xpath->query("//input[contains(@class, 'check_box')]");
 

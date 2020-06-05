@@ -15,19 +15,9 @@
       type="text/javascript"
       src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"
     ></script>
-    <script
-      type="text/javascript"
-      src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"
-    ></script>
-    <script
-      type="text/javascript"
-      src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"
-    ></script>
-    <link
-      rel="stylesheet"
-      type="text/css"
-      href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css"
-    />
+    <script type="text/javascript" src="./js/moment.min.js"></script>
+    <script type="text/javascript" src="./js/daterangepicker.js"></script>
+    <link rel="stylesheet" type="text/css" href="./css/daterangepicker.css" />
   </head>
   <body>
     <div class="header">
@@ -69,19 +59,13 @@
                 </div>
 
                 <div class="search_label">
-                  <label for="check-in">Check-in date</label>
+                  <label for="check-in">Check-in/Check-out</label>
                 </div>
                 <div class="search_input">
-                  <input type="date" id="check-in" name="check-in" />
-                </div>
-                <div class="search_label">
-                  <label for="check-out">Check-out date</label>
-                </div>
-                <div class="search_input">
-                  <input type="date" id="check-out" name="check-out" />
+                  <input type="text" id="date_range" name="date_range" />
                 </div>
 
-                <div class="nights">3-night stay</div>
+                <div id="nights">1-night stay</div>
 
                 <div class="search_select">
                   <select type="text" id="adults" name="adults">

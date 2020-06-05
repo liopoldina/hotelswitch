@@ -18,25 +18,34 @@ $(function () {
     }, 1000);
   });
 
-  //date_range_pickser
-  $('input[name="check-in"]').daterangepicker(
+  //get today date to set in minDate in date_range_picker
+  var today = new Date();
+  var dd = String(today.getDate()).padStart(2, "0");
+  var mm = String(today.getMonth() + 1).padStart(2, "0"); //January is 0!
+  var yyyy = today.getFullYear();
+  today = mm + "/" + dd + "/" + yyyy;
+
+  //date_range_picker
+  $("#date_range").daterangepicker(
     {
       autoApply: true,
-      startDate: "06/04/2020",
-      endDate: "06/04/2020",
-      minDate: "06/04/2020",
+      minDate: today,
       maxDate: "12/31/2020",
+      locale: {
+        // format: "DD/MM/YY",
+      },
     },
+
+    // change displays nights under range picket
     function (start, end, label) {
-      console.log(
-        "New date range selected: " +
-          start.format("YYYY-MM-DD") +
-          " to " +
-          end.format("YYYY-MM-DD") +
-          " (predefined range: " +
-          label +
-          ")"
-      );
+      nr_nights = (end - start) / (1000 * 3600 * 24);
+      nr_nights = Math.round(Math.abs(nr_nights)) - 1;
+
+      if (nr_nights == 1) {
+        $("#nights").text(nr_nights + "-night stay");
+      } else {
+        $("#nights").text(nr_nights + "-nights stay");
+      }
     }
   );
 
