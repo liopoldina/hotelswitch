@@ -1,4 +1,3 @@
-
 <?php
 
 // custom variables if anything else is set to avoid no variables error
@@ -23,8 +22,16 @@ $check_in=$date_range_array[0];
 $check_out=$date_range_array[2];
 $nights = (strtotime($check_out) - strtotime($check_in))/86400;
 
-//create objects
-include "hotel_results.php";
+// escolher data source
+$data_source="scrapy";
+switch ($data_source){
+    case "database":
+        include "hotel_results_database.php";
+        break;
+    case "scrapy":
+        include "hotel_results_scrapy.php";
+        break;
+}
 
 //create dom document with template
 $dom = new DOMDocument();
@@ -32,7 +39,7 @@ $dom->loadHTMLFile("index.html");
 $hotelbox = $dom-> getElementById("hotelbox");
 $hotel_boxes_wrapper = $dom-> getElementById("hotel_boxes_wrapper");
 
-$nr_results = 2;
+$nr_results = count($hotel);
 for ($i=0; $i < $nr_results-1 ; $i++) { 
 $hotel_boxes_wrapper->appendChild($hotelbox->cloneNode(true) );
 }
@@ -58,7 +65,7 @@ $nodes_price = $xpath->query("//span[@class= 'price' ]");
 
 
 for ($i=0; $i < $nr_results ; $i++) { 
-$nodes_name->item($i)->nodeValue= $hotel[$i]->name;
+$nodes_name->item($i)->nodeValue= htmlspecialchars($hotel[$i]->name);
 $nodes_star->item($i)->nodeValue= $hotel[$i]->stars_symbol;
 $nodes_score->item($i)->nodeValue= $hotel[$i]->score;
 $nodes_quality->item($i)->nodeValue= $hotel[$i]->quality;

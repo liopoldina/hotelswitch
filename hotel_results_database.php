@@ -21,8 +21,8 @@ $search_results[] = $search_result;
 }
 
 // create hotel objects from multidimensional array
-$hotel[] = new Hotel($search_results[0]);
-$hotel[] = new Hotel($search_results[1]);
+$hotel[] = new Hotel($search_results[0],"database");
+$hotel[] = new Hotel($search_results[1],"database");
 
 $hotel[0]->price = "49€";
 $hotel[1]->price = "59€";

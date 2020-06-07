@@ -20,21 +20,31 @@ class Hotel {
 
     var $price;
 
-    function __construct($x)
-    { $this->name = $x["name"];
-      $this->stars = $x["stars"];
-      $this->score = $x["score"];
-      $this->nr_reviews= $x["nr_reviews"];
-      $this->city = $x["city"];
-      $this->district = $x["district"];
-      $this->distance_center = $x["distance_center"];
-      $this->room_name = $x["room_name"];
-      $this->bed_type = $x["room_bed_type"];
-      $this->cancellation_policy = $x["room_cancellation_policy"];
-      $this->payment_policy = $x["room_payment_policy"];
-      $this->set_stars_symbol();
-      $this->set_quality();
+    // construct from database
+    function __construct($input){ 
+                $this->name = $input["name"];
+                $this->stars = $input["stars"];
+                $this->score = $input["score"];
+                $this->nr_reviews= $input["nr_reviews"];
+                $this->city = $input["city"];
+                $this->district = $input["district"];
+                $this->distance_center = $input["distance_center"];
+                $this->room_name = $input["room_name"];
+                $this->bed_type = $input["room_bed_type"];
+                $this->cancellation_policy = $input["room_cancellation_policy"];
+                $this->payment_policy = $input["room_payment_policy"];
+                if (isset($input["price"])) {$this->price = $input["price"];};
+                $this->set_stars_symbol();
+                $this->set_quality();
+                $this->sanitize();
     }
+
+    function sanitize(){
+        // maximum name length
+        if (strlen($this->name)>37) {$this->name = rtrim(substr($this->name,0,36))."."; };
+
+    }
+
     function set_stars_symbol() {
         switch ($this->stars) {
             case 1:
