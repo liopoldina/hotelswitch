@@ -1,5 +1,5 @@
 <?php
-include "tools.php";
+include "hotel_class.php";
 
 $servername = "127.0.0.1:3306";
 $username = "root";

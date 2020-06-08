@@ -26,12 +26,13 @@ $nights = (strtotime($check_out) - strtotime($check_in))/86400;
 $data_source="scrapy";
 switch ($data_source){
     case "database":
-        include "hotel_results_database.php";
+        include "results_database.php";
         break;
     case "scrapy":
-        include "hotel_results_scrapy.php";
+        include "results_scraper.php";
         break;
 }
+
 
 //create dom document with template
 $dom = new DOMDocument();
@@ -173,8 +174,8 @@ if(isset($_GET['score'])) {
 
 //save final html to temporary file and include
 $php = $dom->saveHTML();
-file_put_contents("temp.html", $php);
+file_put_contents("temp/temp.html", $php);
 
-include "temp.html";
+include "temp/temp.html";
 ?>
 

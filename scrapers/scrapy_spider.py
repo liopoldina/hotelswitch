@@ -1,4 +1,4 @@
-# practice -> scrapy shell "https://www.hotels.com/search.do?destination-id=1506246"
+#!C:/Users/Pedro/AppData/Local/Programs/Python/Python38/python.exe
 import json
 import scrapy
 from scrapy.crawler import CrawlerProcess
@@ -17,7 +17,8 @@ hotel_item = items()
 
 class hotelSpider (scrapy.Spider):
     name = 'hotel'
-    start_urls = ['https://www.hotels.com/search.do?destination-id=1506246']
+    start_urls = [
+        'https://es.hoteles.com/search.do?destination-id=1506246']
 
     def parse(self, response):
 
@@ -57,5 +58,5 @@ for i in range(0, len(hotel_item['name'])):
     hotels[i].room_payment_policy = "Prepayment needed"
     hotels[i].price = hotel_item['price'][i]
 
-with open('hotels.json', 'w') as outfile:
+with open('temp/hotels.json', 'w') as outfile:
     json.dump([ob.__dict__ for ob in hotels], outfile)
