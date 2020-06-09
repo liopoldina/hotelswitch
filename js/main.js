@@ -49,5 +49,10 @@ $(function () {
     }
   );
 
+  // Delete policy separator dot if payment policy doesn't exists
+
+  if ($(".payment_policy").is(":empty")) {
+    $(".policy_separator").children().text("");
+  }
   //end
 });

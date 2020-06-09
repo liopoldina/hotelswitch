@@ -23,12 +23,12 @@ $check_out=$date_range_array[2];
 $nights = (strtotime($check_out) - strtotime($check_in))/86400;
 
 // escolher data source
-$data_source="scrapy";
+$data_source="scrape";
 switch ($data_source){
     case "database":
         include "results_database.php";
         break;
-    case "scrapy":
+    case "scrape":
         include "results_scraper.php";
         break;
 }

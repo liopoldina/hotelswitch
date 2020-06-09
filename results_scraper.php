@@ -2,7 +2,7 @@
 include "hotel_class.php";
 
 
-$scraper="scrapy";
+$scraper="soup";
 
 switch ($scraper){
     case "scrapy":

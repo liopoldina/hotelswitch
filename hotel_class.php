@@ -27,8 +27,8 @@ class Hotel {
                 $this->score = $input["score"];
                 $this->nr_reviews= $input["nr_reviews"];
                 $this->city = $input["city"];
-                $this->district = $input["district"];
-                $this->distance_center = $input["distance_center"];
+                $this->district = $input["district"] . ",";
+                $this->distance_center = $input["distance_center"] . " km from center";
                 $this->room_name = $input["room_name"];
                 $this->bed_type = $input["room_bed_type"];
                 $this->cancellation_policy = $input["room_cancellation_policy"];

@@ -17,6 +17,11 @@ hotel_item = items()
 
 class hotelSpider (scrapy.Spider):
     name = 'hotel'
+
+    custom_settings = {
+        'LOG_ENABLED': 'False',
+    }
+
     start_urls = [
         'https://es.hoteles.com/search.do?destination-id=1506246']
 
