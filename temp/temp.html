@@ -4,14 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HotelHooping.com</title>
+    <!-- css -->
     <link rel="stylesheet" href="./css/main.css">
+    <link rel="stylesheet" href="./jquery-ui/jquery-ui.css">
+    <link rel="stylesheet" href="./jquery-ui/jquery-ui.structure.css">
+    <link rel="stylesheet" href="./jquery-ui/jquery-ui.theme.css">
+    <link rel="stylesheet" type="text/css" href="./css/daterangepicker.css">
+    <!-- js -->
     <script src="./js/jquery.min.js"></script>
+    <script src="./jquery-ui/jquery-ui.min.js"></script>
     <script src="./js/main.js"></script>
     <script src="https://kit.fontawesome.com/93e6a1962d.js" crossorigin="anonymous"></script>
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
-    <script type="text/javascript" src="./js/moment.min.js"></script>
-    <script type="text/javascript" src="./js/daterangepicker.js"></script>
-    <link rel="stylesheet" type="text/css" href="./css/daterangepicker.css">
+    <script src="./js/moment.min.js"></script>
+    <script src="./js/daterangepicker.js"></script>
   </head>
   <body>
     <div class="header">
@@ -43,22 +48,18 @@
                 <div class="search_label">
                   <span>Destination</span>
                 </div>
-                <div class="search_select search_select_destination">
-                  <select type="text" id="destination" name="destination">
-                    <option value="Lisbon">
-                      Lisbon
-                    </option>
-                  </select>
+                <div class="search_input_destination search_input">
+                  <input type="text" id="destination" name="destination" value="hong kong">
+                  <input type="hidden" id="destination_id" name="destination_id">
                 </div>
-
                 <div class="search_label">
                   <label for="check-in">Check-in/Check-out</label>
                 </div>
                 <div class="search_input">
-                  <input type="text" id="date_range" name="date_range" value="06/09/2020 - 06/09/2020">
+                  <input type="text" id="date_range" name="date_range" value="06/23/2020 - 06/26/2020">
                 </div>
 
-                <div id="nights">0-nights stay</div>
+                <div id="nights">3-nights stay</div>
 
                 <div class="search_select">
                   <select type="text" id="adults" name="adults">
@@ -342,8 +343,8 @@
         </div>
         <div class="right">
           <div class="search_top">
-            <div class="property_numbers">
-              <span>Lisbon: 147 hotels found </span>
+            <div class="destination_header_wrapper">
+              <span class="destination_header">Hong Kong, Hong Kong SAR</span>
             </div>
             <div class="sort_by">
               <span>Sort by:</span>
@@ -378,13 +379,13 @@
             <div class="hotelbox" id="hotelbox">
               <div class="hotelbox_inside">
                 <div class="hotel_photo">
-                  <img src="./images/search/hotel_cover.jpg" alt="hotel_cover">
+                  <img src="https://exp.cdn-hotels.com/hotels/2000000/1860000/1855600/1855596/f7cfef72_z.jpg" class="search_cover_photo" alt="hotel_cover">
                 </div>
                 <div class="hotel_content">
                   <div class="hotel_head">
-                    <span class="name">Radisson Hotel New York Times Square</span>
+                    <span class="name">JEN Hong Kong by Shangri-La</span>
                     <div class="stars_wrapper">
-                      <span class="stars">&#9733;&#9733;&#9733;</span>
+                      <span class="stars">&#9733;&#9733;&#9733;&#9733;</span>
                     </div>
                   </div>
                   <div class="hotel_review">
@@ -393,26 +394,26 @@
                         <span class="quality">Very Good</span>
                       </div>
                       <div class="nr_reviews_wrapper">
-                        <span class="nr_reviews">92</span>
+                        <span class="nr_reviews">494</span>
                         <span>reviews</span>
                       </div>
                     </div>
                     <div class="score_outer_wrapper">
                       <div class="score_inner_wrapper">
-                        <span class="score">8.4</span>
+                        <span class="score">8.8</span>
                       </div>
                     </div>
                   </div>
                   <div class="address_wrapper">
                     <div class="address">
-                      <span class="district">Central New York City,</span>
-                      <span class="city">New York</span>
+                      <span class="district">Sai Wan</span>
+                      <span class="city"></span>
                     </div>
                     <div class="address_separator">
                       <span>.</span>
                     </div>
                     <div class="distance_center_wrapper">
-                      <span class="distance_center">0.4 km from center</span>
+                      <span class="distance_center">1.5 km from center</span>
                     </div>
                   </div>
                   <div class="hotel_room">
@@ -428,7 +429,7 @@
                         <img src="./images/search/guest_icon.png" alt="guest_icon">
                       </div>
                       <div class="nights_guests">
-                        <span class="nights">0 nights</span>
+                        <span class="nights">3 nights</span>
                         <span>, </span>
                         <span class="adults">2 adults</span>
                       </div>
@@ -449,7 +450,7 @@
                         </div>
                       </div>
                       <div class="price_wrapper">
-                        <span class="price">&euro;106</span>
+                        <span class="price">&euro;254</span>
                       </div>
                     </div>
                   </div>
@@ -462,41 +463,41 @@
           <div class="hotelbox" id="hotelbox">
               <div class="hotelbox_inside">
                 <div class="hotel_photo">
-                  <img src="./images/search/hotel_cover.jpg" alt="hotel_cover">
+                  <img src="https://exp.cdn-hotels.com/hotels/3000000/2140000/2133600/2133542/33586b98_z.jpg" class="search_cover_photo" alt="hotel_cover">
                 </div>
                 <div class="hotel_content">
                   <div class="hotel_head">
-                    <span class="name">Arlo SoHo</span>
+                    <span class="name">W Hong Kong</span>
                     <div class="stars_wrapper">
-                      <span class="stars">&#9733;&#9733;&#9733;&#9733;</span>
+                      <span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
                     </div>
                   </div>
                   <div class="hotel_review">
                     <div class="quality_number">
                       <div class="quality_wrapper">
-                        <span class="quality">Very Good</span>
+                        <span class="quality">Wonderful</span>
                       </div>
                       <div class="nr_reviews_wrapper">
-                        <span class="nr_reviews">1,492</span>
+                        <span class="nr_reviews">413</span>
                         <span>reviews</span>
                       </div>
                     </div>
                     <div class="score_outer_wrapper">
                       <div class="score_inner_wrapper">
-                        <span class="score">8.6</span>
+                        <span class="score">9</span>
                       </div>
                     </div>
                   </div>
                   <div class="address_wrapper">
                     <div class="address">
-                      <span class="district">Hudson Square,</span>
-                      <span class="city">New York</span>
+                      <span class="district">West Kowloon</span>
+                      <span class="city"></span>
                     </div>
                     <div class="address_separator">
                       <span>.</span>
                     </div>
                     <div class="distance_center_wrapper">
-                      <span class="distance_center">2.5 km from center</span>
+                      <span class="distance_center">1.5 km from center</span>
                     </div>
                   </div>
                   <div class="hotel_room">
@@ -512,7 +513,7 @@
                         <img src="./images/search/guest_icon.png" alt="guest_icon">
                       </div>
                       <div class="nights_guests">
-                        <span class="nights">0 nights</span>
+                        <span class="nights">3 nights</span>
                         <span>, </span>
                         <span class="adults">2 adults</span>
                       </div>
@@ -533,7 +534,7 @@
                         </div>
                       </div>
                       <div class="price_wrapper">
-                        <span class="price">&euro;83</span>
+                        <span class="price">&euro;786</span>
                       </div>
                     </div>
                   </div>
@@ -545,11 +546,11 @@
             </div><div class="hotelbox" id="hotelbox">
               <div class="hotelbox_inside">
                 <div class="hotel_photo">
-                  <img src="./images/search/hotel_cover.jpg" alt="hotel_cover">
+                  <img src="https://exp.cdn-hotels.com/hotels/2000000/1100000/1091000/1090925/65165c61_z.jpg" class="search_cover_photo" alt="hotel_cover">
                 </div>
                 <div class="hotel_content">
                   <div class="hotel_head">
-                    <span class="name">Freehand New York</span>
+                    <span class="name">Dorsett Wanchai Hong Kong</span>
                     <div class="stars_wrapper">
                       <span class="stars">&#9733;&#9733;&#9733;&#9733;</span>
                     </div>
@@ -560,26 +561,26 @@
                         <span class="quality">Very Good</span>
                       </div>
                       <div class="nr_reviews_wrapper">
-                        <span class="nr_reviews">1,308</span>
+                        <span class="nr_reviews">1,835</span>
                         <span>reviews</span>
                       </div>
                     </div>
                     <div class="score_outer_wrapper">
                       <div class="score_inner_wrapper">
-                        <span class="score">8.6</span>
+                        <span class="score">8</span>
                       </div>
                     </div>
                   </div>
                   <div class="address_wrapper">
                     <div class="address">
-                      <span class="district">Gramercy,</span>
-                      <span class="city">New York</span>
+                      <span class="district">Wan Chai</span>
+                      <span class="city"></span>
                     </div>
                     <div class="address_separator">
                       <span>.</span>
                     </div>
                     <div class="distance_center_wrapper">
-                      <span class="distance_center">1.2 km from center</span>
+                      <span class="distance_center">1.4 km from center</span>
                     </div>
                   </div>
                   <div class="hotel_room">
@@ -595,7 +596,588 @@
                         <img src="./images/search/guest_icon.png" alt="guest_icon">
                       </div>
                       <div class="nights_guests">
-                        <span class="nights">0 nights</span>
+                        <span class="nights">3 nights</span>
+                        <span>, </span>
+                        <span class="adults">2 adults</span>
+                      </div>
+                    </div>
+                    <div class="bed_type_wrapper">
+                      <span class="bed_type">1 Double Bed</span>
+                    </div>
+                    <div class="policy_price_wrapper">
+                      <div class="room_policy">
+                        <div class="cancellation_policy_wrapper">
+                          <span class="cancellation_policy">FREE cancellation</span>
+                        </div>
+                        <div class="policy_separator">
+                          <span>.</span>
+                        </div>
+                        <div class="payment_policy_wrapper">
+                          <span class="payment_policy"></span>
+                        </div>
+                      </div>
+                      <div class="price_wrapper">
+                        <span class="price">&euro;148</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="hotel_book">
+                  <button>Select Room</button>
+                </div>
+              </div>
+            </div><div class="hotelbox" id="hotelbox">
+              <div class="hotelbox_inside">
+                <div class="hotel_photo">
+                  <img src="https://exp.cdn-hotels.com/hotels/2000000/1260000/1258000/1257977/466e94b8_z.jpg" class="search_cover_photo" alt="hotel_cover">
+                </div>
+                <div class="hotel_content">
+                  <div class="hotel_head">
+                    <span class="name">Cosmo Hotel Hong Kong</span>
+                    <div class="stars_wrapper">
+                      <span class="stars">&#9733;&#9733;&#9733;&#9733;</span>
+                    </div>
+                  </div>
+                  <div class="hotel_review">
+                    <div class="quality_number">
+                      <div class="quality_wrapper">
+                        <span class="quality">Good</span>
+                      </div>
+                      <div class="nr_reviews_wrapper">
+                        <span class="nr_reviews">816</span>
+                        <span>reviews</span>
+                      </div>
+                    </div>
+                    <div class="score_outer_wrapper">
+                      <div class="score_inner_wrapper">
+                        <span class="score">7.4</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="address_wrapper">
+                    <div class="address">
+                      <span class="district">Wan Chai</span>
+                      <span class="city"></span>
+                    </div>
+                    <div class="address_separator">
+                      <span>.</span>
+                    </div>
+                    <div class="distance_center_wrapper">
+                      <span class="distance_center">1.4 km from center</span>
+                    </div>
+                  </div>
+                  <div class="hotel_room">
+                    <div class="room_title">
+                      <div class="room_name_wrapper">
+                        <span class="room_name">Double Room</span>
+                      </div>
+                      <div class="room_separator">
+                        <span>-</span>
+                      </div>
+                      <div class="room_guests_icon">
+                        <img src="./images/search/guest_icon.png" alt="guest_icon">
+                        <img src="./images/search/guest_icon.png" alt="guest_icon">
+                      </div>
+                      <div class="nights_guests">
+                        <span class="nights">3 nights</span>
+                        <span>, </span>
+                        <span class="adults">2 adults</span>
+                      </div>
+                    </div>
+                    <div class="bed_type_wrapper">
+                      <span class="bed_type">1 Double Bed</span>
+                    </div>
+                    <div class="policy_price_wrapper">
+                      <div class="room_policy">
+                        <div class="cancellation_policy_wrapper">
+                          <span class="cancellation_policy">FREE cancellation</span>
+                        </div>
+                        <div class="policy_separator">
+                          <span>.</span>
+                        </div>
+                        <div class="payment_policy_wrapper">
+                          <span class="payment_policy"></span>
+                        </div>
+                      </div>
+                      <div class="price_wrapper">
+                        <span class="price">&euro;120</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="hotel_book">
+                  <button>Select Room</button>
+                </div>
+              </div>
+            </div><div class="hotelbox" id="hotelbox">
+              <div class="hotelbox_inside">
+                <div class="hotel_photo">
+                  <img src="https://exp.cdn-hotels.com/hotels/7000000/6480000/6470800/6470790/9ec8e216_z.jpg" class="search_cover_photo" alt="hotel_cover">
+                </div>
+                <div class="hotel_content">
+                  <div class="hotel_head">
+                    <span class="name">Sohotel</span>
+                    <div class="stars_wrapper">
+                      <span class="stars">&#9733;&#9733;&#9733;&#9733;</span>
+                    </div>
+                  </div>
+                  <div class="hotel_review">
+                    <div class="quality_number">
+                      <div class="quality_wrapper">
+                        <span class="quality">Very Good</span>
+                      </div>
+                      <div class="nr_reviews_wrapper">
+                        <span class="nr_reviews">447</span>
+                        <span>reviews</span>
+                      </div>
+                    </div>
+                    <div class="score_outer_wrapper">
+                      <div class="score_inner_wrapper">
+                        <span class="score">8.2</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="address_wrapper">
+                    <div class="address">
+                      <span class="district">Sheung Wan</span>
+                      <span class="city"></span>
+                    </div>
+                    <div class="address_separator">
+                      <span>.</span>
+                    </div>
+                    <div class="distance_center_wrapper">
+                      <span class="distance_center">0.7 km from center</span>
+                    </div>
+                  </div>
+                  <div class="hotel_room">
+                    <div class="room_title">
+                      <div class="room_name_wrapper">
+                        <span class="room_name">Double Room</span>
+                      </div>
+                      <div class="room_separator">
+                        <span>-</span>
+                      </div>
+                      <div class="room_guests_icon">
+                        <img src="./images/search/guest_icon.png" alt="guest_icon">
+                        <img src="./images/search/guest_icon.png" alt="guest_icon">
+                      </div>
+                      <div class="nights_guests">
+                        <span class="nights">3 nights</span>
+                        <span>, </span>
+                        <span class="adults">2 adults</span>
+                      </div>
+                    </div>
+                    <div class="bed_type_wrapper">
+                      <span class="bed_type">1 Double Bed</span>
+                    </div>
+                    <div class="policy_price_wrapper">
+                      <div class="room_policy">
+                        <div class="cancellation_policy_wrapper">
+                          <span class="cancellation_policy"></span>
+                        </div>
+                        <div class="policy_separator">
+                          <span>.</span>
+                        </div>
+                        <div class="payment_policy_wrapper">
+                          <span class="payment_policy"></span>
+                        </div>
+                      </div>
+                      <div class="price_wrapper">
+                        <span class="price">&euro;145</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="hotel_book">
+                  <button>Select Room</button>
+                </div>
+              </div>
+            </div><div class="hotelbox" id="hotelbox">
+              <div class="hotelbox_inside">
+                <div class="hotel_photo">
+                  <img src="https://exp.cdn-hotels.com/hotels/8000000/7060000/7054900/7054843/89a617d9_z.jpg" class="search_cover_photo" alt="hotel_cover">
+                </div>
+                <div class="hotel_content">
+                  <div class="hotel_head">
+                    <span class="name">Dorsett Tsuen Wan, Hong Kong</span>
+                    <div class="stars_wrapper">
+                      <span class="stars">&#9733;&#9733;&#9733;&#9733;</span>
+                    </div>
+                  </div>
+                  <div class="hotel_review">
+                    <div class="quality_number">
+                      <div class="quality_wrapper">
+                        <span class="quality">Good</span>
+                      </div>
+                      <div class="nr_reviews_wrapper">
+                        <span class="nr_reviews">971</span>
+                        <span>reviews</span>
+                      </div>
+                    </div>
+                    <div class="score_outer_wrapper">
+                      <div class="score_inner_wrapper">
+                        <span class="score">7.8</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="address_wrapper">
+                    <div class="address">
+                      <span class="district">Kwai Chung</span>
+                      <span class="city"></span>
+                    </div>
+                    <div class="address_separator">
+                      <span>.</span>
+                    </div>
+                    <div class="distance_center_wrapper">
+                      <span class="distance_center">6.3 km from center</span>
+                    </div>
+                  </div>
+                  <div class="hotel_room">
+                    <div class="room_title">
+                      <div class="room_name_wrapper">
+                        <span class="room_name">Double Room</span>
+                      </div>
+                      <div class="room_separator">
+                        <span>-</span>
+                      </div>
+                      <div class="room_guests_icon">
+                        <img src="./images/search/guest_icon.png" alt="guest_icon">
+                        <img src="./images/search/guest_icon.png" alt="guest_icon">
+                      </div>
+                      <div class="nights_guests">
+                        <span class="nights">3 nights</span>
+                        <span>, </span>
+                        <span class="adults">2 adults</span>
+                      </div>
+                    </div>
+                    <div class="bed_type_wrapper">
+                      <span class="bed_type">1 Double Bed</span>
+                    </div>
+                    <div class="policy_price_wrapper">
+                      <div class="room_policy">
+                        <div class="cancellation_policy_wrapper">
+                          <span class="cancellation_policy">FREE cancellation</span>
+                        </div>
+                        <div class="policy_separator">
+                          <span>.</span>
+                        </div>
+                        <div class="payment_policy_wrapper">
+                          <span class="payment_policy"></span>
+                        </div>
+                      </div>
+                      <div class="price_wrapper">
+                        <span class="price">&euro;148</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="hotel_book">
+                  <button>Select Room</button>
+                </div>
+              </div>
+            </div><div class="hotelbox" id="hotelbox">
+              <div class="hotelbox_inside">
+                <div class="hotel_photo">
+                  <img src="https://exp.cdn-hotels.com/hotels/1000000/30000/21500/21454/188b5c19_z.jpg" class="search_cover_photo" alt="hotel_cover">
+                </div>
+                <div class="hotel_content">
+                  <div class="hotel_head">
+                    <span class="name">Kowloon Shangri-La, Hong Kong</span>
+                    <div class="stars_wrapper">
+                      <span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+                    </div>
+                  </div>
+                  <div class="hotel_review">
+                    <div class="quality_number">
+                      <div class="quality_wrapper">
+                        <span class="quality">Wonderful</span>
+                      </div>
+                      <div class="nr_reviews_wrapper">
+                        <span class="nr_reviews">1,335</span>
+                        <span>reviews</span>
+                      </div>
+                    </div>
+                    <div class="score_outer_wrapper">
+                      <div class="score_inner_wrapper">
+                        <span class="score">9.2</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="address_wrapper">
+                    <div class="address">
+                      <span class="district">Tsim Sha Tsui</span>
+                      <span class="city"></span>
+                    </div>
+                    <div class="address_separator">
+                      <span>.</span>
+                    </div>
+                    <div class="distance_center_wrapper">
+                      <span class="distance_center">1.5 km from center</span>
+                    </div>
+                  </div>
+                  <div class="hotel_room">
+                    <div class="room_title">
+                      <div class="room_name_wrapper">
+                        <span class="room_name">Double Room</span>
+                      </div>
+                      <div class="room_separator">
+                        <span>-</span>
+                      </div>
+                      <div class="room_guests_icon">
+                        <img src="./images/search/guest_icon.png" alt="guest_icon">
+                        <img src="./images/search/guest_icon.png" alt="guest_icon">
+                      </div>
+                      <div class="nights_guests">
+                        <span class="nights">3 nights</span>
+                        <span>, </span>
+                        <span class="adults">2 adults</span>
+                      </div>
+                    </div>
+                    <div class="bed_type_wrapper">
+                      <span class="bed_type">1 Double Bed</span>
+                    </div>
+                    <div class="policy_price_wrapper">
+                      <div class="room_policy">
+                        <div class="cancellation_policy_wrapper">
+                          <span class="cancellation_policy">FREE cancellation</span>
+                        </div>
+                        <div class="policy_separator">
+                          <span>.</span>
+                        </div>
+                        <div class="payment_policy_wrapper">
+                          <span class="payment_policy"></span>
+                        </div>
+                      </div>
+                      <div class="price_wrapper">
+                        <span class="price">&euro;487</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="hotel_book">
+                  <button>Select Room</button>
+                </div>
+              </div>
+            </div><div class="hotelbox" id="hotelbox">
+              <div class="hotelbox_inside">
+                <div class="hotel_photo">
+                  <img src="https://exp.cdn-hotels.com/hotels/3000000/2440000/2434400/2434366/a350bf1d_z.jpg" class="search_cover_photo" alt="hotel_cover">
+                </div>
+                <div class="hotel_content">
+                  <div class="hotel_head">
+                    <span class="name">Dorsett Mongkok, Hong Kong</span>
+                    <div class="stars_wrapper">
+                      <span class="stars">&#9733;&#9733;&#9733;&#9733;</span>
+                    </div>
+                  </div>
+                  <div class="hotel_review">
+                    <div class="quality_number">
+                      <div class="quality_wrapper">
+                        <span class="quality">Very Good</span>
+                      </div>
+                      <div class="nr_reviews_wrapper">
+                        <span class="nr_reviews">2,842</span>
+                        <span>reviews</span>
+                      </div>
+                    </div>
+                    <div class="score_outer_wrapper">
+                      <div class="score_inner_wrapper">
+                        <span class="score">8.4</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="address_wrapper">
+                    <div class="address">
+                      <span class="district">Tai Kok Tsui</span>
+                      <span class="city"></span>
+                    </div>
+                    <div class="address_separator">
+                      <span>.</span>
+                    </div>
+                    <div class="distance_center_wrapper">
+                      <span class="distance_center">2.6 km from center</span>
+                    </div>
+                  </div>
+                  <div class="hotel_room">
+                    <div class="room_title">
+                      <div class="room_name_wrapper">
+                        <span class="room_name">Double Room</span>
+                      </div>
+                      <div class="room_separator">
+                        <span>-</span>
+                      </div>
+                      <div class="room_guests_icon">
+                        <img src="./images/search/guest_icon.png" alt="guest_icon">
+                        <img src="./images/search/guest_icon.png" alt="guest_icon">
+                      </div>
+                      <div class="nights_guests">
+                        <span class="nights">3 nights</span>
+                        <span>, </span>
+                        <span class="adults">2 adults</span>
+                      </div>
+                    </div>
+                    <div class="bed_type_wrapper">
+                      <span class="bed_type">1 Double Bed</span>
+                    </div>
+                    <div class="policy_price_wrapper">
+                      <div class="room_policy">
+                        <div class="cancellation_policy_wrapper">
+                          <span class="cancellation_policy">FREE cancellation</span>
+                        </div>
+                        <div class="policy_separator">
+                          <span>.</span>
+                        </div>
+                        <div class="payment_policy_wrapper">
+                          <span class="payment_policy"></span>
+                        </div>
+                      </div>
+                      <div class="price_wrapper">
+                        <span class="price">&euro;109</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="hotel_book">
+                  <button>Select Room</button>
+                </div>
+              </div>
+            </div><div class="hotelbox" id="hotelbox">
+              <div class="hotelbox_inside">
+                <div class="hotel_photo">
+                  <img src="https://exp.cdn-hotels.com/hotels/12000000/11060000/11057600/11057546/b93c5efa_z.jpg" class="search_cover_photo" alt="hotel_cover">
+                </div>
+                <div class="hotel_content">
+                  <div class="hotel_head">
+                    <span class="name">The Perkin Hotel</span>
+                    <div class="stars_wrapper">
+                      <span class="stars">&#9733;&#9733;&#9733;</span>
+                    </div>
+                  </div>
+                  <div class="hotel_review">
+                    <div class="quality_number">
+                      <div class="quality_wrapper">
+                        <span class="quality">Very Good</span>
+                      </div>
+                      <div class="nr_reviews_wrapper">
+                        <span class="nr_reviews">539</span>
+                        <span>reviews</span>
+                      </div>
+                    </div>
+                    <div class="score_outer_wrapper">
+                      <div class="score_inner_wrapper">
+                        <span class="score">8.8</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="address_wrapper">
+                    <div class="address">
+                      <span class="district">Tsim Sha Tsui</span>
+                      <span class="city"></span>
+                    </div>
+                    <div class="address_separator">
+                      <span>.</span>
+                    </div>
+                    <div class="distance_center_wrapper">
+                      <span class="distance_center">1.6 km from center</span>
+                    </div>
+                  </div>
+                  <div class="hotel_room">
+                    <div class="room_title">
+                      <div class="room_name_wrapper">
+                        <span class="room_name">Double Room</span>
+                      </div>
+                      <div class="room_separator">
+                        <span>-</span>
+                      </div>
+                      <div class="room_guests_icon">
+                        <img src="./images/search/guest_icon.png" alt="guest_icon">
+                        <img src="./images/search/guest_icon.png" alt="guest_icon">
+                      </div>
+                      <div class="nights_guests">
+                        <span class="nights">3 nights</span>
+                        <span>, </span>
+                        <span class="adults">2 adults</span>
+                      </div>
+                    </div>
+                    <div class="bed_type_wrapper">
+                      <span class="bed_type">1 Double Bed</span>
+                    </div>
+                    <div class="policy_price_wrapper">
+                      <div class="room_policy">
+                        <div class="cancellation_policy_wrapper">
+                          <span class="cancellation_policy"></span>
+                        </div>
+                        <div class="policy_separator">
+                          <span>.</span>
+                        </div>
+                        <div class="payment_policy_wrapper">
+                          <span class="payment_policy"></span>
+                        </div>
+                      </div>
+                      <div class="price_wrapper">
+                        <span class="price">&euro;158</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="hotel_book">
+                  <button>Select Room</button>
+                </div>
+              </div>
+            </div><div class="hotelbox" id="hotelbox">
+              <div class="hotelbox_inside">
+                <div class="hotel_photo">
+                  <img src="https://exp.cdn-hotels.com/hotels/46000000/45260000/45258600/45258536/a9c74ccc_z.jpg" class="search_cover_photo" alt="hotel_cover">
+                </div>
+                <div class="hotel_content">
+                  <div class="hotel_head">
+                    <span class="name">Hotel Conext</span>
+                    <div class="stars_wrapper">
+                      <span class="stars">&#9733;&#9733;</span>
+                    </div>
+                  </div>
+                  <div class="hotel_review">
+                    <div class="quality_number">
+                      <div class="quality_wrapper">
+                        <span class="quality">Plesant</span>
+                      </div>
+                      <div class="nr_reviews_wrapper">
+                        <span class="nr_reviews">1</span>
+                        <span>reviews</span>
+                      </div>
+                    </div>
+                    <div class="score_outer_wrapper">
+                      <div class="score_inner_wrapper">
+                        <span class="score">2</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="address_wrapper">
+                    <div class="address">
+                      <span class="district">Jordan</span>
+                      <span class="city"></span>
+                    </div>
+                    <div class="address_separator">
+                      <span>.</span>
+                    </div>
+                    <div class="distance_center_wrapper">
+                      <span class="distance_center">1.7 km from center</span>
+                    </div>
+                  </div>
+                  <div class="hotel_room">
+                    <div class="room_title">
+                      <div class="room_name_wrapper">
+                        <span class="room_name">Double Room</span>
+                      </div>
+                      <div class="room_separator">
+                        <span>-</span>
+                      </div>
+                      <div class="room_guests_icon">
+                        <img src="./images/search/guest_icon.png" alt="guest_icon">
+                        <img src="./images/search/guest_icon.png" alt="guest_icon">
+                      </div>
+                      <div class="nights_guests">
+                        <span class="nights">3 nights</span>
                         <span>, </span>
                         <span class="adults">2 adults</span>
                       </div>
@@ -628,11 +1210,11 @@
             </div><div class="hotelbox" id="hotelbox">
               <div class="hotelbox_inside">
                 <div class="hotel_photo">
-                  <img src="./images/search/hotel_cover.jpg" alt="hotel_cover">
+                  <img src="https://exp.cdn-hotels.com/hotels/1000000/30000/23500/23450/c0032666_z.jpg" class="search_cover_photo" alt="hotel_cover">
                 </div>
                 <div class="hotel_content">
                   <div class="hotel_head">
-                    <span class="name">Ink 48 Hotel</span>
+                    <span class="name">Novotel Nathan Road Kowloon Hong Kong</span>
                     <div class="stars_wrapper">
                       <span class="stars">&#9733;&#9733;&#9733;&#9733;</span>
                     </div>
@@ -643,173 +1225,7 @@
                         <span class="quality">Very Good</span>
                       </div>
                       <div class="nr_reviews_wrapper">
-                        <span class="nr_reviews">798</span>
-                        <span>reviews</span>
-                      </div>
-                    </div>
-                    <div class="score_outer_wrapper">
-                      <div class="score_inner_wrapper">
-                        <span class="score">8.6</span>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="address_wrapper">
-                    <div class="address">
-                      <span class="district">Hell's Kitchen,</span>
-                      <span class="city">New York</span>
-                    </div>
-                    <div class="address_separator">
-                      <span>.</span>
-                    </div>
-                    <div class="distance_center_wrapper">
-                      <span class="distance_center">0.7 km from center</span>
-                    </div>
-                  </div>
-                  <div class="hotel_room">
-                    <div class="room_title">
-                      <div class="room_name_wrapper">
-                        <span class="room_name">Double Room</span>
-                      </div>
-                      <div class="room_separator">
-                        <span>-</span>
-                      </div>
-                      <div class="room_guests_icon">
-                        <img src="./images/search/guest_icon.png" alt="guest_icon">
-                        <img src="./images/search/guest_icon.png" alt="guest_icon">
-                      </div>
-                      <div class="nights_guests">
-                        <span class="nights">0 nights</span>
-                        <span>, </span>
-                        <span class="adults">2 adults</span>
-                      </div>
-                    </div>
-                    <div class="bed_type_wrapper">
-                      <span class="bed_type">1 Double Bed</span>
-                    </div>
-                    <div class="policy_price_wrapper">
-                      <div class="room_policy">
-                        <div class="cancellation_policy_wrapper">
-                          <span class="cancellation_policy">FREE cancellation</span>
-                        </div>
-                        <div class="policy_separator">
-                          <span>.</span>
-                        </div>
-                        <div class="payment_policy_wrapper">
-                          <span class="payment_policy"></span>
-                        </div>
-                      </div>
-                      <div class="price_wrapper">
-                        <span class="price">&euro;216</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="hotel_book">
-                  <button>Select Room</button>
-                </div>
-              </div>
-            </div><div class="hotelbox" id="hotelbox">
-              <div class="hotelbox_inside">
-                <div class="hotel_photo">
-                  <img src="./images/search/hotel_cover.jpg" alt="hotel_cover">
-                </div>
-                <div class="hotel_content">
-                  <div class="hotel_head">
-                    <span class="name">Fitzpatrick Grand Central</span>
-                    <div class="stars_wrapper">
-                      <span class="stars">&#9733;&#9733;&#9733;&#9733;</span>
-                    </div>
-                  </div>
-                  <div class="hotel_review">
-                    <div class="quality_number">
-                      <div class="quality_wrapper">
-                        <span class="quality">Wonderful</span>
-                      </div>
-                      <div class="nr_reviews_wrapper">
-                        <span class="nr_reviews">891</span>
-                        <span>reviews</span>
-                      </div>
-                    </div>
-                    <div class="score_outer_wrapper">
-                      <div class="score_inner_wrapper">
-                        <span class="score">9</span>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="address_wrapper">
-                    <div class="address">
-                      <span class="district">Midtown East,</span>
-                      <span class="city">New York</span>
-                    </div>
-                    <div class="address_separator">
-                      <span>.</span>
-                    </div>
-                    <div class="distance_center_wrapper">
-                      <span class="distance_center">0.7 km from center</span>
-                    </div>
-                  </div>
-                  <div class="hotel_room">
-                    <div class="room_title">
-                      <div class="room_name_wrapper">
-                        <span class="room_name">Double Room</span>
-                      </div>
-                      <div class="room_separator">
-                        <span>-</span>
-                      </div>
-                      <div class="room_guests_icon">
-                        <img src="./images/search/guest_icon.png" alt="guest_icon">
-                        <img src="./images/search/guest_icon.png" alt="guest_icon">
-                      </div>
-                      <div class="nights_guests">
-                        <span class="nights">0 nights</span>
-                        <span>, </span>
-                        <span class="adults">2 adults</span>
-                      </div>
-                    </div>
-                    <div class="bed_type_wrapper">
-                      <span class="bed_type">1 Double Bed</span>
-                    </div>
-                    <div class="policy_price_wrapper">
-                      <div class="room_policy">
-                        <div class="cancellation_policy_wrapper">
-                          <span class="cancellation_policy">FREE cancellation</span>
-                        </div>
-                        <div class="policy_separator">
-                          <span>.</span>
-                        </div>
-                        <div class="payment_policy_wrapper">
-                          <span class="payment_policy"></span>
-                        </div>
-                      </div>
-                      <div class="price_wrapper">
-                        <span class="price">&euro;133</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="hotel_book">
-                  <button>Select Room</button>
-                </div>
-              </div>
-            </div><div class="hotelbox" id="hotelbox">
-              <div class="hotelbox_inside">
-                <div class="hotel_photo">
-                  <img src="./images/search/hotel_cover.jpg" alt="hotel_cover">
-                </div>
-                <div class="hotel_content">
-                  <div class="hotel_head">
-                    <span class="name">Hotel Hendricks</span>
-                    <div class="stars_wrapper">
-                      <span class="stars">&#9733;&#9733;&#9733;&#9733;</span>
-                    </div>
-                  </div>
-                  <div class="hotel_review">
-                    <div class="quality_number">
-                      <div class="quality_wrapper">
-                        <span class="quality">Very Good</span>
-                      </div>
-                      <div class="nr_reviews_wrapper">
-                        <span class="nr_reviews">562</span>
+                        <span class="nr_reviews">1,675</span>
                         <span>reviews</span>
                       </div>
                     </div>
@@ -821,14 +1237,14 @@
                   </div>
                   <div class="address_wrapper">
                     <div class="address">
-                      <span class="district">Midtown,</span>
-                      <span class="city">New York</span>
+                      <span class="district">Jordan</span>
+                      <span class="city"></span>
                     </div>
                     <div class="address_separator">
                       <span>.</span>
                     </div>
                     <div class="distance_center_wrapper">
-                      <span class="distance_center">0.4 km from center</span>
+                      <span class="distance_center">1.8 km from center</span>
                     </div>
                   </div>
                   <div class="hotel_room">
@@ -844,7 +1260,7 @@
                         <img src="./images/search/guest_icon.png" alt="guest_icon">
                       </div>
                       <div class="nights_guests">
-                        <span class="nights">0 nights</span>
+                        <span class="nights">3 nights</span>
                         <span>, </span>
                         <span class="adults">2 adults</span>
                       </div>
@@ -865,7 +1281,7 @@
                         </div>
                       </div>
                       <div class="price_wrapper">
-                        <span class="price">&euro;149</span>
+                        <span class="price">&euro;150</span>
                       </div>
                     </div>
                   </div>
@@ -877,41 +1293,41 @@
             </div><div class="hotelbox" id="hotelbox">
               <div class="hotelbox_inside">
                 <div class="hotel_photo">
-                  <img src="./images/search/hotel_cover.jpg" alt="hotel_cover">
+                  <img src="https://exp.cdn-hotels.com/hotels/4000000/3390000/3380800/3380735/3ec4b331_z.jpg" class="search_cover_photo" alt="hotel_cover">
                 </div>
                 <div class="hotel_content">
                   <div class="hotel_head">
-                    <span class="name">Arlo NoMad</span>
+                    <span class="name">iclub Wan Chai Hotel</span>
                     <div class="stars_wrapper">
-                      <span class="stars">&#9733;&#9733;&#9733;&#9733;</span>
+                      <span class="stars">&#9733;&#9733;&#9733;</span>
                     </div>
                   </div>
                   <div class="hotel_review">
                     <div class="quality_number">
                       <div class="quality_wrapper">
-                        <span class="quality">Very Good</span>
+                        <span class="quality">Good</span>
                       </div>
                       <div class="nr_reviews_wrapper">
-                        <span class="nr_reviews">2,072</span>
+                        <span class="nr_reviews">291</span>
                         <span>reviews</span>
                       </div>
                     </div>
                     <div class="score_outer_wrapper">
                       <div class="score_inner_wrapper">
-                        <span class="score">8.8</span>
+                        <span class="score">7.8</span>
                       </div>
                     </div>
                   </div>
                   <div class="address_wrapper">
                     <div class="address">
-                      <span class="district">Midtown,</span>
-                      <span class="city">New York</span>
+                      <span class="district">Wan Chai</span>
+                      <span class="city"></span>
                     </div>
                     <div class="address_separator">
                       <span>.</span>
                     </div>
                     <div class="distance_center_wrapper">
-                      <span class="distance_center">0.7 km from center</span>
+                      <span class="distance_center">1.2 km from center</span>
                     </div>
                   </div>
                   <div class="hotel_room">
@@ -927,7 +1343,7 @@
                         <img src="./images/search/guest_icon.png" alt="guest_icon">
                       </div>
                       <div class="nights_guests">
-                        <span class="nights">0 nights</span>
+                        <span class="nights">3 nights</span>
                         <span>, </span>
                         <span class="adults">2 adults</span>
                       </div>
@@ -948,90 +1364,7 @@
                         </div>
                       </div>
                       <div class="price_wrapper">
-                        <span class="price">&euro;124</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="hotel_book">
-                  <button>Select Room</button>
-                </div>
-              </div>
-            </div><div class="hotelbox" id="hotelbox">
-              <div class="hotelbox_inside">
-                <div class="hotel_photo">
-                  <img src="./images/search/hotel_cover.jpg" alt="hotel_cover">
-                </div>
-                <div class="hotel_content">
-                  <div class="hotel_head">
-                    <span class="name">NobleDEN Hotel</span>
-                    <div class="stars_wrapper">
-                      <span class="stars">&#9733;&#9733;&#9733;&#9733;</span>
-                    </div>
-                  </div>
-                  <div class="hotel_review">
-                    <div class="quality_number">
-                      <div class="quality_wrapper">
-                        <span class="quality">Wonderful</span>
-                      </div>
-                      <div class="nr_reviews_wrapper">
-                        <span class="nr_reviews">890</span>
-                        <span>reviews</span>
-                      </div>
-                    </div>
-                    <div class="score_outer_wrapper">
-                      <div class="score_inner_wrapper">
-                        <span class="score">9.4</span>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="address_wrapper">
-                    <div class="address">
-                      <span class="district">Manhattan,</span>
-                      <span class="city">New York</span>
-                    </div>
-                    <div class="address_separator">
-                      <span>.</span>
-                    </div>
-                    <div class="distance_center_wrapper">
-                      <span class="distance_center">2.6 km from center</span>
-                    </div>
-                  </div>
-                  <div class="hotel_room">
-                    <div class="room_title">
-                      <div class="room_name_wrapper">
-                        <span class="room_name">Double Room</span>
-                      </div>
-                      <div class="room_separator">
-                        <span>-</span>
-                      </div>
-                      <div class="room_guests_icon">
-                        <img src="./images/search/guest_icon.png" alt="guest_icon">
-                        <img src="./images/search/guest_icon.png" alt="guest_icon">
-                      </div>
-                      <div class="nights_guests">
-                        <span class="nights">0 nights</span>
-                        <span>, </span>
-                        <span class="adults">2 adults</span>
-                      </div>
-                    </div>
-                    <div class="bed_type_wrapper">
-                      <span class="bed_type">1 Double Bed</span>
-                    </div>
-                    <div class="policy_price_wrapper">
-                      <div class="room_policy">
-                        <div class="cancellation_policy_wrapper">
-                          <span class="cancellation_policy"></span>
-                        </div>
-                        <div class="policy_separator">
-                          <span>.</span>
-                        </div>
-                        <div class="payment_policy_wrapper">
-                          <span class="payment_policy"></span>
-                        </div>
-                      </div>
-                      <div class="price_wrapper">
-                        <span class="price">&euro;117</span>
+                        <span class="price">&euro;126</span>
                       </div>
                     </div>
                   </div>

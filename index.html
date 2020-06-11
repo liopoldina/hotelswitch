@@ -4,20 +4,22 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>HotelHooping.com</title>
+    <!-- css -->
     <link rel="stylesheet" href="./css/main.css" />
+    <link rel="stylesheet" href="./jquery-ui/jquery-ui.css" />
+    <link rel="stylesheet" href="./jquery-ui/jquery-ui.structure.css" />
+    <link rel="stylesheet" href="./jquery-ui/jquery-ui.theme.css" />
+    <link rel="stylesheet" type="text/css" href="./css/daterangepicker.css" />
+    <!-- js -->
     <script src="./js/jquery.min.js"></script>
+    <script src="./jquery-ui/jquery-ui.min.js"></script>
     <script src="./js/main.js"></script>
     <script
       src="https://kit.fontawesome.com/93e6a1962d.js"
       crossorigin="anonymous"
     ></script>
-    <script
-      type="text/javascript"
-      src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"
-    ></script>
-    <script type="text/javascript" src="./js/moment.min.js"></script>
-    <script type="text/javascript" src="./js/daterangepicker.js"></script>
-    <link rel="stylesheet" type="text/css" href="./css/daterangepicker.css" />
+    <script src="./js/moment.min.js"></script>
+    <script src="./js/daterangepicker.js"></script>
   </head>
   <body>
     <div class="header">
@@ -50,14 +52,14 @@
                 <div class="search_label">
                   <span>Destination</span>
                 </div>
-                <div class="search_select search_select_destination">
-                  <select type="text" id="destination" name="destination">
-                    <option value="Lisbon">
-                      Lisbon
-                    </option>
-                  </select>
+                <div class="search_input_destination search_input">
+                  <input type="text" id="destination" name="destination" />
+                  <input
+                    type="hidden"
+                    id="destination_id"
+                    name="destination_id"
+                  />
                 </div>
-
                 <div class="search_label">
                   <label for="check-in">Check-in/Check-out</label>
                 </div>
@@ -492,8 +494,8 @@
         </div>
         <div class="right">
           <div class="search_top">
-            <div class="property_numbers">
-              <span>Lisbon: 147 hotels found </span>
+            <div class="destination_header_wrapper">
+              <span class="destination_header">Lisbon: 147 hotels found </span>
             </div>
             <div class="sort_by">
               <span>Sort by:</span>
@@ -530,6 +532,7 @@
                 <div class="hotel_photo">
                   <img
                     src="./images/search/hotel_cover.jpg"
+                    class="search_cover_photo"
                     alt="hotel_cover"
                   />
                 </div>

@@ -2,6 +2,7 @@
 
 class Hotel {
     var $name;
+    var $search_cover_photo;
     var $stars;
     var $stars_symbol;
 
@@ -20,23 +21,28 @@ class Hotel {
 
     var $price;
 
-    // construct from database
+    var $destination_header;
+    // construct
     function __construct($input){ 
                 $this->name = $input["name"];
                 $this->stars = $input["stars"];
-                $this->score = $input["score"];
-                $this->nr_reviews= $input["nr_reviews"];
-                $this->city = $input["city"];
-                $this->district = $input["district"] . ",";
+                if (isset($input["score"])) {$this->score = $input["score"];};
+                if (isset($input["nr_reviews"])) {$this->nr_reviews= $input["nr_reviews"];};
+                $this->district = $input["district"];
+                if (isset($input["city"])) {$this->city = $input["city"];
+                    $this->district = $input["district"] . ",";};
                 $this->distance_center = $input["distance_center"] . " km from center";
+                $this->search_cover_photo = $input["search_cover_photo"];
                 $this->room_name = $input["room_name"];
                 $this->bed_type = $input["room_bed_type"];
                 $this->cancellation_policy = $input["room_cancellation_policy"];
                 $this->payment_policy = $input["room_payment_policy"];
                 if (isset($input["price"])) {$this->price = $input["price"];};
                 $this->set_stars_symbol();
-                $this->set_quality();
+                if (isset($input["score"])) {$this->set_quality();};
                 $this->sanitize();
+
+                if (isset($input["destination_header"])) {$this->destination_header = $input["destination_header"];};
     }
 
     function sanitize(){

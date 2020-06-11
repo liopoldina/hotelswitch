@@ -1,16 +1,18 @@
 <?php
-
-// custom variables if anything else is set to avoid no variables error
+// 0) Defult Items: in case no filed is set
 if (count($_GET)==0) {
-    $destination ="Lisbon";
+    $destination_name = urlencode("Lisbon");
+    $destination_id ="1063515";
+    $destination_id ="";
     $date_range= date('m/d/yy') . " - " . date("m/d/yy", strtotime(date('m/d/yy') . "+1 days"));
     $adults = 2;
     $children = 0;
     $rooms = 1;}
 
-//search items
+// 1) Search items: receive get request fields
 else  {
-$destination = $_GET["destination"];
+$destination_name = urlencode($_GET["destination"]);
+$destination_id = $_GET["destination_id"];
 $date_range=$_GET["date_range"];
 $adults = $_GET["adults"];
 $children = $_GET["children"];
@@ -18,11 +20,14 @@ $rooms = $_GET["rooms"];
 };
 
 $date_range_array = explode(' ',trim($date_range));
-$check_in=$date_range_array[0];
-$check_out=$date_range_array[2];
-$nights = (strtotime($check_out) - strtotime($check_in))/86400;
+$check_in = strtotime($date_range_array[0]);
+$check_out = strtotime($date_range_array[2]);
+$nights = ($check_out - $check_in)/86400;
 
-// escolher data source
+$check_in = date("yy-m-d", $check_in );
+$check_out = date("yy-m-d", $check_out );
+
+// 2) Get Data: - escolher data source
 $data_source="scrape";
 switch ($data_source){
     case "database":
@@ -33,8 +38,7 @@ switch ($data_source){
         break;
 }
 
-
-//create dom document with template
+// 3) Dom - create dom document with template
 $dom = new DOMDocument();
 $dom->loadHTMLFile("index.html");
 $hotelbox = $dom-> getElementById("hotelbox");
@@ -45,10 +49,11 @@ for ($i=0; $i < $nr_results-1 ; $i++) {
 $hotel_boxes_wrapper->appendChild($hotelbox->cloneNode(true) );
 }
 
-//dynamically populate hotelboxes
+// 4) Xpath - get dom nodes 
 $xpath = new DomXPath($dom);
 
 $nodes_name = $xpath->query("//span[@class= 'name' ]");
+$nodes_search_cover_photo = $xpath->query("//img[@class= 'search_cover_photo' ]");
 $nodes_star = $xpath->query("//span[@class= 'stars' ]");
 $nodes_score = $xpath->query("//span[@class= 'score' ]");
 $nodes_quality = $xpath->query("//span[@class= 'quality' ]");
@@ -64,9 +69,12 @@ $nodes_nights = $xpath->query("//span[@class= 'nights' ]");
 $nodes_adults = $xpath->query("//span[@class= 'adults' ]");
 $nodes_price = $xpath->query("//span[@class= 'price' ]");
 
+$nodes_destination_header = $xpath->query("//span[@class= 'destination_header' ]");
 
+// 5) Populate - insert data in dom nodes
 for ($i=0; $i < $nr_results ; $i++) { 
 $nodes_name->item($i)->nodeValue= htmlspecialchars($hotel[$i]->name);
+$nodes_search_cover_photo->item($i)->setAttribute('src',$hotel[$i]->search_cover_photo);
 $nodes_star->item($i)->nodeValue= $hotel[$i]->stars_symbol;
 $nodes_score->item($i)->nodeValue= $hotel[$i]->score;
 $nodes_quality->item($i)->nodeValue= $hotel[$i]->quality;
@@ -88,7 +96,11 @@ else  {$nodes_adults->item($i)->nodeValue= $adults . " adults";}
 $nodes_price->item($i)->nodeValue= $hotel[$i]->price;
 }
 
-// keep searchbox input
+$nodes_destination_header->item(0)->nodeValue= $hotel[0]->destination_header;
+
+// 6) keep searchbox input
+$dom-> getElementById("destination")->setAttribute("value",urldecode($destination_name) );
+
 $dom-> getElementById("date_range")->setAttribute("value",$date_range);
 
 if ($nights==1) {$dom-> getElementById("nights")->nodeValue=$nights."-night stay";}
@@ -131,7 +143,7 @@ switch ($rooms) {
         break;
     }
     
-// keep filter checked
+// 7) keep filter checked
 $nodes_filter_checkboxes = $xpath->query("//input[contains(@class, 'check_box')]");
 
 $budget_filter=[50,100,150,"unlimited"];
@@ -172,7 +184,7 @@ if(isset($_GET['score'])) {
     }}}
 
 
-//save final html to temporary file and include
+// 8) Final: save dom html to temporary file and include
 $php = $dom->saveHTML();
 file_put_contents("temp/temp.html", $php);
 

@@ -174,10 +174,6 @@ form {
   margin-top: 10px;
 }
 
-.search_select_destination {
-  margin-top: 0px;
-}
-
 .search_input input,
 .search_select select {
   height: 30px;
@@ -185,6 +181,10 @@ form {
   border-radius: 3px;
   border: none;
   cursor: pointer;
+}
+
+.search_input_destination input {
+  cursor: auto;
 }
 
 #children {
@@ -509,7 +509,7 @@ input:checked + .slider:before {
   position: relative;
 }
 
-.property_numbers {
+.destination_header_wrapper {
   float: left;
   width: fit-content;
   font-size: 23px;
