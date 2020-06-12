@@ -95,5 +95,84 @@ $(function () {
   // 8) Delete hotel reviews wrapper if there is no reviews
   $(".hotel_review").has(".score:empty").remove();
 
-  //end
+  // 9) Open and close map
+  //open map
+  $(".map_wrapper").click(function () {
+    $("#map_overlay").addClass("display_map_overlay");
+    $("body").css("overflow", "hidden"); //disable scroll
+  });
+  //close map on cross
+  $(".map_close").click(function () {
+    $("#map_overlay").removeClass("display_map_overlay");
+    $("body").css("overflow", "auto"); //enable scroll
+  });
+  //close map on clicked outside
+  $(document).mouseup(function (e) {
+    if ($("#map_overlay").hasClass("display_map_overlay")) {
+      var container = $("#map_popup");
+      if (!container.is(e.target) && container.has(e.target).length === 0) {
+        $("#map_overlay").removeClass("display_map_overlay");
+        $("body").css("overflow", "auto"); //enable scroll
+      }
+    }
+  });
+
+  //end jquery
 });
+
+// JUST JAVASCRIPT
+//10) Google Maps
+
+// Map options
+var options = {
+  center: { lat: 38.715, lng: -9.142685 },
+  zoom: 15,
+  gestureHandling: "greedy", //no need to press ctrl to mouse zoom
+};
+// New map
+function initMap() {
+  var map = new google.maps.Map(document.getElementById("map"), options);
+  // Add Marker Function
+  function addMarker(props) {
+    var marker = new google.maps.Marker({
+      position: props.coords,
+      map: map,
+    });
+    //Info Window
+    var infoWindow = new google.maps.InfoWindow({
+      content: props.content,
+    });
+    marker.addListener("click", function () {
+      infoWindow.open(map, marker);
+    });
+  }
+  //Array of markers
+  var markers = [
+    {
+      coords: { lat: 38.7156116, lng: -9.1404987 },
+      content: "<h1>Rossio Garden Hotel</h1>",
+    },
+    {
+      coords: { lat: 38.714954, lng: -9.1404965 },
+      content: "<h1>Rossio Boutique Hotel</h1>",
+    },
+    {
+      coords: { lat: 38.7153571, lng: -9.1471453 },
+      content: "<h1>Bairro Alto Suite</h1>",
+    },
+  ];
+
+  // Loop through markers
+  for (var i = 0; i < markers.length; i++) {
+    addMarker(markers[i]);
+  }
+}
+
+// var country = "Germany";
+// var geocoder;
+
+// geocoder.geocode({ address: country }, function (results, status) {
+//   if (status == google.maps.GeocoderStatus.OK) {
+//     map.setCenter(results[0].geometry.location);
+//   }
+// });

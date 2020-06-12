@@ -28,7 +28,7 @@ $check_in = date("yy-m-d", $check_in );
 $check_out = date("yy-m-d", $check_out );
 
 // 2) Get Data: - escolher data source
-$data_source="scrape";
+$data_source="database";
 switch ($data_source){
     case "database":
         include "results_database.php";
@@ -40,7 +40,7 @@ switch ($data_source){
 
 // 3) Dom - create dom document with template
 $dom = new DOMDocument();
-$dom->loadHTMLFile("index.html");
+@$dom->loadHTMLFile("index.html"); //@ to ignore errors because of google maps url
 $hotelbox = $dom-> getElementById("hotelbox");
 $hotel_boxes_wrapper = $dom-> getElementById("hotel_boxes_wrapper");
 
@@ -189,5 +189,10 @@ $php = $dom->saveHTML();
 file_put_contents("temp/temp.html", $php);
 
 include "temp/temp.html";
+
+echo"<script>
+var hotel =" . json_encode($hotel) . 
+"</script>";
+
 ?>
 
