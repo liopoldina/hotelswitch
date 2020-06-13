@@ -146,33 +146,16 @@ function initMap() {
       infoWindow.open(map, marker);
     });
   }
-  //Array of markers
-  var markers = [
-    {
-      coords: { lat: 38.7156116, lng: -9.1404987 },
-      content: "<h1>Rossio Garden Hotel</h1>",
-    },
-    {
-      coords: { lat: 38.714954, lng: -9.1404965 },
-      content: "<h1>Rossio Boutique Hotel</h1>",
-    },
-    {
-      coords: { lat: 38.7153571, lng: -9.1471453 },
-      content: "<h1>Bairro Alto Suite</h1>",
-    },
-  ];
-
-  // Loop through markers
-  for (var i = 0; i < markers.length; i++) {
+  //Create markets dynamically
+  var markers = [];
+  for (var i = 0; i < hotel.length; i++) {
+    markers[i] = {
+      coords: {
+        lat: parseFloat(hotel[i].coords.lat),
+        lng: parseFloat(hotel[i].coords.lon),
+      },
+      content: "<h1>" + hotel[i].name + "</h1>",
+    };
     addMarker(markers[i]);
   }
 }
-
-// var country = "Germany";
-// var geocoder;
-
-// geocoder.geocode({ address: country }, function (results, status) {
-//   if (status == google.maps.GeocoderStatus.OK) {
-//     map.setCenter(results[0].geometry.location);
-//   }
-// });

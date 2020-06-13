@@ -63,5 +63,5 @@ for i in range(0, len(hotel_item['name'])):
     hotels[i].room_payment_policy = "Prepayment needed"
     hotels[i].price = hotel_item['price'][i]
 
-with open('temp/hotels.json', 'w') as outfile:
-    json.dump([ob.__dict__ for ob in hotels], outfile)
+# print (pass to php)
+print(json.dumps([ob.__dict__ for ob in hotels]))

@@ -1,5 +1,5 @@
 <?php
-include "hotel_class.php";
+include "classes\old\hotel_class_old.php"; 
 
 $servername = "127.0.0.1:3306";
 $username = "root";
@@ -28,6 +28,8 @@ $hotel[] = new Hotel($search_results[1]);
 
 $hotel[0]->price = "49€";
 $hotel[1]->price = "59€";
+
+$m->destination_header = "Lisbon, Portugal"
 
 // $conn->close();
 ?>

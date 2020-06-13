@@ -1,35 +1,37 @@
 <?php
+$m= new stdClass();
+
 // 0) Defult Items: in case no filed is set
 if (count($_GET)==0) {
-    $destination_name = urlencode("Lisbon");
-    $destination_id ="1063515";
-    $destination_id ="";
-    $date_range= date('m/d/yy') . " - " . date("m/d/yy", strtotime(date('m/d/yy') . "+1 days"));
-    $adults = 2;
-    $children = 0;
-    $rooms = 1;}
+    $m->destination_name = urlencode("Lisbon");
+    $m->destination_id ="1063515";
+    $m->destination_id ="";
+    $m->date_range= date('m/d/yy') . " - " . date("m/d/yy", strtotime(date('m/d/yy') . "+1 days"));
+    $m->adults = 2;
+    $m->children = 0;
+    $m->rooms = 1;}
 
 // 1) Search items: receive get request fields
 else  {
-$destination_name = urlencode($_GET["destination"]);
-$destination_id = $_GET["destination_id"];
-$date_range=$_GET["date_range"];
-$adults = $_GET["adults"];
-$children = $_GET["children"];
-$rooms = $_GET["rooms"];
+$m->destination_name = urlencode($_GET["destination"]);
+$m->destination_id = $_GET["destination_id"];
+$m->date_range=$_GET["date_range"];
+$m->adults = $_GET["adults"];
+$m->children = $_GET["children"];
+$m->rooms = $_GET["rooms"];
 };
 
-$date_range_array = explode(' ',trim($date_range));
-$check_in = strtotime($date_range_array[0]);
-$check_out = strtotime($date_range_array[2]);
-$nights = ($check_out - $check_in)/86400;
+$m->date_range_array = explode(' ',trim($m->date_range));
+$m->check_in = strtotime($m->date_range_array[0]);
+$m->check_out = strtotime($m->date_range_array[2]);
+$m->nights = ($m->check_out - $m->check_in)/86400;
 
-$check_in = date("yy-m-d", $check_in );
-$check_out = date("yy-m-d", $check_out );
+$m->check_in = date("yy-m-d", $m->check_in );
+$m->check_out = date("yy-m-d", $m->check_out );
 
 // 2) Get Data: - escolher data source
-$data_source="database";
-switch ($data_source){
+$m->data_source="scrape";
+switch ($m->data_source){
     case "database":
         include "results_database.php";
         break;
@@ -44,69 +46,71 @@ $dom = new DOMDocument();
 $hotelbox = $dom-> getElementById("hotelbox");
 $hotel_boxes_wrapper = $dom-> getElementById("hotel_boxes_wrapper");
 
-$nr_results = count($hotel);
-for ($i=0; $i < $nr_results-1 ; $i++) { 
+$m->nr_results = count($hotel);
+for ($i=0; $i < $m->nr_results-1 ; $i++) { 
 $hotel_boxes_wrapper->appendChild($hotelbox->cloneNode(true) );
 }
 
 // 4) Xpath - get dom nodes 
 $xpath = new DomXPath($dom);
 
-$nodes_name = $xpath->query("//span[@class= 'name' ]");
-$nodes_search_cover_photo = $xpath->query("//img[@class= 'search_cover_photo' ]");
-$nodes_star = $xpath->query("//span[@class= 'stars' ]");
-$nodes_score = $xpath->query("//span[@class= 'score' ]");
-$nodes_quality = $xpath->query("//span[@class= 'quality' ]");
-$nodes_nr_reviews = $xpath->query("//span[@class= 'nr_reviews' ]");
-$nodes_city = $xpath->query("//span[@class= 'city' ]");
-$nodes_district = $xpath->query("//span[@class= 'district' ]");
-$nodes_distance_center = $xpath->query("//span[@class= 'distance_center' ]");
-$nodes_room_name = $xpath->query("//span[@class= 'room_name' ]");
-$nodes_bed_type = $xpath->query("//span[@class= 'bed_type' ]");
-$nodes_cancellation_policy = $xpath->query("//span[@class= 'cancellation_policy' ]");
-$nodes_payment_policy = $xpath->query("//span[@class= 'payment_policy' ]");
-$nodes_nights = $xpath->query("//span[@class= 'nights' ]");
-$nodes_adults = $xpath->query("//span[@class= 'adults' ]");
-$nodes_price = $xpath->query("//span[@class= 'price' ]");
+$nodes= new stdClass();
 
-$nodes_destination_header = $xpath->query("//span[@class= 'destination_header' ]");
+$nodes->name = $xpath->query("//span[@class= 'name' ]");
+$nodes->search_cover_photo = $xpath->query("//img[@class= 'search_cover_photo' ]");
+$nodes->star = $xpath->query("//span[@class= 'stars' ]");
+$nodes->score = $xpath->query("//span[@class= 'score' ]");
+$nodes->quality = $xpath->query("//span[@class= 'quality' ]");
+$nodes->nr_reviews = $xpath->query("//span[@class= 'nr_reviews' ]");
+$nodes->city = $xpath->query("//span[@class= 'city' ]");
+$nodes->district = $xpath->query("//span[@class= 'district' ]");
+$nodes->distance_center = $xpath->query("//span[@class= 'distance_center' ]");
+$nodes->room_name = $xpath->query("//span[@class= 'room_name' ]");
+$nodes->bed_type = $xpath->query("//span[@class= 'bed_type' ]");
+$nodes->cancellation_policy = $xpath->query("//span[@class= 'cancellation_policy' ]");
+$nodes->payment_policy = $xpath->query("//span[@class= 'payment_policy' ]");
+$nodes->nights = $xpath->query("//span[@class= 'nights' ]");
+$nodes->adults = $xpath->query("//span[@class= 'adults' ]");
+$nodes->price = $xpath->query("//span[@class= 'price' ]");
+
+$nodes->destination_header = $xpath->query("//span[@class= 'destination_header' ]");
 
 // 5) Populate - insert data in dom nodes
-for ($i=0; $i < $nr_results ; $i++) { 
-$nodes_name->item($i)->nodeValue= htmlspecialchars($hotel[$i]->name);
-$nodes_search_cover_photo->item($i)->setAttribute('src',$hotel[$i]->search_cover_photo);
-$nodes_star->item($i)->nodeValue= $hotel[$i]->stars_symbol;
-$nodes_score->item($i)->nodeValue= $hotel[$i]->score;
-$nodes_quality->item($i)->nodeValue= $hotel[$i]->quality;
-$nodes_nr_reviews->item($i)->nodeValue= $hotel[$i]->nr_reviews;
-$nodes_city->item($i)->nodeValue= $hotel[$i]->city;
-$nodes_district->item($i)->nodeValue= $hotel[$i]->district;
-$nodes_distance_center->item($i)->nodeValue= $hotel[$i]->distance_center;
-$nodes_room_name->item($i)->nodeValue= $hotel[$i]->room_name;
-$nodes_bed_type->item($i)->nodeValue= $hotel[$i]->bed_type;
-$nodes_cancellation_policy->item($i)->nodeValue= $hotel[$i]->cancellation_policy;
-$nodes_payment_policy->item($i)->nodeValue= $hotel[$i]->payment_policy;
+for ($i=0; $i < $m->nr_results ; $i++) { 
+$nodes->name->item($i)->nodeValue= htmlspecialchars($hotel[$i]->name);
+$nodes->search_cover_photo->item($i)->setAttribute('src',$hotel[$i]->search_cover_photo);
+$nodes->star->item($i)->nodeValue= $hotel[$i]->stars_symbol;
+$nodes->score->item($i)->nodeValue= $hotel[$i]->score;
+$nodes->quality->item($i)->nodeValue= $hotel[$i]->quality;
+$nodes->nr_reviews->item($i)->nodeValue= $hotel[$i]->nr_reviews;
+$nodes->city->item($i)->nodeValue= $hotel[$i]->city;
+$nodes->district->item($i)->nodeValue= $hotel[$i]->district;
+$nodes->distance_center->item($i)->nodeValue= $hotel[$i]->distance_center;
+$nodes->room_name->item($i)->nodeValue= $hotel[$i]->room_name;
+$nodes->bed_type->item($i)->nodeValue= $hotel[$i]->bed_type;
+$nodes->cancellation_policy->item($i)->nodeValue= $hotel[$i]->cancellation_policy;
+$nodes->payment_policy->item($i)->nodeValue= $hotel[$i]->payment_policy;
 
-if ($nights==1) {$nodes_nights->item($i)->nodeValue= $nights . " night";}
-else  {$nodes_nights->item($i)->nodeValue= $nights . " nights";}
+if ($m->nights==1) {$nodes->nights->item($i)->nodeValue= $m->nights . " night";}
+else  {$nodes->nights->item($i)->nodeValue= $m->nights . " nights";}
 
-if ($adults==1) {$nodes_adults->item($i)->nodeValue= $adults . " adult";}
-else  {$nodes_adults->item($i)->nodeValue= $adults . " adults";}
+if ($m->adults==1) {$nodes->adults->item($i)->nodeValue= $m->adults . " adult";}
+else  {$nodes->adults->item($i)->nodeValue= $m->adults . " adults";}
 
-$nodes_price->item($i)->nodeValue= $hotel[$i]->price;
+$nodes->price->item($i)->nodeValue= $hotel[$i]->price;
 }
 
-$nodes_destination_header->item(0)->nodeValue= $hotel[0]->destination_header;
+$nodes->destination_header->item(0)->nodeValue= $m->destination_header;
 
 // 6) keep searchbox input
-$dom-> getElementById("destination")->setAttribute("value",urldecode($destination_name) );
+$dom-> getElementById("destination")->setAttribute("value",urldecode($m->destination_name) );
 
-$dom-> getElementById("date_range")->setAttribute("value",$date_range);
+$dom-> getElementById("date_range")->setAttribute("value",$m->date_range);
 
-if ($nights==1) {$dom-> getElementById("nights")->nodeValue=$nights."-night stay";}
-else  {$dom-> getElementById("nights")->nodeValue=$nights."-nights stay";}
+if ($m->nights==1) {$dom-> getElementById("nights")->nodeValue=$m->nights."-night stay";}
+else  {$dom-> getElementById("nights")->nodeValue=$m->nights."-nights stay";}
 
-switch ($adults) {
+switch ($m->adults) {
     case 1:
         $dom-> getElementById("1_adult")->setAttribute("selected","selected");
         break;
@@ -121,7 +125,7 @@ switch ($adults) {
         break;
     }
 
-switch ($children) {
+switch ($m->children) {
     case 0:
         $dom-> getElementById("no_children")->setAttribute("selected","selected");
         break;
@@ -134,7 +138,7 @@ switch ($children) {
     }
 
 
-switch ($rooms) {
+switch ($m->rooms) {
     case 1:
         $dom-> getElementById("1_room")->setAttribute("selected","selected");
         break;
@@ -144,43 +148,45 @@ switch ($rooms) {
     }
     
 // 7) keep filter checked
-$nodes_filter_checkboxes = $xpath->query("//input[contains(@class, 'check_box')]");
+$nodes->filter_checkboxes = $xpath->query("//input[contains(@class, 'check_box')]");
 
-$budget_filter=[50,100,150,"unlimited"];
-$star_filter=[1,2,3,4,5,"unrated"];
-$distance_filter=["1km","3km","5km"];
-$policy_filter=["free_cancellation","no_creditcard","no_prepayment"];
-$score_filter=[9,8,7,6,"no_rating"];
+$filter= new stdClass();
+
+$filter->budget=[50,100,150,"unlimited"];
+$filter->star=[1,2,3,4,5,"unrated"];
+$filter->distance=["1km","3km","5km"];
+$filter->policy=["free_cancellation","no_creditcard","no_prepayment"];
+$filter->score=[9,8,7,6,"no_rating"];
 
 if(isset($_GET['budget'])) {
-foreach ($budget_filter as $key=>$value) {
+foreach ($filter->budget as $key=>$value) {
     if (in_array($value, $_GET['budget'])){
-    $nodes_filter_checkboxes->item($key)->setAttribute("checked","true");
+    $nodes->filter_checkboxes->item($key)->setAttribute("checked","true");
     }}}
 
 if(isset($_GET['stars'])) {
-foreach ($star_filter as $key=>$value) {
+foreach ($filter->star as $key=>$value) {
 if (in_array($value, $_GET['stars'])){
-$nodes_filter_checkboxes->item(4+$key)->setAttribute("checked","true");
+$nodes->filter_checkboxes->item(4+$key)->setAttribute("checked","true");
 }}}
 
 if(isset($_GET['distance'])) {
-    foreach ($distance_filter as $key=>$value) {
+    foreach ($filter->distance as $key=>$value) {
     if (in_array($value, $_GET['distance'])){
-    $nodes_filter_checkboxes->item(10+$key)->setAttribute("checked","true");
+    $nodes->filter_checkboxes->item(10+$key)->setAttribute("checked","true");
     }}}
 
     
 if(isset($_GET['policy'])) {
-foreach ($policy_filter as $key=>$value) {
+foreach ($filter->policy as $key=>$value) {
 if (in_array($value, $_GET['policy'])){
-$nodes_filter_checkboxes->item(13+$key)->setAttribute("checked","true");
+$nodes->filter_checkboxes->item(13+$key)->setAttribute("checked","true");
 }}}
 
 if(isset($_GET['score'])) {
-    foreach ($score_filter as $key=>$value) {
+    foreach ($filter->score as $key=>$value) {
     if (in_array($value, $_GET['score'])){
-    $nodes_filter_checkboxes->item(16+$key)->setAttribute("checked","true");
+    $nodes->filter_checkboxes->item(16+$key)->setAttribute("checked","true");
     }}}
 
 
@@ -188,11 +194,11 @@ if(isset($_GET['score'])) {
 $php = $dom->saveHTML();
 file_put_contents("temp/temp.html", $php);
 
-include "temp/temp.html";
-
 echo"<script>
-var hotel =" . json_encode($hotel) . 
+var hotel =" . json_encode($hotel) . "; var m=" . json_encode($m) . 
 "</script>";
+
+include "temp/temp.html";
 
 ?>
 

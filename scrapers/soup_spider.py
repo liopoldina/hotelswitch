@@ -117,9 +117,17 @@ for i in range(0, len(sections)):
         hotels[i].price = section.find('div', class_='price').strong.text
 
 # destination header
-hotels[0].destination_header = soup.find('h1', class_='destination-title').text
-# search url for debug
-hotels[0].url = url
+destination_header = soup.find('h1', class_='destination-title').text
 
-with open('temp/hotels.json', 'w') as outfile:
-    json.dump([ob.__dict__ for ob in hotels], outfile)
+
+class output:
+
+    def function(self):
+        pass
+
+
+output.hotels = [ob.__dict__ for ob in hotels]
+
+
+# print (pass to php)
+print(json.dumps([output.hotels, destination_header, url]))

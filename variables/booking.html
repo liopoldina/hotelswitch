@@ -1,0 +1,1048 @@
+<script>
+var b_experiments = {}, WIDTH, B = window.booking = {
+_onfly: [], // "on the fly" functions, will be executed as soon as external js files were loaded
+devTools: {
+trackedExperiments: []
+},
+user: {
+},
+env : {
+isRetina : window.devicePixelRatio > 1,
+"b_gtt": 'dLYAeZFVJfNTBBSSMYEQNALWVJBJYTIOOXdPLRe',
+"b_action" : 'searchresults',
+"b_secure_domain" : 'https://secure.booking.com',
+"b_site_type" : 'www',
+"b_site_type_id": '1',
+"b_query_params_with_lang_no_ext": '?label=gen173nr-1DCAEoggI46AdIM1gEaLsBiAEBmAExuAEXyAEM2AED6AEB-AECiAIBqAIDuALT-4v3BcACAdICJGQ4NDU2Y2RlLTJkMTAtNGU4Yi04ZWNkLWIwZDZiYWRlMzQ3NtgCBOACAQ;sid=65f92edabaab200cc88fb48d7e3c12e4;srpvid=ca101c2bbe3b004f&',
+"b_query_params_with_lang_no_ext_enforce_lang_aid_currency": '?label=gen173nr-1DCAEoggI46AdIM1gEaLsBiAEBmAExuAEXyAEM2AED6AEB-AECiAIBqAIDuALT-4v3BcACAdICJGQ4NDU2Y2RlLTJkMTAtNGU4Yi04ZWNkLWIwZDZiYWRlMzQ3NtgCBOACAQ;sid=65f92edabaab200cc88fb48d7e3c12e4;srpvid=ca101c2bbe3b004f&;lang=en-us;aid=304142;selected_currency=EUR',
+"b_calendar2" : '1',
+/*
+*/
+"b_partner_channel_id": '3',
+"b_bookings_owned": '1',
+"b_google_maps_key_params" : 'true&indexing=true',
+"b_lang" : 'en',
+"b_checkin_date": '2020-06-15',
+"b_checkout_date": '2020-06-18',
+"b_checkin_checkout_interval": 3,
+"b_has_valid_dates": '1',
+"b_countrycode" : 'pt',
+"b_guest_country" : 'pt',
+"b_locale" : 'en-us',
+"date_format_locale" : 'DDD, MMMM D, YYYY',
+"b_lang_for_url" : 'en-us',
+"b_this_urchin" : '/searchresults.html?label=gen173nr-1DCAEoggI46AdIM1gEaLsBiAEBmAExuAEXyAEM2AED6AEB-AECiAIBqAIDuALT-4v3BcACAdICJGQ4NDU2Y2RlLTJkMTAtNGU4Yi04ZWNkLWIwZDZiYWRlMzQ3NtgCBOACAQ&amp;tmpl=searchresults&amp;class_interval=1&amp;dest_id=-2167973&amp;dest_type=city&amp;dtdisc=0&amp;from_sf=1&amp;group_adults=2&amp;group_children=0&amp;inac=0&amp;index_postcard=0&amp;label_click=undef&amp;no_rooms=1&amp;offset=0&amp;postcard=0&amp;raw_dest_type=city&amp;room1=A%2CA&amp;sb_price_type=total&amp;shw_aparth=1&amp;slp_r_match=0&amp;src=index&amp;src_elem=sb&amp;srpvid=ca101c2bbe3b004f&amp;ss=Lisbon&amp;ss_all=0&amp;ssb=empty&amp;sshis=0&amp;ssne=Lisbon&amp;ssne_untouched=Lisbon&amp;top_ufis=1&&amp;',
+"b_flag_to_suggest" : 'gb',
+"b_companyname" : 'Booking.com',
+"b_partner_vertical" : 'channel_direct',
+b_date_format: {"short_month_only":"{short_month_name}","date_with_weekday_time_until":"{weekday}, {begin_marker}{month_name} {day_of_month}{end_marker}, {full_year} until {time}","in_month_with_year":"in {month_name_in} {full_year}","range_from_long_date_time_until_long_date_time":"from {month_name} {day_of_month}, {full_year} at {time} until {month_name_until} {day_of_month_until}, {full_year_until} at {time_until}","numeric_day_month_year_time_before":"before {time} on {month_name_0}/{day_name_0}/{full_year}","day_of_month_only":"{day_of_month}","date_with_weekday_with_markers":"{weekday}, {begin_marker}{month_name} {day_of_month}{end_marker}, {full_year}","date_with_weekday_from":"{weekday_from}, {month_name_from} {day_of_month}, {full_year}","day_month_year_between":"between {month_name} {day_name}, {full_year} and {month_name_until} {day_name_until}, {full_year_until}","date_with_short_weekday_with_year":"{short_weekday} {month_name} {day_of_month}, {full_year}","numeric_day_month_year_until":"until {month_name_0}/{day_name_0}/{full_year}","ux_day_month_on":"on {month_2} {day_2}","date_without_year":"{month_name} {day_of_month}","numeric_day_month_year_from":"from {month_name_0}/{day_name_0}/{full_year}","day_month_until":"until {month_name} {day_name}","day_month_year_other":"{month_name} {day_other}, {full_year}","from_month_with_year":"since {month_name_from} {full_year}","day_month_year":"{month_name} {day_name}, {full_year}","date_with_year":"{month_name} {day_of_month}, {full_year}","numeric_date":"{month}/{day_of_month}/{full_year}","short_date":"{short_month_name} {day_of_month}, {full_year}","day_short_month_year_until":"until {short_month_name} {day_name}, {full_year}","day_month_other":"{month_name} {day_other}","long_date_range_both_years":"{month_name} {day_of_month}, {full_year} - {month_name_until} {day_of_month_until}, {full_year_until}","day_month_between":"between {month_name} {day_name} and {month_name_until} {day_name_until}","numeric_day_month_year_on":"on {month_name_0}/{day_name_0}/{full_year}","day_month_on":"on {month_name} {day_name}","date_with_weekday_to":"{weekday_to} {day_of_month} {month_name_to} {full_year}","date_with_weekday_time_from":"{weekday}, {begin_marker}{month_name} {day_of_month}{end_marker}, {full_year} from {time}","day_short_month_year_time":"{short_month_name} {day_of_month}, {full_year}, {time}","day_short_month_on":"on {short_month_name} {day_name}","short_date_without_year":"{short_month_name} {day_of_month}","short_date_with_weekday":"{short_weekday}, {short_month_name} {day_of_month}, {full_year}","day_month":"{month_name} {day_name}","numeric_date_range_both_years":"{month}/{day_of_month}/{full_year} - {month_until}/{day_of_month_until}/{full_year_until}","day_short_month_time_between":"{short_month_name} {day_of_month}, {time} – {time_until}","day_month_year_on":"on {month_name} {day_name}, {full_year}","day_short_month_year":"{short_month_name} {day_name}, {full_year}","ux_day_month":"{month_1} {day_1}","day_short_month_from":"from {short_month_name} {day_name}","day_month_from":"from {month_name} {day_name}","day_short_month_year_from":"from {short_month_name} {day_name}, {full_year}","numeric_day_month_year":"{month_name_0}/{day_name_0}/{full_year}","day_short_month":"{short_month_name} {day_name}","day_short_month_year_other":"{short_month_name} {day_name_other}, {full_year}","short_month_with_year":"{short_month_name} {full_year}","day_short_month_year_on":"on {short_month_name} {day_name}, {full_year}","day_short_month_between":"{short_month_name} {day_of_month} – {short_month_name_until} {day_of_month_until}","day_short_month_year_time_between":"{short_month_name} {day_of_month}, {full_year}, {time} – {time_until}","day_short_month_until":"until {short_month_name} {day_name}","day_short_month_year_between":"{short_month_name} {day_of_month}, {full_year} – {short_month_name_until} {day_of_month_until}, {full_year_until}","short_date_without_year_range":"{short_month_name} {day_of_month} - {short_month_name_until} {day_of_month_until}","short_weekday_only":"{short_weekday}","day_month_year_until":"until {month_name} {day_name}, {full_year}","date_with_weekday":"{weekday}, {month_name} {day_of_month}, {full_year}","month_with_year":"{month_name_with_year_only} {full_year}","date_with_weekday_time_from_until":"{weekday}, {begin_marker}{month_name} {day_of_month}{end_marker}, {full_year} from {time} until {time_until}","date_with_short_weekday_without_year":"{short_weekday} {month_name} {day_of_month}","date_range_with_short_weekday_short_month":"{short_weekday} {short_month_name} {day_of_month} - {short_weekday_until} {short_month_name_until} {day_of_month_until}","day_short_month_time":"{short_month_name} {day_of_month}, {time}","numeric_day_month_year_between":"between {month_name_0}/{day_name_0}/{full_year} and {month_name_0_until}/{day_name_0_until}/{full_year_until}","day_month_year_from":"from {month_name} {day_name}, {full_year}","short_date_with_weekday_without_year":"{short_weekday}, {short_month_name} {day_of_month}","day_month_year_time_before":"before {time} on {month_name} {day_name}, {year}","month_name_only":"{month_name_nom}","numeric_date_range":"{month}/{day_of_month} - {month_until}/{day_of_month_until}"},
+b_month_for_formatted_date: {"1":{"name_def_article_lc":"the January","name_with_year_only":"January","name_from":"January","name_def_article_uc":"The January","name_lc":"January","name_only":"January","on_day_month":"01","name_uc":"January","short_name":"Jan","name_other":"January","month_1":"January","to_month_lc":"to January","in_month_lc":"in January","short_name_uc":"January","name_to":"January","day_to":"January","name_in":"January","name":"January","genitive_lc":"January","month_2":"January","genitive_uc":"January"},"10":{"name_from":"October","name_with_year_only":"October","name_def_article_lc":"the October","on_day_month":"10","name_uc":"October","name_def_article_uc":"The October","name_lc":"October","name_only":"October","name_other":"October","short_name":"Oct","month_1":"October","to_month_lc":"to October","in_month_lc":"in October","name_in":"October","short_name_uc":"October","name_to":"October","month_2":"October","genitive_uc":"October","genitive_lc":"October","name":"October"},"11":{"to_month_lc":"to November ","in_month_lc":"in November ","name_in":"November","name_to":"November","short_name_uc":"November","genitive_uc":"November ","month_2":"November","name":"November","genitive_lc":"November ","name_from":"November","name_with_year_only":"November","name_def_article_lc":"the November","on_day_month":"11","name_uc":"November","name_only":"November","name_lc":"November","name_def_article_uc":"The November","name_other":"November","short_name":"Nov","month_1":"November"},"12":{"name_def_article_lc":"the December","name_with_year_only":"December","name_from":"December","name_def_article_uc":"The December","name_only":"December","name_lc":"December","on_day_month":"12","name_uc":"December","short_name":"Dec","name_other":"December","month_1":"December","to_month_lc":"to December","in_month_lc":"in December","short_name_uc":"December","name_to":"December","name_in":"December","name":"December","genitive_lc":"December ","month_2":"December","genitive_uc":"December"},"2":{"month_2":"February","genitive_uc":"February ","name":"February","genitive_lc":"February ","name_in":"February","short_name_uc":"February","day_to":"February","name_to":"February","in_month_lc":"in February ","to_month_lc":"to February ","month_1":"February","name_other":"February","short_name":"Feb","name_uc":"February","on_day_month":"02","name_def_article_uc":"The February","name_only":"February","name_lc":"February","name_from":"February","name_with_year_only":"February","name_def_article_lc":"the February"},"3":{"in_month_lc":"in March","to_month_lc":"to March","name":"March","genitive_lc":"March","month_2":"March","genitive_uc":"March","short_name_uc":"March","name_to":"March","day_to":"March","name_in":"March","name_def_article_uc":"The March","name_lc":"March","name_only":"March","name_uc":"March","on_day_month":"03","name_def_article_lc":"the March","name_with_year_only":"March","name_from":"March","month_1":"March","short_name":"Mar","name_other":"March"},"4":{"on_day_month":"04","name_uc":"April","name_lc":"April","name_only":"April","name_def_article_uc":"The April","name_from":"April","name_def_article_lc":"the April","name_with_year_only":"April","month_1":"April","name_other":"April","short_name":"Apr","in_month_lc":"in April","to_month_lc":"to April","genitive_uc":"April","month_2":"April","genitive_lc":"April","name":"April","name_in":"April","name_to":"April","short_name_uc":"April"},"5":{"in_month_lc":"in May","to_month_lc":"to May","name":"May","genitive_lc":"May","genitive_uc":"May","month_2":"May","name_to":"May","short_name_uc":"May","name_in":"May","name_only":"May","name_lc":"May","name_def_article_uc":"The May","on_day_month":"05","name_uc":"May","name_with_year_only":"May","name_def_article_lc":"the May","name_from":"May","month_1":"May","short_name":"May","name_other":"May"},"6":{"name_in":"June","short_name_uc":"June","name_to":"June","month_2":"June","genitive_uc":"June","name":"June","genitive_lc":"June","to_month_lc":"to June","in_month_lc":"in June","name_other":"June","short_name":"Jun","month_1":"June","name_from":"June","name_def_article_lc":"the June","name_with_year_only":"June","name_uc":"June","on_day_month":"06","name_def_article_uc":"The June","name_only":"June","name_lc":"June"},"7":{"name_in":"July","short_name_uc":"July","name_to":"July","month_2":"July","genitive_uc":"July","genitive_lc":"July","name":"July","to_month_lc":"to July","in_month_lc":"in July","name_other":"July","short_name":"Jul","month_1":"July","name_from":"July","name_def_article_lc":"the July","name_with_year_only":"July","on_day_month":"07","name_uc":"July","name_def_article_uc":"The July","name_lc":"July","name_only":"July"},"8":{"name_in":"August","short_name_uc":"August","name_to":"August","month_2":"August","genitive_uc":"August","genitive_lc":"August","name":"August","to_month_lc":"to August","in_month_lc":"in August","name_other":"August","short_name":"Aug","month_1":"August","name_from":"August","name_with_year_only":"August","name_def_article_lc":"the August","on_day_month":"08","name_uc":"August","name_def_article_uc":"The August","name_only":"August","name_lc":"August"},"9":{"short_name_uc":"September","name_to":"September","name_in":"September","genitive_lc":"September","name":"September","month_2":"September","genitive_uc":"September","to_month_lc":"to September","in_month_lc":"in September","short_name":"Sept","name_other":"September","month_1":"September","name_with_year_only":"September","name_def_article_lc":"the September","name_from":"September","name_def_article_uc":"The September","name_only":"September","name_lc":"September","name_uc":"September","on_day_month":"09"}},
+b_weekday_formatted_date: {"1":{"name_from":"Monday","name_uc":"Monday","shortest":"Mo","name_lc":"Monday","name_other":"Monday","short":"Mon","short_uc":"Mon","name_on":"Monday","name_other_uc":"Monday","name_to":"Monday","name":"Monday"},"2":{"short":"Tue","name_other":"Tuesday","short_uc":"Tue","name_from":"Tuesday","shortest":"Tu","name_lc":"Tuesday","name_uc":"Tuesday","name_to":"Tuesday","name_other_uc":"Tuesday","name":"Tuesday","name_on":"Tuesday"},"3":{"name_uc":"Wednesday","name_lc":"Wednesday","shortest":"We","name_from":"Wednesday","short_uc":"Wed","name_other":"Wednesday","short":"Wed","name_on":"Wednesday","name":"Wednesday","name_other_uc":"Wednesday","name_to":"Wednesday"},"4":{"name_other_uc":"Thursday","name_to":"Thursday","name":"Thursday","name_on":"Thursday","name_other":"Thursday","short":"Thu","short_uc":"Thu","name_from":"Thursday","name_uc":"Thursday","shortest":"Th","name_lc":"Thursday"},"5":{"shortest":"Fr","name_lc":"Friday","name_uc":"Friday","name_from":"Friday","short_uc":"Fri","short":"Fri","name_other":"Friday","name_on":"Friday","name":"Friday","name_to":"Friday","name_other_uc":"Friday"},"6":{"name_from":"Saturday","name_uc":"Saturday","shortest":"Sa","name_lc":"Saturday","name_other":"Saturday","short":"Sat","short_uc":"Sat","name_on":"Saturday","name_other_uc":"Saturday","name_to":"Saturday","name":"Saturday"},"7":{"name_on":"Sunday","name":"Sunday","name_to":"Sunday","name_other_uc":"Sunday","shortest":"Su","name_lc":"Sunday","name_uc":"Sunday","name_from":"Sunday","short_uc":"Sun","short":"Sun","name_other":"Sunday"},"8":{"short_uc":"short_uc","name_other":"name_other","short":"short","name_uc":"name_uc","name_lc":"every day","shortest":"shortest","name_from":"name_from","name":"Every day","name_other_uc":"name_other_uc","name_to":"name_to","name_on":"name_on"}},
+b_time_format: {"AM_symbol":{"name":"AM"},"PM_symbol":{"name":"PM"},"time":{"name":"{hour_12h_no0}:{minutes} {AM_PM}"}},
+"b_protocol": 'https',
+auth_level : "0",
+b_user_auth_level_is_none : 1,
+bui: {
+color: {
+bui_color_grayscale_dark: "#333333",
+bui_color_grayscale: "#6B6B6B",
+bui_color_grayscale_light: "#BDBDBD",
+bui_color_grayscale_lighter: "#E6E6E6",
+bui_color_grayscale_lightest: "#F5F5F5",
+bui_color_primary_dark: "#00224F",
+bui_color_primary: "#003580",
+bui_color_primary_light: "#BAD4F7",
+bui_color_primary_lighter: "#EBF3FF",
+bui_color_primary_lightest: "#FAFCFF",
+bui_color_complement_dark: "#CD8900",
+bui_color_complement: "#FEBB02",
+bui_color_complement_light: "#FFE08A",
+bui_color_complement_lighter: "#FDF4D8",
+bui_color_complement_lightest: "#FEFBF0",
+bui_color_callout_dark: "#BC5B01",
+bui_color_callout: "#FF8000",
+bui_color_callout_light: "#FFC489",
+bui_color_callout_lighter: "#FFF0E0",
+bui_color_callout_lightest: "#FFF8F0",
+bui_color_destructive_dark: "#A30000",
+bui_color_destructive: "#CC0000",
+bui_color_destructive_light: "#FCB4B4",
+bui_color_destructive_lighter: "#FFEBEB",
+bui_color_destructive_lightest: "#FFF0F0",
+bui_color_constructive_dark: "#006607",
+bui_color_constructive: "#008009",
+bui_color_constructive_light: "#97E59C",
+bui_color_constructive_lighter: "#E7FDE9",
+bui_color_constructive_lightest: "#F1FEF2",
+bui_color_action: "#0071C2",
+bui_color_white: "#FFFFFF",
+bui_color_black: "#000000"
+}
+},
+bb: {
+ibb: "",
+uibb: "",
+ibbta: "",
+itp: "0",
+iuibb: "",
+bme: "",
+euibb: "0",
+tp: "0"
+},
+b_run_sr_ajax: !!(window.history && window.history.pushState),
+b_run_map_sr_ajax: !!(window.history && window.history.pushState),
+b_destination_fullname: 'Lisbon',
+b_growls_close_fast: 1,
+fe_enable_login_with_phone_number: 1,
+asyncLoader: {
+async_assistant_entrypoint_css: 'https://q-cf.bstatic.com/static/css/assistant_entrypoint_cloudfront.iq_ltr/d1c86763cea7bf1507084e0a08742e28e148adac.css',
+async_assistant_entrypoint_js: 'https://q-cf.bstatic.com/static/js/assistant_entrypoint_cloudfront/cfb68a5a1bc07f9888848acc1965a76d58932abf.js',
+async_atlas_places_js: 'https://r-cf.bstatic.com/static/js/atlas_places_async_cloudfront/ffea3a98161683ccaa7c6c5c8cc91af51502acad.js',
+async_atlas_v2_cn_js: 'https://r-cf.bstatic.com/static/js/async_atlas_v2_cn_cloudfront/d2ff298a2f050008ff1c34cd78b5d3d0caab740b.js',
+async_atlas_v2_non_cn_js: 'https://q-cf.bstatic.com/static/js/async_atlas_v2_non_cn_cloudfront/69fbb089d33773cfaa0a37c51e1066f36c58e9c5.js',
+image_gallery_js: 'https://q-cf.bstatic.com/static/js/ski_lp_overview_panel_cloudfront/9d8e7cfd33a37ffb15285d98f6970024f06cf36d.js',
+image_gallery_css: 'https://q-cf.bstatic.com/static/css/ski_lp_overview_panel_cloudfront.iq_ltr/e905a114a7e2a2092dfa73ce9ac18c326a2d9a25.css',
+async_lists_js: 'https://r-cf.bstatic.com/static/js/async_lists_cloudfront/d4e9c3b8e9491d2e28cd3fa62f4ef0407df9cf21.js',
+async_atlas_map_EXTERNAL_BUILD__google_sr_js: 'https://r-cf.bstatic.com/static/js/atlas_webpack_ggle_www_sr_cloudfront/a73c7178f2771bfa06fcea05cfb192220b2ce9c6.js',
+async_atlas_map_EXTERNAL_BUILD__leaflet_sr_js: 'https://q-cf.bstatic.com/static/js/atlas_webpack_leaflet_www_sr_cloudfront/adac06aaa18617691702de3728bc9022758375e2.js',
+async_atlas_css: 'https://r-cf.bstatic.com/static/css/async_atlas_sr_cloudfront.iq_ltr/2d4493ce2be454a988db317abb9d8fdb775d764a.css',
+async_sr_atlas_map_js: 'https://r-cf.bstatic.com/static/js/async_sr_atlas_map_cloudfront/461c0a64301793f177cf45a4d5d3ac9222b0ece7.js',
+async_ski_interactive_map: 'https://q-cf.bstatic.com/static/js/async_ski_interactive_map_cloudfront/13ddcaf59bafef7f519035f91110f053b8b0c0d0.js',
+async_wpm_overlay_css: 'https://r-cf.bstatic.com/static/css/async_wpm_overlay_assets_cloudfront.iq_ltr/abb304bf3600a5cf5f7406a27f042cf1ce2429b1.css',
+async_wpm_overlay_js: 'https://q-cf.bstatic.com/static/js/async_wpm_overlay_assets_cloudfront/bad8801e54813b301e0ad7241f80b7968b6e2f7f.js',
+async_slider_view_js: 'https://r-cf.bstatic.com/mobile/js/async_slider_view_cloudfront/c8bcc83700f0739610b716240c75842ab94053c6.js',
+async_slider_view_css: 'https://r-cf.bstatic.com/mobile/css/async_slider_view_cloudfront.iq_ltr/3d514cbc5d5049f6ec0363aa35ed0de242954933.css',
+async_beach_team_pilot_js: 'https://q-cf.bstatic.com/mobile/js/async_beach_team_pilot_cloudfront/f6625ae6cd5094084f38f433fc56e936893a38ea.js',
+async_beach_team_pilot_css: 'https://r-cf.bstatic.com/mobile/css/async_beach_team_pilot_cloudfront.iq_ltr/4eab70976639a9d339c54f6c392cb4d47263d6af.css',
+async_m_searchresults_voyager_themes_js: 'https://r-cf.bstatic.com/mobile/js/searchresults_voyager_themes_cloudfront/d56c2bc0e0cc9dd85cd18f0f24488799c3c157f0.js',
+empty: ''
+},
+fe_enable_fps_goal_with_value: 1,
+b_email_validation_regex : /^([\w-\.\+]+@([\w-]+\.)+[\w-]{2,14})?$/,
+b_domain_end : '.booking.com',
+b_original_url : 'https:&#47;&#47;www.booking.com&#47;searchresults.html?label=gen173nr-1DCAEoggI46AdIM1gEaLsBiAEBmAExuAEXyAEM2AED6AEB-AECiAIBqAIDuALT-4v3BcACAdICJGQ4NDU2Y2RlLTJkMTAtNGU4Yi04ZWNkLWIwZDZiYWRlMzQ3NtgCBOACAQ&amp;sid=65f92edabaab200cc88fb48d7e3c12e4&amp;sb=1&amp;sb_lp=1&amp;src=index&amp;src_elem=sb&amp;error_url=https%3A%2F%2Fwww.booking.com%2Findex.html%3Flabel%3Dgen173nr-1DCAEoggI46AdIM1gEaLsBiAEBmAExuAEXyAEM2AED6AEB-AECiAIBqAIDuALT-4v3BcACAdICJGQ4NDU2Y2RlLTJkMTAtNGU4Yi04ZWNkLWIwZDZiYWRlMzQ3NtgCBOACAQ%3Bsid%3D65f92edabaab200cc88fb48d7e3c12e4%3Bsb_price_type%3Dtotal%26%3B&amp;ss=Lisbon&amp;is_ski_area=0&amp;ssne=Lisbon&amp;ssne_untouched=Lisbon&amp;dest_id=-2167973&amp;dest_type=city&amp;checkin_year=2020&amp;checkin_month=6&amp;checkin_monthday=15&amp;checkout_year=2020&amp;checkout_month=6&amp;checkout_monthday=18&amp;group_adults=2&amp;group_children=0&amp;no_rooms=1&amp;b_h4u_keep_filters=&amp;from_sf=1',
+b_this_url : '/searchresults.html?label=gen173nr-1DCAEoggI46AdIM1gEaLsBiAEBmAExuAEXyAEM2AED6AEB-AECiAIBqAIDuALT-4v3BcACAdICJGQ4NDU2Y2RlLTJkMTAtNGU4Yi04ZWNkLWIwZDZiYWRlMzQ3NtgCBOACAQ;sid=65f92edabaab200cc88fb48d7e3c12e4;tmpl=searchresults;checkin_month=6;checkin_monthday=15;checkin_year=2020;checkout_month=6;checkout_monthday=18;checkout_year=2020;class_interval=1;dest_id=-2167973;dest_type=city;dtdisc=0;from_sf=1;group_adults=2;group_children=0;inac=0;index_postcard=0;label_click=undef;no_rooms=1;offset=0;postcard=0;raw_dest_type=city;room1=A%2CA;sb_price_type=total;shw_aparth=1;slp_r_match=0;src=index;src_elem=sb;srpvid=ca101c2bbe3b004f;ss=Lisbon;ss_all=0;ssb=empty;sshis=0;ssne=Lisbon;ssne_untouched=Lisbon;top_ufis=1&',
+b_this_url_without_lang : '/searchresults.html?label=gen173nr-1DCAEoggI46AdIM1gEaLsBiAEBmAExuAEXyAEM2AED6AEB-AECiAIBqAIDuALT-4v3BcACAdICJGQ4NDU2Y2RlLTJkMTAtNGU4Yi04ZWNkLWIwZDZiYWRlMzQ3NtgCBOACAQ;sid=65f92edabaab200cc88fb48d7e3c12e4;tmpl=searchresults;checkin_month=6;checkin_monthday=15;checkin_year=2020;checkout_month=6;checkout_monthday=18;checkout_year=2020;class_interval=1;dest_id=-2167973;dest_type=city;dtdisc=0;from_sf=1;group_adults=2;group_children=0;inac=0;index_postcard=0;label_click=undef;no_rooms=1;offset=0;postcard=0;raw_dest_type=city;room1=A%2CA;sb_price_type=total;shw_aparth=1;slp_r_match=0;src=index;src_elem=sb;srpvid=ca101c2bbe3b004f;ss=Lisbon;ss_all=0;ssb=empty;sshis=0;ssne=Lisbon;ssne_untouched=Lisbon;top_ufis=1&',
+b_referrer : 'https:&#47;&#47;www.booking.com&#47;',
+b_acc_type : '',
+b_req_login: '',
+jst : {'loading': true},
+b_timestamp : 1591934423,
+scripts_tracking : {
+atlas:{loaded:false,run:false},
+atlas_cst:{loaded:false,run:false},
+bhc:{loaded:false,run:false},
+calendar2:{loaded:false,run:false},
+jquery:{loaded:false,run:false},
+main:{loaded:false,run:false},
+searchresults:{loaded:false,run:false}
+},
+enable_scripts_tracking : 1,
+b_ufi : '-2167973',
+"setvar_affiliate_is_bookings2" : 1,
+transl_close_x : 'close',
+transl_checkin_title: 'Check-in date',
+transl_checkout_title: 'Check-out date',
+browser_lang: 'en-us',
+b_hijri_calendar_available: false,
+b_aid: '304142',
+b_label: 'gen173nr-1DCAEoggI46AdIM1gEaLsBiAEBmAExuAEXyAEM2AED6AEB-AECiAIBqAIDuALT-4v3BcACAdICJGQ4NDU2Y2RlLTJkMTAtNGU4Yi04ZWNkLWIwZDZiYWRlMzQ3NtgCBOACAQ',
+b_sid: '65f92edabaab200cc88fb48d7e3c12e4',
+b_dest_id: '-2167973',
+ip_country: 'pt',
+country_currency: 'EUR',
+b_selected_currency: 'EUR',
+b_selected_language: 'en-us',
+b_selected_language_country_flag: 'us',
+b_dest_type: 'city',
+b_filter_currency: '',
+b_has_filters: 0,
+inline_sort_headers: {
+'star_track': {
+sortHeader: 'Sort all properties by number of stars'
+},
+'big_review_score_detailed': {
+sortHeader: 'Sort all properties by review score'
+},
+'address_text': {
+sortHeader: 'Sort all properties by location'
+},
+'district_link': {
+sortHeader: 'Sort all properties by location'
+},
+'smart_price_style': {
+sortHeader: 'Sort all properties by price'
+}
+},
+pageview_id: 'ca101c2bbe3b004f',
+aid: '304142',
+b_csrf_token: 'FzbjXgAAAAA=XqMy_Z8BmyLdSJJ2ZaA1mWAFxNRygah0691tYx78T9FO3zFuQqx6VbsL88ZUHshLK3R1XkmZIyJeG76zKz7qkA9-5h9KFur4c5NKycN_2GHuzLzFo3uE4XzQG4p4Y5UmFg8Lo2W-LDm7tMW7modTLipTo90lHYFpP1ogsbmRvHf1stTVeGRIRs2987DMerSROrRo9JSgj4nHZlYW',
+b_show_user_accounts_features: 1,
+b_browser: 'chrome',
+b_browser_version: '83',
+et_debug_level: '0',
+icons: '/static/img',
+b_static_images: 'https://r-cf.bstatic.com/images/',
+b_currency_url: '/general.html?label=gen173nr-1DCAEoggI46AdIM1gEaLsBiAEBmAExuAEXyAEM2AED6AEB-AECiAIBqAIDuALT-4v3BcACAdICJGQ4NDU2Y2RlLTJkMTAtNGU4Yi04ZWNkLWIwZDZiYWRlMzQ3NtgCBOACAQ;sid=65f92edabaab200cc88fb48d7e3c12e4;srpvid=ca101c2bbe3b004f&;tmpl=currency_foldout;cur_currency=EUR;cc1=pt',
+b_languages_url: '/general.html?label=gen173nr-1DCAEoggI46AdIM1gEaLsBiAEBmAExuAEXyAEM2AED6AEB-AECiAIBqAIDuALT-4v3BcACAdICJGQ4NDU2Y2RlLTJkMTAtNGU4Yi04ZWNkLWIwZDZiYWRlMzQ3NtgCBOACAQ;sid=65f92edabaab200cc88fb48d7e3c12e4;srpvid=ca101c2bbe3b004f&;tmpl=language_foldout',
+b_weekdays: [
+{"b_is_weekend": parseInt( '' ),
+"b_number": parseInt('1'),
+"name": 'Monday',
+"short": 'Mon',
+"shorter": 'Mon',
+"shortest": 'Mo'},
+{"b_is_weekend": parseInt( '' ),
+"b_number": parseInt('2'),
+"name": 'Tuesday',
+"short": 'Tue',
+"shorter": 'Tue',
+"shortest": 'Tu'},
+{"b_is_weekend": parseInt( '' ),
+"b_number": parseInt('3'),
+"name": 'Wednesday',
+"short": 'Wed',
+"shorter": 'Wed',
+"shortest": 'We'},
+{"b_is_weekend": parseInt( '' ),
+"b_number": parseInt('4'),
+"name": 'Thursday',
+"short": 'Thu',
+"shorter": 'Thu',
+"shortest": 'Th'},
+{"b_is_weekend": parseInt( '' ),
+"b_number": parseInt('5'),
+"name": 'Friday',
+"short": 'Fri',
+"shorter": 'Fri',
+"shortest": 'Fr'},
+{"b_is_weekend": parseInt( '1' ),
+"b_number": parseInt('6'),
+"name": 'Saturday',
+"short": 'Sat',
+"shorter": 'Sat',
+"shortest": 'Sa'},
+{"b_is_weekend": parseInt( '1' ),
+"b_number": parseInt('7'),
+"name": 'Sunday',
+"short": 'Sun',
+"shorter": 'Sun',
+"shortest": 'Su'},
+{}],
+b_group: [
+{ "guests": 2,
+"children": 0,
+"ages": [ ],
+}
+],
+b_group_rooms_wanted: 1,
+b_simple_weekdays: ['Mo','Tu','We','Th','Fr','Sa','Su'],
+b_simple_weekdays_for_js: ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'],
+b_long_weekdays: ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'],
+b_short_months: ['January','February','March','April','May','June','July','August','September','October','November','December'],
+b_short_months_abbr: ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],
+b_year_months: {
+'2020-6': {'name': 'June 2020' },
+'2020-7': {'name': 'July 2020' },
+'2020-8': {'name': 'August 2020' },
+'2020-9': {'name': 'September 2020' },
+'2020-10': {'name': 'October 2020' },
+'2020-11': {'name': 'November 2020' },
+'2020-12': {'name': 'December 2020' },
+'2021-1': {'name': 'January 2021' },
+'2021-2': {'name': 'February 2021' },
+'2021-3': {'name': 'March 2021' },
+'2021-4': {'name': 'April 2021' },
+'2021-5': {'name': 'May 2021' },
+'2021-6': {'name': 'June 2021' },
+'2021-7': {'name': 'July 2021' },
+'2021-8': {'name': 'August 2021' },
+'2021-9': {'name': 'September 2021' }
+},
+b_user_is_new: 1,
+b_user_auth_level_is_none: 1,
+b_is_fb_safe: 1,
+b_is_app: 1,
+first_page_of_results: true,
+b_partner_id: '1',
+b_is_destination_finder_supported: 1,
+b_is_dsf: 0,
+b_pr_param: '',
+/*
+*/
+feature_profile_split_sb_checkbox: 1,
+usp_overlay: [{
+title: "Book now, pay when you stay!",
+body: "With FREE cancellation on most rooms"
+},{
+title: "Booking is safe",
+body: "When you book with us your details are protected by a secure connection."
+},{
+title: "Unbiased reviews",
+body: "178,910,000 verified reviews"
+},
+],
+usp_sr_load_budget_title: "Access lower prices",
+usp_sr_load_budget_body: "Sign in and look out for Secret Deals",
+b_run_hp_back_is_back_on_searchresults: true,
+inandaround_more: "More",
+b_signup_iframe_url: 'https://secure.booking.com' + '/login.html?tmpl=profile/signup_after_subscribe' + '&lang=en-us' ,
+b_exclude_lang_firstname: 0,
+user_has_dates: 1,
+mapTrackEvents: 1,
+map_1_person_looking : "There is 1 person looking at this hotel. ",
+map_x_persons_looking : "placeholder people are looking right now",
+hotel_score_words : {
+very_poor : "Very Poor",
+poor : "Poor",
+disappointing : "Disappointing",
+average_passable : "Fair",
+average_okay : "Okay",
+pleasant : "Pleasant",
+good : "Good",
+very_good : "Very Good",
+fabulous : "Excellent",
+superb: "Wonderful",
+exceptional : "Exceptional",
+review_score_from_x : "Rating from \u003cstrong\u003eplaceholder\u003c/strong\u003e reviews",
+score_from_x : "\u003cstrong\u003eplaceholder\u003c/strong\u003e reviews"
+},
+use_new_landmark_icons : 1,
+map_right_click : {
+hotel : ['See this hotel', 'See this hotel in a new tab'],
+hotel_current : ['See this hotel', 'See this hotel in a new tab'],
+city : ['See this city', 'See this city in a new tab'],
+city_current : ['See this city', 'See this city in a new tab'],
+landmark : ['See this landmark', 'See this landmark in a new tab'],
+landmark_current : ['See this landmark', 'See this landmark in a new tab'],
+airport : ['See this airport', 'See this airport in a new tab'],
+airport_current : ['See this airport', 'See this airport in a new tab'],
+disambiguation : ['Search this destination', 'Search this destination in a new tab'],
+disambiguation_best : ['Search this destination', 'Search this destination in a new tab']
+},
+map_x_rooms_left : {
+rooms_1: 'Only 1 left',
+apts_1: 'Only 1 left',
+rooms_x: 'Only placeholder left',
+apts_x: 'Only placeholder left'
+},
+loading : 'Loading',
+ajax_hotel_details_soldout : 'Sold out',
+mapAddressLoadingMsgTxt: "Finding accommodation ...",
+mapPricePerXNights : 1,
+map_price_per_x_nights_txt : "Price for 3 nights",
+b_ufi : '-2167973',
+b_city_id: '-2167973',
+mapShowCurrentDistrict: 1,
+mapCurrentDistrictPolygons : [[],[],[],[],[],[],[],[],[],[],[],[],[],[],[]],
+map_handle_hashchange : 1,
+use_places_autocomplete: 1,
+map_sr_default_max_zoom_level: 17,
+b_district_name : 'Arroios',
+map_vars: {
+'translation_from' : 'From \u003cspan class=\"hotel_overlay_room_price hotel_overlay_occupancy_item\"\u003eprice_placeholder\u003c/span\u003e',
+'translation_from2' : 'From \u003cspan class=\"b_overlay_td_room_price\"\u003eprice_placeholder\u003c/span\u003e',
+'translation_occupancies' : [
+'Single Room',
+'Double Room',
+'Triple Room',
+'Group Room'
+],
+'selected_currency_symbol' : '&#x20AC;',
+'b_currencycode' : ''
+},
+mapAddressNotDesc: 1,
+b_map_ufi_average_price_tpl: "Discover \{av_city_name\}! Average price per night (2 guests): \{av_city_ppn\}.",
+map_legend_hotel_matching_search : 'Hotel matching your search',
+enter_dates_to_see_prices: 'Enter your check-in and check-out dates in the search box to see the exact room rates and to sort by price.',
+b_available_hotels: 3693,
+view_prices_enter_dates: 'To view prices and availability, please enter your dates.',
+b_total_selected_filters: "",
+b_current_page_nr: 1,
+b_order : "popularity",
+autocomplete_categories: {
+city: 'Cities',
+region: 'Regions',
+airport: 'Airports',
+hotel: 'Hotels',
+landmark: 'Landmarks',
+country: 'Countries',
+district: 'Districts',
+theme: 'Themes'
+},
+autocomplete_skip_suggestions: 'Search for more options',
+autocomplete_counter_label: 'Properties nearby',
+autocomplete : {
+property_nearby: '1 property nearby',
+properties_nearby: ' properties nearby',
+hotel: 'property',
+hotels: 'properties',
+hotels_nearby: 'Properties nearby'
+},
+lists: {
+collection: [
+{
+id: "0",
+name: "My next trip",
+hotels_count: "0"
+}
+]
+},
+touch_os: false,
+calendar_days_allowed_number: 353,
+b_search_max_months: 16,
+b_run_ge_new_newsletter_login: 1,
+b_password_strength_msg: ['Not long enough','Weak','Fair','Good','Strong','Very Strong'],
+b_passwd_min_length_error: 'Password needs to be at least 8 characters long',
+b_password_must_be_numeric: 'Your booking\'s PIN code should contain 4 digits. Please try again.',
+b_bkng_nr_must_be_numeric: 'Your booking number should contain 9 digits. Please try again.',
+b_blank_numeric_pin: 'Please enter your booking\'s PIN code.',
+b_blank_bkng_nr: 'Please enter your booking number.',
+password_cant_be_username: 'Your password can\'t be the same as your email address',
+b_show_passwd: 'View password',
+b_passwd_tooltip: 'Include capital letters, special characters, and numbers to increase your password strength',
+account_error_add_password: 'Please add a password',
+password_needs_8: 'Password needs to be at least 8 characters long',
+error_sign_up_password_email_combo_01: 'Please check your email address or password and try again.',
+social_plugins_footer: 1,
+b_lazy_load_print_css: 1,
+print_css_href: 'https://r-cf.bstatic.com/static/css/print/0cc4ce4b7108d42a9f293fc9b654f749d84ba4eb.css',
+'component/dropdown-onload-shower/header_signin_prompt' : {
+b_action: "searchresults"
+,can_redirect: 1
+,redirect_uri: "https://account.booking.com/auth/oauth2?dt=1591934424&state=Ut4H6Fuf5KH77dveATgdWh32r9sag1fJHYXV0SB7iJi_ubqKiR9uWdcVUSAGu64trEDNKgbR0ZeSJDLXKlyZ2Q37qRPoLdRkwaH5jBGDcGd0Z2IhzEKKk5cQohmTUJhXNfxwOIY6oeKH4KGTRcD0lND4KRDZmQRMgTvWbNeXP88CD3cZNQKL0jc30NpsPrm3NDr2oLJlAdiyKIO7P-ztODKHk2ivHx-jUt1ItqxYw_Lzddtc-vk1T8kToxepLl8MXSvprMqToExve6AXCm9Ch6ggkuyKcclA-MfClqUsMiduo1qvHd8Hjzc9ieJeAVR8guSDHjBYoM6C43VfhVpUnHKK3CYyWvALZIp_cTgwgtSruHVN1epT0cj_fhDZJtziYlhOa7SLOujHKGs7R1UyGjuMCDTHymbb1kAA7BfEBvtbykxOtx6EwjtZWrbWpoXgxjYH3B8s38dZouDcBahh5EOYW0zbz6N2bJiQFzv64mCwxG-SLyJFs1u7qFqBXJ4ZmU2v-yi4HqNCYL2YoZ5pPALKVniK9BRtxJ6YFNbafcwK7Xtdqar_DyZSusbejYmB37WnY2Z7GWvGNujqUie6vrXKe1BTRXW5lxAyDn-oiFfDTgJD8ys07nzQ8b1KfgtiZ8jP5Jpnu6P8ah827LHTer7higQyEp1Jrz1V9Y453qU-NaF_ADbf_heB9qlZoQUmnTzBSKo3Ny7dL1Ky7lC39kbXNxJ0wr8DY3WkDxQPetY_QxEkaJY-adkLBHyHJfnL204qsdKvVQb1EK_AWLp_PKZSEyj8N9Inc1kce19kqXgVJ-1N3q7P-Tp3ozgBzWMXcPpTQ5T3446CzxVGqp4Dn8ePOSn2_lYTHnbYYHhAbuwrHFSOYfnthNjOn4zW98WdW8cBFm8uJp_pfwkfCS8Ovct4sNCpD2t0colrOulY2sCoEAoyeVts2DUVs_2DaVfWO6yKPYCqgabzy_pGLg207HWa6gnkHz1Ue_JTwM-alcMC2rtzACJiocAWWK0rGrIt3NhPAtYZV7XeCifSpunkBatw6M0J3q4O43yszkIUUiDwmsRDkaJzO0KUQQUhrn54Hi6Mtvdau3-mReIzs9fNpvp43YfYlHxtrvGBnCiKFKyMgfQ8aUPhd554eGPh_2KcYo5a-PesO3EBynLHYwdMj279pM_OrJ03x-Y1PkpyqKOrKCetCjEBTDIVf-_KMGiDozJUYLJMn5J8tSJjuI-wL1KoajO9GFzcXIaBwPEsM8FAOJZ27MlE2OXr_7KPjVcVlGBJYn59ZdZCPNcs0Bou3K-yx0yeGqwDfPDBheN-hzMt&client_id=vO1Kblk7xX9tUn2cpZLS&lang=en-us&response_type=code&redirect_uri=https%3A%2F%2Fsecure.booking.com%2Flogin.html%3Fop%3Doauth_return&aid=304142"
+},
+b_hostname_signup: "www.booking.com",
+b_nonsecure_hostname: "https://www.booking.com",
+b_nonsecure_hostname_signup: "https://www.booking.com",
+b_fd_searchresults_url_signup: "",
+translation_customer_service_which_booking_no_specific: 'No specific reservation',
+stored_past_and_upcoming_bookings: [
+],
+global_translation_tags: {"lrm":"\u200e","zwsp":"\u200b","rlm":"\u200f","nbsp":"&nbsp;","line_break":"\u003cbr\u003e"},
+b_rackrates_monitoring_running: true,
+b_wishlist_referrer : '',
+b_reg_user_last_used_wishlist: "",
+b_reg_user_wishlist_remaining: 1,
+is_user_center_bar: 1,
+b_site_experiment_user_center_bar: 1,
+b_reg_user_is_genius : "",
+'social-connect': [
+{
+state: "",
+provider: "facebook"
+}
+,
+{
+state: "",
+provider: "google"
+}
+],
+b_run_social_connect: 1,
+profile_menu: {
+b_user_auth_level: 0,
+b_domain_for_app: "https://www.booking.com",
+b_query_params_with_lang_no_ext: "?label=gen173nr-1DCAEoggI46AdIM1gEaLsBiAEBmAExuAEXyAEM2AED6AEB-AECiAIBqAIDuALT-4v3BcACAdICJGQ4NDU2Y2RlLTJkMTAtNGU4Yi04ZWNkLWIwZDZiYWRlMzQ3NtgCBOACAQ;sid=65f92edabaab200cc88fb48d7e3c12e4;srpvid=ca101c2bbe3b004f&",
+b_action: "searchresults",
+b_site_info: {"is_bookings_owned":1,"is_iam_auth_allowed":1},
+b_site_type: "www",
+b_companyname: "Booking.com",
+b_reg_user_full_name: "",
+b_is_genius_branded: "0",
+b_reg_user_is_genius: "",
+b_genius_dashboard_expiry_destfinder_url: "https://www.booking.com/destinationfinderdeals.html?label=gen173nr-1DCAEoggI46AdIM1gEaLsBiAEBmAExuAEXyAEM2AED6AEB-AECiAIBqAIDuALT-4v3BcACAdICJGQ4NDU2Y2RlLTJkMTAtNGU4Yi04ZWNkLWIwZDZiYWRlMzQ3NtgCBOACAQ;sid=65f92edabaab200cc88fb48d7e3c12e4;srpvid=ca101c2bbe3b004f&;genius_deals_mode=1;checkin=2020-06-15;checkout=2020-06-18",
+b_run_bb_pb_reports: "",
+b_bwallet_has_wallet: 0,
+b_bwallet_currency_html: "",
+b_bwallet_total_balance_p: "",
+b_bwallet_has_credit: "",
+b_bwallet_total_balance_euro: "",
+b_bwallet_hide_badge_profile_dropdown: "",
+b_rewards_has_reward: 0,
+b_reg_user_last_used_wishlist: "",
+b_genius_product_page_url: "https://www.booking.com/genius.html?label=gen173nr-1DCAEoggI46AdIM1gEaLsBiAEBmAExuAEXyAEM2AED6AEB-AECiAIBqAIDuALT-4v3BcACAdICJGQ4NDU2Y2RlLTJkMTAtNGU4Yi04ZWNkLWIwZDZiYWRlMzQ3NtgCBOACAQ;sid=65f92edabaab200cc88fb48d7e3c12e4;srpvid=ca101c2bbe3b004f&",
+b_reg_user_five_bookings_challenge: "",
+b_reg_user_detail_name_email_hash: "",
+b_user_is_grap_eligible: "",
+b_grap_remove_raf_checks: 1,
+b_is_bbtool_admin: "",
+b_is_bbtool_user: "",
+fe_bbtool_permission_is_connected_to_bbtool: "",
+fe_this_url_travel_purpose_business: "https://secure.booking.com/company/search.html?label=gen173nr-1DCAEoggI46AdIM1gEaLsBiAEBmAExuAEXyAEM2AED6AEB-AECiAIBqAIDuALT-4v3BcACAdICJGQ4NDU2Y2RlLTJkMTAtNGU4Yi04ZWNkLWIwZDZiYWRlMzQ3NtgCBOACAQ&sid=65f92edabaab200cc88fb48d7e3c12e4&srpvid=ca101c2bbe3b004f&sb_travel_purpose=business",
+fe_this_url_travel_purpose_leisure: "https://www.booking.com/index.html?label=gen173nr-1DCAEoggI46AdIM1gEaLsBiAEBmAExuAEXyAEM2AED6AEB-AECiAIBqAIDuALT-4v3BcACAdICJGQ4NDU2Y2RlLTJkMTAtNGU4Yi04ZWNkLWIwZDZiYWRlMzQ3NtgCBOACAQ&sid=65f92edabaab200cc88fb48d7e3c12e4&srpvid=ca101c2bbe3b004f&sb_travel_purpose=leisure",
+fe_reservations_url_travel_purpose_business: "https://secure.booking.com/company/reservations.html?label=gen173nr-1DCAEoggI46AdIM1gEaLsBiAEBmAExuAEXyAEM2AED6AEB-AECiAIBqAIDuALT-4v3BcACAdICJGQ4NDU2Y2RlLTJkMTAtNGU4Yi04ZWNkLWIwZDZiYWRlMzQ3NtgCBOACAQ&sid=65f92edabaab200cc88fb48d7e3c12e4&srpvid=ca101c2bbe3b004f&sb_travel_purpose=business",
+fe_reservations_url_travel_purpose_leisure: "https://secure.booking.com/myreservations.html?label=gen173nr-1DCAEoggI46AdIM1gEaLsBiAEBmAExuAEXyAEM2AED6AEB-AECiAIBqAIDuALT-4v3BcACAdICJGQ4NDU2Y2RlLTJkMTAtNGU4Yi04ZWNkLWIwZDZiYWRlMzQ3NtgCBOACAQ&sid=65f92edabaab200cc88fb48d7e3c12e4&srpvid=ca101c2bbe3b004f&sb_travel_purpose=leisure",
+fe_my_settings_url_travel_purpose_business: "https://secure.booking.com/mysettings.html?label=gen173nr-1DCAEoggI46AdIM1gEaLsBiAEBmAExuAEXyAEM2AED6AEB-AECiAIBqAIDuALT-4v3BcACAdICJGQ4NDU2Y2RlLTJkMTAtNGU4Yi04ZWNkLWIwZDZiYWRlMzQ3NtgCBOACAQ&sid=65f92edabaab200cc88fb48d7e3c12e4&srpvid=ca101c2bbe3b004f&sb_travel_purpose=business",
+fe_my_settings_url_travel_purpose_leisure: "https://secure.booking.com/mysettings.html?label=gen173nr-1DCAEoggI46AdIM1gEaLsBiAEBmAExuAEXyAEM2AED6AEB-AECiAIBqAIDuALT-4v3BcACAdICJGQ4NDU2Y2RlLTJkMTAtNGU4Yi04ZWNkLWIwZDZiYWRlMzQ3NtgCBOACAQ&sid=65f92edabaab200cc88fb48d7e3c12e4&srpvid=ca101c2bbe3b004f&sb_travel_purpose=leisure",
+fe_bbtool_can_see_tool_promos: "1",
+fe_bbtool_blackout_user_company: "",
+fe_bbtool_redirect_personal_to_index: 1,
+b_reg_user_company_name: "",
+b_reg_user_company_name_escaped: "",
+b_reg_user_companyjoin_url: "",
+b_bbtool_product_page_url: "https://www.booking.com/business.html?label=gen173nr-1DCAEoggI46AdIM1gEaLsBiAEBmAExuAEXyAEM2AED6AEB-AECiAIBqAIDuALT-4v3BcACAdICJGQ4NDU2Y2RlLTJkMTAtNGU4Yi04ZWNkLWIwZDZiYWRlMzQ3NtgCBOACAQ&sid=65f92edabaab200cc88fb48d7e3c12e4&srpvid=ca101c2bbe3b004f&stid=934592",
+b_is_ie7: "",
+b_this_url: "/searchresults.html?label=gen173nr-1DCAEoggI46AdIM1gEaLsBiAEBmAExuAEXyAEM2AED6AEB-AECiAIBqAIDuALT-4v3BcACAdICJGQ4NDU2Y2RlLTJkMTAtNGU4Yi04ZWNkLWIwZDZiYWRlMzQ3NtgCBOACAQ;sid=65f92edabaab200cc88fb48d7e3c12e4;tmpl=searchresults;checkin_month=6;checkin_monthday=15;checkin_year=2020;checkout_month=6;checkout_monthday=18;checkout_year=2020;class_interval=1;dest_id=-2167973;dest_type=city;dtdisc=0;from_sf=1;group_adults=2;group_children=0;inac=0;index_postcard=0;label_click=undef;no_rooms=1;offset=0;postcard=0;raw_dest_type=city;room1=A%2CA;sb_price_type=total;shw_aparth=1;slp_r_match=0;src=index;src_elem=sb;srpvid=ca101c2bbe3b004f;ss=Lisbon;ss_all=0;ssb=empty;sshis=0;ssne=Lisbon;ssne_untouched=Lisbon;top_ufis=1&",
+b_lang_for_url: "en-us",
+b_secure_hostname: "https://secure.booking.com",
+b_nonsecure_hostname: "https://www.booking.com",
+b_query_params_with_lang: ".html?label=gen173nr-1DCAEoggI46AdIM1gEaLsBiAEBmAExuAEXyAEM2AED6AEB-AECiAIBqAIDuALT-4v3BcACAdICJGQ4NDU2Y2RlLTJkMTAtNGU4Yi04ZWNkLWIwZDZiYWRlMzQ3NtgCBOACAQ;sid=65f92edabaab200cc88fb48d7e3c12e4;srpvid=ca101c2bbe3b004f&",
+b_query_params_with_lang_no_ext: "?label=gen173nr-1DCAEoggI46AdIM1gEaLsBiAEBmAExuAEXyAEM2AED6AEB-AECiAIBqAIDuALT-4v3BcACAdICJGQ4NDU2Y2RlLTJkMTAtNGU4Yi04ZWNkLWIwZDZiYWRlMzQ3NtgCBOACAQ;sid=65f92edabaab200cc88fb48d7e3c12e4;srpvid=ca101c2bbe3b004f&",
+b_query_params_delimiter: ";",
+b_reg_user_detail_dashboard_url: "",
+b_is_reg_user_city_guide_in_lang_available: "0",
+b_aspiring_user_fifth_booking_ufi : "",
+b_reg_user_aspiring_data: "",
+b_dummy_var_for_trailing_comma: false,
+b_ip_country: "",
+b_guest_country: "pt",
+b_raf_multiple_campaigns: true,
+b_agent_is_no_robot: 1,
+b_page_name : "searchresults",
+b_landingpage_theme_type: "",
+b_brewards_account_details: "",
+b_upcoming_rewards: "",
+b_rewards_reminder_is_on: 1,
+fe_rewards__game_over: "1",
+loyalty_program_rules: "",
+loyalty_program_status: "",
+loyalty_program_bonus_url: "",
+b_brewards_loyalty_program_account_type: "",
+b_user_has_mobile_app: "",
+b_aid: 304142,
+b_label: "gen173nr-1DCAEoggI46AdIM1gEaLsBiAEBmAExuAEXyAEM2AED6AEB-AECiAIBqAIDuALT-4v3BcACAdICJGQ4NDU2Y2RlLTJkMTAtNGU4Yi04ZWNkLWIwZDZiYWRlMzQ3NtgCBOACAQ",
+fe_show_travel_communities_menu_item: 1,
+fe_user_can_see_company_reservations: null,
+b_oauth_client_id: "",
+b_sso_logout_url: "",
+b_sso_logout_callback_url: "",
+fe_sso_logout_state: "",
+fe_blackout_mydashboard: "",
+fe_user_menu_aspiring_genius_link: false
+},
+accounting_config: {"currency_separator":{"GBP":"","default":"&nbsp;","USD":"","JPY":""},"group_separator":{"default":","},"decimal_separator":{"default":"."},"symbol_position":{"default":"before","CZK":"after","RON":"after","PLN":"after"},"html_symbol":{"INR":"Rs.","CLP":"CL$","CZK":"K&#269;","EUR":"&#x20AC;","XPF":"CFP","ILS":"&#x20AA;","ARS":"AR$","PLN":"z&#x0142;","IDR":"Rp","PHP":"&#8369;","USD":"US$","HKD":"HK$","BRL":"R$","TRY":"TL","GBP":"&#163;","SGD":"S$","JPY":"&#165;","RON":"lei"},"num_decimals":{"GNF":"0","IDR":"0","BHD":"3","TND":"3","KMF":"0","KWD":"3","OMR":"3","RWF":"0","JPY":"0","TJR":"0","PYG":"0","LAK":"0","DJF":"0","COP":"0","XOF":"0","RUB":"0","JOD":"3","KRW":"0","MGA":"0","MZM":"0","AFA":"0","UGX":"0","XPF":"0","BIF":"0","ECS":"0","default":"2","VUV":"0","CLP":"0","BYR":"0","ISK":"0","HUF":"0","TMM":"0","VND":"0","LYD":"3","TWD":"0","IQD":"3","XAF":"0"}},
+distance_config: "metric",
+b_run_tfl_move_away_from_lightbox: true,
+b_wishlist_singlepage_url: 'https://secure.booking.com/mywishlist.html?label=gen173nr-1DCAEoggI46AdIM1gEaLsBiAEBmAExuAEXyAEM2AED6AEB-AECiAIBqAIDuALT-4v3BcACAdICJGQ4NDU2Y2RlLTJkMTAtNGU4Yi04ZWNkLWIwZDZiYWRlMzQ3NtgCBOACAQ;sid=65f92edabaab200cc88fb48d7e3c12e4;srpvid=ca101c2bbe3b004f&',
+is_listview_page: true,
+b_this_weekend_checkin: "",
+b_this_weekend_checkout: "",
+b_next_weekend_checkin: "",
+b_next_weekend_checkout: "",
+b_official_continent: "",
+b_deals_continents : "",
+b_messenger_url: '',
+b_open_messenger: false,
+wholesaler_configuration: {
+b_wholesaler_hotel_ids: [1497691,265624,439138,343599,439149,38511,239413],
+b_wholesaler_url: "https://carrier.booking.com/wholesaler/get_tpi_availability",
+hotel_info_prices: {
+"239413": "199.2",
+"240744": "102",
+"1428671": "84.9",
+"1135608": "108.9",
+"1497691": "87",
+"412948": "131.97",
+"2419587": "147",
+"1072433": "385.5",
+"38511": "123",
+"41429": "105",
+"1639471": "93",
+"1223896": "102",
+"38690": "87",
+"2071571": "169",
+"2895474": "222",
+"4044207": "462.13",
+"343599": "177",
+"439138": "183.69",
+"3826490": "272",
+"1383217": "107",
+"265624": "111",
+"3264879": "292",
+"1699465": "147",
+"439149": "154.59",
+"1707561": "192",
+},
+b_wholesaler_hotels_cheapest_prices: {"265624":{"b_nr_blocks":4,"b_room_cancellation_policy":"refundable","b_room_mealplan_category":"","b_value":99,"b_paymentterms_id":33,"b_depositterms_id":152,"b_nr_cancellation_policies":1,"b_currency":"EUR"},"343599":{"b_room_cancellation_policy":"non_refundable_anymore","b_room_mealplan_category":"","b_nr_blocks":9,"b_currency":"EUR","b_value":165,"b_paymentterms_id":1,"b_depositterms_id":1,"b_nr_cancellation_policies":2},"439138":{"b_nr_blocks":10,"b_room_mealplan_category":"","b_room_cancellation_policy":"free_cancellation","b_nr_cancellation_policies":1,"b_paymentterms_id":34,"b_value":171.69,"b_depositterms_id":152,"b_currency":"EUR"},"1497691":{"b_paymentterms_id":1,"b_value":67.5,"b_depositterms_id":1,"b_nr_cancellation_policies":2,"b_currency":"EUR","b_nr_blocks":8,"b_room_cancellation_policy":"non_refundable_anymore","b_room_mealplan_category":""},"439149":{"b_room_cancellation_policy":"free_cancellation","b_room_mealplan_category":"","b_nr_blocks":4,"b_currency":"EUR","b_paymentterms_id":34,"b_value":142.59,"b_depositterms_id":152,"b_nr_cancellation_policies":1},"239413":{"b_currency":"EUR","b_depositterms_id":152,"b_paymentterms_id":34,"b_value":187.2,"b_nr_cancellation_policies":1,"b_room_cancellation_policy":"free_cancellation","b_room_mealplan_category":"","b_nr_blocks":16},"38511":{"b_currency":"EUR","b_paymentterms_id":36,"b_depositterms_id":152,"b_value":111,"b_nr_cancellation_policies":1,"b_room_cancellation_policy":"free_cancellation","b_room_mealplan_category":"","b_nr_blocks":2}},
+b_wholesaler_translations: {
+"20": "Basic Option",
+"36": "BBasic Room",
+"10": "Single",
+"9": "Double",
+"23": "Double for Single Use",
+"8": "Twin",
+"24": "Twin&#47;Double",
+"7": "Triple",
+"4": "Quad",
+"13": "Family",
+"5": "Suite",
+"12": "Studio",
+"1": "Apartment",
+"25": "Dorm Room",
+"26": "Bed in Dorm",
+"27": "Bungalow",
+"28": "Chalet",
+"31": "Villa",
+"29": "Vacation Home",
+"32": "Trailer",
+"33": "Tent",
+"35": "Empty lot",
+},
+availability_api_request: {"affiliate_id":304142,"allow_data_gathering":null,"ds_metadata":{"is_normal_user":1,"experiment_seed":"005ee1907698d3fb503bb45ccebf012896"},"hotels":[{"id":1497691,"cheapest_room":{"excl_charges":70.7547169811321,"charges_breakdown":[{"charge_type":22,"charge_amount":12.0,"charge_inclusion":"included"},{"charge_inclusion":"included","charge_amount":4.24528301886792,"charge_type":21}],"currency":"EUR","price":67.5}},{"cheapest_room":{"price":99,"currency":"EUR","charges_breakdown":[{"charge_type":22,"charge_amount":12.0,"charge_inclusion":"included"},{"charge_type":21,"charge_amount":5.60377358490566,"charge_inclusion":"included"}],"excl_charges":93.3962264150943},"id":265624},{"cheapest_room":{"price":171.69,"excl_charges":161.971698113208,"charges_breakdown":[{"charge_type":22,"charge_amount":12.0,"charge_inclusion":"included"},{"charge_type":21,"charge_inclusion":"included","charge_amount":9.71830188679245}],"currency":"EUR"},"id":439138},{"cheapest_room":{"charges_breakdown":[{"charge_type":22,"charge_amount":12.0,"charge_inclusion":"included"},{"charge_type":21,"charge_amount":9.33962264150943,"charge_inclusion":"included"}],"currency":"EUR","excl_charges":155.660377358491,"price":165},"id":343599},{"id":439149,"cheapest_room":{"excl_charges":134.518867924528,"charges_breakdown":[{"charge_amount":12.0,"charge_inclusion":"included","charge_type":22},{"charge_amount":8.0711320754717,"charge_inclusion":"included","charge_type":21}],"currency":"EUR","price":142.59}},{"id":38511,"cheapest_room":{"price":111,"excl_charges":104.716981132075,"charges_breakdown":[{"charge_type":22,"charge_amount":12.0,"charge_inclusion":"included"},{"charge_type":21,"charge_inclusion":"included","charge_amount":6.28301886792453}],"currency":"EUR"}},{"id":239413,"cheapest_room":{"currency":"EUR","charges_breakdown":[{"charge_type":22,"charge_amount":12.0,"charge_inclusion":"included"},{"charge_inclusion":"included","charge_amount":10.5962264150943,"charge_type":21}],"excl_charges":176.603773584906,"price":187.2}}],"user":{"country_code":"pt","logged_in":"","language_code":"en-us","genius_level":0,"sr_key":"ca101c2bbe3b004f","genius":0,"business_booker":null,"visitor_ufi":-2162511,"pageview_id":"ca101c2bbe3b004f","currency_code":"EUR"},"exp":{"tpi_app_android_multiple_room":0,"tpi_web_mdot_multi_room":0,"tpi_app_ios_multiple_room_booking":0,"tpi_web_www_multi_room":0},"platform":"www","search_config":{"checkout_date":"2020-06-18","number_of_children":0,"checkin_date":"2020-06-15","number_of_rooms":1,"number_of_adults":2},"source":"sr","restrictions":{"allow_flexible_rates":1,"skip_ct":1,"apply_net_rate_filtering":0,"skip_ag":0,"show_only_price":0,"allow_surcharge_rates":1}},
+decision_fragment_request: {"request_arguments":{"affiliate_id":304142,"allow_data_gathering":null,"ds_metadata":{"is_normal_user":1,"experiment_seed":"005ee1907698d3fb503bb45ccebf012896"},"hotels":[{"id":1497691,"cheapest_room":{"excl_charges":70.7547169811321,"charges_breakdown":[{"charge_type":22,"charge_amount":12.0,"charge_inclusion":"included"},{"charge_inclusion":"included","charge_amount":4.24528301886792,"charge_type":21}],"currency":"EUR","price":67.5}},{"cheapest_room":{"price":99,"currency":"EUR","charges_breakdown":[{"charge_type":22,"charge_amount":12.0,"charge_inclusion":"included"},{"charge_type":21,"charge_amount":5.60377358490566,"charge_inclusion":"included"}],"excl_charges":93.3962264150943},"id":265624},{"cheapest_room":{"price":171.69,"excl_charges":161.971698113208,"charges_breakdown":[{"charge_type":22,"charge_amount":12.0,"charge_inclusion":"included"},{"charge_type":21,"charge_inclusion":"included","charge_amount":9.71830188679245}],"currency":"EUR"},"id":439138},{"cheapest_room":{"charges_breakdown":[{"charge_type":22,"charge_amount":12.0,"charge_inclusion":"included"},{"charge_type":21,"charge_amount":9.33962264150943,"charge_inclusion":"included"}],"currency":"EUR","excl_charges":155.660377358491,"price":165},"id":343599},{"id":439149,"cheapest_room":{"excl_charges":134.518867924528,"charges_breakdown":[{"charge_amount":12.0,"charge_inclusion":"included","charge_type":22},{"charge_amount":8.0711320754717,"charge_inclusion":"included","charge_type":21}],"currency":"EUR","price":142.59}},{"id":38511,"cheapest_room":{"price":111,"excl_charges":104.716981132075,"charges_breakdown":[{"charge_type":22,"charge_amount":12.0,"charge_inclusion":"included"},{"charge_type":21,"charge_inclusion":"included","charge_amount":6.28301886792453}],"currency":"EUR"}},{"id":239413,"cheapest_room":{"currency":"EUR","charges_breakdown":[{"charge_type":22,"charge_amount":12.0,"charge_inclusion":"included"},{"charge_inclusion":"included","charge_amount":10.5962264150943,"charge_type":21}],"excl_charges":176.603773584906,"price":187.2}}],"user":{"country_code":"pt","logged_in":"","language_code":"en-us","genius_level":0,"sr_key":"ca101c2bbe3b004f","genius":0,"business_booker":null,"visitor_ufi":-2162511,"pageview_id":"ca101c2bbe3b004f","currency_code":"EUR"},"exp":{"tpi_app_android_multiple_room":0,"tpi_web_mdot_multi_room":0,"tpi_app_ios_multiple_room_booking":0,"tpi_web_www_multi_room":0},"platform":"www","search_config":{"checkout_date":"2020-06-18","number_of_children":0,"checkin_date":"2020-06-15","number_of_rooms":1,"number_of_adults":2},"source":"sr","restrictions":{"allow_flexible_rates":1,"skip_ct":1,"apply_net_rate_filtering":0,"skip_ag":0,"show_only_price":0,"allow_surcharge_rates":1}},"rooms":"to be added by client side"},
+searchresults_ordered_by_price: 0,
+tpi_track_ajax_failures: 1,
+tpi_av_badrequest_squeak_name: 'PPXGJaALOLOLOCcBFZQcbFXCfPSXT',
+tpi_av_squeak_name: 'PPXGJaALOLOLOCcBFZLPTSEPcWKe',
+tpi_av_timeout_squeak_name: 'PPXGJaALOLOLOCcBFZLJUYJO',
+tpi_frg_squeak_name: 'PPXGSVbTJcCcCcCWNObdcESZFENaRe',
+"tpi_exps": {
+"www_db": "PPXGFRURURYPJNUFJO",
+"transition":"PPXGFRURURYTfbfWafYT"
+},
+},
+tpi_search_config: {"b_abnormal_params":0,"b_adults_total":2,"b_pets_total":null,"b_is_group_search":0,"b_children_ages_total":[],"b_children_total":0,"b_rooms":[{"b_children_ages":[],"b_children":0,"b_room_order":1,"b_adults":2}],"autosplit":1,"b_nr_rooms_needed":1,"traveller_segment":"couple"},
+tpi_los: 3,
+b_is_asian_user: '',
+b_days_to_checkin: '',
+b_extra_ajax_headers: {},
+et_debug_level: '0',
+trackExperiment : function () {},
+"error" : {}
+},
+ensureNamespaceExists: function (namespaceString) {
+if (!booking[namespaceString]) {
+booking[namespaceString] = {};
+}
+}, hotel: {}, experiments: {}, startup: {}, experiments_load: {}, startup_load: {}, promotions: {}, timestamp: new Date()};
+function Tip() {};
+(function (scope) {
+booking.env.b_sb_autocomplete_predictions_url = '/autocomplete_csrf';
+booking.env.b_sb_autocomplete_predictions_method = 'GET';
+booking.env.b_sb_googleplaces_carrier_url = 'https://carrier.booking.com/google/places/webautocompletesimple';
+booking.env.b_sb_googleplaces_carrier_method = 'POST';
+var params = scope.search_autocomplete_params = {};
+params.v = '1';
+params.lang = 'en-us';
+params.sid = '65f92edabaab200cc88fb48d7e3c12e4';
+params.aid = '304142';
+params.pid = 'ca101c2bbe3b004f';
+params.stype = '1';
+params.src = 'searchresults';
+params.eb = '0';
+params.e_obj_labels = '1';
+params.context_dest_type = 'city';
+params.context_dest_id = '-2167973';
+params.e_tclm = 1;
+params.add_themes = '1';
+params.themes_match_start = '1';
+params.include_synonyms = '1';
+}(window.autocomplete_vars || booking.env));
+</script>
+
+<script type="text/javascript">
+window.utag_data = {
+opt_out_companies: {},
+site: 'bookings2',
+stypeid: '1',
+action: 'searchresults',
+crt: '1',
+fbp: '1',
+exp1: '',
+exp2: '0',
+bem: '0',
+bip: '0',
+exp_rmkt_test: 'global_on',
+ns: '0',
+nsc: '0',
+famem: '-1',
+famfn: '-1',
+fampn: '-1',
+gwcur: '-1',
+gwcuc: '-1',
+rb: '0',
+gst: '1',
+fbqs: '',
+sage: '277',
+alev: '0',
+atid: '',
+atnm: '',
+biz_s: '0',
+biz_p: '',
+bo: '1',
+browser: 'chrome',
+browser_ver: '83',
+bstage: '',
+clkid: '',
+emksho: '1',
+genis: '',
+n_b: '',
+sid: '65f92edabaab200cc88fb48d7e3c12e4',
+ui: '',
+is_aid_mcc_level_tracked: '',
+partner_channel_id: '3',
+ttv: '',
+ttv_uc: '',
+p1: '0',
+hotels_id_list: '239413,240744,1428671,1135608,1497691,412948,2419587,1072433,38511,41429,1639471,1223896,38690,2071571,2895474,4044207,343599,439138,3826490,1383217,265624,3264879,1699465,439149,1707561',
+preferred_neighborhoods: [],
+hotel_name: '',
+channel_id: '3',
+partner_id: '1',
+ai: '304142',
+adults: '2',
+book_window: '3',
+children: '0',
+district_name: 'Arroios',
+city_name: 'Lisbon',
+region_name: '-1',
+country_name: 'Portugal',
+currency: 'EUR',
+date_in: '2020-06-15',
+cul: '0',
+mnns: '0',
+date_out: '2020-06-18',
+dayofwk: '1',
+depth: '1',
+dest_type: '-1',
+dest_id: '-1',
+dest_cc: 'pt',
+dest_ufi: '-2167973',
+dest_name: 'Lisbon',
+hotel_count: '0',
+hotel_id: '239413',
+hotel_id_list: '239413,240744,1428671',
+hr: '-1',
+i1: '239413',
+i2: '240744',
+i3: '1428671',
+isfd: '',
+isnl: '',
+label: 'gen173nr-1DCAEoggI46AdIM1gEaLsBiAEBmAExuAEXyAEM2AED6AEB-AECiAIBqAIDuALT-4v3BcACAdICJGQ4NDU2Y2RlLTJkMTAtNGU4Yi04ZWNkLWIwZDZiYWRlMzQ3NtgCBOACAQ',
+language: 'en-us',
+logged_in: '0',
+nights: '3',
+cv: '-1',
+ordv: '-1',
+rooms: '1',
+seed: 'UXnPhVfM95-DLx5ic7Hfiw',
+srord: 'popularity',
+sub: '0',
+ui_a: '0',
+user_location: 'pt',
+pid: '',
+stid: '304142',
+gaclientid: '',
+bkng_cookie_identifier: 'UmFuZG9tSVYkc2RlIyh9YeXKWxo4vn0n0Ey_4ceBXiR14Lhyi0vFHlokfvv_I-xM',
+tag_cdn: 'tags.tiqcdn.com'
+};
+
+<script>
+var B = booking = window.booking || {};
+var booking_extra = {
+pageview_id: 'ca101c2bbe3b004f',
+b_aid: '304142',
+b_stid: '304142',
+b_lang_for_url: 'en-us',
+b_gtt: "dLYAeZFVJfNTBBSSMYEQNALWVJBJYTIOOXdPLRe",
+b_ch: 'd',
+b_site_type_id: '1',
+b_action: 'searchresults'
+};
+</script>
+<script
+src="https://r-cf.bstatic.com/static/js/error_catcher_bec_cloudfront/f56f7a2e7854715ad5ecc2f07a1a4c7b4a49970d.js"
+crossorigin
+></script>
+
+}());
+var ajaxHeaders = {
+'X-Booking-AID': '304142',
+'X-Booking-CSRF': 'FzbjXgAAAAA=XqMy_Z8BmyLdSJJ2ZaA1mWAFxNRygah0691tYx78T9FO3zFuQqx6VbsL88ZUHshLK3R1XkmZIyJeG76zKz7qkA9-5h9KFur4c5NKycN_2GHuzLzFo3uE4XzQG4p4Y5UmFg8Lo2W-LDm7tMW7modTLipTo90lHYFpP1ogsbmRvHf1stTVeGRIRs2987DMerSROrRo9JSgj4nHZlYW',
+'X-Booking-Info': function(){ return (document && document.getElementById('req_info')) ? document.getElementById('req_info').innerHTML : '' },
+'X-Booking-Client-Info': function() { return B.et.tracked() },
+'X-Booking-Label': encodeURIComponent('gen173nr-1DCAEoggI46AdIM1gEaLsBiAEBmAExuAEXyAEM2AED6AEB-AECiAIBqAIDuALT-4v3BcACAdICJGQ4NDU2Y2RlLTJkMTAtNGU4Yi04ZWNkLWIwZDZiYWRlMzQ3NtgCBOACAQ'),
+'X-Booking-Language-Code': 'en-us',
+'X-Booking-Pageview-Id': 'ca101c2bbe3b004f',
+'X-Booking-Session-Id': '65f92edabaab200cc88fb48d7e3c12e4',
+'X-Booking-SiteType-Id': '1',
+'X-Partner-Channel-Id': '3',
+'X-Requested-With': 'XMLHttpRequest'
+};
+
+<script>
+B.require('tmpl_data')({"b_search_config":{"b_abnormal_params":0,"b_adults_total":2,"b_pets_total":null,"b_is_group_search":0,"b_children_ages_total":[],"b_children_total":0,"b_rooms":[{"b_children_ages":[],"b_children":0,"b_room_order":1,"b_adults":2}],"autosplit":1,"b_nr_rooms_needed":1,"traveller_segment":"couple"}});
+</script>
+<script>
+/**/ (function () { 'use strict'; if (!B.define) { return; } B.define('searchresults/env', ['require'], function (require) { var events = require('searchresults/events'); var env; env = { /* jshint ignore:start */
+'b_dest_id': -2167973,
+'b_dest_type': "city",
+'b_search_config': JSON.parse('{"b_abnormal_params":0,"b_adults_total":2,"b_pets_total":null,"b_is_group_search":0,"b_children_ages_total":[],"b_children_total":0,"b_rooms":[{"b_children_ages":[],"b_children":0,"b_room_order":1,"b_adults":2}],"autosplit":1,"b_nr_rooms_needed":1,"traveller_segment":"couple"}' || '{}'),
+'b_destination_fullname': "Lisbon",
+'b_current_page_nr': 1,
+'b_selected_nflt_url_param_decoded': "",
+'b_bh_nflt_filters': "",
+'b_total_selected_filters': "",
+'b_nr_hotels_available': 3693,
+'b_sr_filter_by_price_enabled': "",
+'b_user_is_business_booker': "",
+'b_sr_is_address_search': 0,
+'b_did_bigger_search': 0,
+'b_did_auto_extend_radius': "",
+"b_checkin_date": '2020-06-15',
+"b_checkout_date": '2020-06-18',
+"b_checkin_checkout_interval": 3,
+wholesaler_configuration: {
+b_wholesaler_hotel_ids: [1497691,265624,439138,343599,439149,38511,239413],
+b_wholesaler_url: "https://carrier.booking.com/wholesaler/get_tpi_availability",
+hotel_info_prices: {
+"239413": "199.2",
+"240744": "102",
+"1428671": "84.9",
+"1135608": "108.9",
+"1497691": "87",
+"412948": "131.97",
+"2419587": "147",
+"1072433": "385.5",
+"38511": "123",
+"41429": "105",
+"1639471": "93",
+"1223896": "102",
+"38690": "87",
+"2071571": "169",
+"2895474": "222",
+"4044207": "462.13",
+"343599": "177",
+"439138": "183.69",
+"3826490": "272",
+"1383217": "107",
+"265624": "111",
+"3264879": "292",
+"1699465": "147",
+"439149": "154.59",
+"1707561": "192",
+},
+b_wholesaler_hotels_cheapest_prices: {"265624":{"b_nr_blocks":4,"b_room_cancellation_policy":"refundable","b_room_mealplan_category":"","b_value":99,"b_paymentterms_id":33,"b_depositterms_id":152,"b_nr_cancellation_policies":1,"b_currency":"EUR"},"343599":{"b_room_cancellation_policy":"non_refundable_anymore","b_room_mealplan_category":"","b_nr_blocks":9,"b_currency":"EUR","b_value":165,"b_paymentterms_id":1,"b_depositterms_id":1,"b_nr_cancellation_policies":2},"439138":{"b_nr_blocks":10,"b_room_mealplan_category":"","b_room_cancellation_policy":"free_cancellation","b_nr_cancellation_policies":1,"b_paymentterms_id":34,"b_value":171.69,"b_depositterms_id":152,"b_currency":"EUR"},"1497691":{"b_paymentterms_id":1,"b_value":67.5,"b_depositterms_id":1,"b_nr_cancellation_policies":2,"b_currency":"EUR","b_nr_blocks":8,"b_room_cancellation_policy":"non_refundable_anymore","b_room_mealplan_category":""},"439149":{"b_room_cancellation_policy":"free_cancellation","b_room_mealplan_category":"","b_nr_blocks":4,"b_currency":"EUR","b_paymentterms_id":34,"b_value":142.59,"b_depositterms_id":152,"b_nr_cancellation_policies":1},"239413":{"b_currency":"EUR","b_depositterms_id":152,"b_paymentterms_id":34,"b_value":187.2,"b_nr_cancellation_policies":1,"b_room_cancellation_policy":"free_cancellation","b_room_mealplan_category":"","b_nr_blocks":16},"38511":{"b_currency":"EUR","b_paymentterms_id":36,"b_depositterms_id":152,"b_value":111,"b_nr_cancellation_policies":1,"b_room_cancellation_policy":"free_cancellation","b_room_mealplan_category":"","b_nr_blocks":2}},
+availability_api_request: {"affiliate_id":304142,"allow_data_gathering":null,"ds_metadata":{"is_normal_user":1,"experiment_seed":"005ee1907698d3fb503bb45ccebf012896"},"hotels":[{"id":1497691,"cheapest_room":{"excl_charges":70.7547169811321,"charges_breakdown":[{"charge_type":22,"charge_amount":12.0,"charge_inclusion":"included"},{"charge_inclusion":"included","charge_amount":4.24528301886792,"charge_type":21}],"currency":"EUR","price":67.5}},{"cheapest_room":{"price":99,"currency":"EUR","charges_breakdown":[{"charge_type":22,"charge_amount":12.0,"charge_inclusion":"included"},{"charge_type":21,"charge_amount":5.60377358490566,"charge_inclusion":"included"}],"excl_charges":93.3962264150943},"id":265624},{"cheapest_room":{"price":171.69,"excl_charges":161.971698113208,"charges_breakdown":[{"charge_type":22,"charge_amount":12.0,"charge_inclusion":"included"},{"charge_type":21,"charge_inclusion":"included","charge_amount":9.71830188679245}],"currency":"EUR"},"id":439138},{"cheapest_room":{"charges_breakdown":[{"charge_type":22,"charge_amount":12.0,"charge_inclusion":"included"},{"charge_type":21,"charge_amount":9.33962264150943,"charge_inclusion":"included"}],"currency":"EUR","excl_charges":155.660377358491,"price":165},"id":343599},{"id":439149,"cheapest_room":{"excl_charges":134.518867924528,"charges_breakdown":[{"charge_amount":12.0,"charge_inclusion":"included","charge_type":22},{"charge_amount":8.0711320754717,"charge_inclusion":"included","charge_type":21}],"currency":"EUR","price":142.59}},{"id":38511,"cheapest_room":{"price":111,"excl_charges":104.716981132075,"charges_breakdown":[{"charge_type":22,"charge_amount":12.0,"charge_inclusion":"included"},{"charge_type":21,"charge_inclusion":"included","charge_amount":6.28301886792453}],"currency":"EUR"}},{"id":239413,"cheapest_room":{"currency":"EUR","charges_breakdown":[{"charge_type":22,"charge_amount":12.0,"charge_inclusion":"included"},{"charge_inclusion":"included","charge_amount":10.5962264150943,"charge_type":21}],"excl_charges":176.603773584906,"price":187.2}}],"user":{"country_code":"pt","logged_in":"","language_code":"en-us","genius_level":0,"sr_key":"ca101c2bbe3b004f","genius":0,"business_booker":null,"visitor_ufi":-2162511,"pageview_id":"ca101c2bbe3b004f","currency_code":"EUR"},"exp":{"tpi_app_android_multiple_room":0,"tpi_web_mdot_multi_room":0,"tpi_app_ios_multiple_room_booking":0,"tpi_web_www_multi_room":0},"platform":"www","search_config":{"checkout_date":"2020-06-18","number_of_children":0,"checkin_date":"2020-06-15","number_of_rooms":1,"number_of_adults":2},"source":"sr","restrictions":{"allow_flexible_rates":1,"skip_ct":1,"apply_net_rate_filtering":0,"skip_ag":0,"show_only_price":0,"allow_surcharge_rates":1}},
+decision_fragment_request: {"request_arguments":{"affiliate_id":304142,"allow_data_gathering":null,"ds_metadata":{"is_normal_user":1,"experiment_seed":"005ee1907698d3fb503bb45ccebf012896"},"hotels":[{"id":1497691,"cheapest_room":{"excl_charges":70.7547169811321,"charges_breakdown":[{"charge_type":22,"charge_amount":12.0,"charge_inclusion":"included"},{"charge_inclusion":"included","charge_amount":4.24528301886792,"charge_type":21}],"currency":"EUR","price":67.5}},{"cheapest_room":{"price":99,"currency":"EUR","charges_breakdown":[{"charge_type":22,"charge_amount":12.0,"charge_inclusion":"included"},{"charge_type":21,"charge_amount":5.60377358490566,"charge_inclusion":"included"}],"excl_charges":93.3962264150943},"id":265624},{"cheapest_room":{"price":171.69,"excl_charges":161.971698113208,"charges_breakdown":[{"charge_type":22,"charge_amount":12.0,"charge_inclusion":"included"},{"charge_type":21,"charge_inclusion":"included","charge_amount":9.71830188679245}],"currency":"EUR"},"id":439138},{"cheapest_room":{"charges_breakdown":[{"charge_type":22,"charge_amount":12.0,"charge_inclusion":"included"},{"charge_type":21,"charge_amount":9.33962264150943,"charge_inclusion":"included"}],"currency":"EUR","excl_charges":155.660377358491,"price":165},"id":343599},{"id":439149,"cheapest_room":{"excl_charges":134.518867924528,"charges_breakdown":[{"charge_amount":12.0,"charge_inclusion":"included","charge_type":22},{"charge_amount":8.0711320754717,"charge_inclusion":"included","charge_type":21}],"currency":"EUR","price":142.59}},{"id":38511,"cheapest_room":{"price":111,"excl_charges":104.716981132075,"charges_breakdown":[{"charge_type":22,"charge_amount":12.0,"charge_inclusion":"included"},{"charge_type":21,"charge_inclusion":"included","charge_amount":6.28301886792453}],"currency":"EUR"}},{"id":239413,"cheapest_room":{"currency":"EUR","charges_breakdown":[{"charge_type":22,"charge_amount":12.0,"charge_inclusion":"included"},{"charge_inclusion":"included","charge_amount":10.5962264150943,"charge_type":21}],"excl_charges":176.603773584906,"price":187.2}}],"user":{"country_code":"pt","logged_in":"","language_code":"en-us","genius_level":0,"sr_key":"ca101c2bbe3b004f","genius":0,"business_booker":null,"visitor_ufi":-2162511,"pageview_id":"ca101c2bbe3b004f","currency_code":"EUR"},"exp":{"tpi_app_android_multiple_room":0,"tpi_web_mdot_multi_room":0,"tpi_app_ios_multiple_room_booking":0,"tpi_web_www_multi_room":0},"platform":"www","search_config":{"checkout_date":"2020-06-18","number_of_children":0,"checkin_date":"2020-06-15","number_of_rooms":1,"number_of_adults":2},"source":"sr","restrictions":{"allow_flexible_rates":1,"skip_ct":1,"apply_net_rate_filtering":0,"skip_ag":0,"show_only_price":0,"allow_surcharge_rates":1}},"rooms":"to be added by client side"},
+searchresults_ordered_by_price: 0,
+b_wholesaler_translations: {
+"20": "Basic Option",
+"36": "BBasic Room",
+"10": "Single",
+"9": "Double",
+"23": "Double for Single Use",
+"8": "Twin",
+"24": "Twin/Double",
+"7": "Triple",
+"4": "Quad",
+"13": "Family",
+"5": "Suite",
+"12": "Studio",
+"1": "Apartment",
+"25": "Dorm Room",
+"26": "Bed in Dorm",
+"27": "Bungalow",
+"28": "Chalet",
+"31": "Villa",
+"29": "Vacation Home",
+"32": "Trailer",
+"33": "Tent",
+"35": "Empty lot",
+},
+},
+b_district_ids_to_polygon: {"989":[],"8260":[],"9138":[],"8254":[],"8246":[],"7164":[],"6188":[],"5320":[],"8856":[],"8259":[],"8217":[],"8216":[],"1947":[],"1945":[],"982":[]},
+
+<script>
+booking.ensureNamespaceExists('env');
+booking.env.b_map_center_latitude = 38.736171;
+booking.env.b_map_center_longitude = -9.15650400801331;
+booking.env.b_map_google_static_thumbnail_zoom_level = 11;
+booking.env.b_map_google_bounding_box = '-9.15477365255356,38.7422391244904,-9.13118898868561,38.7098616444354';
+booking.env.b_query_params_no_ext = '?label=gen173nr-1DCAEoggI46AdIM1gEaLsBiAEBmAExuAEXyAEM2AED6AEB-AECiAIBqAIDuALT-4v3BcACAdICJGQ4NDU2Y2RlLTJkMTAtNGU4Yi04ZWNkLWIwZDZiYWRlMzQ3NtgCBOACAQ;sid=65f92edabaab200cc88fb48d7e3c12e4;srpvid=ca101c2bbe3b004f&';
+booking.env.b_server_role='app';
+</script>
+
+}
+booking.env.b_lang = 'en';
+booking.env.b_map_dest_type = 'city';
+booking.env.b_map_dest_id = '-2167973';
+booking.env.current_hotel = '';
+booking.env.map_more_params = "";
+booking.env.autocomplete_more_params = '';
+booking.env.touch_map_infowindow_close = '';
+booking.env.b_icons_url = 'https://r-cf.bstatic.com/static/img';
+booking.env.b_map_nights = '3';
+booking.env.b_domestic_booker = '1';
+booking.env.b_guest_country = 'pt';
+booking.env.b_city_has_metro_access = '';
+booking.env.b_city_has_rail_access = '';
+maps.EXPERIMENTS = [
+{
+
+if (i === 1 && typeof bMovableBookNowButton != "undefined") {
+bMovableBookNowButton.init();
+}
+if (i == 4) {
+$(".toggle_overview").show();
+$(".toggle_review").hide();
+} else {
+$(".toggle_review").show();
+$(".toggle_overview").hide();
+}
+}
+}
+function popup( url, w, h ) {
+newWindow = window.open( url, 'popupWindow', 'width=' + w + ',height=' + h + ',menubar=no,toolbar=no,location=no,bookmarks=no,status=no,scrollbars=yes,resizable=yes' );
+if ( window.focus ) {
+newWindow.focus();
+}
+}
+booking.ensureNamespaceExists( 'env' );
+booking.env.b_checkin_date = '2020-06-15';
+booking.env.b_session_checkin_date = '2020-06-15';
+booking.env.b_checkout_date = '2020-06-18';
+booking.env.b_session_checkout_date = '2020-06-18';
+booking.env.b_no_dates_mode = '';
+booking.env.b_months = [{"b_number": +"6","name":'June'},{"b_number": +"7","name":'July'},{"b_number": +"8","name":'August'},{"b_number": +"9","name":'September'},{"b_number": +"10","name":'October'},{"b_number": +"11","name":'November'},{"b_number": +"12","name":'December'},{"b_number": +"1","name":'January'},{"b_number": +"2","name":'February'},{"b_number": +"3","name":'March'},{"b_number": +"4","name":'April'},{"b_number": +"5","name":'May'},{"b_number": +"6","name":'June'},{"b_number": +"7","name":'July'},{"b_number": +"8","name":'August'},{"b_number": +"9","name":'September'}];
+(function() {
+var months = booking.env.b_months;
+if ( months.length >= 12 ) {
+booking.env.b_months = months.slice( 0, 12 );
+}
+})();
+booking.env.b_this_year4 = 2020;
+booking.env.b_this_month = 6;
+booking.env.b_this_day = 12;
+booking.env.date_format_acronym = "YYYY-MM-DD";
+booking.env.day = "day";
+booking.env.sbox_day = "Day";
+booking.env.sbox_month = "Month";
+booking.env.error.checkin_date_in_the_past = {
+"name" : "Your selected check-in date is in the past. Please check your dates and try again. "
+};
+booking.env.error.checkin_date_invalid = {
+"name" : "Your check-in date is invalid."
+};
+booking.env.error.checkin_date_to_far_in_the_future = {
+"name" : "Your selected check-in date is too far in the future. Please try again."
+};
+booking.env.error.checkout_date_invalid = {
+"name" : "Your departure date is invalid."
+};
+booking.env.error.checkout_date_more_than_30_days_after_checkin = {
+"name" : "Your check-out date is more than 30 nights after your check-in date. Bookings can only be made for a maximum of 30 nights. Please enter different dates and try again."
+};
+booking.env.error.checkout_date_not_after_checkin_date = {
+"name" : "Your check-out date is before your check-in date. Have another look at your dates and try again."
+};
+booking.env.error.not_specific_enough = {
+"name" : "Oops! We need at least part of the name to start searching."
+};
+booking.env.error.checkin_in_past_error_suggest_tonight = {
+"name" : "This check-in date is in the past. You can search for tonight or enter new dates below."
+};
+booking.env.month = "Month";
+booking.env.please_enter_your_check_in_date = "Please enter your check-in date.";
+booking.env.please_enter_your_check_out_date = "Please enter your check-out date.";
+booking.env.s_value_checkin_monthday = "15";
+booking.env.s_value_checkin_monthday_is_set = 1;
+booking.env.s_value_checkin_year_month = '';
+booking.env.s_value_checkin_year_month_is_set = 1;
+booking.env.s_value_checkout_monthday = "18";
+booking.env.s_value_checkout_monthday_is_set = 1;
+booking.env.s_value_checkout_year_month = '';
+booking.env.s_value_checkout_year_month_is_set = 1;
+booking.env.sb_flexi_srch_month_validation = "Select a month";
+booking.env.to_check_availability_please_enter_your_dates_of_stay = "Please enter dates to check availability.";
+booking.env.checkout_date_not_after_checkin_date = "Please check your dates, the check-out date appears to be before the check-in date.";
+booking.env.b_room_groups = [];
+booking.env.b_room_extrabeds = [];
+booking.env.error.hp_dates_in_the_past = {
+"name" : "Please select current or future dates for check-in and check-out."
+};
+booking.env.error.hp_same_day_checkin_checkout = {
+"name" : "Make sure your check-out date is at least 1 day after check-in."
+};
+booking.env.domain_for_book = 'https://secure.booking.com';
+booking.env.b_query_params_with_lang = '.html?label=gen173nr-1DCAEoggI46AdIM1gEaLsBiAEBmAExuAEXyAEM2AED6AEB-AECiAIBqAIDuALT-4v3BcACAdICJGQ4NDU2Y2RlLTJkMTAtNGU4Yi04ZWNkLWIwZDZiYWRlMzQ3NtgCBOACAQ;sid=65f92edabaab200cc88fb48d7e3c12e4;srpvid=ca101c2bbe3b004f&';
+booking.env.b_canonical_url = 'https:&#47;&#47;www.booking.com&#47;searchresults.html?dest_id=-2167973;dest_type=city;ss=Lisbon';
+booking.env.b_canonical_url_delimiter = ';';
+booking.env.b_query_params_delimiter = ';';
+booking.env.group_booking_02 = 'See all rooms available';
+booking.env.group_room = 'Room';
+booking.env.group_remove = 'Remove';
+booking.env.s_value_ss = "Lisbon";
+booking.env.s_value_ss_raw = "";
+booking.env.close_button = "CLOSE";
+booking.env.next_button = "Next";
+booking.env.prev_button = "Previous";
+booking.env.book_button = "Book now";
+booking.env.date_format_acronym = "YYYY-MM-DD";
+booking.env.sunday_first = 1;
+booking.env.experiment_popups_close = 'Close';
+booking.env.a11y_dialog_content_start_text = 'Start of dialog content';
+booking.env.a11y_dialog_content_end_text = 'End of dialog content';
+booking.env.city_name_en = '';
+booking.env.b_urlcity = 'lisbon';
+booking.env.child_age_text = "Enter all children\'s ages using numbers from 0 to 17.";
+booking.env.b_stid = 304142;
+booking.env.b_new_ga_track = 1;
+booking.env.prd_bpg_overlay_cs_link = '<a href="https://secure.booking.com/content/cs.html?label=gen173nr-1DCAEoggI46AdIM1gEaLsBiAEBmAExuAEXyAEM2AED6AEB-AECiAIBqAIDuALT-4v3BcACAdICJGQ4NDU2Y2RlLTJkMTAtNGU4Yi04ZWNkLWIwZDZiYWRlMzQ3NtgCBOACAQ;sid=65f92edabaab200cc88fb48d7e3c12e4;srpvid=ca101c2bbe3b004f&" target="_blank">';
+</script>
+
+window.b = window.b || window.B || window.booking || {};
+var pageviewInfo = window.b.gaPageViewInfo = {
+page: '/searchresults.html?label=gen173nr-1DCAEoggI46AdIM1gEaLsBiAEBmAExuAEXyAEM2AED6AEB-AECiAIBqAIDuALT-4v3BcACAdICJGQ4NDU2Y2RlLTJkMTAtNGU4Yi04ZWNkLWIwZDZiYWRlMzQ3NtgCBOACAQ&tmpl=searchresults&class_interval=1&dest_id=-2167973&dest_type=city&dtdisc=0&from_sf=1&group_adults=2&group_children=0&inac=0&index_postcard=0&label_click=undef&no_rooms=1&offset=0&postcard=0&raw_dest_type=city&room1=A%2CA&sb_price_type=total&shw_aparth=1&slp_r_match=0&src=index&src_elem=sb&srpvid=ca101c2bbe3b004f&ss=Lisbon&ss_all=0&ssb=empty&sshis=0&ssne=Lisbon&ssne_untouched=Lisbon&top_ufis=1&ur_dat=1&ur_hc=2',
+dimension13: "" + (new Date('2020-06-15').getDay()) + "|" + (new Date('2020-06-18').getDay()),
+dimension14: "3",
+dimension94: "3",
+dimension15: "3",
+dimension95: "3",
+dimension16: "34",
+dimension4: "65F92ED",
+dimension5: "304142",
+dimension6: "3",
+dimension7: "1",
+dimension8: "gen173nr-1DCAEoggI46AdIM1gEaLsBiAEBmAExuAEXyAEM2AED6AEB-AECiAIBqAIDuALT-4v3BcACAdICJGQ4NDU2Y2RlLTJkMTAtNGU4Yi04ZWNkLWIwZDZiYWRlMzQ3NtgCBOACAQ",
+dimension44: "",
+dimension9: "1 rooms | 2 adults | 0 kids",
+dimension53: "1 rooms | 2 adults | 0 kids",
+dimension11: "desktop",
+dimension12: "en-us",
+dimension10: "0",
+dimension29: "0",
+dimension32: "not_logged_in",
+dimension33: "na",
+dimension35: "UmFuZG9tSVYkc2RlIyh9YeXKWxo4vn0n0Ey_4ceBXiR14Lhyi0vFHlokfvv_I-xM",
+dimension84: "0",
+dimension31: "unknown",
+dimension45: 'pt->pt',
+dimension37: (booking.env.b_guest_country == booking.env.b_countrycode) ? 'domestic' : 'international',
+dimension46: 'city-3000-4000',
+dimension38: "null",
+dimension39: "null",
+dimension41: "-2167973",
+dimension42: "Search Results (city)",
+dimension61: "0",
+dimension62: "0",
+dimension63: "1",
+dimension64: '',
+dimension68: "0",
+dimension73: "EUR",
+dimension23: (function(){return navigator.connection && navigator.connection.effectiveType || ''})(),
+dimension24: (function(){return navigator.connection && navigator.connection.type || ''})(),
+dimension85: "Couple",
+dimension99: "Couple",
+dimension90: "not rated",
+dimension91: "0",
+dimension100: 270,
+dimension116: 0,
+dimension117: 0,
+dimension118: 0,
+dimension119: 0,
+dimension121: "Other",
+dimension52: "0",
+dimension199: "2020-06-11;",
+dimension255: "null"
+};
