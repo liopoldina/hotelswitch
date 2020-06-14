@@ -117,6 +117,20 @@ $(function () {
     }
   });
 
+  // 10) load more results
+  //  $("button").click(function(){
+  //   $.ajax({url: "demo_test.txt", success: function(result){
+  //     $("#div1").html(result);
+  //   }});
+  // });
+  // 10) load more results
+
+  $.ajax({
+    url: "results_page.php",
+    method: "GET",
+    success: function (res) {},
+  });
+
   //end jquery
 });
 

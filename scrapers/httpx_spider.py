@@ -1,118 +1,133 @@
 #!C:/Users/Pedro/AppData/Local/Programs/Python/Python38/python.exe
 import json
-from bs4 import BeautifulSoup
-import re
 import sys
 import httpx
+import time
+from datetime import datetime
+from datetime import timedelta
 
+if sys.argv[1] == "initial":
+    mode = sys.argv[1]
+    check_in = sys.argv[2]
+    check_out = sys.argv[3]
+    destination_name = sys.argv[4]
+    if len(sys.argv) == 6:
+        destination_id = sys.argv[5]
+    else:
+        destination_id = ""
 
-# fields
-# check_in = sys.argv[1]
-# check_out = sys.argv[2]
-# destination_name = sys.argv[3]
+if sys.argv[1] == "page":
+    mode = sys.argv[1]
+    check_in = sys.argv[2]
+    check_out = sys.argv[3]
+    destination_name = sys.argv[4]
+    destination_id = sys.argv[5]
+    page_url = sys.argv[6]
 
-# if len(sys.argv) == 5:
-#     destination_id = sys.argv[4]
-# else:
-#     destination_id = ""
+# mode = "page"
+# check_in = "2020-09-01"
+# check_out = "2020-09-04"
+# destination_name = "Moscow, Russia"
+# destination_id = "1153093"
+# page_url = "?q-check-out=2020-09-04&q-destination=Moscow,%20Russia&f-star-rating=5,4,3,2,1&start-index=10&q-check-in=2020-09-01&q-room-0-children=0&points=false&destination-id=1153093&q-room-0-adults=2&pg=1&q-rooms=1&resolved-location=CITY:1153093:UNKNOWN:UNKNOWN&f-accid=1&pn=2"
 
-class parameters:
-    pass
+user_agent = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.97 Safari/537.36"
 
+with open('scrapers/cookies.json') as file:
+    cookie_settings = json.load(file)
 
-param = parameters()
+cookie_date = datetime.strptime(cookie_settings[-1]['date'], '%d/%m/%y')
+today = datetime.now()
 
-param.check_in = "2020-07-10"
-param.check_out = "2020-07-11"
-param.destination_name = "Lisbon"
-param.destination_id = "1063515"
+# set user agent and cookie
+if today > cookie_date + timedelta(days=1):
 
-# search_url = "https://uk.hotels.com/search.do?"
+    search_headers = {
+        "accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9",
+        "accept-encoding": "gzip, deflate, br",
+        "accept-language": "en-US,en;q=0.5",
+        "cache-control": "no-cache",
+        "pragma": "no-cache",
+        "referer": "https://www.google.com/",
+        "sec-fetch-dest": "document",
+        "sec-fetch-mode": "navigate",
+        "sec-fetch-site": "same-origin",
+        "sec-fetch-user": "?1",
+        "upgrade-insecure-requests": "1",
+        "user-agent": "" + user_agent + ""
+    }
+    with httpx.Client(http2=True, headers=search_headers, timeout=15.0) as client:
+        r_home = client.get("https://uk.hotels.com")
+        time.sleep(3)
+        r_search = client.get(
+            "https://uk.hotels.com/search.do?resolved-location=CITY%3A549499%3AUNKNOWN%3AUNKNOWN&destination-id=549499&q-destination=London,%20England,%20United%20Kingdom&q-check-in=2020-12-31&q-check-out=2021-01-01&q-rooms=1&q-room-0-adults=2&q-room-0-children=0")
+        time.sleep(3)
+        r_listings = client.get(
+            "https://uk.hotels.com/search/listings.json?destination-id=549499&q-check-out=2021-01-01&q-destination=London,%20England,%20United%20Kingdom&q-room-0-adults=2&pg=1&q-rooms=1&start-index=12&q-check-in=2020-12-31&resolved-location=CITY:549499:UNKNOWN:UNKNOWN&q-room-0-children=0&pn=2")
 
+        cookie_settings.append({
+            "date": today.strftime('%d/%m/%y'),
+            "user_agent": user_agent,
+            "cookie": r_listings.request.headers._list[14][1].decode("utf-8")
+        })
+
+        del cookie_settings[0]
+        with open('scrapers/cookies.json', 'w') as outfile:
+            json.dump(cookie_settings, outfile)
+
+# Listings
 listings_url = "https://uk.hotels.com/search/listings.json"
 
-# search_parameters = {
-#     "currency": "cur=EUR",
-#     "q-destination": param.destination_name,
-#     "destination-id": param.destination_id,
-#     "q-check-in": param.check_in,
-#     "q-check-out": param.check_out,
-#     "q-rooms": 1,
-#     "f-star-rating": "5,4,3,2,1",
-#     "f-accid": 1
-# }
-
-
-# search_headers = {
-#     "accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9",
-#     "accept-encoding": "gzip, deflate, br",
-#     "accept-language": "en-US,en;q=0.9,pt;q=0.8",
-#     "cache-control": "no-cache",
-#     "pragma": "no-cache",
-#     "referer": "https://uk.hotels.com/",
-#     "sec-fetch-dest": "document",
-#     "sec-fetch-mode": "navigate",
-#     "sec-fetch-site": "same-origin",
-#     "sec-fetch-user": "?1",
-#     "upgrade-insecure-requests": "1",
-#     "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.97 Safari/537.3"
-# }
-
-# star session and get search page to get 1st page and cookies
-# s = requests.Session()
-# s.headers = search_headers
-# search_page = s.get(search_url, params=search_parameters)
-
 listings_parameters = {
-    "q-destination": param.destination_name,
-    "destination-id": param.destination_id,
-    "q-check-in": param.check_in,
-    "q-check-out": param.check_out,
+    "cur": "EUR",
+    "q-destination": destination_name,
+    "destination-id": destination_id,
+    "q-check-in": check_in,
+    "q-check-out": check_out,
     "q-rooms": 1,
     "f-star-rating": "5,4,3,2,1",
     "f-accid": 1,
-    "start-index": 8,
-    "resolved-location": "CITY:1063515:UNKNOWN:UNKNOWN",  # new
-    "pn": 2
+    "start-index": 0,
+    # "resolved-location": "CITY:" + destination_id + ":UNKNOWN:UNKNOWN",  # dá erro quando não existe destination e de qualquer forma temos que arranjar o "city"
+    "pn": 1
 }
 
 listings_headers = {
     "accept": "application/json, text/javascript, */*; q=0.01",
     "accept-encoding": "gzip, deflate, br",
-    "accept-language": "en-US,en;q=0.9,pt;q=0.8",
+    "accept-language": "en-US,en;q=0.5",
     "cache-control": "no-cache",
     "content-type": "application/javascript",
-    "cookie": "akacd_pr_20=1597178903~rv=40~id=32b7b6f7639eb6dcbd407b6ec499910c; bm_sz=9EDAC6D0123370579A928262C5185C8E~YAAQDZt6XHd4Y5lyAQAAeGpKqgjvuDnqC1Sz20quLEGgpIbiGSnXL+REk404Bk8zk/wN7PmaADXboreCOzkuSEIf1dxBjmfkuR3hKTAUrqQWVDm89S2JigeQSBbqSUD2tnQoIfwgt4SW+2NptiNa2B0f1HbWFJ3d/SRBpdeYB5GDkSotdDZu3W5GODKRyo24; asc=1; visitId=67d62b03-2f70-4c3b-9e70-a05eef86139c; SESSID=m2VGp6G3rTt6NJL6UHkw9tv5d9.hpa-74cd7c9dbb-mptg6; guid=6577d7d9-b497-44a2-90dd-c0cae3ecf474; user=QSplbl9HQnxIQ09NX1VL; dr=AAA~1591996398~AC256D453887E7598ECDB314AF5EB169C972C297A7EBF69D393777EEB4204837; _ga=GA1.2.1901412547.1591996401; _gid=GA1.2.1782156065.1591996401; AMCVS_C00802BE5330A8350A490D4C%40AdobeOrg=1; s_ecid=MCMID%7C03624445163088631420702441923045447796; AMCV_C00802BE5330A8350A490D4C%40AdobeOrg=-1330315163%7CMCIDTS%7C18426%7CMCMID%7C03624445163088631420702441923045447796%7CMCAAMLH-1592601200%7C6%7CMCAAMB-1592601200%7CRKhpRz8krg2tLO6pguXWp5olkAcUniQYPHaMWWgdJ3xzPWQmdj0y%7CMCOPTOUT-1592003600s%7CNONE%7CMCAID%7CNONE; s_cc=true; xdid=6b48c01c-8407-4636-ad84-2b58e861495b|1591996401|uk.hotels.com; mvthistory=eJxNjzkOAjAMBH8U%2BYyPlgYJISpqav7A40liI9FNJqu1HT54wHgTJbIP2oyWZDbssKeEtsdEQFkIG3TIseuBK3KsEI%2BIrSNRwcoqdDNvjpYIBWZe4NQtblh5SwyZRxJ4%2FEqInXulJCUaWGHSWeWkriVpcXTDZCm5ViYruxO8rz0fmoJYSwiq1AxZPLmlQSU5haTOEwasKkuRSSUVux832x97MW%2BODnPfsGaFn1mf6%2BVxfz1vX%2B8rV8U%3D; cPol=1; cbShown=1; _gcl_au=1.1.1274818481.1591996424; homepage_search_data=TGlzYm9uLCBQb3J0dWdhbA..%2F%2F14%2F06%2F2020%2F%2F15%2F06%2F2020%2F%2F2%2F%2Fdd%2FMM%2Fyyyy%2F%2F1063515%2F%2F; AFFLB=A; s_sq=%5B%5BB%5D%5D; aws=1; _gat=1; _abck=BAA6CDD4EFB38DACE8565EACB249D42A~0~YAAQDZt6XGGwY5lyAQAAxAN1qgQZXKVYTA8emOjrBJV5geuvADmqjDG6knXhjIsp66uXS/V8oZeJU+P9L4phx898cnb3zFDwPX15jWKfTaJisG8MX2dUNMPG3sKGCnc/3CXrwUuGja9As4tpql65jfXxib8jwR6XAFw6tRBHIszTEnkbxTjw5o2xhZluKK3JAlrAZSTwYhAcFZjU9lJ9LalnBWfgI04MyvN20ip76F6iQt+Dw6CfdV34WgKjmXSYgzsdAwbinalzzbRdnYjtro6O7yop/ou/PxZT1lZwrl6RqeGr/D0H2Kd2mwzqLxKdXwcQ72+hjQ==~-1~-1~-1; Session_Pageviews=6; _uetsid=857c30fb-2a78-7eaa-3bde-66e7ee799d8b; _uetvid=8d44dd77-a7f7-992c-84fa-b9f29df6e298",
+    "cookie": "" + cookie_settings[-1]['cookie'] + "",
     "pragma": "no-cache",
-    "referer": "https://uk.hotels.com/search.do?resolved-location=CITY%3A1063515%3AUNKNOWN%3AUNKNOWN&destination-id=1063515&q-destination=Lisbon,%20Portugal&q-check-in=2020-06-14&q-check-out=2020-06-15&q-rooms=1&q-room-0-adults=2&q-room-0-children=0",
+    "referer": "https://uk.hotels.com/search.do?resolved-location=CITY%3A" + destination_id + "%3AUNKNOWN%3AUNKNOWN&destination-id=" + destination_id + "&q-destination="+destination_name+"&q-check-in=" + check_in + "&q-check-out=" + check_out + "&q-rooms=1&q-room-0-adults=2&q-room-0-children=0",
     "sec-fetch-dest": "empty",
     "sec-fetch-mode": "cors",
     "sec-fetch-site": "same-origin",
-    "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.97 Safari/537.3",
+    "user-agent": "" + user_agent + "",
     "x-requested-with": "XMLHttpRequest"
 }
 
-# listings_url = "https://uk.hotels.com/search/listings.json?destination-id=1063515&q-check-out=2020-06-15&q-destination=Lisbon,%20Portugal&q-room-0-adults=2&pg=1&q-rooms=1&start-index=8&q-check-in=2020-06-14&resolved-location=CITY:1063515:UNKNOWN:UNKNOWN&q-room-0-children=0&pn=2"
 
-
-# client = httpx.AsyncClient(http2=True)
-with httpx.Client(http2=True) as client:
-    r = client.get(listings_url, params=listings_parameters,
-                   headers=listings_headers)
-    page_1 = json.loads(r.text)
-
+if mode == "initial":
+    with httpx.Client(http2=True) as client:
+        r = client.get(listings_url, params=listings_parameters,
+                       headers=listings_headers)
+        page_1 = json.loads(r.text)
     # r = client.get("https://uk.hotels.com/search/listings.json" +
     #                page_1['data']['body']['searchResults']['pagination']['nextPageUrl'], headers=listings_headers)
     # page_2 = json.loads(r.text)
+    # results.extend(page_2['data']['body']['searchResults']['results'])
+        results = page_1['data']['body']['searchResults']['results']
 
-
-results = page_1['data']['body']['searchResults']['results']
-
-# results.extend(page_2['data']['body']['searchResults']['results'])
+if mode == "page":
+    with httpx.Client(http2=True) as client:
+        r = client.get(listings_url + page_url, headers=listings_headers)
+        page_1 = json.loads(r.text)
+        results = page_1['data']['body']['searchResults']['results']
 
 
 class Hotel:
-
     def function(self):
         pass
 
@@ -135,10 +150,12 @@ for i in range(0, len(results)):
     hotels[i].stars = results[i]['starRating']
 
     # score
-    hotels[i].score = results[i]['guestReviews']['rating']
+    if 'guestReviews' in results[i]:
+        hotels[i].score = results[i]['guestReviews']['rating']
 
     # number of reviews
-    hotels[i].nr_reviews = results[i]['guestReviews']['total']
+    if 'guestReviews' in results[i]:
+        hotels[i].nr_reviews = results[i]['guestReviews']['total']
 
     # city
     hotels[i].city = results[i]['address']['locality']
@@ -172,8 +189,9 @@ for i in range(0, len(results)):
 
 # destination header
 destination_header = page_1['data']['body']['header']
-# search url for debug
-url = page_1['data']['body']['searchResults']['pagination']['nextPageUrl']
+
+# next_url
+next_url = page_1['data']['body']['searchResults']['pagination']['nextPageUrl']
 
 
 class output:
@@ -186,4 +204,4 @@ output.hotels = [ob.__dict__ for ob in hotels]
 
 
 # print (pass to php)
-print(json.dumps([output.hotels, destination_header, url]))
+print(json.dumps([output.hotels, destination_header, next_url]))
