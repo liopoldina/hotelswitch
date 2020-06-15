@@ -30,7 +30,7 @@ $m->check_in = date("yy-m-d", $m->check_in );
 $m->check_out = date("yy-m-d", $m->check_out );
 
 // 2) Get Data: - escolher data source
-$m->data_source="scrape";
+$m->data_source="database";
 switch ($m->data_source){
     case "database":
         include "results_database.php";
@@ -190,15 +190,20 @@ if(isset($_GET['score'])) {
     }}}
 
 
-// 8) Final: save dom html to temporary file and include
+// 8) Pass variables to head
+$script_element = $dom->createElement('script');
+$script_node = $dom->createTextNode("var hotel =" . json_encode($hotel) . "; var m=" . json_encode($m));
+$script_element->appendChild($script_node);
+    
+$head = $dom->getElementsByTagName('head');
+$head->item(0)->appendChild($script_element);
+
+// 9) Final: save dom html to temporary file and include
 $php = $dom->saveHTML();
 file_put_contents("temp/temp.html", $php);
 
-echo"<script>
-var hotel =" . json_encode($hotel) . "; var m=" . json_encode($m) . 
-"</script>";
-
 include "temp/temp.html";
+
 
 ?>
 

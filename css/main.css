@@ -873,6 +873,37 @@ input:checked + .slider:before {
   font-weight: bolder;
 }
 
+.page_loading_wrapper {
+  transform: translateY(-10px);
+  display: none;
+}
+
+.page_loading_wrapper_show {
+  display: block;
+}
+
+.filter_loading_wrapper_show {
+  display: block;
+  position: fixed;
+  top: 200px;
+  right: 429px;
+  transform: translateX(50%);
+}
+
+.page_loading {
+  width: fit-content;
+  height: auto;
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.page_loading img {
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
 .footer {
   min-width: var(--min_width);
   margin-top: 100px;

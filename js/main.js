@@ -48,8 +48,10 @@ $(function () {
   // 4) loading
   $(".sort_item, .switch, .hopping_select").click(function () {
     $(".hotel_boxes_wrapper").addClass("hotelbox_loading");
+    $(".page_loading_wrapper ").addClass("filter_loading_wrapper_show");
     setTimeout(function () {
       $(".hotel_boxes_wrapper").removeClass("hotelbox_loading");
+      $(".page_loading_wrapper ").removeClass("filter_loading_wrapper_show");
     }, 1000);
   });
 
@@ -117,18 +119,49 @@ $(function () {
     }
   });
 
-  // 10) load more results
-  //  $("button").click(function(){
-  //   $.ajax({url: "demo_test.txt", success: function(result){
-  //     $("#div1").html(result);
-  //   }});
-  // });
-  // 10) load more results
+  // 10) load more results if scrooll all the way down
+  $(window).scroll(function () {
+    if ($(window).scrollTop() + $(window).height() == $(document).height()) {
+      // alert("bottom!");
 
-  $.ajax({
-    url: "results_page.php",
-    method: "GET",
-    success: function (res) {},
+      $(".page_loading_wrapper").addClass("page_loading_wrapper_show");
+
+      function getpage(callback) {
+        $.ajax({
+          url: "results_page.php",
+          method: "GET",
+          dataType: "json",
+          data: {
+            next_url: m.next_url,
+          },
+          success: callback,
+        });
+      }
+
+      getpage(function (result) {
+        m.destination_header = result["auxiliar"]["destination_header"];
+        m.next_url = result["auxiliar"]["next_url"];
+        initial_length = hotel.length;
+        hotel = hotel.concat(result["hotels"]);
+        $(".page_loading_wrapper").removeClass("page_loading_wrapper_show");
+        for (var i = initial_length; i < hotel.length; i++) {
+          var teste = $("#hotelbox").clone();
+          $(teste)
+            .find(".search_cover_photo")
+            .attr("src", hotel[i].search_cover_photo);
+          $(teste).find(".name").text(hotel[i].name);
+          $(teste).find(".stars").text(hotel[i].stars_symbol);
+          $(teste).find(".quality").text(hotel[i].quality);
+          $(teste).find(".nr_reviews").text(hotel[i].nr_reviews);
+          $(teste).find(".score").text(hotel[i].score);
+          $(teste).find(".district").text(hotel[i].district);
+          $(teste).find(".city").text(hotel[i].city);
+          $(teste).find(".room_name").text(hotel[i].room_name);
+          $(teste).find(".price").text(hotel[i].price);
+          $(".hotel_boxes_wrapper").append($(teste));
+        }
+      });
+    }
   });
 
   //end jquery

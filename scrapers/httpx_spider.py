@@ -24,14 +24,14 @@ if sys.argv[1] == "page":
     destination_id = sys.argv[5]
     page_url = sys.argv[6]
 
-# mode = "page"
+# mode = "initial"
 # check_in = "2020-09-01"
 # check_out = "2020-09-04"
 # destination_name = "Moscow, Russia"
 # destination_id = "1153093"
 # page_url = "?q-check-out=2020-09-04&q-destination=Moscow,%20Russia&f-star-rating=5,4,3,2,1&start-index=10&q-check-in=2020-09-01&q-room-0-children=0&points=false&destination-id=1153093&q-room-0-adults=2&pg=1&q-rooms=1&resolved-location=CITY:1153093:UNKNOWN:UNKNOWN&f-accid=1&pn=2"
 
-user_agent = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.97 Safari/537.36"
+user_agent = "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.97 Safari/537.36"
 
 with open('scrapers/cookies.json') as file:
     cookie_settings = json.load(file)
@@ -110,7 +110,7 @@ listings_headers = {
 
 
 if mode == "initial":
-    with httpx.Client(http2=True) as client:
+    with httpx.Client(http2=True, timeout=10.0) as client:
         r = client.get(listings_url, params=listings_parameters,
                        headers=listings_headers)
         page_1 = json.loads(r.text)
@@ -121,8 +121,9 @@ if mode == "initial":
         results = page_1['data']['body']['searchResults']['results']
 
 if mode == "page":
-    with httpx.Client(http2=True) as client:
-        r = client.get(listings_url + page_url, headers=listings_headers)
+    with httpx.Client(http2=True, timeout=10.0) as client:
+        r = client.get(listings_url + page_url +
+                       "&cur=EUR", headers=listings_headers)
         page_1 = json.loads(r.text)
         results = page_1['data']['body']['searchResults']['results']
 
