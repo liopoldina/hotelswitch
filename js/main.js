@@ -34,19 +34,14 @@ $(function () {
       $(this).autocomplete("search");
     });
 
-  // 2) submit when filter changes
-  $(".section_item").click(function () {
-    document.getElementById("search").submit();
-  });
-
-  // 3) alterar cor selected sort
+  // 2) alterar cor selected sort
   $(".sort_item", this).click(function () {
     $(".sort_item").removeClass("sort_selected");
     $(this).addClass("sort_selected");
   });
 
-  // 4) loading
-  $(".sort_item, .switch, .hopping_select").click(function () {
+  // 3) loading
+  $(".switch, .hopping_select").click(function () {
     $(".hotel_boxes_wrapper").addClass("hotelbox_loading");
     $(".page_loading_wrapper ").addClass("filter_loading_wrapper_show");
     setTimeout(function () {
@@ -55,14 +50,14 @@ $(function () {
     }, 1000);
   });
 
-  // 5) get today date to set in minDate in date_range_picker
+  // 4) get today date to set in minDate in date_range_picker
   var today = new Date();
   var dd = String(today.getDate()).padStart(2, "0");
   var mm = String(today.getMonth() + 1).padStart(2, "0"); //January is 0!
   var yyyy = today.getFullYear();
   today = mm + "/" + dd + "/" + yyyy;
 
-  // 6) date_range_picker
+  // 5) date_range_picker
   $("#date_range").daterangepicker(
     {
       autoApply: true,
@@ -89,15 +84,15 @@ $(function () {
     }
   );
 
-  // 7) Delete policy separator dot if payment policy doesn't exists
+  // 6) Delete policy separator dot if payment policy doesn't exists
   if ($(".payment_policy").is(":empty")) {
     $(".policy_separator").children().text("");
   }
 
-  // 8) Delete hotel reviews wrapper if there is no reviews
+  // 7) Delete hotel reviews wrapper if there is no reviews
   $(".hotel_review").has(".score:empty").remove();
 
-  // 9) Open and close map
+  // 8) Open and close map
   //open map
   $(".map_wrapper").click(function () {
     $("#map_overlay").addClass("display_map_overlay");
@@ -118,8 +113,147 @@ $(function () {
       }
     }
   });
+  m.filters = [];
 
-  // 10) load more results if scrooll all the way down
+  // 9 Price Range Slider
+  $("#slider-range").slider({
+    range: true,
+    min: 0,
+    max: 150,
+    step: 5,
+    values: [0, 150],
+    slide: function (event, ui) {
+      if (ui.values[1] == 150) {
+        $("#amount").val("€" + ui.values[0] + " - €" + ui.values[1] + "+");
+      } else {
+        $("#amount").val("€" + ui.values[0] + " - €" + ui.values[1]);
+      }
+      m.filters.price_range = [];
+      m.filters.price_range.minimum_price = ui.values[0];
+      m.filters.price_range.maximum_price = ui.values[1];
+      if (ui.values[0] == 0) {
+        delete m.filters.price_range.minimum_price;
+      }
+      if (ui.values[1] == 150) {
+        delete m.filters.price_range.maximum_price;
+      }
+    },
+    stop: function (event, ui) {
+      get_filter_results();
+    },
+  });
+
+  $("#amount").val(
+    "€" +
+      $("#slider-range").slider("values", 0) +
+      " - €" +
+      $("#slider-range").slider("values", 1) +
+      "+"
+  );
+
+  // 10 Uncheck radio button on clicked
+  $("input:radio").on("click", function (e) {
+    var inp = $(this); //cache the selector
+    if (inp.is(".theone")) {
+      //see if it has the selected class
+      inp.prop("checked", false).removeClass("theone");
+      return;
+    }
+    $("input:radio[name='" + inp.prop("name") + "'].theone").removeClass(
+      "theone"
+    );
+    inp.addClass("theone");
+  });
+
+  // 11) Get value of selected filters
+  $(".check_box").click(function () {
+    m.filters.price_range = [];
+    m.filters.price_range.minimum_price = $("#slider-range").slider(
+      "values",
+      0
+    );
+    m.filters.price_range.maximum_price = $("#slider-range").slider(
+      "values",
+      1
+    );
+    if (m.filters.price_range.minimum_price == 0) {
+      delete m.filters.price_range.minimum_price;
+    }
+    if (m.filters.price_range.maximum_price == 150) {
+      delete m.filters.price_range.maximum_price;
+    }
+    // stars
+    m.filters.stars = [];
+    $("input:checkbox[name=stars]:checked").each(function () {
+      m.filters.stars.push($(this).val());
+    });
+    // distance from center
+    m.filters.distance_center = $(
+      "input:radio[name=distance_center]:checked"
+    ).val();
+    // cancellation policy
+    m.filters.free_cancellation = $(
+      "input:checkbox[name=free_cancellation]:checked"
+    ).val();
+    // minimum score
+    m.filters.minimum_score = $(
+      "input:radio[name=minimum_score]:checked"
+    ).val();
+
+    // call function get_filter_results
+    get_filter_results();
+  });
+
+  function get_filter_results() {
+    $(".hotel_boxes_wrapper").addClass("hotelbox_loading");
+    $(".page_loading_wrapper ").addClass("filter_loading_wrapper_show");
+
+    function filter(callback) {
+      $.ajax({
+        url: "results_page.php",
+        method: "GET",
+        dataType: "json",
+        data: {
+          next_url: m.next_url,
+          //filters
+          distance_center: m.filters.distance_center,
+          minimum_price: m.filters.price_range.minimum_price,
+          maximum_price: m.filters.price_range.maximum_price,
+          free_cancellation: m.filters.free_cancellation,
+          minimum_score: m.filters.minimum_score,
+        },
+        success: callback,
+      });
+    }
+
+    filter(function (result) {
+      m.destination_header = result["auxiliar"]["destination_header"];
+      m.next_url = result["auxiliar"]["next_url"];
+      hotel = result["hotels"];
+      var template = $("#hotelbox").clone();
+      $(".hotelbox").remove();
+      for (var i = 0; i < hotel.length; i++) {
+        var box = template.clone();
+        $(box)
+          .find(".search_cover_photo")
+          .attr("src", hotel[i].search_cover_photo);
+        $(box).find(".name").text(hotel[i].name);
+        $(box).find(".stars").text(hotel[i].stars_symbol);
+        $(box).find(".quality").text(hotel[i].quality);
+        $(box).find(".nr_reviews").text(hotel[i].nr_reviews);
+        $(box).find(".score").text(hotel[i].score);
+        $(box).find(".district").text(hotel[i].district);
+        $(box).find(".city").text(hotel[i].city);
+        $(box).find(".room_name").text(hotel[i].room_name);
+        $(box).find(".price").text(hotel[i].price);
+        $(".hotel_boxes_wrapper").append($(box));
+      }
+      $(".hotel_boxes_wrapper").removeClass("hotelbox_loading");
+      $(".page_loading_wrapper ").removeClass("filter_loading_wrapper_show");
+    });
+  }
+
+  // 12) load more results if scrooll all the way down
   $(window).scroll(function () {
     if ($(window).scrollTop() + $(window).height() == $(document).height()) {
       // alert("bottom!");
@@ -145,20 +279,20 @@ $(function () {
         hotel = hotel.concat(result["hotels"]);
         $(".page_loading_wrapper").removeClass("page_loading_wrapper_show");
         for (var i = initial_length; i < hotel.length; i++) {
-          var teste = $("#hotelbox").clone();
-          $(teste)
+          var box = $("#hotelbox").clone();
+          $(box)
             .find(".search_cover_photo")
             .attr("src", hotel[i].search_cover_photo);
-          $(teste).find(".name").text(hotel[i].name);
-          $(teste).find(".stars").text(hotel[i].stars_symbol);
-          $(teste).find(".quality").text(hotel[i].quality);
-          $(teste).find(".nr_reviews").text(hotel[i].nr_reviews);
-          $(teste).find(".score").text(hotel[i].score);
-          $(teste).find(".district").text(hotel[i].district);
-          $(teste).find(".city").text(hotel[i].city);
-          $(teste).find(".room_name").text(hotel[i].room_name);
-          $(teste).find(".price").text(hotel[i].price);
-          $(".hotel_boxes_wrapper").append($(teste));
+          $(box).find(".name").text(hotel[i].name);
+          $(box).find(".stars").text(hotel[i].stars_symbol);
+          $(box).find(".quality").text(hotel[i].quality);
+          $(box).find(".nr_reviews").text(hotel[i].nr_reviews);
+          $(box).find(".score").text(hotel[i].score);
+          $(box).find(".district").text(hotel[i].district);
+          $(box).find(".city").text(hotel[i].city);
+          $(box).find(".room_name").text(hotel[i].room_name);
+          $(box).find(".price").text(hotel[i].price);
+          $(".hotel_boxes_wrapper").append($(box));
         }
       });
     }
@@ -168,7 +302,7 @@ $(function () {
 });
 
 // JUST JAVASCRIPT
-//10) Google Maps
+//13) Google Maps
 
 // Map options
 var options = {

@@ -419,6 +419,7 @@ input:checked + .slider:before {
   background-color: white;
   border: 1px solid #bdbdbd;
   border-radius: 4px;
+  color: #333;
 }
 .filter_section {
   border-top: 1px solid #bdbdbd;
@@ -450,6 +451,50 @@ input:checked + .slider:before {
   width: 20px;
   position: absolute;
   left: -100vw;
+}
+.section_item input[type="radio"] {
+  cursor: pointer;
+  height: 20px;
+  width: 20px;
+  position: absolute;
+  left: -100vw;
+}
+
+.price_range_item {
+  height: auto;
+  margin: 10px 20px;
+}
+
+.amount_wrapper {
+  width: fit-content;
+  margin-bottom: 10px;
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+#amount {
+  width: 88px;
+  font-size: 14px;
+  border: none;
+}
+
+.slider_range_wrapper {
+  height: 20px;
+}
+
+.ui-state-hover {
+  border: 2px solid var(--main-color-light) !important;
+}
+
+.ui-state-active {
+  background-color: var(--main-color-light) !important;
+  border: 2px solid var(--main-color-light) !important;
+  box-shadow: 0px 0px 1px 1px var(--main-color-light) !important;
+}
+
+.ui-state-focus {
+  outline: none;
 }
 
 .check_box {
@@ -495,7 +540,6 @@ input:checked + .slider:before {
 .label_wrapper label {
   cursor: pointer;
   padding: 4px 10px 3px 30px;
-  color: #000;
   font-size: 13px;
   /* border: 1px solid black; */
 }

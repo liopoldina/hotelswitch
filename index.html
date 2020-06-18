@@ -113,6 +113,7 @@
                 </div>
               </div>
             </div>
+            </form>
             <div class="hopping_wrapper">
               <div class="hopping_toggle">
                 <div class="hooping_title tooltip">
@@ -200,58 +201,15 @@
             <div class="filter_wrapper">
               <div class="filter_title">Filter by:</div>
               <div class="filter_section">
-                <div class="section_title">Your Budget</div>
-                <div class="section_item">
-                  <input
-                    type="checkbox"
-                    id="0-50"
-                    class="check_box"
-                    name="budget[]"
-                    value="50"
-                  />
-                  <div class="check_box"></div>
-                  <div class="label_wrapper">
-                    <label for="0-50">€ 0 - € 50 per night</label>
+                <div class="section_title">Price per night</div>
+                <div class="price_range_item">
+                    <label for="amount" ></label>
+                    <div class="amount_wrapper">
+                    <input type="text" id="amount" readonly>
                   </div>
+                  <div class="slider_range_wrapper">
+                  <div id="slider-range"></div>
                 </div>
-                <div class="section_item">
-                  <input
-                    type="checkbox"
-                    id="50-100"
-                    class="check_box"
-                    name="budget[]"
-                    value="100"
-                  />
-                  <div class="check_box"></div>
-                  <div class="label_wrapper">
-                    <label for="50-100">€ 50 - € 100 per night</label>
-                  </div>
-                </div>
-                <div class="section_item">
-                  <input
-                    type="checkbox"
-                    id="100-150"
-                    class="check_box"
-                    name="budget[]"
-                    value="150"
-                  />
-                  <div class="check_box"></div>
-                  <div class="label_wrapper">
-                    <label for="100-150">€ 100 - € 150 per night</label>
-                  </div>
-                </div>
-                <div class="section_item">
-                  <input
-                    type="checkbox"
-                    id="+150"
-                    class="check_box"
-                    name="budget[]"
-                    value="unlimited"
-                  />
-                  <div class="check_box"></div>
-                  <div class="label_wrapper">
-                    <label for="+150">€ 150 + per night</label>
-                  </div>
                 </div>
               </div>
 
@@ -262,7 +220,7 @@
                     type="checkbox"
                     id="1_star"
                     class="check_box"
-                    name="stars[]"
+                    name="stars"
                     value="1"
                   />
                   <div class="check_box"></div>
@@ -275,7 +233,7 @@
                     type="checkbox"
                     id="2_stars"
                     class="check_box"
-                    name="stars[]"
+                    name="stars"
                     value="2"
                   />
                   <div class="check_box"></div>
@@ -288,7 +246,7 @@
                     type="checkbox"
                     id="3_stars"
                     class="check_box"
-                    name="stars[]"
+                    name="stars"
                     value="3"
                   />
                   <div class="check_box"></div>
@@ -301,7 +259,7 @@
                     type="checkbox"
                     id="4_stars"
                     class="check_box"
-                    name="stars[]"
+                    name="stars"
                     value="4"
                   />
                   <div class="check_box"></div>
@@ -314,25 +272,12 @@
                     type="checkbox"
                     id="5_stars"
                     class="check_box"
-                    name="stars[]"
+                    name="stars"
                     value="5"
                   />
                   <div class="check_box"></div>
                   <div class="label_wrapper">
                     <label for="5_stars">5 stars</label>
-                  </div>
-                </div>
-                <div class="section_item">
-                  <input
-                    type="checkbox"
-                    id="unrated"
-                    class="check_box"
-                    name="stars[]"
-                    value="unrated"
-                  />
-                  <div class="check_box"></div>
-                  <div class="label_wrapper">
-                    <label for="unrated">Unrated</label>
                   </div>
                 </div>
               </div>
@@ -341,10 +286,10 @@
                 <div class="section_title">Distance from center</div>
                 <div class="section_item">
                   <input
-                    type="checkbox"
+                    type="radio"
                     id="1km"
                     class="check_box"
-                    name="distance[]"
+                    name="distance_center"
                     value="1km"
                   />
                   <div class="check_box"></div>
@@ -354,10 +299,10 @@
                 </div>
                 <div class="section_item">
                   <input
-                    type="checkbox"
+                    type="radio"
                     id="3km"
                     class="check_box"
-                    name="distance[]"
+                    name="distance_center"
                     value="3km"
                   />
                   <div class="check_box"></div>
@@ -367,10 +312,10 @@
                 </div>
                 <div class="section_item">
                   <input
-                    type="checkbox"
+                    type="radio"
                     id="5km"
                     class="check_box"
-                    name="distance[]"
+                    name="distance_center"
                     value="5km"
                   />
                   <div class="check_box"></div>
@@ -387,112 +332,72 @@
                     type="checkbox"
                     id="free_cancellation"
                     class="check_box"
-                    name="policy[]"
-                    value="free_cancellation"
+                    name="free_cancellation"
+                    value="True"
                   />
                   <div class="check_box"></div>
                   <div class="label_wrapper">
                     <label for="free_cancellation">Free cancellation</label>
                   </div>
                 </div>
-                <div class="section_item">
-                  <input
-                    type="checkbox"
-                    id="no_creditcard"
-                    class="check_box"
-                    name="policy[]"
-                    value="no_creditcard"
-                  />
-                  <div class="check_box"></div>
-                  <div class="label_wrapper">
-                    <label for="no_creditcard">Book without credit card</label>
-                  </div>
-                </div>
-                <div class="section_item">
-                  <input
-                    type="checkbox"
-                    id="no_prepayment"
-                    class="check_box"
-                    name="policy[]"
-                    value="no_prepayment"
-                  />
-                  <div class="check_box"></div>
-                  <div class="label_wrapper">
-                    <label for="no_prepayment">No prepayment</label>
-                  </div>
-                </div>
               </div>
 
               <div class="filter_section">
-                <div class="section_title">Review Score</div>
+                <div class="section_title">Minimum Score</div>
                 <div class="section_item">
                   <input
-                    type="checkbox"
+                    type="radio"
                     id="wonderful"
                     class="check_box"
-                    name="score[]"
+                    name="minimum_score"
                     value="9"
                   />
                   <div class="check_box"></div>
                   <div class="label_wrapper">
-                    <label for="wonderful">Wonderful: 9+</label>
+                    <label for="wonderful">Wonderful: 9</label>
                   </div>
                 </div>
                 <div class="section_item">
                   <input
-                    type="checkbox"
+                    type="radio"
                     id="very_good"
                     class="check_box"
-                    name="score[]"
+                    name="minimum_score"
                     value="8"
                   />
                   <div class="check_box"></div>
                   <div class="label_wrapper">
-                    <label for="very_good">Very Good: 8+</label>
+                    <label for="very_good">Very Good: 8</label>
                   </div>
                 </div>
                 <div class="section_item">
                   <input
-                    type="checkbox"
+                    type="radio"
                     id="good"
                     class="check_box"
-                    name="score[]"
+                    name="minimum_score"
                     value="7"
                   />
                   <div class="check_box"></div>
                   <div class="label_wrapper">
-                    <label for="good">Good: 7+</label>
+                    <label for="good">Good: 7</label>
                   </div>
                 </div>
                 <div class="section_item">
                   <input
-                    type="checkbox"
+                    type="radio"
                     id="pleasant"
                     class="check_box"
-                    name="score[]"
+                    name="minimum_score"
                     value="6"
                   />
                   <div class="check_box"></div>
                   <div class="label_wrapper">
-                    <label for="pleasant">Pleasant: 6+</label>
-                  </div>
-                </div>
-                <div class="section_item">
-                  <input
-                    type="checkbox"
-                    id="no_rating"
-                    class="check_box"
-                    name="score[]"
-                    value="no_rating"
-                  />
-                  <div class="check_box"></div>
-                  <div class="label_wrapper">
-                    <label for="no_rating">No rating</label>
+                    <label for="pleasant">Pleasant: 6</label>
                   </div>
                 </div>
               </div>
             </div>
-          </form>
         </div>
         <div class="right">
           <div class="search_top">

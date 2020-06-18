@@ -147,50 +147,7 @@ switch ($m->rooms) {
         break;
     }
     
-// 7) keep filter checked
-$nodes->filter_checkboxes = $xpath->query("//input[contains(@class, 'check_box')]");
-
-$filter= new stdClass();
-
-$filter->budget=[50,100,150,"unlimited"];
-$filter->star=[1,2,3,4,5,"unrated"];
-$filter->distance=["1km","3km","5km"];
-$filter->policy=["free_cancellation","no_creditcard","no_prepayment"];
-$filter->score=[9,8,7,6,"no_rating"];
-
-if(isset($_GET['budget'])) {
-foreach ($filter->budget as $key=>$value) {
-    if (in_array($value, $_GET['budget'])){
-    $nodes->filter_checkboxes->item($key)->setAttribute("checked","true");
-    }}}
-
-if(isset($_GET['stars'])) {
-foreach ($filter->star as $key=>$value) {
-if (in_array($value, $_GET['stars'])){
-$nodes->filter_checkboxes->item(4+$key)->setAttribute("checked","true");
-}}}
-
-if(isset($_GET['distance'])) {
-    foreach ($filter->distance as $key=>$value) {
-    if (in_array($value, $_GET['distance'])){
-    $nodes->filter_checkboxes->item(10+$key)->setAttribute("checked","true");
-    }}}
-
-    
-if(isset($_GET['policy'])) {
-foreach ($filter->policy as $key=>$value) {
-if (in_array($value, $_GET['policy'])){
-$nodes->filter_checkboxes->item(13+$key)->setAttribute("checked","true");
-}}}
-
-if(isset($_GET['score'])) {
-    foreach ($filter->score as $key=>$value) {
-    if (in_array($value, $_GET['score'])){
-    $nodes->filter_checkboxes->item(16+$key)->setAttribute("checked","true");
-    }}}
-
-
-// 8) Pass variables to head
+// 7) Pass variables to head
 $script_element = $dom->createElement('script');
 $script_node = $dom->createTextNode("var hotel =" . json_encode($hotel) . "; var m=" . json_encode($m));
 $script_element->appendChild($script_node);
@@ -198,7 +155,7 @@ $script_element->appendChild($script_node);
 $head = $dom->getElementsByTagName('head');
 $head->item(0)->appendChild($script_element);
 
-// 9) Final: save dom html to temporary file and include
+// 8) Final: save dom html to temporary file and include
 $php = $dom->saveHTML();
 file_put_contents("temp/temp.html", $php);
 

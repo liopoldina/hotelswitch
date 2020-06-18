@@ -2,6 +2,7 @@
 include "classes\hotel_class.php"; 
 $m= new stdClass();
 
+$m->filters->stars=$_GET["stars"];
 $url = $_GET["next_url"];
 // $url="?q-check-out=2020-09-04&q-destination=Moscow,%20Russia&f-star-rating=5,4,3,2,1&start-index=10&q-check-in=2020-09-01&q-room-0-children=0&points=false&destination-id=1153093&q-room-0-adults=2&pg=1&q-rooms=1&resolved-location=CITY:1153093:UNKNOWN:UNKNOWN&f-accid=1&pn=2";
 
@@ -17,7 +18,7 @@ $mode= "page";
 
 $command = escapeshellcmd("C:/wamp64/www/hotelhopping.com/scrapers/httpx_spider.py $mode $check_in $check_out $destination_name $destination_id $url");
 
-$output = shell_exec($command);
+// $output = shell_exec($command); temporary disable for testing
 
 $output_json=json_decode($output,true);
 
