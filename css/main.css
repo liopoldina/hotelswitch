@@ -919,10 +919,14 @@ input:checked + .slider:before {
 
 .page_loading_wrapper {
   transform: translateY(-10px);
+  height: 80px;
+}
+
+.page_loading {
   display: none;
 }
 
-.page_loading_wrapper_show {
+.page_loading_show {
   display: block;
 }
 
@@ -950,7 +954,6 @@ input:checked + .slider:before {
 
 .footer {
   min-width: var(--min_width);
-  margin-top: 100px;
 }
 
 .first_footer {

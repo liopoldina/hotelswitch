@@ -16,20 +16,20 @@ if sys.argv[1] == "initial":
     else:
         destination_id = ""
 
-if sys.argv[1] == "page":
+if sys.argv[1] == "xhr":
     mode = sys.argv[1]
     check_in = sys.argv[2]
     check_out = sys.argv[3]
     destination_name = sys.argv[4]
     destination_id = sys.argv[5]
-    page_url = sys.argv[6]
+    xhr_url = sys.argv[6]
 
 # mode = "initial"
 # check_in = "2020-09-01"
 # check_out = "2020-09-04"
 # destination_name = "Moscow, Russia"
 # destination_id = "1153093"
-# page_url = "?q-check-out=2020-09-04&q-destination=Moscow,%20Russia&f-star-rating=5,4,3,2,1&start-index=10&q-check-in=2020-09-01&q-room-0-children=0&points=false&destination-id=1153093&q-room-0-adults=2&pg=1&q-rooms=1&resolved-location=CITY:1153093:UNKNOWN:UNKNOWN&f-accid=1&pn=2"
+# xhr_url = "?q-check-out=2020-09-04&q-destination=Moscow,%20Russia&f-star-rating=5,4,3,2,1&start-index=10&q-check-in=2020-09-01&q-room-0-children=0&points=false&destination-id=1153093&q-room-0-adults=2&pg=1&q-rooms=1&resolved-location=CITY:1153093:UNKNOWN:UNKNOWN&f-accid=1&pn=2"
 
 user_agent = "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.97 Safari/537.36"
 
@@ -120,10 +120,9 @@ if mode == "initial":
     # results.extend(page_2['data']['body']['searchResults']['results'])
         results = page_1['data']['body']['searchResults']['results']
 
-if mode == "page":
+if mode == "xhr":
     with httpx.Client(http2=True, timeout=10.0) as client:
-        r = client.get(listings_url + page_url +
-                       "&cur=EUR", headers=listings_headers)
+        r = client.get(xhr_url, headers=listings_headers)
         page_1 = json.loads(r.text)
         results = page_1['data']['body']['searchResults']['results']
 

@@ -187,6 +187,8 @@ $(function () {
     $("input:checkbox[name=stars]:checked").each(function () {
       m.filters.stars.push($(this).val());
     });
+    m.filters.stars = m.filters.stars.reverse();
+    m.filters.stars = m.filters.stars.join(",");
     // distance from center
     m.filters.distance_center = $(
       "input:radio[name=distance_center]:checked"
@@ -206,19 +208,22 @@ $(function () {
 
   function get_filter_results() {
     $(".hotel_boxes_wrapper").addClass("hotelbox_loading");
-    $(".page_loading_wrapper ").addClass("filter_loading_wrapper_show");
+    $(".page_loading_wrapper").addClass("filter_loading_wrapper_show");
+    $(".page_loading").addClass("page_loading_show");
 
     function filter(callback) {
       $.ajax({
-        url: "results_page.php",
+        url: "xhr_search.php",
         method: "GET",
         dataType: "json",
         data: {
+          mode: "filter",
           next_url: m.next_url,
-          //filters
-          distance_center: m.filters.distance_center,
+          nights: m.nights,
           minimum_price: m.filters.price_range.minimum_price,
           maximum_price: m.filters.price_range.maximum_price,
+          stars: m.filters.stars,
+          distance_center: m.filters.distance_center,
           free_cancellation: m.filters.free_cancellation,
           minimum_score: m.filters.minimum_score,
         },
@@ -229,6 +234,7 @@ $(function () {
     filter(function (result) {
       m.destination_header = result["auxiliar"]["destination_header"];
       m.next_url = result["auxiliar"]["next_url"];
+      m.previous_url = result["auxiliar"]["previous_url"];
       hotel = result["hotels"];
       var template = $("#hotelbox").clone();
       $(".hotelbox").remove();
@@ -243,29 +249,31 @@ $(function () {
         $(box).find(".nr_reviews").text(hotel[i].nr_reviews);
         $(box).find(".score").text(hotel[i].score);
         $(box).find(".district").text(hotel[i].district);
+        $(box).find(".distance_center").text(hotel[i].distance_center);
         $(box).find(".city").text(hotel[i].city);
         $(box).find(".room_name").text(hotel[i].room_name);
+        $(box).find(".cancellation_policy").text(hotel[i].cancellation_policy);
         $(box).find(".price").text(hotel[i].price);
         $(".hotel_boxes_wrapper").append($(box));
       }
       $(".hotel_boxes_wrapper").removeClass("hotelbox_loading");
       $(".page_loading_wrapper ").removeClass("filter_loading_wrapper_show");
+      $(".page_loading").removeClass("page_loading_show");
     });
   }
 
   // 12) load more results if scrooll all the way down
   $(window).scroll(function () {
     if ($(window).scrollTop() + $(window).height() == $(document).height()) {
-      // alert("bottom!");
-
-      $(".page_loading_wrapper").addClass("page_loading_wrapper_show");
+      $(".page_loading").addClass("page_loading_show");
 
       function getpage(callback) {
         $.ajax({
-          url: "results_page.php",
+          url: "xhr_search.php",
           method: "GET",
           dataType: "json",
           data: {
+            mode: "page",
             next_url: m.next_url,
           },
           success: callback,
@@ -275,9 +283,10 @@ $(function () {
       getpage(function (result) {
         m.destination_header = result["auxiliar"]["destination_header"];
         m.next_url = result["auxiliar"]["next_url"];
+        m.previous_url = result["auxiliar"]["previous_url"];
         initial_length = hotel.length;
         hotel = hotel.concat(result["hotels"]);
-        $(".page_loading_wrapper").removeClass("page_loading_wrapper_show");
+        $(".page_loading").removeClass("page_loading_show");
         for (var i = initial_length; i < hotel.length; i++) {
           var box = $("#hotelbox").clone();
           $(box)
@@ -289,8 +298,12 @@ $(function () {
           $(box).find(".nr_reviews").text(hotel[i].nr_reviews);
           $(box).find(".score").text(hotel[i].score);
           $(box).find(".district").text(hotel[i].district);
+          $(box).find(".distance_center").text(hotel[i].distance_center);
           $(box).find(".city").text(hotel[i].city);
           $(box).find(".room_name").text(hotel[i].room_name);
+          $(box)
+            .find(".cancellation_policy")
+            .text(hotel[i].cancellation_policy);
           $(box).find(".price").text(hotel[i].price);
           $(".hotel_boxes_wrapper").append($(box));
         }

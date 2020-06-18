@@ -30,7 +30,7 @@ $m->check_in = date("yy-m-d", $m->check_in );
 $m->check_out = date("yy-m-d", $m->check_out );
 
 // 2) Get Data: - escolher data source
-$m->data_source="database";
+$m->data_source="scrape";
 switch ($m->data_source){
     case "database":
         include "results_database.php";
