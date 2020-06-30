@@ -7,6 +7,8 @@ $(function () {
           event.preventDefault();
           $("#destination").val(ui.item.label); // display the label
           $("#destination_id").val(ui.item.value); // save value to hidden input
+          $("#lat").val(ui.item.coords.lat);
+          $("#lon").val(ui.item.coords.lon);
         },
         source: function (request, cb) {
           $.ajax({
@@ -113,8 +115,8 @@ $(function () {
       }
     }
   });
-  m.filters = [];
 
+  m.filters = {};
   // 9 Price Range Slider
   $("#slider-range").slider({
     range: true,
@@ -128,7 +130,7 @@ $(function () {
       } else {
         $("#amount").val("€" + ui.values[0] + " - €" + ui.values[1]);
       }
-      m.filters.price_range = [];
+      m.filters.price_range = {};
       m.filters.price_range.minimum_price = ui.values[0];
       m.filters.price_range.maximum_price = ui.values[1];
       if (ui.values[0] == 0) {
@@ -166,8 +168,10 @@ $(function () {
   });
 
   // 11) Get value of selected filters
+  var template = $("#hotelbox").clone();
+
   $(".check_box").click(function () {
-    m.filters.price_range = [];
+    m.filters.price_range = {};
     m.filters.price_range.minimum_price = $("#slider-range").slider(
       "values",
       0
@@ -210,6 +214,7 @@ $(function () {
     $(".hotel_boxes_wrapper").addClass("hotelbox_loading");
     $(".page_loading_wrapper").addClass("filter_loading_wrapper_show");
     $(".page_loading").addClass("page_loading_show");
+    $(".page_end_wrapper").removeClass("page_end_wrapper_show");
 
     function filter(callback) {
       $.ajax({
@@ -218,77 +223,28 @@ $(function () {
         dataType: "json",
         data: {
           mode: "filter",
-          next_url: m.next_url,
-          nights: m.nights,
-          minimum_price: m.filters.price_range.minimum_price,
-          maximum_price: m.filters.price_range.maximum_price,
-          stars: m.filters.stars,
-          distance_center: m.filters.distance_center,
-          free_cancellation: m.filters.free_cancellation,
-          minimum_score: m.filters.minimum_score,
+          m: m,
         },
         success: callback,
       });
     }
 
     filter(function (result) {
-      m.destination_header = result["auxiliar"]["destination_header"];
-      m.next_url = result["auxiliar"]["next_url"];
-      m.previous_url = result["auxiliar"]["previous_url"];
-      hotel = result["hotels"];
-      var template = $("#hotelbox").clone();
-      $(".hotelbox").remove();
-      for (var i = 0; i < hotel.length; i++) {
-        var box = template.clone();
-        $(box)
-          .find(".search_cover_photo")
-          .attr("src", hotel[i].search_cover_photo);
-        $(box).find(".name").text(hotel[i].name);
-        $(box).find(".stars").text(hotel[i].stars_symbol);
-        $(box).find(".quality").text(hotel[i].quality);
-        $(box).find(".nr_reviews").text(hotel[i].nr_reviews);
-        $(box).find(".score").text(hotel[i].score);
-        $(box).find(".district").text(hotel[i].district);
-        $(box).find(".distance_center").text(hotel[i].distance_center);
-        $(box).find(".city").text(hotel[i].city);
-        $(box).find(".room_name").text(hotel[i].room_name);
-        $(box).find(".cancellation_policy").text(hotel[i].cancellation_policy);
-        $(box).find(".price").text(hotel[i].price);
-        $(".hotel_boxes_wrapper").append($(box));
-      }
-      $(".hotel_boxes_wrapper").removeClass("hotelbox_loading");
-      $(".page_loading_wrapper ").removeClass("filter_loading_wrapper_show");
-      $(".page_loading").removeClass("page_loading_show");
-    });
-  }
+      m.destination_header = result["m"]["destination_header"];
+      m.next_url = result["m"]["next_url"];
+      m.previous_url = result["m"]["previous_url"];
 
-  // 12) load more results if scrooll all the way down
-  $(window).scroll(function () {
-    if ($(window).scrollTop() + $(window).height() == $(document).height()) {
-      $(".page_loading").addClass("page_loading_show");
-
-      function getpage(callback) {
-        $.ajax({
-          url: "xhr_search.php",
-          method: "GET",
-          dataType: "json",
-          data: {
-            mode: "page",
-            next_url: m.next_url,
-          },
-          success: callback,
-        });
-      }
-
-      getpage(function (result) {
-        m.destination_header = result["auxiliar"]["destination_header"];
-        m.next_url = result["auxiliar"]["next_url"];
-        m.previous_url = result["auxiliar"]["previous_url"];
-        initial_length = hotel.length;
-        hotel = hotel.concat(result["hotels"]);
+      if (result["hotels"] == null) {
+        console.log("There are no results that match your filters");
+        $(".hotelbox").remove();
+        $(".hotel_boxes_wrapper").removeClass("hotelbox_loading");
+        $(".page_loading_wrapper ").removeClass("filter_loading_wrapper_show");
         $(".page_loading").removeClass("page_loading_show");
-        for (var i = initial_length; i < hotel.length; i++) {
-          var box = $("#hotelbox").clone();
+      } else {
+        hotel = result["hotels"];
+        $(".hotelbox").remove();
+        for (var i = 0; i < hotel.length; i++) {
+          var box = template.clone();
           $(box)
             .find(".search_cover_photo")
             .attr("src", hotel[i].search_cover_photo);
@@ -307,10 +263,75 @@ $(function () {
           $(box).find(".price").text(hotel[i].price);
           $(".hotel_boxes_wrapper").append($(box));
         }
-      });
+        $(".hotel_boxes_wrapper").removeClass("hotelbox_loading");
+        $(".page_loading_wrapper ").removeClass("filter_loading_wrapper_show");
+        $(".page_loading").removeClass("page_loading_show");
+      }
+    });
+  }
+
+  // 12) load more results if scrooll all the way down
+  $(window).scroll(function () {
+    if ($(window).scrollTop() + $(window).height() == $(document).height()) {
+      // call function get_filter_results
+      if (m.next_url == "no results") {
+      } else {
+        get_page_results();
+      }
     }
   });
 
+  function get_page_results() {
+    $(".page_loading").addClass("page_loading_show");
+
+    function getpage(callback) {
+      $.ajax({
+        url: "xhr_search.php",
+        method: "GET",
+        dataType: "json",
+        data: {
+          mode: "page",
+          m: m,
+        },
+        success: callback,
+      });
+    }
+
+    getpage(function (result) {
+      m.destination_header = result["m"]["destination_header"];
+      m.next_url = result["m"]["next_url"];
+      m.previous_url = result["m"]["previous_url"];
+
+      if (m.next_url == "no results") {
+        $(".page_loading").removeClass("page_loading_show");
+        $(".page_end_wrapper").addClass("page_end_wrapper_show");
+      } else {
+        initial_length = hotel.length;
+        hotel = hotel.concat(result["hotels"]);
+        $(".page_loading").removeClass("page_loading_show");
+        for (var i = initial_length; i < hotel.length; i++) {
+          var box = template.clone();
+          $(box)
+            .find(".search_cover_photo")
+            .attr("src", hotel[i].search_cover_photo);
+          $(box).find(".name").text(hotel[i].name);
+          $(box).find(".stars").text(hotel[i].stars_symbol);
+          $(box).find(".quality").text(hotel[i].quality);
+          $(box).find(".nr_reviews").text(hotel[i].nr_reviews);
+          $(box).find(".score").text(hotel[i].score);
+          $(box).find(".district").text(hotel[i].district);
+          $(box).find(".distance_center").text(hotel[i].distance_center);
+          $(box).find(".city").text(hotel[i].city);
+          $(box).find(".room_name").text(hotel[i].room_name);
+          $(box)
+            .find(".cancellation_policy")
+            .text(hotel[i].cancellation_policy);
+          $(box).find(".price").text(hotel[i].price);
+          $(".hotel_boxes_wrapper").append($(box));
+        }
+      }
+    });
+  }
   //end jquery
 });
 

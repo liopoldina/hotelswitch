@@ -14,6 +14,7 @@ for ($i = 0; $i <= count($json->suggestions[0]->entities)-1; $i++) {
     $response[]=new stdClass();
     $response[$i]->label = strip_tags($json->suggestions[0]->entities[$i]->caption);
     $response[$i]->value = $json->suggestions[0]->entities[$i]->destinationId;
+    $response[$i]->coords = ['lat'=>$json->suggestions[0]->entities[$i]->latitude,'lon'=>$json->suggestions[0]->entities[$i]->longitude];
   }
 
 $response = json_encode ($response);

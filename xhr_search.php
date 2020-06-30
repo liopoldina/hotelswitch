@@ -1,23 +1,21 @@
 <?php
 include "classes\hotel_class.php"; 
 
-$url = $_GET["next_url"];
-// $url="?q-check-out=2020-09-04&q-destination=Moscow,%20Russia&f-star-rating=5,4,3,2,1&start-index=10&q-check-in=2020-09-01&q-room-0-children=0&points=false&destination-id=1153093&q-room-0-adults=2&pg=1&q-rooms=1&resolved-location=CITY:1153093:UNKNOWN:UNKNOWN&f-accid=1&pn=2";
+$m=$_GET["m"];
 
-$parsed_url= parse_url($url);
-parse_str($parsed_url['query'], $query);
+$next_url = $m["next_url"];
 
-$check_in = $query['q-check-in'];
-$check_out = $query['q-check-out'];
-$destination_name = str_replace(' ', '%20',$query['q-destination']);
-$destination_id = $query['destination-id'];
+$check_in = $m["check_in"];
+$check_out = $m["check_out"];
+$destination_name = str_replace(' ', '%20',$m["destination_name"]);
+$destination_id = $m["destination_id"];
 
 $mode= $_GET["mode"];
 
 switch ($mode){
     case "page":
         $url="https://uk.hotels.com/search/listings.json" .
-        $url.
+        $next_url.
         "&cur=EUR";
         break;
 
@@ -28,13 +26,13 @@ switch ($mode){
         "&cur=EUR".
         "&include-filters=true" .
         "&f-price-currency-code=EUR" .
-        ((isset($_GET["nights"])) ? "&f-price-multiplier" . $_GET["nights"] : "") .
-        ((isset($_GET["minimum_price"])) ? "&f-price-min=" . $_GET["minimum_price"] : "") .
-        ((isset($_GET["maximum_price"])) ? "&f-price-max=" . $_GET["maximum_price"] : "") .
-        ((isset($_GET["stars"])) ? "&f-star-rating=" . $_GET["stars"] : "") .
-        ((isset($_GET["minimum_score"])) ? "&f-guest-rating-min=" . $_GET["minimum_score"] : "") .
-        ((isset($_GET["free_cancellation"])) ? "&f-pay-pref=fc" : "") .
-        ((isset($_GET["distance_center"])) ? "&f-distance=" . $_GET["distance_center"] . "&f-lid=" . $destination_id : "") .
+        ((isset($m["nights"])) ? "&f-price-multiplier" . $m["nights"] : "") .
+        ((isset($m["filters"]['price_range']["minimum_price"])) ? "&f-price-min=" . $m["filters"]['price_range']["minimum_price"] : "") .
+        ((isset($m["filters"]['price_range']["maximum_price"])) ? "&f-price-max=" . $m["filters"]['price_range']["maximum_price"] : "") .
+        ((isset($m["filters"]["stars"])) ? "&f-star-rating=" . $m["filters"]["stars"] : "") .
+        ((isset($m["filters"]["minimum_score"])) ? "&f-guest-rating-min=" . $m["filters"]["minimum_score"] : "") .
+        ((isset($m["filters"]["free_cancellation"])) ? "&f-pay-pref=fc" : "") .
+        ((isset($m["filters"]["distance_center"])) ? "&f-distance=" . $m["filters"]["distance_center"] . "&f-lid=" . $destination_id : "") .
         "&f-accid=1" . //just hotels
         "&destination-id=" . $destination_id .
         "&q-destination=" . $destination_name .
@@ -54,8 +52,12 @@ foreach ($output_json[0] as $value)
 $hotel[] = new Hotel($value);
 
 $m= new stdClass();
-$m->next_url=$output_json[2];
+$m->next_url=$output_json[4];
 $m->previous_url=$url;
 
-echo json_encode(array('hotels'=>$hotel,'auxiliar'=>$m,));
+if (isset($hotel)){
+echo json_encode(array('hotels'=>$hotel,'m'=>$m,));
+}
+else {echo json_encode(array('m'=>$m,));}
+
 ?>

@@ -1,0 +1,67 @@
+[
+  {
+    "type": "location",
+    "subType": "CITY",
+    "name": "BRAGANCA",
+    "detailedName": "BRAGANCA/PT",
+    "id": "CBGC",
+    "self": {
+      "href": "https://api.amadeus.com/v1/reference-data/locations/CBGC",
+      "methods": ["GET"]
+    },
+    "timeZoneOffset": "+01:00",
+    "iataCode": "BGC",
+    "geoCode": { "latitude": 41.85778, "longitude": -6.70722 },
+    "address": {
+      "cityName": "BRAGANCA",
+      "cityCode": "BGC",
+      "countryName": "PORTUGAL",
+      "countryCode": "PT",
+      "regionCode": "EUROP"
+    },
+    "analytics": { "travelers": { "score": 1 } }
+  },
+  {
+    "type": "location",
+    "subType": "CITY",
+    "name": "BRAGA",
+    "detailedName": "BRAGA/PT",
+    "id": "CBGZ",
+    "self": {
+      "href": "https://api.amadeus.com/v1/reference-data/locations/CBGZ",
+      "methods": ["GET"]
+    },
+    "timeZoneOffset": "+01:00",
+    "iataCode": "BGZ",
+    "geoCode": { "latitude": 41.58001, "longitude": -8.45 },
+    "address": {
+      "cityName": "BRAGA",
+      "cityCode": "BGZ",
+      "countryName": "PORTUGAL",
+      "countryCode": "PT",
+      "regionCode": "EUROP"
+    }
+  },
+  {
+    "type": "location",
+    "subType": "CITY",
+    "name": "ARTHUR SIQUEIRA",
+    "detailedName": "BRAGANCA PAULISTA/SP/BR:ARTHUR",
+    "id": "CBJP",
+    "self": {
+      "href": "https://api.amadeus.com/v1/reference-data/locations/CBJP",
+      "methods": ["GET"]
+    },
+    "timeZoneOffset": "-03:00",
+    "iataCode": "BJP",
+    "geoCode": { "latitude": -22.97805, "longitude": -46.53777 },
+    "address": {
+      "cityName": "BRAGANCA PAULISTA",
+      "cityCode": "BJP",
+      "countryName": "BRAZIL",
+      "countryCode": "BR",
+      "stateCode": "SP",
+      "regionCode": "SAMER"
+    }
+  }
+]

@@ -24,12 +24,13 @@ if sys.argv[1] == "xhr":
     destination_id = sys.argv[5]
     xhr_url = sys.argv[6]
 
-# mode = "initial"
-# check_in = "2020-09-01"
-# check_out = "2020-09-04"
-# destination_name = "Moscow, Russia"
-# destination_id = "1153093"
-# xhr_url = "?q-check-out=2020-09-04&q-destination=Moscow,%20Russia&f-star-rating=5,4,3,2,1&start-index=10&q-check-in=2020-09-01&q-room-0-children=0&points=false&destination-id=1153093&q-room-0-adults=2&pg=1&q-rooms=1&resolved-location=CITY:1153093:UNKNOWN:UNKNOWN&f-accid=1&pn=2"
+# mode = "xhr"
+# check_in = "2020-06-21"
+# check_out = "2020-06-22"
+# destination_name = "Lisbon, Portugal"
+# destination_id = "1063515"
+# xhr_url = "https://uk.hotels.com/search/listings.json?q-check-out=2020-07-02&f-price-currency-code=EUR&q-destination=Lisbon,%20Portugal&f-star-rating=5,4,3&start-index=4&q-check-in=2020-07-01&q-room-0-children=0&points=false&destination-id=1063515&q-room-0-adults=2&pg=2&q-rooms=1&f-price-multiplier=1&f-price-max=45&resolved-location=CITY:1063515:UNKNOWN:UNKNOWN&f-accid=1&pn=1"
+
 
 user_agent = "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.97 Safari/537.36"
 
@@ -187,11 +188,20 @@ for i in range(0, len(results)):
     hotels[i].coords = results[i]['coordinate']
 
 
+# destination name
+destination_name = page_1['data']['body']['query']['destination']['value']
+
+# destination id
+destination_id = page_1['data']['body']['query']['destination']['id']
+
 # destination header
 destination_header = page_1['data']['body']['header']
 
 # next_url
-next_url = page_1['data']['body']['searchResults']['pagination']['nextPageUrl']
+if 'pagination' in page_1['data']['body']['searchResults']:
+    next_url = page_1['data']['body']['searchResults']['pagination']['nextPageUrl']
+else:
+    next_url = "no results"
 
 
 class output:
@@ -204,4 +214,5 @@ output.hotels = [ob.__dict__ for ob in hotels]
 
 
 # print (pass to php)
-print(json.dumps([output.hotels, destination_header, next_url]))
+print(json.dumps([output.hotels, destination_name,
+                  destination_id, destination_header, next_url]))

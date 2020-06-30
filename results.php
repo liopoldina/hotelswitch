@@ -6,7 +6,8 @@ if (count($_GET)==0) {
     $m->destination_name = urlencode("Lisbon");
     $m->destination_id ="1063515";
     $m->destination_id ="";
-    $m->date_range= date('m/d/yy') . " - " . date("m/d/yy", strtotime(date('m/d/yy') . "+1 days"));
+    $m->coords=['lat'=> 38.7125263493089,'lon'=> -9.138443771542375];
+    $date_range= date('m/d/yy') . " - " . date("m/d/yy", strtotime(date('m/d/yy') . "+1 days"));
     $m->adults = 2;
     $m->children = 0;
     $m->rooms = 1;}
@@ -15,29 +16,33 @@ if (count($_GET)==0) {
 else  {
 $m->destination_name = urlencode($_GET["destination"]);
 $m->destination_id = $_GET["destination_id"];
-$m->date_range=$_GET["date_range"];
+$m->coords=['lat'=> $_GET["lat"],'lon'=> $_GET["lon"]];
+$date_range=$_GET["date_range"];
 $m->adults = $_GET["adults"];
 $m->children = $_GET["children"];
 $m->rooms = $_GET["rooms"];
 };
 
-$m->date_range_array = explode(' ',trim($m->date_range));
-$m->check_in = strtotime($m->date_range_array[0]);
-$m->check_out = strtotime($m->date_range_array[2]);
+$date_range_array = explode(' ',trim($date_range));
+$m->check_in = strtotime($date_range_array[0]);
+$m->check_out = strtotime($date_range_array[2]);
 $m->nights = ($m->check_out - $m->check_in)/86400;
 
 $m->check_in = date("yy-m-d", $m->check_in );
 $m->check_out = date("yy-m-d", $m->check_out );
 
 // 2) Get Data: - escolher data source
-$m->data_source="scrape";
-switch ($m->data_source){
+$data_source="hotelbeds";
+switch ($data_source){
     case "database":
         include "results_database.php";
         break;
     case "scrape":
         include "results_scraper.php";
         break;
+    case "hotelbeds":
+        include "./Mongo/hotelbeds.php";
+        break;   
 }
 
 // 3) Dom - create dom document with template
@@ -46,8 +51,8 @@ $dom = new DOMDocument();
 $hotelbox = $dom-> getElementById("hotelbox");
 $hotel_boxes_wrapper = $dom-> getElementById("hotel_boxes_wrapper");
 
-$m->nr_results = count($hotel);
-for ($i=0; $i < $m->nr_results-1 ; $i++) { 
+$nr_results = count($hotel);
+for ($i=0; $i < $nr_results-1 ; $i++) { 
 $hotel_boxes_wrapper->appendChild($hotelbox->cloneNode(true) );
 }
 
@@ -76,7 +81,7 @@ $nodes->price = $xpath->query("//span[@class= 'price' ]");
 $nodes->destination_header = $xpath->query("//span[@class= 'destination_header' ]");
 
 // 5) Populate - insert data in dom nodes
-for ($i=0; $i < $m->nr_results ; $i++) { 
+for ($i=0; $i < $nr_results ; $i++) { 
 $nodes->name->item($i)->nodeValue= htmlspecialchars($hotel[$i]->name);
 $nodes->search_cover_photo->item($i)->setAttribute('src',$hotel[$i]->search_cover_photo);
 $nodes->star->item($i)->nodeValue= $hotel[$i]->stars_symbol;
@@ -105,7 +110,13 @@ $nodes->destination_header->item(0)->nodeValue= $m->destination_header;
 // 6) keep searchbox input
 $dom-> getElementById("destination")->setAttribute("value",urldecode($m->destination_name) );
 
-$dom-> getElementById("date_range")->setAttribute("value",$m->date_range);
+if (isset($m->coords)){
+    $dom-> getElementById("lat")->setAttribute("value",urldecode($m->coords['lat']) );
+    $dom-> getElementById("lon")->setAttribute("value",urldecode($m->coords['lon']) );
+
+    }
+
+$dom-> getElementById("date_range")->setAttribute("value",$date_range);
 
 if ($m->nights==1) {$dom-> getElementById("nights")->nodeValue=$m->nights."-night stay";}
 else  {$dom-> getElementById("nights")->nodeValue=$m->nights."-nights stay";}

@@ -6,7 +6,7 @@
   --main-color-light: #008c6c;
   --secondary-color: #c6c013;
   --main-background: white;
-  --color: 0, 113, 194;
+  --main-color-rgb: 0, 87, 67;
   --min_width: 1125px;
 }
 
@@ -673,7 +673,7 @@ input:checked + .slider:before {
 }
 
 .hotelbox:hover {
-  background-color: rgba(var(--color), 0.05);
+  background-color: rgba(var(--main-color-rgb), 0.05);
 }
 
 .hotelbox_inside {
@@ -920,6 +920,7 @@ input:checked + .slider:before {
 .page_loading_wrapper {
   transform: translateY(-10px);
   height: 80px;
+  margin: 0px 15px;
 }
 
 .page_loading {
@@ -950,6 +951,45 @@ input:checked + .slider:before {
   position: relative;
   left: 50%;
   transform: translateX(-50%);
+}
+
+.page_end_wrapper {
+  display: none;
+  height: 50px;
+  background-color: rgba(var(--main-color-rgb), 0.15);
+  margin: 0px 15px;
+  border-radius: 3px;
+  margin-bottom: 50px;
+}
+
+.page_end_wrapper_show {
+  display: block;
+  margin-top: -75px;
+}
+
+.page_end_icon {
+  float: left;
+  width: fit-content;
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+  margin: 0px 10px;
+}
+
+.page_end_icon img {
+  width: 35px;
+}
+
+.page_end_message {
+  float: left;
+  width: fit-content;
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+}
+.page_end_message span {
+  font-size: 16px;
+  white-space: nowrap;
 }
 
 .footer {
