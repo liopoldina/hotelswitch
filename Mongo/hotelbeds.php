@@ -24,7 +24,7 @@ $c = new MongoDB\Client('mongodb://localhost:27017');
 
 
 // $collection_name=get_collection($collection_name);
-$collection_name="2020-06-28 13:07:26.573";
+$collection_name="38.712526349309_-9.1384437715424_2020-07-01_2020-07-02_1_2_2";
 
 $hotel=get_hotels($m,$collection_name);
 

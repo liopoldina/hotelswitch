@@ -24,9 +24,9 @@ if sys.argv[1] == "xhr":
     destination_id = sys.argv[5]
     xhr_url = sys.argv[6]
 
-# mode = "xhr"
-# check_in = "2020-06-21"
-# check_out = "2020-06-22"
+# mode = "initial"
+# check_in = "2020-07-21"
+# check_out = "2020-07-22"
 # destination_name = "Lisbon, Portugal"
 # destination_id = "1063515"
 # xhr_url = "https://uk.hotels.com/search/listings.json?q-check-out=2020-07-02&f-price-currency-code=EUR&q-destination=Lisbon,%20Portugal&f-star-rating=5,4,3&start-index=4&q-check-in=2020-07-01&q-room-0-children=0&points=false&destination-id=1063515&q-room-0-adults=2&pg=2&q-rooms=1&f-price-multiplier=1&f-price-max=45&resolved-location=CITY:1063515:UNKNOWN:UNKNOWN&f-accid=1&pn=1"

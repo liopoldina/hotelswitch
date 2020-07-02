@@ -128,6 +128,10 @@ form {
   cursor: pointer;
 }
 
+.internal {
+  min-width: var(--min_width);
+}
+
 .internal_wrapper {
   width: var(--min_width);
   overflow: auto;
@@ -139,10 +143,10 @@ form {
 }
 
 .right {
+  position: relative;
   float: left;
   width: calc(100% - 265px);
   background-color: var(--main-background);
-  right: 30px;
 }
 
 .search {
@@ -932,11 +936,11 @@ input:checked + .slider:before {
 }
 
 .filter_loading_wrapper_show {
-  display: block;
-  position: fixed;
+  position: absolute;
+  top: 30px;
+  left: 50%;
+  transform: translateX(-50%);
   top: 200px;
-  right: 429px;
-  transform: translateX(50%);
 }
 
 .page_loading {

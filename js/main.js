@@ -235,11 +235,15 @@ $(function () {
       m.previous_url = result["m"]["previous_url"];
 
       if (result["hotels"] == null) {
-        console.log("There are no results that match your filters");
         $(".hotelbox").remove();
         $(".hotel_boxes_wrapper").removeClass("hotelbox_loading");
         $(".page_loading_wrapper ").removeClass("filter_loading_wrapper_show");
         $(".page_loading").removeClass("page_loading_show");
+        $(".page_end_message span").text(
+          "There are no properties that match your search criteria."
+        );
+        $(".page_end_wrapper").addClass("page_end_wrapper_show");
+        $("html, body").animate({ scrollTop: 0 }, "slow");
       } else {
         hotel = result["hotels"];
         $(".hotelbox").remove();
@@ -272,7 +276,10 @@ $(function () {
 
   // 12) load more results if scrooll all the way down
   $(window).scroll(function () {
-    if ($(window).scrollTop() + $(window).height() == $(document).height()) {
+    if (
+      Math.floor($(window).scrollTop() + $(window).height()) ==
+      $(document).height()
+    ) {
       // call function get_filter_results
       if (m.next_url == "no results") {
       } else {
@@ -304,6 +311,9 @@ $(function () {
 
       if (m.next_url == "no results") {
         $(".page_loading").removeClass("page_loading_show");
+        $(".page_end_message span").text(
+          "There are no more properties that match your search criteria."
+        );
         $(".page_end_wrapper").addClass("page_end_wrapper_show");
       } else {
         initial_length = hotel.length;
