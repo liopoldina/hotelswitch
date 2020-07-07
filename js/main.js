@@ -218,7 +218,7 @@ $(function () {
 
     function filter(callback) {
       $.ajax({
-        url: "xhr_search.php",
+        url: "xhr.php",
         method: "GET",
         dataType: "json",
         data: {
@@ -231,8 +231,8 @@ $(function () {
 
     filter(function (result) {
       m.destination_header = result["m"]["destination_header"];
-      m.next_url = result["m"]["next_url"];
-      m.previous_url = result["m"]["previous_url"];
+      m.index = result["m"]["index"];
+      m.next_index = result["m"]["next_index"];
 
       if (result["hotels"] == null) {
         $(".hotelbox").remove();
@@ -277,11 +277,11 @@ $(function () {
   // 12) load more results if scrooll all the way down
   $(window).scroll(function () {
     if (
-      Math.floor($(window).scrollTop() + $(window).height()) ==
+      Math.ceil($(window).scrollTop() + $(window).height()) >=
       $(document).height()
     ) {
-      // call function get_filter_results
-      if (m.next_url == "no results") {
+      // call function get_page_results
+      if (m.next_index == "no more results") {
       } else {
         get_page_results();
       }
@@ -293,7 +293,7 @@ $(function () {
 
     function getpage(callback) {
       $.ajax({
-        url: "xhr_search.php",
+        url: "xhr.php",
         method: "GET",
         dataType: "json",
         data: {
@@ -305,11 +305,10 @@ $(function () {
     }
 
     getpage(function (result) {
-      m.destination_header = result["m"]["destination_header"];
-      m.next_url = result["m"]["next_url"];
-      m.previous_url = result["m"]["previous_url"];
+      m.index = result["m"]["index"];
+      m.next_index = result["m"]["next_index"];
 
-      if (m.next_url == "no results") {
+      if (m.next_index == "no more results") {
         $(".page_loading").removeClass("page_loading_show");
         $(".page_end_message span").text(
           "There are no more properties that match your search criteria."

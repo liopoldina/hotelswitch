@@ -2,7 +2,7 @@
 require 'vendor\autoload.php';
 use GuzzleHttp\Client;
 
-function get_collection($collection_name) {
+function get_collection($collection_name, $m) {
     
 $client = new Client([
     'base_uri' => 'https://api.test.hotelbeds.com/hotel-api/1.0/'
@@ -23,18 +23,21 @@ $headers=[
 
 $body=[
     "stay"=> [
-        "checkIn"  => "2020-08-01",
-        "checkOut" => "2020-08-03"
+        "checkIn"  => $m->check_in,
+        "checkOut" => $m->check_out
     ],
     "occupancies"=> [
         [
-        "rooms"   => 1,
-        "adults"  => 2,
-        "children"=> 0
+        "rooms"   => $m->rooms,
+        "adults"  => $m->adults,
+        "children"=> $m->children
         ]
     ],
-    "destination"=> [
-        "code"=> "LIS"
+    "geolocation" => [
+        "latitude"=> $m->coords["lat"],
+        "longitude"=> $m->coords["lon"],
+        "radius"=> 20,
+        "unit"=> "km"
     ],
     "accommodations"=> ["HOTEL"],
     "dailyRate"=>"true",

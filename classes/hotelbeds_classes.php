@@ -45,8 +45,10 @@ class Hotel {
                 $this->room_name = $this->titleCase($input["rooms"][0]["name"]);
                 $this->set_bed_type();
 
+                if (isset($input["rooms"][0]["rates"][0]["cancellationPolicies"][0]["from"])){
                 $this->cancellation_deadline=$input["rooms"][0]["rates"][0]["cancellationPolicies"][0]["from"];
-                $this->set_cancellation_policy();
+                $this->set_cancellation_policy();}
+                
                 // $this->payment_policy = $input["room_payment_policy"];
 
                 $this->price = "€" . round($input["rooms"][0]["rates"][0]["net"]);

@@ -31,19 +31,8 @@ $m->nights = ($m->check_out - $m->check_in)/86400;
 $m->check_in = date("yy-m-d", $m->check_in );
 $m->check_out = date("yy-m-d", $m->check_out );
 
-// 2) Get Data: - escolher data source
-$data_source="hotelbeds";
-switch ($data_source){
-    case "database":
-        include "results_database.php";
-        break;
-    case "scrape":
-        include "results_scraper.php";
-        break;
-    case "hotelbeds":
-        include "./Mongo/hotelbeds.php";
-        break;   
-}
+// 2) Get Data
+include "./Mongo/hotelbeds_initial.php";
 
 // 3) Dom - create dom document with template
 $dom = new DOMDocument();
@@ -147,7 +136,6 @@ switch ($m->children) {
         $dom-> getElementById("2_children")->setAttribute("selected","selected");
         break;
     }
-
 
 switch ($m->rooms) {
     case 1:

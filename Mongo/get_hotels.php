@@ -3,12 +3,11 @@ require 'vendor\autoload.php';
 require "classes\hotelbeds_classes.php"; 
 
 function get_hotels($m, $collection_name){
-$index=0;
 
-$maximum_price= "150";
-$minimum_price= "130";
+isset($m->maximum_price) ? $maximum_price= $m->maximum_price : $maximum_price=1000;
+isset($m->minimum_price) ? $minimum_price= $m->minimum_price : $minimum_price=0;
 
-$price_range=['$gte' => $minimum_price,'$lte' => $maximum_price];
+$price_range=['$gte' => (string) $minimum_price,'$lte' => (string) $maximum_price];
 
 $star_rating="5,4,3,2,1";
 
@@ -30,7 +29,7 @@ $filter=[
     '$or'=>$star_rating
     
 ];
-$options=[ 'skip' => $index,
+$options=[ 'skip' => $m->index,
            'limit'=> 10,
     
            'sort' => ['minRate' => 1],
@@ -54,6 +53,14 @@ $inputs = json_decode(json_encode($cursor->toArray()),true);
 
 foreach ($inputs as $input){
     $hotel[] = new Hotel($input,$m->coords);
+}
+
+if (isset($hotel)){
+$m->next_index=$m->index+count($hotel);
+}
+else{
+$m->next_index="no more results";
+$hotel=[];
 }
 
 return $hotel;
