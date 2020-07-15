@@ -40,6 +40,42 @@ $(function () {
   $(".sort_item", this).click(function () {
     $(".sort_item").removeClass("sort_selected");
     $(this).addClass("sort_selected");
+    console.log($(this).attr("id"));
+    switch ($(this).attr("id")) {
+      case "sort_our_top_picks":
+        m.filters.sort = "minRate";
+        m.filters.sort_order = 1;
+        break;
+      case "sort_lowest_price_first":
+        m.filters.sort = "minRate";
+        m.filters.sort_order = 1;
+        break;
+      case "sort_stars":
+        if (m.filters.sort == "categoryCode") {
+          m.filters.sort_order = -1 * m.filters.sort_order;
+        } else {
+          m.filters.sort_order = -1;
+        }
+        m.filters.sort = "categoryCode";
+        break;
+      case "sort_distance_from_center":
+        if (m.filters.sort == "distance_center") {
+          m.filters.sort_order = -1 * m.filters.sort_order;
+        } else {
+          m.filters.sort_order = 1;
+        }
+        m.filters.sort = "distance_center";
+        break;
+      case "sort_review_score":
+        if (m.filters.sort == "score") {
+          m.filters.sort_order = -1 * m.filters.sort_order;
+        } else {
+          m.filters.sort_order = -1;
+        }
+        m.filters.sort = "score";
+        break;
+    }
+    get_filter_results();
   });
 
   // 3) loading
@@ -116,7 +152,6 @@ $(function () {
     }
   });
 
-  m.filters = {};
   // 9 Price Range Slider
   $("#slider-range").slider({
     range: true,
@@ -133,11 +168,8 @@ $(function () {
       m.filters.price_range = {};
       m.filters.price_range.minimum_price = ui.values[0];
       m.filters.price_range.maximum_price = ui.values[1];
-      if (ui.values[0] == 0) {
-        delete m.filters.price_range.minimum_price;
-      }
       if (ui.values[1] == 150) {
-        delete m.filters.price_range.maximum_price;
+        m.filters.price_range.maximum_price = 999;
       }
     },
     stop: function (event, ui) {
@@ -180,11 +212,9 @@ $(function () {
       "values",
       1
     );
-    if (m.filters.price_range.minimum_price == 0) {
-      delete m.filters.price_range.minimum_price;
-    }
+
     if (m.filters.price_range.maximum_price == 150) {
-      delete m.filters.price_range.maximum_price;
+      m.filters.price_range.maximum_price = 999;
     }
     // stars
     m.filters.stars = [];
@@ -193,18 +223,29 @@ $(function () {
     });
     m.filters.stars = m.filters.stars.reverse();
     m.filters.stars = m.filters.stars.join(",");
+    if (m.filters.stars == "") {
+      m.filters.stars = "5,4,3,2,1";
+    }
     // distance from center
-    m.filters.distance_center = $(
-      "input:radio[name=distance_center]:checked"
-    ).val();
+    m.filters.distance_center = parseFloat(
+      $("input:radio[name=distance_center]:checked").val()
+    );
+    if (isNaN(m.filters.distance_center)) {
+      m.filters.distance_center = 10;
+    }
+
     // cancellation policy
     m.filters.free_cancellation = $(
       "input:checkbox[name=free_cancellation]:checked"
     ).val();
+
+    if (m.filters.free_cancellation != "true") {
+      m.filters.free_cancellation = false;
+    }
     // minimum score
-    m.filters.minimum_score = $(
-      "input:radio[name=minimum_score]:checked"
-    ).val();
+    m.filters.minimum_score = parseFloat(
+      $("input:radio[name=minimum_score]:checked").val()
+    );
 
     // call function get_filter_results
     get_filter_results();

@@ -2,14 +2,9 @@
 require 'vendor\autoload.php';
 require "classes\hotelbeds_classes.php"; 
 
-function get_hotels($m, $collection_name){
+function get_hotels($m){
 
-isset($m->maximum_price) ? $maximum_price= $m->maximum_price : $maximum_price=1000;
-isset($m->minimum_price) ? $minimum_price= $m->minimum_price : $minimum_price=0;
-
-$price_range=['$gte' => (string) $minimum_price,'$lte' => (string) $maximum_price];
-
-$star_rating="5,4,3,2,1";
+$star_rating=$m->filters["stars"];
 
 $star_rating=explode(',',$star_rating);
 
@@ -21,18 +16,23 @@ $c = new MongoDB\Client('mongodb://localhost:27017');
 
 $db = $c->hotelbeds;
 
-$collection=$db->{$collection_name};
-
+$collection=$db->{$m->collection_name};
 
 $filter=[
-    'minRate' => $price_range,
-    '$or'=>$star_rating
-    
+    'minRate' => ['$gte' => $m->filters["price_range"]["minimum_price"],'$lte' => $m->filters["price_range"]["maximum_price"]],
+    '$or'=>$star_rating,
+    'distance_center'=> ['$lte' => $m->filters["distance_center"]],
+    'score' => ['$gte' => $m->filters["minimum_score"]],
 ];
+
+if($m->filters["free_cancellation"] == "true"){ 
+$filter['cancellation_policy']= 'Free Cancellation';
+}
+
 $options=[ 'skip' => $m->index,
            'limit'=> 10,
     
-           'sort' => ['minRate' => 1],
+           'sort' => [$m->filters["sort"] => $m->filters["sort_order"] ],
           
            'projection'=>[    
            'name'=>1,
@@ -63,6 +63,6 @@ $m->next_index="no more results";
 $hotel=[];
 }
 
-return $hotel;
+return array($hotel,$m);
 
 }

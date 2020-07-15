@@ -3,16 +3,15 @@ require "Hotelbeds\get_collection.php";
 require "Mongo\get_hotels.php";
 require 'vendor\autoload.php';
 
+$m->collection_name = $m->coords["lat"] ."_". $m->coords["lon"] ."_".$m->check_in ."_". $m->check_out ."_". $m->rooms ."_". $m->adults ."_".$m->adults;
 
-$collection_name= $m->coords["lat"] ."_". $m->coords["lon"] ."_".$m->check_in ."_". $m->check_out ."_". $m->rooms ."_". $m->adults ."_".$m->adults;
-
-$collection_name= "38.712526349309_-9.1384437715424_2020-07-05_2020-07-06_1_2_2";
+$m->collection_name = "copia";
 
 $c = new MongoDB\Client('mongodb://localhost:27017');
 
 $collections_query = $c->hotelbeds->listCollections([
     'filter' => [
-        'name' => $collection_name,
+        'name' => $m->collection_name,
      ], 
   ]);
 
@@ -21,15 +20,26 @@ $collections_query = $c->hotelbeds->listCollections([
     $collectionNames[] = $collection_query->getName();
   }
 
-$exists = in_array($collection_name, $collectionNames);
+$exists = in_array($m->collection_name, $collectionNames);
 
 if ($exists == false)
-{$collection_name=get_collection($collection_name, $m);
+{$m->collection_name = get_collection($m);
 }
 
-
 $m->index=0;
-$hotel=get_hotels($m,$collection_name);
 
-$m->destination_header=urldecode($m->destination_name) ;
+$m->filters["sort"]= 'minRate';
+$m->filters["sort_order"] = 1;
+
+$m->filters["price_range"]["maximum_price"]=999;
+$m->filters["price_range"]["minimum_price"]=0;
+$m->filters["stars"]="5,4,3,2,1";
+$m->filters["distance_center"]=10;
+$m->filters["free_cancellation"]=false;
+$m->filters["minimum_score"]=0;
+
+
+[$hotel,$m]=get_hotels($m);
+
+$m->destination_header=urldecode($m->destination_name);
 ?>

@@ -25,10 +25,12 @@
   </head>
   <body>
     <div class="header">
+      <a href="results.php">
       <div class="logo_wrapper">
         <span class="hotel">Hotel</span><span class="hopping">Switch</span
         ><span class="com">.com</span>
       </div>
+    </a>
       <div class="user_wrapper">
         <div class="user_items">
           <div id="currency_wrapper"><a id="currency" href="#">€</a></div>
@@ -124,7 +126,7 @@
               </div>
             </div>
             </form>
-            <div class="hopping_wrapper">
+            <div id="hopping" class="hopping_wrapper">
               <div class="hopping_toggle">
                 <div class="hooping_title tooltip">
                   <span>Switch Hotels</span>
@@ -208,7 +210,7 @@
                 </div>
               </div>
             </div>
-            <div class="filter_wrapper">
+            <div id="filter" class="filter_wrapper">
               <div class="filter_title">Filter by:</div>
               <div class="filter_section">
                 <div class="section_title">Price per night</div>
@@ -313,7 +315,7 @@
                     id="1km"
                     class="check_box"
                     name="distance_center"
-                    value="1.0"
+                    value="1"
                   />
                   <div class="check_box"></div>
                   <div class="label_wrapper">
@@ -326,7 +328,7 @@
                     id="3km"
                     class="check_box"
                     name="distance_center"
-                    value="3.0"
+                    value="3"
                   />
                   <div class="check_box"></div>
                   <div class="label_wrapper">
@@ -339,7 +341,7 @@
                     id="5km"
                     class="check_box"
                     name="distance_center"
-                    value="5.0"
+                    value="5"
                   />
                   <div class="check_box"></div>
                   <div class="label_wrapper">
@@ -422,7 +424,7 @@
               </div>
             </div>
         </div>
-        <div class="right">
+        <div id=search_page class="right">
           <div class="search_top">
             <div class="destination_header_wrapper">
               <span class="destination_header">Lisbon, Portugal </span>
@@ -440,19 +442,19 @@
             </div>
           </div>
           <div class="sort_wrapper">
-            <div id="test" class="sort_item sort_selected">
+            <div id="sort_our_top_picks" class="sort_item">
               <span>Our Top Picks</span>
             </div>
-            <div class="sort_item">
+            <div id="sort_lowest_price_first" class="sort_item sort_selected">
               <span>Lowest Price First</span>
             </div>
-            <div class="sort_item">
+            <div id="sort_stars" class="sort_item">
               <span>Stars</span>
             </div>
-            <div class="sort_item">
+            <div id="sort_distance_from_center" class="sort_item">
               <span>Distance from center</span>
             </div>
-            <div class="sort_item sort_item_last_border">
+            <div id="sort_review_score" class="sort_item sort_item_last_border">
               <span>Review Score</span>
             </div>
           </div>
@@ -551,7 +553,9 @@
                   </div>
                 </div>
                 <div class="hotel_book">
+                  <a href="hotel.php">
                   <button>Select Room</button>
+                  </a>
                 </div>
               </div>
             </div>
@@ -570,6 +574,64 @@
             </div>
           </div>
         </div>
+        <div id=hotel_page class="right">
+          <div class="search_top">
+            <div class="destination_header_wrapper">
+              <span class="destination_header">Lisbon, Portugal </span>
+            </div>
+            <div class="map_wrapper" id="map_wrapper">
+              <div class="position_icon">
+                <i class="fas fa-map-marker-alt fa-lg"></i>
+              </div>
+              <div class="map_text">
+                <span>Map</span>
+              </div>
+            </div>
+          </div>
+          <div class="hp_head">
+          <div class="hp_head_tittle">
+            <div class="hp_tittle">
+              <span class="hp_name">Hotel Royal Sample</span>
+              <div class="hp_stars_wrapper">
+                <span class="hp_stars">★★★★★</span>
+              </div>
+            </div>
+            <div class="hp_address_icon">
+              <i class="fas fa-map-marker-alt" aria-hidden="true"></i>
+            </div>
+            <div class="hp_address_wrapper">
+              <span>Av. D. João II, n.º 27, Parque das Nações, Lisboa, 1990-083, Portugal</span>
+            </div>
+          </div>
+          <div class="hp_head_book">
+            <div class="hp_nightly_price">
+              <span>€99</span>
+            </div>
+            <div class="hp_head_nightly_text">
+            <span>nightly price per room</span>
+          </div>
+            <div class="hp_total_price">
+              <span><strong>198€</strong> for 2 nights</span>
+            </div>
+            <div class="hp_head_button">
+                <a href="">
+                <button>Reserve</button>
+                </a>
+            </div>
+          </div>    
+        </div>
+        <div class="hp_gallery">
+        <div class="hp_slideshow">
+            <div class="hp_slide">
+              <img id=slide src="" alt="">
+            </div>
+            <div class="arrow_left"></div>
+            <div class="arrow_right"></div>
+        </div>
+        <div class="hp_slides_index"></div> 
+      </div>     
+        </div>
+
       </div>
     </div>
 

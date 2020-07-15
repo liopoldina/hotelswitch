@@ -2,7 +2,7 @@
 require 'vendor\autoload.php';
 use GuzzleHttp\Client;
 
-function get_collection($collection_name, $m) {
+function get_collection($m) {
     
 $client = new Client([
     'base_uri' => 'https://api.test.hotelbeds.com/hotel-api/1.0/'
@@ -62,8 +62,8 @@ $response_json = json_decode($response->getBody()->getContents());
 $c = new MongoDB\Client('mongodb://localhost:27017');
 $db = $c->hotelbeds;
 
-$db->createCollection($collection_name);
-$collection=$db->{$collection_name};
+$db->createCollection($m->collection_name);
+$collection=$db->{$m->collection_name };
 
 $collection->insertOne(["info"=> [
  "checkIn"  =>  $response_json->hotels->checkIn,
@@ -73,6 +73,6 @@ $collection->insertOne(["info"=> [
 
 $collection->insertMany($response_json->hotels->hotels);
 
-return $collection_name;
+return $m->collection_name;
 }
 ?>

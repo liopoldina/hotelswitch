@@ -37,6 +37,13 @@ include "./Mongo/hotelbeds_initial.php";
 // 3) Dom - create dom document with template
 $dom = new DOMDocument();
 @$dom->loadHTMLFile("index.html"); //@ to ignore errors because of google maps url
+
+$hotel_page = $dom-> getElementById("hotel_page");
+$hotel_page->parentNode->removechild($hotel_page); // remove hotel page
+
+$hopping = $dom-> getElementById("hopping");
+$hopping->parentNode->removechild($hopping); // remove hopping
+
 $hotelbox = $dom-> getElementById("hotelbox");
 $hotel_boxes_wrapper = $dom-> getElementById("hotel_boxes_wrapper");
 
@@ -156,9 +163,9 @@ $head->item(0)->appendChild($script_element);
 
 // 8) Final: save dom html to temporary file and include
 $php = $dom->saveHTML();
-file_put_contents("temp/temp.html", $php);
+file_put_contents("temp/temp_hotel.html", $php);
 
-include "temp/temp.html";
+include "temp/temp_hotel.html";
 
 
 ?>
