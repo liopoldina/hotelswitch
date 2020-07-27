@@ -40,6 +40,8 @@ $dom = new DOMDocument();
 
 $hotel_page = $dom-> getElementById("hotel_page");
 $hotel_page->parentNode->removechild($hotel_page); // remove hotel page
+$hotel_left = $dom-> getElementById("hotel_left");
+$hotel_left->parentNode->removechild($hotel_left);
 
 $hopping = $dom-> getElementById("hopping");
 $hopping->parentNode->removechild($hopping); // remove hopping
