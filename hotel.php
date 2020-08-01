@@ -1,6 +1,8 @@
 <?php
 $h= new stdClass();
 
+include "./Mongo/hotel_page.php";
+
 $dom = new DOMDocument();
 @$dom->loadHTMLFile("index.html"); //@ to ignore errors because of google maps url
 
@@ -16,6 +18,13 @@ $search_page = $dom-> getElementById("search_page");
 $search_page->parentNode->removechild($search_page); // remove hotel page
 
 
+// name
+$hp_name=$xpath->query("//span[@class='hp_name']")->item(0);
+$hp_name->nodeValue=$h->name;
+
+//adress
+$hp_name=$xpath->query("//span[@class='hp_address_content']")->item(0);
+$hp_name->nodeValue=$h->address;
 
 // insert slide indexes
 $h->images[0] =

@@ -1317,12 +1317,12 @@ input:checked + .slider:before {
 
 .hp_head {
   overflow: auto;
-  margin: 5px 0px 15px 0px;
+  margin: 5px 0px 10px 0px;
 }
 
 .hp_head_tittle {
   float: left;
-  width: fit-content;
+  width: 650px;
 }
 
 .hp_head_book {
@@ -1341,7 +1341,6 @@ input:checked + .slider:before {
   font-size: 24px;
   font-weight: bold;
   color: var(--main-color-light);
-  cursor: pointer;
 }
 
 .hp_stars_wrapper {
@@ -1354,23 +1353,64 @@ input:checked + .slider:before {
   color: var(--secondary-color);
   font-size: 16px;
 }
-.hp_address_wrapper {
-  float: left;
-  width: fit-content;
-  margin-top: 2px;
+
+.hp_map_icon {
+  margin-top: 5px;
+  margin-right: 5px;
+  color: var(--main-color);
 }
 
-.hp_address_icon {
-  width: fit-content;
-  float: left;
-  margin: 3px 4px 1px 2px;
-}
-.hp_address_icon:hover .fa-map-marker-alt {
-  color: var(--main-color-light);
-}
-
-.hp_address_wrapper span {
+.hp_address {
+  margin-left: 0px;
   font-size: 14px;
+}
+
+.hp_see_map {
+  color: var(--main-color);
+  font-weight: bold;
+  margin-top: 2px;
+  cursor: pointer;
+}
+
+.hp_see_map:hover {
+  color: var(--main-color);
+  text-decoration: underline;
+}
+
+.hp_distance_center {
+  margin-top: 3px;
+  font-size: 13px;
+}
+
+.hp_top_facilities {
+  flex: 1;
+  background-color: rgba(var(--main-color-rgb), 0.05);
+  border-radius: 4px;
+  margin-left: 60px;
+  padding: 20px;
+}
+
+.hp_spotlight_wrapper {
+  margin-top: 12px;
+  width: fit-content;
+}
+
+.hp_spotlight {
+  display: inline-block;
+  font-size: 14px;
+  border-radius: 3px;
+  width: fit-content;
+  background-color: rgba(var(--main-color-rgb), 0.2);
+  padding: 3px 6px;
+}
+
+.hp_spotlight i {
+  width: 20px;
+  text-align: center;
+}
+
+.hp_spotlight span {
+  margin-left: 10px;
 }
 
 .hp_nightly_price {
@@ -1407,6 +1447,10 @@ input:checked + .slider:before {
 
 .hp_head_button button:hover {
   background-color: var(--main-color);
+}
+
+.hp_gallery {
+  position: relative;
 }
 
 .hp_slideshow {
@@ -1483,6 +1527,15 @@ input:checked + .slider:before {
   width: 100%;
   height: 100%;
   cursor: pointer;
+}
+
+.hp_hotel_review {
+  position: absolute;
+  top: 11px;
+  right: 11px;
+  background-color: rgb(242, 246, 245);
+  cursor: pointer;
+  padding: 7px 7px 7px 30px;
 }
 
 .hp_description_wrapper {
