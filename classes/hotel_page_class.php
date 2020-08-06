@@ -2,60 +2,58 @@
 
 class Hotel {
     var $name;
+    var $stars;
+    var $stars_symbol;
+
     var $city;
     var $country_code;
     var $country;
     var $address;
+
     var $coords;
-
-
-
-    var $search_cover_photo;
-    var $stars;
-    var $stars_symbol;
+    var $city_coords;
+    var $distance_center;
 
     var $score;
     var $quality;
     var $nr_reviews;
 
-    var $district;
-    var $distance_center;
+    var $images;
 
-    var $room_name;
-    var $bed_type;
+    var $description;
 
-    var $cancellation_deadline;
-    var $cancellation_policy;
-    var $payment_policy;
+    var $facilities_group;
 
-    var $price;
-    
     // construct
-    function __construct($input){ 
-                $this->name = $input["name"]["content"];
+    function __construct($static, $offer){ 
+                $this->name = $static["name"]["content"];
+                $this->stars = (int)$static["categoryCode"];
+                $this->set_stars_symbol();
 
-                $this->city=$input["city"]["content"];
-                $this->country_code = $input["countryCode"];
+                $this->city=$static["city"]["content"];
+                $this->country_code = $static["countryCode"];
                 $this->get_country();
-                $this->address=$this->titleCase($input["address"]["content"]).", ".$this->titleCase($this->city). ", " . $input["postalCode"] . ", " . $this->country;
+                $this->address=$this->titleCase($static["address"]["content"]).", ".$this->titleCase($this->city). ", " . $static["postalCode"] . ", " . $this->country;
 
-                $this->coords = ['lat'=>$input["coordinates"]["latitude"],$input["coordinates"]["longitude"]];
+                $this->coords = ['lat'=>$static["coordinates"]["latitude"],'lon'=>$static["coordinates"]["longitude"]];
+                $this->city_coords = ['lat'=>38.71667,'lon'=>-9.13333];
 
+                $this->distance_center = round($this->distance($this->coords["lat"],  $this->coords["lon"], $this->city_coords["lat"], $this->city_coords["lon"]),1). " km from center";
+
+                $this->score = $offer["reviews"][0]["rate"] * 2;
+                $this->set_quality();
+                $this->nr_reviews= $offer["reviews"][0]["reviewCount"];
+
+                $this->get_images($static["images"]);
+            
+                $this->description=$static["description"]["content"];
+
+                $this->get_facilities($static["facilities"]);
                 
-                // $this->search_cover_photo = "./images/search/hotel_cover.jpg";
-                $this->stars = (int)$input["categoryCode"];
-               
-                // $this->set_stars_symbol();
-
-                // $this->score = $input["reviews"][0]["rate"] * 2;
-                // $this->set_quality();
-                // $this->nr_reviews= $input["reviews"][0]["reviewCount"];
+                // $this->facilitites=$static["facilities"];
 
                 // $this->city = $input["zoneName"];
                 // // $this->district = $input["district"];
-
-                // $this->distance_center = round($this->distance(
-                //     $this->coords["lat"],  $this->coords["lon"], $coords["lat"], $coords["lon"]),1). " km from center";
 
                 // $this->room_name = $this->titleCase($input["rooms"][0]["name"]);
                 // $this->set_bed_type();
@@ -78,7 +76,6 @@ class Hotel {
 
         // maximum name length
         if (strlen($this->name)>37) {$this->name = rtrim(substr($this->name,0,36))."."; };
-
         
     }
 
@@ -134,7 +131,7 @@ class Hotel {
             $this->bed_type = "2 Single Beds";
         }
         else {$this->bed_type = "1 Double Bed";}
-             
+        
     }
 
     function titleCase($string, $delimiters = array(" ", "-", ".", "'", "O'", "Mc"), $exceptions = array("or", "VIII"))
@@ -204,12 +201,76 @@ function distance($latitudeFrom, $longitudeFrom, $latitudeTo, $longitudeTo, $ear
     ];
     
     $cursor=$collection->find ($filter);
-
     $cursor_decode = json_decode(json_encode($cursor->toArray()),true);
 
     $this->country=$cursor_decode[0]["description"]["content"];
 
   }
 
+  function get_images($images){
+
+    foreach ($images as $image) {
+    $this->images[]= "http://photos.hotelbeds.com/giata/bigger/" . $image["path"];
+    $this->images_min[]= "http://photos.hotelbeds.com/giata/small/" . $image["path"];
+
+    }   
 }
+
+function get_facilities($facilities){
+    $c = new MongoDB\Client('mongodb://localhost:27017');
+    $db = $c->static_content;
+
+    $collection=$db->facilitygroups;
+    
+    $filter=[];
+    
+    $options = [ 'projection' => ['_id' => 0, 'code' => 1, 'description' => 1]];
+
+    $cursor=$collection->find ($filter,$options);
+    $cursor_decode = json_decode(json_encode($cursor->toArray()),true);
+
+    $collection=$db->facilities;    
+    $options = [ 'projection' => ['_id' => 0, 'code' => 1, 'description' => 1]];
+
+    $this->facilities_group = array();
+
+    foreach ($cursor_decode as $facility_group){
+
+        $this->facilities_group[$facility_group["description"]["content"]]['code']= $facility_group["code"];
+
+        foreach ($facilities as $facility){
+
+            if ($facility["facilityGroupCode"]==$facility_group["code"]){
+                
+                $filter=['$and' =>[
+                    ['facilityGroupCode'=>$facility["facilityGroupCode"]],
+                    ['code'=>$facility["facilityCode"]]
+                    ]];
+                
+                $cursor=$collection->find ($filter,$options);
+                $cursor_decode = json_decode(json_encode($cursor->toArray()),true);
+
+                $this->facilities_group[$facility_group["description"]["content"]][$cursor_decode[0]["description"]["content"]] = $facility;
+
+
+
+            }
+
+        }
+
+
+    }
+        // }
+
+    
+
+    // foreach ($this->facilitites as $facility_group){
+     
+    // }
+
+    // echo ("ola");
+}
+
+}
+
 ?>

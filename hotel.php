@@ -18,40 +18,77 @@ $search_page = $dom-> getElementById("search_page");
 $search_page->parentNode->removechild($search_page); // remove hotel page
 
 
+//Insert static content
+
 // name
 $hp_name=$xpath->query("//span[@class='hp_name']")->item(0);
 $hp_name->nodeValue=$h->name;
 
-//adress
+// stars
+$hp_stars=$xpath->query("//span[@class='hp_stars']")->item(0);
+$hp_stars->nodeValue=$h->stars_symbol;
+
+// address
 $hp_name=$xpath->query("//span[@class='hp_address_content']")->item(0);
 $hp_name->nodeValue=$h->address;
 
-// insert slide indexes
-$h->images[0] =
-"https://r-cf.bstatic.com/images/hotel/max1024x768/228/228385161.jpg";
-$h->images[1] =
-"https://q-cf.bstatic.com/images/hotel/max1280x900/228/228385038.jpg";
-$h->images[2] =
-"https://q-cf.bstatic.com/images/hotel/max1280x900/337/33716742.jpg";
+// distance center
+$hp_distance_center=$xpath->query("//span[@class='hp_distance_center_content']")->item(0);
+$hp_distance_center->nodeValue=$h->distance_center;
 
+// score
+$hp_score=$xpath->query("//span[@class='score']")->item(0);
+$hp_score->nodeValue=$h->score;
+
+// quality
+$hp_quality=$xpath->query("//span[@class='quality']")->item(0);
+$hp_quality->nodeValue=$h->quality;
+
+// nr reviews
+$hp_nr_reviews=$xpath->query("//span[@class='nr_reviews']")->item(0);
+$hp_nr_reviews->nodeValue=$h->nr_reviews;
+
+// property images
 $slides_index=$xpath->query("//div[@class= 'hp_slides_index' ]")->item(0);
 $min_slide=$xpath->query("//div[@class= 'hp_min_slide' ]")->item(0);
 
 $slide_img = $xpath->query("//img[@class= 'hp_slide_img' ]")->item(0);
-$slide_img->setAttribute('src',$h->images[0]);
+$slide_img->setAttribute('src',$h->images_min[0]);
+$slide_img->setAttribute('main',$h->images[0]);
 $slide_img->setAttribute('index',0);
 
-
-$nr_results = count($h->images);
+$nr_results = count($h->images_min);
 for ($i=1; $i < $nr_results ; $i++) { 
 $slides_index->appendChild($min_slide->cloneNode(true));
 $slide_img = $xpath->query("//img[@class= 'hp_slide_img' ]");
-$slide_img->item($i)->setAttribute('src',$h->images[$i]);
+$slide_img->item($i)->setAttribute('src',$h->images_min[$i]);
+$slide_img->item($i)->setAttribute('main',$h->images[$i]);
 $slide_img->item($i)->setAttribute('index',$i);
-
 }
 
 $min_slide->setAttribute('class', 'hp_min_slide hp_min_slide_selected');
+
+// description
+$hp_description_text=$xpath->query("//div[@class='hp_descrition_text']")->item(0);
+$paragraph = $dom->createElement('p');
+
+while ($hp_description_text->hasChildNodes()) {
+    $hp_description_text -> removeChild($hp_description_text->firstChild);
+  }
+
+$description = explode('.', $h->description);
+for ($i=0; $i<count($description)-1; $i++){
+    $description[$i]=$description[$i].".";
+}
+
+for ($i=0; $i<count($description)/2-1; $i++){
+    $paragraph->nodeValue= $description[$i*2].$description[$i*2+1];
+    $hp_description_text->appendChild($paragraph->cloneNode(true));
+}
+
+
+// facilities
+
 
 
 // insert variables and links in head
@@ -66,9 +103,6 @@ $head->appendChild($script_variables);
 $script_js_link = $dom->createElement('script');
 $script_js_link->setAttribute ('src', './js/hotel.js');
 $head->appendChild($script_js_link);
-
-
-
 
 $php = $dom->saveHTML();
 file_put_contents("temp/temp_hotel.html", $php);

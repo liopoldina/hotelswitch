@@ -34,7 +34,7 @@ $(function () {
   $(".hp_slide_img", this).click(function () {
     $(".hp_min_slide").removeClass("hp_min_slide_selected");
     $(this).parent().addClass("hp_min_slide_selected");
-    $("#slide").attr("src", $(this).attr("src"));
+    $("#slide").attr("src", $(this).attr("main"));
     h.image_index = parseInt($(this).attr("index"));
   });
 });

@@ -6,19 +6,27 @@ function get_hotel_content($code){
 
 $c = new MongoDB\Client('mongodb://localhost:27017');
 
-$db = $c->static_content;
-
-$collection=$db->hotels;
-
 $filter=[
     'code' => $code,
 ];
 
+// get static content
+$db = $c->static_content;
+$collection=$db->hotels;
+
 $cursor=$collection->find ($filter);
+$static = json_decode(json_encode($cursor->toArray()),true);
 
-$input = json_decode(json_encode($cursor->toArray()),true);
+// get offer
+$db = $c->hotelbeds;
+$collection=$db->{"38.712526349309_-9.1384437715424_2020-07-05_2020-07-06_1_2_2"};
 
-$h = new Hotel($input[0]);
+$cursor=$collection->find ($filter);
+$offer = json_decode(json_encode($cursor->toArray()),true);
+
+
+
+$h = new Hotel($static[0],$offer[0]);
 
 return $h;
 
