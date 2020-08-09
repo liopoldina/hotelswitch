@@ -88,6 +88,71 @@ for ($i=0; $i<count($description)/2-1; $i++){
 
 
 // facilities
+$facilities_group=$xpath->query("//div[@class='hp_facilities_group']");
+$facilities_ul=$xpath->query("//ul[@class='facilities_list']");
+
+$keys = array_keys($h->facilities);
+
+for ($i=0; $i < $facilities_group->length ; $i++) { 
+    
+    if(!empty($h->facilities[$keys[$i]])){
+
+        while ($facilities_ul->item($i)->hasChildNodes()) {
+            $facilities_ul->item($i) -> removeChild( $facilities_ul->item($i)->firstChild);
+          }
+
+
+        foreach($h->facilities[$keys[$i]] as $li){
+            $facility_li=$dom->createElement('li');
+            $facility_li->nodeValue=$li;
+            $facilities_ul->item($i)->appendChild($facility_li);
+        }
+
+    } else {$facilities_group->item($i)->parentNode->removeChild($facilities_group->item($i));}
+}
+
+// hotel policies
+$hp_rule_content=$xpath->query("//div[@class='hp_rule_content']");
+$hp_rule=$xpath->query("//div[@class='hp_rule']");
+
+$keys = array_keys($h->policies);
+
+for ($i=0; $i < count($h->policies); $i++) { 
+
+
+     
+    if(!empty($h->policies[$keys[$i]])){
+
+        while ($hp_rule_content->item($i)->hasChildNodes()) {
+            $hp_rule_content->item($i) -> removeChild( $hp_rule_content->item($i)->firstChild);
+          }
+
+        if($keys[$i]=="Cards accepted"){
+            $cards_aux=["Visa"=>"visa",
+                        "MasterCard"=>"mastercard",
+                        "American Express"=>"amex",
+                        "JCB"=>"jcb",
+                        "Diners Club"=>"diners-club"];
+            foreach($h->policies[$keys[$i]] as $rule){
+                if(isset($cards_aux[$rule])){
+                    $card=$dom->createElement('i');
+                    $card->setAttribute('class','fab fa-cc-' . $cards_aux[$rule] . ' fa-2x');
+                    $hp_rule_content->item($hp_rule_content->length-1)->appendChild($card);
+                }
+            }
+        }else{
+            foreach($h->policies[$keys[$i]] as $rule){
+                $rule_span=$dom->createElement('span');
+                $rule_span->nodeValue=$rule;
+                $hp_rule_content->item($i)->appendChild($rule_span);
+            }
+            }
+
+    } 
+    else {$hp_rule->item($i)->parentNode->removeChild($hp_rule->item($i));}
+}
+
+//Insert Offer (dynamic content)
 
 
 

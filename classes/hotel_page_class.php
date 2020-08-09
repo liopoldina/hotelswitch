@@ -22,7 +22,9 @@ class Hotel {
 
     var $description;
 
-    var $facilities_group;
+    var $facilities;
+
+    var $policies;
 
     // construct
     function __construct($static, $offer){ 
@@ -48,7 +50,15 @@ class Hotel {
             
                 $this->description=$static["description"]["content"];
 
-                $this->get_facilities($static["facilities"]);
+                $this->facilitites_aux=$static["facilities"];
+
+                $facilities_aux=$this->get_facilities($static["facilities"]); 
+                
+                // instead of feeding $static["facilities"] to function get_policies, we feed $facilities_aux that is equal but already contains the description of the facility
+                
+                $this->facilitites_aux=$facilities_aux; //can delete this line later (just to check variable in browser dev)
+                $this->get_policies($facilities_aux);
+
                 
                 // $this->facilitites=$static["facilities"];
 
@@ -218,57 +228,89 @@ function distance($latitudeFrom, $longitudeFrom, $latitudeTo, $longitudeTo, $ear
 
 function get_facilities($facilities){
     $c = new MongoDB\Client('mongodb://localhost:27017');
-    $db = $c->static_content;
+    $db = $c->modified_static_content;
 
     $collection=$db->facilitygroups;
-    
-    $filter=[];
-    
-    $options = [ 'projection' => ['_id' => 0, 'code' => 1, 'description' => 1]];
 
-    $cursor=$collection->find ($filter,$options);
+    $cursor=$collection->find ();
     $cursor_decode = json_decode(json_encode($cursor->toArray()),true);
 
-    $collection=$db->facilities;    
-    $options = [ 'projection' => ['_id' => 0, 'code' => 1, 'description' => 1]];
-
-    $this->facilities_group = array();
+    $this->facilities = array();
 
     foreach ($cursor_decode as $facility_group){
+    $this->facilities[$facility_group["FacilityGroup"]]=array();
+    }
 
-        $this->facilities_group[$facility_group["description"]["content"]]['code']= $facility_group["code"];
+for ($i=0; $i<count($facilities); $i++){
+        $collection=$db->facilities;  
 
-        foreach ($facilities as $facility){
+        $filter=['$and' =>[
+            ['facilityGroupCode'=>$facilities[$i]["facilityGroupCode"]],
+            ['code'=>$facilities[$i]["facilityCode"]]
+            ]];  
+        
+        $options = [ 'projection' => ['_id' => 0, 'code' => 1, 'description' => 1]];
 
-            if ($facility["facilityGroupCode"]==$facility_group["code"]){
-                
-                $filter=['$and' =>[
-                    ['facilityGroupCode'=>$facility["facilityGroupCode"]],
-                    ['code'=>$facility["facilityCode"]]
-                    ]];
-                
-                $cursor=$collection->find ($filter,$options);
-                $cursor_decode = json_decode(json_encode($cursor->toArray()),true);
+        $cursor=$collection->find ($filter,$options);
+        $cursor_decode = json_decode(json_encode($cursor->toArray()),true);
 
-                $this->facilities_group[$facility_group["description"]["content"]][$cursor_decode[0]["description"]["content"]] = $facility;
+        $facilities[$i]['description']=$cursor_decode[0]["description"]["content"];
 
+        if(isset($cursor_decode[0]["description"]["FacilityGroup"])){
 
+            if(!in_array($cursor_decode[0]["description"]["content"],$this->facilities[$cursor_decode[0]["description"]["FacilityGroup"]])){
+    
+                $this->facilities[$cursor_decode[0]["description"]["FacilityGroup"]][]=$cursor_decode[0]["description"]["content"];
 
             }
+        }
+    }
 
+    return($facilities);
+}
+
+
+function get_policies($facilities){
+    $this->policies['Check-in and check-out']=array();
+    $this->policies['Cancellation/Prepayment']=array();
+    $this->policies['Children and beds']=array();
+    $this->policies['Meals']=array();
+    $this->policies['Pets']=array();
+    $this->policies['Cards accepted']=array();
+
+    $this->policies['Cancellation/Prepayment'][]="You can find more information on the terms of cancellation or prepayment in the booking terms of the rate you've chosen.";
+
+    // $this->policies['Children and beds'][]="Children of any age are welcome.";
+    // $this->policies['Children and beds'][]="Children aged 12 years and above are considered adults at this property.";
+    $this->policies['Children and beds'][]="To see correct prices and occupancy information, please add the number of children in your group and their ages to your search.";
+
+    // $this->policies['Meals'][]="Price of an additional breakfast: 8.00 EUR per person.";
+    $this->policies['Meals'][]="Information about the type of meals included in the price is indicated in the rate details.";
+
+    for ($i=0; $i<count($facilities); $i++){
+
+        switch ($facilities[$i]["description"]) {
+            case "Check-in hour":
+                $this->policies['Check-in and check-out'][]='Check-in from '. substr($facilities[$i]['timeFrom'], 0, -3);
+            break;
+
+            case "Check-out hour":
+                $this->policies['Check-in and check-out'][]='Check-out time: before '. substr($facilities[$i]['timeTo'], 0, -3); 
+            break;
+
+            case "Small pets allowed (under 5 kg)":
+                if($facilities[$i]['indYesOrNo'] == true){
+                $this->policies['Pets'][]=$facilities[$i]["description"];
+                }else{
+                $this->policies['Pets'][]="Pets are not allowed.";
+                }
+            break;
         }
 
-
+        if ($facilities[$i]["facilityGroupCode"]==30) {
+            $this->policies['Cards accepted'][]=$facilities[$i]["description"];
+        }
     }
-        // }
-
-    
-
-    // foreach ($this->facilitites as $facility_group){
-     
-    // }
-
-    // echo ("ola");
 }
 
 }
