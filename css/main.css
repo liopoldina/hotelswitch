@@ -1739,12 +1739,22 @@ input:checked + .slider:before {
 }
 
 .hp_room {
-  overflow: auto;
+  display: flex;
   border: 1px solid #c6c6c6;
   border-radius: 3px;
   background-color: white;
   margin: 15px;
   margin-top: 0px;
+}
+
+.hp_room_wrapper {
+  border: none;
+}
+
+.hp_room_content {
+  display: flex;
+  border: none;
+  border-top: 1px solid #c6c6c6;
 }
 
 .hp_room_type,
@@ -1766,12 +1776,6 @@ input:checked + .slider:before {
   width: 282px;
 }
 
-.hp_room_type,
-.hp_room_offers,
-.hp_select_rooms,
-.hp_room_reserve {
-  float: left;
-}
 .hp_room_type {
   border: none;
 }
@@ -1789,26 +1793,29 @@ input:checked + .slider:before {
   border-right: 1px solid #c6c6c6;
 }
 
-.hp_room_vertical {
+.hp_room_offer {
   height: 250px;
+  border-bottom: 1px solid #c6c6c6;
 }
 
-.hp_vertical_last {
+.hp_room_offer:last-child,
+.hp_room_offer_select:last-child {
   border-bottom: none;
 }
 
 .hp_room_type,
-.hp_room_vertical {
+.hp_room_offer {
   padding: 15px;
 }
 
-.hp_room_vertical_select {
+.hp_room_offer_select {
   height: 250px;
   display: flex;
   justify-content: center;
+  border-bottom: 1px solid #c6c6c6;
 }
 
-.hp_room_vertical_select select {
+.hp_room_offer_select select {
   margin-top: 5px;
   height: 25px;
   width: 40px;
@@ -1834,13 +1841,10 @@ input:checked + .slider:before {
   box-shadow: 0px 0px 5px 2px #333;
 }
 
-.hp_room_top {
-  border-bottom: 1px solid #c6c6c6;
-}
-
 .hp_room_image {
   height: 150px;
   margin-bottom: 12px;
+  cursor: pointer;
 }
 
 .hp_room_image img {
@@ -1869,6 +1873,7 @@ input:checked + .slider:before {
   font-weight: bold;
   color: var(--main-color-light);
   margin-bottom: 20px;
+  cursor: pointer;
 }
 
 .hp_amenity {
@@ -1899,6 +1904,7 @@ input:checked + .slider:before {
 
 .hp_offer {
   margin-top: 15px;
+  color: rgb(102, 102, 102);
 }
 
 .hp_offer span {
@@ -1915,11 +1921,11 @@ input:checked + .slider:before {
   color: rgb(102, 102, 102);
 }
 
-.hp_room_breakfast {
+.hp_breakfast_included {
   color: var(--main-color-light);
 }
 
-.hp_offer_policy {
+.hp_refundable {
   color: rgb(46, 150, 169);
 }
 

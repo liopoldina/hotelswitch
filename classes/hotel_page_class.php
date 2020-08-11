@@ -1,6 +1,14 @@
 <?php
-
 class Hotel {
+    var $check_in;
+    var $check_out;
+    var $nights;
+    var $nights_text;
+    var $adults;
+    var $adults_text;
+    var $rooms;
+    var $rooms_text;
+
     var $name;
     var $stars;
     var $stars_symbol;
@@ -26,8 +34,25 @@ class Hotel {
 
     var $policies;
 
+    var $offer;
+
+    var $tourist_tax;
+
     // construct
-    function __construct($static, $offer){ 
+    function __construct($static, $offer, $info)
+    {           
+                $this->check_in=$info["info"]["checkIn"];
+                $this->check_out=$info["info"]["checkOut"];
+                $this->nights= (strtotime($this->check_out) - strtotime($this->check_in))/86400;
+                $this->nights_text = $this->nights . " nights";
+                if ($this->nights=1){$this->nights_text = $this->nights . " night";}
+                $this->adults =$offer["rooms"][0]["rates"][0]["adults"]; 
+                $this->adults_text = $this->adults . " adults";
+                if ($this->adults == 1){$this->adults_text = $this->adults . " adult";}
+                $this->rooms = $offer["rooms"][0]["rates"][0]["rooms"];
+                $this->rooms_text = $this->rooms . " rooms";
+                if ($this->rooms == 1){$this->rooms_text = $this->rooms . " room";}
+
                 $this->name = $static["name"]["content"];
                 $this->stars = (int)$static["categoryCode"];
                 $this->set_stars_symbol();
@@ -55,27 +80,17 @@ class Hotel {
                 $facilities_aux=$this->get_facilities($static["facilities"]); 
                 
                 // instead of feeding $static["facilities"] to function get_policies, we feed $facilities_aux that is equal but already contains the description of the facility
-                
                 $this->facilitites_aux=$facilities_aux; //can delete this line later (just to check variable in browser dev)
                 $this->get_policies($facilities_aux);
 
-                
-                // $this->facilitites=$static["facilities"];
+                $this->get_offer($offer['rooms'],$static);
 
-                // $this->city = $input["zoneName"];
-                // // $this->district = $input["district"];
+                if($offer["rooms"][0]["rates"][0]["taxes"]["allIncluded"] == false){
+                    $this->tourist_tax = intval($offer["rooms"][0]["rates"][0]["taxes"]["taxes"][0]["amount"])/$this->adults;
+                }
 
-                // $this->room_name = $this->titleCase($input["rooms"][0]["name"]);
+
                 // $this->set_bed_type();
-
-                // if (isset($input["rooms"][0]["rates"][0]["cancellationPolicies"][0]["from"])){
-                // $this->cancellation_deadline=$input["rooms"][0]["rates"][0]["cancellationPolicies"][0]["from"];
-                // $this->set_cancellation_policy();}
-                
-                // $this->payment_policy = $input["room_payment_policy"];
-
-                // $this->price = "€" . round($input["rooms"][0]["rates"][0]["net"]);
-                    
                 // $this->sanitize();
     }
 
@@ -127,12 +142,6 @@ class Hotel {
                 break;;  }
             }
 
-    function set_cancellation_policy() { 
-        $time_to_deadline = (strtotime ($this->cancellation_deadline) - time())/60/60/24;
-
-        if ($time_to_deadline>1){$this->cancellation_policy = "Free cancellation";}
-    }
-
     function set_bed_type() { 
 
         if (strpos($this->room_name, 'Double or Twin') !== false) {
@@ -170,8 +179,8 @@ class Hotel {
                 array_push($newwords, $word);
             }
             $string = join($delimiter, $newwords);
-       }//foreach
-       return $string;
+        }//foreach
+        return $string;
     }
 
 function distance($latitudeFrom, $longitudeFrom, $latitudeTo, $longitudeTo, $earthRadius = 6371)
@@ -269,7 +278,6 @@ for ($i=0; $i<count($facilities); $i++){
     return($facilities);
 }
 
-
 function get_policies($facilities){
     $this->policies['Check-in and check-out']=array();
     $this->policies['Cancellation/Prepayment']=array();
@@ -313,6 +321,36 @@ function get_policies($facilities){
     }
 }
 
+function get_offer($rooms,$static){
+
+    for ($i=0; $i < count($rooms); $i++){
+        // get room images
+        foreach($static["images"] as $image){
+            if (isset($image["roomCode"]))
+                if($rooms[$i]["code"] == $image["roomCode"]){
+                    $rooms[$i]["images"][] = $image;
+                } 
+        }
+
+
+        for ($n=0; $n < count($rooms[$i]["rates"]); $n++){
+
+            // set cancellaton policy
+            $rooms[$i]["rates"][$n]["cancellationPolicies"][0]["description"] = "Non-refundable rate"; //default
+
+            if (isset($rooms[$i]["rates"][$n]["cancellationPolicies"][0]["from"])){        
+                $time_to_deadline = (strtotime ($rooms[$i]["rates"][$n]["cancellationPolicies"][0]["from"]) - time())/60/60/24;
+                if ($time_to_deadline>1){
+                    $rooms[$i]["rates"][$n]["cancellationPolicies"][0]['description'] = "Free cancellation";}
+            }
+
+            //other
+        }
+    }
+    $this->offer=$rooms;
+}
+
 }
 
 ?>
+

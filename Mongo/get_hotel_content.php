@@ -24,9 +24,13 @@ $collection=$db->{"38.712526349309_-9.1384437715424_2020-07-05_2020-07-06_1_2_2"
 $cursor=$collection->find ($filter);
 $offer = json_decode(json_encode($cursor->toArray()),true);
 
+// get info
+$options = [ 'projection' => ['info' => 1]];
 
+$cursor=$collection->find ([],$options);
+$info = json_decode(json_encode($cursor->toArray()),true);
 
-$h = new Hotel($static[0],$offer[0]);
+$h = new Hotel($static[0],$offer[0],$info[0]);
 
 return $h;
 

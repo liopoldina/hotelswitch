@@ -1,7 +1,9 @@
 <?php
+require './Mongo/get_hotel_content.php';
+
 $h= new stdClass();
 
-include "./Mongo/hotel_page.php";
+$h=get_hotel_content(363373);
 
 $dom = new DOMDocument();
 @$dom->loadHTMLFile("index.html"); //@ to ignore errors because of google maps url
@@ -72,9 +74,7 @@ $min_slide->setAttribute('class', 'hp_min_slide hp_min_slide_selected');
 $hp_description_text=$xpath->query("//div[@class='hp_descrition_text']")->item(0);
 $paragraph = $dom->createElement('p');
 
-while ($hp_description_text->hasChildNodes()) {
-    $hp_description_text -> removeChild($hp_description_text->firstChild);
-  }
+$hp_description_text->nodeValue = "";
 
 $description = explode('.', $h->description);
 for ($i=0; $i<count($description)-1; $i++){
@@ -97,11 +97,8 @@ for ($i=0; $i < $facilities_group->length ; $i++) {
     
     if(!empty($h->facilities[$keys[$i]])){
 
-        while ($facilities_ul->item($i)->hasChildNodes()) {
-            $facilities_ul->item($i) -> removeChild( $facilities_ul->item($i)->firstChild);
-          }
-
-
+        $facilities_ul->item($i)->nodeValue="";
+        
         foreach($h->facilities[$keys[$i]] as $li){
             $facility_li=$dom->createElement('li');
             $facility_li->nodeValue=$li;
@@ -123,9 +120,7 @@ for ($i=0; $i < count($h->policies); $i++) {
      
     if(!empty($h->policies[$keys[$i]])){
 
-        while ($hp_rule_content->item($i)->hasChildNodes()) {
-            $hp_rule_content->item($i) -> removeChild( $hp_rule_content->item($i)->firstChild);
-          }
+        $hp_rule_content->item($i)->nodeValue="";
 
         if($keys[$i]=="Cards accepted"){
             $cards_aux=["Visa"=>"visa",
@@ -147,14 +142,158 @@ for ($i=0; $i < count($h->policies); $i++) {
                 $hp_rule_content->item($i)->appendChild($rule_span);
             }
             }
-
     } 
     else {$hp_rule->item($i)->parentNode->removeChild($hp_rule->item($i));}
 }
 
 //Insert Offer (dynamic content)
 
+// header offer
+$hp_header_price = $xpath->query("//span[@class='hp_header_price']");
+$hp_header_price->item(0)->nodeValue = '€ ' . intval($h->offer[0]["rates"][0]["sellingRate"])/$h->nights;
 
+$hp_total_price_text = $xpath->query("//strong[@class='hp_total_price_text']");
+$hp_total_price_text->item(0)->nodeValue = intval($h->offer[0]["rates"][0]["sellingRate"]) . "€";
+
+$hp_header_nights = $xpath->query("//span[@class='hp_header_nights']");
+$hp_header_nights->item(0)->nodeValue = $h->nights_text;
+
+// search bar
+$hp_header_price = $xpath->query("//span[@class='hp_box_check_in']");
+$hp_header_price->item(0)->nodeValue = $h->check_in;
+
+$hp_header_price = $xpath->query("//span[@class='hp_box_check_out']");
+$hp_header_price->item(0)->nodeValue = $h->check_out;
+
+$hp_header_price = $xpath->query("//span[@class='hp_box_guests']");
+$hp_header_price->item(0)->nodeValue = $h->rooms_text . ", " . $h->adults_text;
+
+// room boxes path
+$hp_room_wrapper=$xpath->query("//div[@class='hp_room_wrapper']");
+$hp_room_content=$xpath->query("//div[@class='hp_room_content']");
+
+// create room boxes
+$hp_room_wrapper->item(0)->nodeValue="";
+
+for($r=0; $r<count($h->offer); $r++){
+
+    // create room
+    $hp_room_wrapper->item(0)->appendChild($hp_room_content->item(0)->cloneNode(True));
+
+    // room path to make relative queries
+    $hp_room_content=$xpath->query("//div[@class='hp_room_content']");
+
+    // room image
+    $hp_room_img=$xpath->query(".//img[@class='hp_room_img']", $hp_room_content->item($r));
+    $hp_room_img->item(0)->setAttribute('src','http://photos.hotelbeds.com/giata/bigger/'.$h->offer[$r]["images"][0]["path"]);
+
+    // room name
+    $room_name=$xpath->query(".//span[@class='room_name']", $hp_room_content->item($r));
+    $room_name->item(0)->nodeValue=$h->titleCase($h->offer[$r]["name"]);
+
+     // adults icons
+    $room_guests_icon = $xpath->query(".//div[@class='room_guests_icon']", $hp_room_content->item($r));
+    $room_guests_icon->item(0)->nodeValue="";
+    $guest_icon = $dom->createElement('img');
+    $guest_icon->setAttribute('src', './images/search/guest_icon.png');
+    for ($i=1; $i <= $h->adults; $i++){
+        $room_guests_icon->item(0)->appendChild($guest_icon->cloneNode(true));
+    }
+ 
+    // adults text
+    $hp_offer_guests = $xpath->query(".//span[@class='hp_offer_guests']", $hp_room_content->item($r));
+    $hp_offer_guests->item(0)->nodeValue =  $h->adults_text;
+
+     // li final price
+    $hp_room_li_price = $xpath->query(".//li[@class='hp_room_li_price']", $hp_room_content->item($r));
+    $hp_room_li_price->item(0)->nodeValue =  "The price shown is the final price for " . $h->nights_text; 
+
+    // li tourist tax
+    $hp_tourist_tax = $xpath->query(".//li[@class='hp_tourist_tax']", $hp_room_content->item($r));
+    if (isset($h->tourist_tax)){
+        $hp_tourist_tax->item(0)->nodeValue =  "At the accommodation you will have to pay the touristic tax of €" . $h->tourist_tax . " per person per night not included in the price."; 
+        } else {$hp_tourist_tax->item(0)->nodeValue =  "";}
+
+    // room offers path (wrapper)
+    $hp_room_offers=$xpath->query(".//div[@class='hp_room_offers']", $hp_room_content->item($r));
+    $hp_select_rooms=$xpath->query(".//div[@class='hp_select_rooms']", $hp_room_content->item($r));
+
+    // room offer path
+    $hp_room_offer=$xpath->query(".//div[@class='hp_room_offer']", $hp_room_content->item($r));
+    $hp_room_offer_select=$xpath->query(".//div[@class='hp_room_offer_select']", $hp_room_content->item($r));
+
+    // delete offers inside wrapper
+    $hp_room_offers->item(0)->nodeValue = "";
+    $hp_select_rooms->item(0)->nodeValue = "";
+
+        for ($i=0; $i<count($h->offer[$r]["rates"]); $i++){
+            $hp_room_offers->item(0)->appendChild($hp_room_offer->item(0)->cloneNode(true));
+            $hp_select_rooms->item(0)->appendChild($hp_room_offer_select->item(0)->cloneNode(true));
+        }
+
+    // price
+    $hp_room_total_price=$xpath->query(".//span[@class='hp_room_total_price']", $hp_room_content->item($r));
+
+    //nights
+    $hp_nights_text=$xpath->query(".//span[@class='hp_nights_text']");
+
+    // board
+    $board=$xpath->query(".//div[@name='board']", $hp_room_content->item($r));
+    $board_icon=$xpath->query(".//i[@name='board_icon']", $hp_room_content->item($r));
+    $hp_board_name=$xpath->query(".//span[@class='hp_board_name']", $hp_room_content->item($r));
+
+    // cancellation policy
+    $policy=$xpath->query(".//div[@name='policy']", $hp_room_content->item($r));
+    $hp_policy=$xpath->query(".//span[@class='hp_policy']", $hp_room_content->item($r));
+
+    // rooms left
+    $rooms_left=$xpath->query(".//div[@name='rooms_left']", $hp_room_content->item($r));
+    $hp_rooms_left=$xpath->query(".//span[@class='hp_rooms_left']", $hp_room_content->item($r));
+
+    // nr rooms select
+    $hp_nr_rooms=$xpath->query(".//select[@class='hp_nr_rooms']", $hp_room_content->item($r));
+    $select_option=$dom->createElement('option');
+
+    for ($i=0; $i<count($h->offer[$r]["rates"]); $i++){
+
+        // price
+        $hp_room_total_price->item($i)->nodeValue='€ ' . intval($h->offer[$r]["rates"][$i]["sellingRate"]);
+        $z=$hp_room_total_price->item($i)->nodeValue;
+        
+        // nights
+        $hp_nights_text->item($i)->nodeValue= "for ". $h->nights_text;
+
+        // board
+        $hp_board_name->item($i)->nodeValue=$h->titleCase($h->offer[0]["rates"][$i]["boardName"]);
+        switch ($h->offer[0]["rates"][$i]["boardName"]){
+            case "BED AND BREAKFAST":
+                $hp_board_name->item($i)->nodeValue='Breakfast included';
+                $board->item($i)->setAttribute('class','hp_offer hp_breakfast_included');
+                $board_icon->item($i)->setAttribute('class','fas fa-coffee');
+            break;
+        }
+
+        // cancellation policy
+        $hp_policy->item($i)->nodeValue=$h->titleCase($h->offer[0]["rates"][$i]["cancellationPolicies"][0]["description"]);
+        switch ($h->offer[0]["rates"][$i]["cancellationPolicies"][0]["description"]){
+            case "Free cancellation":
+                $policy->item($i)->setAttribute('class','hp_offer hp_refundable');
+            break;
+        }
+
+        // rooms left
+        $hp_rooms_left->item($i)->nodeValue="Only " . $h->offer[0]["rates"][$i]["allotment"] . " rooms left" ;
+
+       // nr rooms select
+        $hp_nr_rooms->item($i)->nodeValue="";
+
+        for($n=1; $n <= $h->offer[0]["rates"][$i]["allotment"]; $n++){
+            $select_option->setAttribute('value', $n);
+            $select_option->nodeValue = $n;
+            $hp_nr_rooms->item($i)->appendChild($select_option->cloneNode(true));
+        }
+    }
+}
 
 // insert variables and links in head
 $head = $dom->getElementsByTagName('head')->item(0);
