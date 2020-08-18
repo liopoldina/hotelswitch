@@ -538,11 +538,14 @@
                     src="./images/search/hotel_cover.jpg"
                     class="search_cover_photo"
                     alt="hotel_cover"
+                    onerror="image_error(this);"
                   />
                 </div>
                 <div class="hotel_content">
                   <div class="hotel_head">
-                    <span class="name">Hotel Royal Sample</span>
+                    <a class="link_name" href="hotel.php" target="_blank">
+                      <span class="name">Hotel Royal Sample</span>
+                    </a>
                     <div class="stars_wrapper">
                       <span class="stars">★★★★★</span>
                     </div>
@@ -623,7 +626,7 @@
                   </div>
                 </div>
                 <div class="hotel_book">
-                  <a href="hotel.php">
+                  <a class="link" href="hotel.php" target="_blank">
                   <button>Select Room</button>
                   </a>
                 </div>

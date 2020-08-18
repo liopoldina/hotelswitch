@@ -306,6 +306,18 @@ $(function () {
             .find(".cancellation_policy")
             .text(hotel[i].cancellation_policy);
           $(box).find(".price").text(hotel[i].price);
+          $(box)
+            .find(".link")
+            .attr(
+              "href",
+              "hotel.php?hotel_id=" + hotel[i].id + "&m=" + JSON.stringify(m)
+            );
+          $(box)
+            .find(".link_name")
+            .attr(
+              "href",
+              "hotel.php?hotel_id=" + hotel[i].id + "&m=" + JSON.stringify(m)
+            );
           $(".hotel_boxes_wrapper").append($(box));
         }
         $(".hotel_boxes_wrapper").removeClass("hotelbox_loading");
@@ -373,20 +385,42 @@ $(function () {
           $(box).find(".distance_center").text(hotel[i].distance_center);
           $(box).find(".city").text(hotel[i].city);
           $(box).find(".room_name").text(hotel[i].room_name);
+
           $(box)
             .find(".cancellation_policy")
             .text(hotel[i].cancellation_policy);
           $(box).find(".price").text(hotel[i].price);
+          $(box)
+            .find(".link")
+            .attr(
+              "href",
+              "hotel.php?hotel_id=" + hotel[i].id + "&m=" + JSON.stringify(m)
+            );
+          $(box)
+            .find(".link_name")
+            .attr(
+              "href",
+              "hotel.php?hotel_id=" + hotel[i].id + "&m=" + JSON.stringify(m)
+            );
           $(".hotel_boxes_wrapper").append($(box));
         }
       }
     });
   }
+
   //end jquery
 });
 
+// 13) load more results if scrooll all the way down
+function image_error(image) {
+  image.onerror = "";
+  image.src =
+    "http://photos.hotelbeds.com/giata/bigger/36/363373/363373a_hb_ro_008.jpg";
+  return true;
+}
+
 // JUST JAVASCRIPT
-//13) Google Maps
+//14) Google Maps
 
 // Map options
 var options = {

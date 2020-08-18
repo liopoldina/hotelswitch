@@ -747,7 +747,6 @@ input:checked + .slider:before {
   font-size: 20px;
   font-weight: bold;
   color: var(--main-color-light);
-  cursor: pointer;
 }
 
 .name:hover {
@@ -1854,7 +1853,6 @@ input:checked + .slider:before {
 }
 
 .hp_room_name {
-  height: 30px;
   font-size: 21px;
   font-weight: bold;
   margin-bottom: 9px;

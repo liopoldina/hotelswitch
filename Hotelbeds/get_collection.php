@@ -73,6 +73,9 @@ $collection->insertOne(["info"=> [
 
 $collection->insertMany($response_json->hotels->hotels);
 
+include "Hotelbeds/transform_collection.php";
+
 return $m->collection_name;
+
 }
 ?>

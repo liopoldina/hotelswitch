@@ -2,7 +2,7 @@
 require 'vendor\autoload.php';
 require "classes\hotel_page_class.php"; 
 
-function get_hotel_content($code){
+function get_hotel_content($code, $m){
 
 $c = new MongoDB\Client('mongodb://localhost:27017');
 
@@ -19,7 +19,7 @@ $static = json_decode(json_encode($cursor->toArray()),true);
 
 // get offer
 $db = $c->hotelbeds;
-$collection=$db->{"38.712526349309_-9.1384437715424_2020-07-05_2020-07-06_1_2_2"};
+$collection=$db->{$m->collection_name};
 
 $cursor=$collection->find ($filter);
 $offer = json_decode(json_encode($cursor->toArray()),true);

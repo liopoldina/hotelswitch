@@ -1,6 +1,6 @@
 <?php
-require 'vendor\autoload.php';
-require "classes\hotelbeds_classes.php"; 
+require 'vendor/autoload.php';
+require "classes/results_class.php";
 
 function get_hotels($m){
 
@@ -34,7 +34,8 @@ $options=[ 'skip' => $m->index,
     
            'sort' => [$m->filters["sort"] => $m->filters["sort_order"] ],
           
-           'projection'=>[    
+           'projection'=>[
+           'code'=>1,    
            'name'=>1,
            'categoryName'=>1,
            'zoneName'=>1,

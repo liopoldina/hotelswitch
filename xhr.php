@@ -24,6 +24,8 @@ switch ($mode){
         break;        
 }
 
+// get_cover_images($hotel);
+
 if (isset($hotel)){
 echo json_encode(array('hotels'=>$hotel,'m'=>$m,));
 }

@@ -23,11 +23,15 @@ class Hotel {
     var $payment_policy;
 
     var $price;
+
+    var $id;
     
     // construct
     function __construct($input,$coords){ 
+                $this->id = $input["code"];
+                $this->search_cover_photo = "http://photos.hotelbeds.com/giata/bigger/" . substr(str_pad($this->id, 6, '0', STR_PAD_LEFT), 0, -4) . "/" . str_pad($this->id, 6, '0', STR_PAD_LEFT) . "/" . str_pad($this->id, 6, '0', STR_PAD_LEFT) .  "a_hb_a_001.jpg";  //TTFB 0.3s
+
                 $this->name = $input["name"];
-                $this->search_cover_photo = "./images/search/hotel_cover.jpg";
                 $this->stars = (int)$input["categoryName"];
                 $this->set_stars_symbol();
 
@@ -178,6 +182,34 @@ function distance($latitudeFrom, $longitudeFrom, $latitudeTo, $longitudeTo, $ear
     return $angle * $earthRadius;
   }
 
-
 }
+
+
+function get_cover_images($hotel){ //TTFB 1.5s
+
+    $c = new MongoDB\Client('mongodb://localhost:27017');
+    $db = $c->static_content;
+
+    $collection=$db->hotels;
+
+    for ($i=0; $i<count($hotel); $i++){
+    $codes[]= ['code'=>  $hotel[$i]->id];
+    }
+
+    $filter=[
+        '$or' => $codes
+    ];
+
+    $options = [ 'projection' => ['_id' => 0, 'images' => 2]];
+
+    $cursor=$collection->find ($filter, $options);
+    $cursor_decode = json_decode(json_encode($cursor->toArray()),true);
+
+    for ($i=0; $i<count($hotel); $i++){
+        $hotel[$i]->search_cover_photo =  "http://photos.hotelbeds.com/giata/bigger/" .$cursor_decode[$i]["images"][0]["path"];
+    }
+
+    echo("");
+
+}  
 ?>

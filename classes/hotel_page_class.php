@@ -85,11 +85,11 @@ class Hotel {
 
                 $this->get_offer($offer['rooms'],$static);
 
-                if($offer["rooms"][0]["rates"][0]["taxes"]["allIncluded"] == false){
-                    $this->tourist_tax = intval($offer["rooms"][0]["rates"][0]["taxes"]["taxes"][0]["amount"])/$this->adults;
+                if(isset($offer["rooms"][0]["rates"][0]["taxes"]["allIncluded"])){
+                    if($offer["rooms"][0]["rates"][0]["taxes"]["allIncluded"] == false){
+                        $this->tourist_tax = intval($offer["rooms"][0]["rates"][0]["taxes"]["taxes"][0]["amount"])/$this->adults;
+                    }
                 }
-
-
                 // $this->set_bed_type();
                 // $this->sanitize();
     }
@@ -303,7 +303,11 @@ function get_policies($facilities){
             break;
 
             case "Check-out hour":
-                $this->policies['Check-in and check-out'][]='Check-out time: before '. substr($facilities[$i]['timeTo'], 0, -3); 
+                if(isset($facilities[$i]['timeTo'])){
+                $this->policies['Check-in and check-out'][]='Check-out time: before '. substr($facilities[$i]['timeTo'], 0, -3);
+                } else{
+                $this->policies['Check-in and check-out'][]='Check-out time: before '. substr($facilities[$i]['timeFrom'], 0, -3);
+                }
             break;
 
             case "Small pets allowed (under 5 kg)":

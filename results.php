@@ -7,7 +7,7 @@ if (count($_GET)==0) {
     $m->destination_id ="1063515";
     $m->destination_id ="";
     $m->coords=['lat'=> 38.7125263493089,'lon'=> -9.138443771542375];
-    $date_range= date('m/d/yy') . " - " . date("m/d/yy", strtotime(date('m/d/yy') . "+1 days"));
+    $m->date_range= date('m/d/yy') . " - " . date("m/d/yy", strtotime(date('m/d/yy') . "+1 days"));
     $m->adults = 2;
     $m->children = 0;
     $m->rooms = 1;}
@@ -17,13 +17,13 @@ else  {
 $m->destination_name = urlencode($_GET["destination"]);
 $m->destination_id = $_GET["destination_id"];
 $m->coords=['lat'=> $_GET["lat"],'lon'=> $_GET["lon"]];
-$date_range=$_GET["date_range"];
+$m->date_range=$_GET["date_range"];
 $m->adults = $_GET["adults"];
 $m->children = $_GET["children"];
 $m->rooms = $_GET["rooms"];
 };
 
-$date_range_array = explode(' ',trim($date_range));
+$date_range_array = explode(' ',trim($m->date_range));
 $m->check_in = strtotime($date_range_array[0]);
 $m->check_out = strtotime($date_range_array[2]);
 $m->nights = ($m->check_out - $m->check_in)/86400;
@@ -75,6 +75,10 @@ $nodes->payment_policy = $xpath->query("//span[@class= 'payment_policy' ]");
 $nodes->nights = $xpath->query("//span[@class= 'nights' ]");
 $nodes->adults = $xpath->query("//span[@class= 'adults' ]");
 $nodes->price = $xpath->query("//span[@class= 'price' ]");
+$nodes->link_name = $xpath->query("//a[@class= 'link_name' ]");
+$nodes->link = $xpath->query("//a[@class= 'link' ]");
+
+
 
 $nodes->destination_header = $xpath->query("//span[@class= 'destination_header' ]");
 
@@ -101,6 +105,9 @@ if ($m->adults==1) {$nodes->adults->item($i)->nodeValue= $m->adults . " adult";}
 else  {$nodes->adults->item($i)->nodeValue= $m->adults . " adults";}
 
 $nodes->price->item($i)->nodeValue= $hotel[$i]->price;
+$nodes->link_name->item($i)->setAttribute('href', 'hotel.php?hotel_id='. $hotel[$i]->id . '&m=' . json_encode($m));
+$nodes->link->item($i)->setAttribute('href', 'hotel.php?hotel_id='. $hotel[$i]->id . '&m=' . json_encode($m) );
+
 }
 
 $nodes->destination_header->item(0)->nodeValue= $m->destination_header;
@@ -114,7 +121,7 @@ if (isset($m->coords)){
 
     }
 
-$dom-> getElementById("date_range")->setAttribute("value",$date_range);
+$dom-> getElementById("date_range")->setAttribute("value",$m->date_range);
 
 if ($m->nights==1) {$dom-> getElementById("nights")->nodeValue=$m->nights."-night stay";}
 else  {$dom-> getElementById("nights")->nodeValue=$m->nights."-nights stay";}

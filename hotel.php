@@ -3,7 +3,10 @@ require './Mongo/get_hotel_content.php';
 
 $h= new stdClass();
 
-$h=get_hotel_content(363373);
+$m = json_decode($_GET["m"]);
+$h->id = intval($_GET["hotel_id"]);
+
+$h=get_hotel_content($h->id, $m);
 
 $dom = new DOMDocument();
 @$dom->loadHTMLFile("index.html"); //@ to ignore errors because of google maps url
@@ -20,11 +23,62 @@ $search_page = $dom-> getElementById("search_page");
 $search_page->parentNode->removechild($search_page); // remove hotel page
 
 
+// keep searchbox input
+$dom-> getElementById("destination")->setAttribute("value",urldecode($m->destination_name) );
+
+if (isset($m->coords)){
+    $dom-> getElementById("lat")->setAttribute("value",urldecode($m->coords->lat) );
+    $dom-> getElementById("lon")->setAttribute("value",urldecode($m->coords->lon) );
+
+    }
+
+$dom-> getElementById("date_range")->setAttribute("value",$m->date_range);
+
+if ($m->nights==1) {$dom-> getElementById("nights")->nodeValue=$m->nights."-night stay";}
+else  {$dom-> getElementById("nights")->nodeValue=$m->nights."-nights stay";}
+
+switch ($m->adults) {
+    case 1:
+        $dom-> getElementById("1_adult")->setAttribute("selected","selected");
+        break;
+    case 2:
+        $dom-> getElementById("2_adults")->setAttribute("selected","selected");
+        break;
+    case 3:
+        $dom-> getElementById("3_adults")->setAttribute("selected","selected");
+        break;
+    case 4:
+        $dom-> getElementById("4_adults")->setAttribute("selected","selected");
+        break;
+    }
+
+switch ($m->children) {
+    case 0:
+        $dom-> getElementById("no_children")->setAttribute("selected","selected");
+        break;
+    case 1:
+        $dom-> getElementById("1_child")->setAttribute("selected","selected");
+        break;
+    case 2:
+        $dom-> getElementById("2_children")->setAttribute("selected","selected");
+        break;
+    }
+
+switch ($m->rooms) {
+    case 1:
+        $dom-> getElementById("1_room")->setAttribute("selected","selected");
+        break;
+    case 2:
+        $dom-> getElementById("2_rooms")->setAttribute("selected","selected");
+        break;
+    }
+    
+
 //Insert static content
 
 // name
 $hp_name=$xpath->query("//span[@class='hp_name']")->item(0);
-$hp_name->nodeValue=$h->name;
+$hp_name->nodeValue=htmlspecialchars($h->name);
 
 // stars
 $hp_stars=$xpath->query("//span[@class='hp_stars']")->item(0);
@@ -82,7 +136,7 @@ for ($i=0; $i<count($description)-1; $i++){
 }
 
 for ($i=0; $i<count($description)/2-1; $i++){
-    $paragraph->nodeValue= $description[$i*2].$description[$i*2+1];
+    $paragraph->nodeValue= htmlspecialchars($description[$i*2].$description[$i*2+1]);
     $hp_description_text->appendChild($paragraph->cloneNode(true));
 }
 
@@ -101,7 +155,7 @@ for ($i=0; $i < $facilities_group->length ; $i++) {
         
         foreach($h->facilities[$keys[$i]] as $li){
             $facility_li=$dom->createElement('li');
-            $facility_li->nodeValue=$li;
+            $facility_li->nodeValue=htmlspecialchars($li);
             $facilities_ul->item($i)->appendChild($facility_li);
         }
 
@@ -150,10 +204,10 @@ for ($i=0; $i < count($h->policies); $i++) {
 
 // header offer
 $hp_header_price = $xpath->query("//span[@class='hp_header_price']");
-$hp_header_price->item(0)->nodeValue = '€ ' . intval($h->offer[0]["rates"][0]["sellingRate"])/$h->nights;
+$hp_header_price->item(0)->nodeValue = '€ ' . intval($h->offer[0]["rates"][0]["net"])/$h->nights;
 
 $hp_total_price_text = $xpath->query("//strong[@class='hp_total_price_text']");
-$hp_total_price_text->item(0)->nodeValue = intval($h->offer[0]["rates"][0]["sellingRate"]) . "€";
+$hp_total_price_text->item(0)->nodeValue = intval($h->offer[0]["rates"][0]["net"]) . "€";
 
 $hp_header_nights = $xpath->query("//span[@class='hp_header_nights']");
 $hp_header_nights->item(0)->nodeValue = $h->nights_text;
@@ -212,7 +266,8 @@ for($r=0; $r<count($h->offer); $r++){
     $hp_tourist_tax = $xpath->query(".//li[@class='hp_tourist_tax']", $hp_room_content->item($r));
     if (isset($h->tourist_tax)){
         $hp_tourist_tax->item(0)->nodeValue =  "At the accommodation you will have to pay the touristic tax of €" . $h->tourist_tax . " per person per night not included in the price."; 
-        } else {$hp_tourist_tax->item(0)->nodeValue =  "";}
+        } else {$hp_tourist_tax->item(0)->setAttribute('style','display:none');
+        }
 
     // room offers path (wrapper)
     $hp_room_offers=$xpath->query(".//div[@class='hp_room_offers']", $hp_room_content->item($r));
@@ -257,15 +312,15 @@ for($r=0; $r<count($h->offer); $r++){
     for ($i=0; $i<count($h->offer[$r]["rates"]); $i++){
 
         // price
-        $hp_room_total_price->item($i)->nodeValue='€ ' . intval($h->offer[$r]["rates"][$i]["sellingRate"]);
+        $hp_room_total_price->item($i)->nodeValue='€ ' . intval($h->offer[$r]["rates"][$i]["net"]);
         $z=$hp_room_total_price->item($i)->nodeValue;
         
         // nights
         $hp_nights_text->item($i)->nodeValue= "for ". $h->nights_text;
 
         // board
-        $hp_board_name->item($i)->nodeValue=$h->titleCase($h->offer[0]["rates"][$i]["boardName"]);
-        switch ($h->offer[0]["rates"][$i]["boardName"]){
+        $hp_board_name->item($i)->nodeValue=$h->titleCase($h->offer[$r]["rates"][$i]["boardName"]);
+        switch ($h->offer[$r]["rates"][$i]["boardName"]){
             case "BED AND BREAKFAST":
                 $hp_board_name->item($i)->nodeValue='Breakfast included';
                 $board->item($i)->setAttribute('class','hp_offer hp_breakfast_included');
@@ -274,20 +329,25 @@ for($r=0; $r<count($h->offer); $r++){
         }
 
         // cancellation policy
-        $hp_policy->item($i)->nodeValue=$h->titleCase($h->offer[0]["rates"][$i]["cancellationPolicies"][0]["description"]);
-        switch ($h->offer[0]["rates"][$i]["cancellationPolicies"][0]["description"]){
+        $hp_policy->item($i)->nodeValue=$h->titleCase($h->offer[$r]["rates"][$i]["cancellationPolicies"][0]["description"]);
+        switch ($h->offer[$r]["rates"][$i]["cancellationPolicies"][0]["description"]){
             case "Free cancellation":
                 $policy->item($i)->setAttribute('class','hp_offer hp_refundable');
             break;
         }
 
         // rooms left
-        $hp_rooms_left->item($i)->nodeValue="Only " . $h->offer[0]["rates"][$i]["allotment"] . " rooms left" ;
+        if($h->offer[$r]["rates"][$i]["allotment"] <= 5){
+        $hp_rooms_left->item($i)->nodeValue="Only " . $h->offer[$r]["rates"][$i]["allotment"] . " rooms left" ;
+        $rooms_left->item($i)->setAttribute('style','visibility:visible');
+        } else {
+        $rooms_left->item($i)->setAttribute('style','visibility:hidden');
+        }
 
        // nr rooms select
         $hp_nr_rooms->item($i)->nodeValue="";
 
-        for($n=1; $n <= $h->offer[0]["rates"][$i]["allotment"]; $n++){
+        for($n=1; $n <= $h->offer[$r]["rates"][$i]["allotment"]; $n++){
             $select_option->setAttribute('value', $n);
             $select_option->nodeValue = $n;
             $hp_nr_rooms->item($i)->appendChild($select_option->cloneNode(true));
@@ -299,7 +359,7 @@ for($r=0; $r<count($h->offer); $r++){
 $head = $dom->getElementsByTagName('head')->item(0);
     // insert variables
 $script_variables = $dom->createElement('script');
-$script_node = $dom->createTextNode("var h =" . json_encode($h) . "; var m=" . json_encode($h));
+$script_node = $dom->createTextNode("var h =" . json_encode($h) . "; var m=" . json_encode($m));
 $script_variables->appendChild($script_node);
 $head->appendChild($script_variables);
 
