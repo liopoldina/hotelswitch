@@ -584,7 +584,7 @@ input:checked + .slider:before {
   float: right;
   height: 50px;
   width: 90px;
-  background: url(/images/search/map.jpeg);
+  background: url(../images/search/map.jpeg);
   background-size: 250px;
   cursor: pointer;
   border-radius: 2px;
@@ -1162,7 +1162,7 @@ input:checked + .slider:before {
   position: relative;
   height: 90px;
   width: 100%;
-  background: url(/images/search/map.jpeg);
+  background: url(../images/search/map.jpeg);
   background-size: 250px;
   cursor: pointer;
   border-radius: 2px;
