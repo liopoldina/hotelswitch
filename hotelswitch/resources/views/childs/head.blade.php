@@ -12,10 +12,29 @@
 <script src="./js/jquery.min.js"></script>
 <script src="./jquery-ui/jquery-ui.min.js"></script>
 <script src="./js/main.js"></script>
+@if(Route::currentRouteName() == 'hotel')
+<script src="./js/hotel.js"></script>
+@endif
 <script src="https://kit.fontawesome.com/93e6a1962d.js" crossorigin="anonymous"></script>
 <script src="./js/moment.min.js"></script>
 <script src="./js/daterangepicker.js"></script>
 <script async defer
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCc63WuBkUAUYlLxBxfKN-3dY4i_gEAWaw&callback=initMap">
 </script>
+
+<script>
+    @isset($h)
+    h = @json($h);
+    @endisset
+
+    @isset($hotel)
+    hotel = @json($hotel);
+    @endisset
+
+    @isset($m)
+    m = @json($m);
+    @endisset
+
+</script>
+
 @endsection

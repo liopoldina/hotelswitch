@@ -7,7 +7,7 @@
 
 <body>
     <div class="header">
-        <a href="results.php">
+        <a href="search">
             <div class="logo_wrapper">
                 <span class="hotel">Hotel</span><span class="hopping">Switch</span><span class="com">.com</span>
             </div>
@@ -19,14 +19,31 @@
             <div class="user_items">
                 <img id="flag" src="./images/header/bandeira.png" alt="idioma" />
             </div>
+            @if (Route::has('login'))
+            @auth
             <div class="user_items header_buttons">
-                <button>Register</button>
+                <a href="{{ url('/home') }}">
+                    <button>Home</button>
+                </a>
             </div>
+            @else
+            @if (Route::has('register'))
             <div class="user_items header_buttons">
-                <button>Sign in</button>
+                <a href="{{ route('register') }}">
+                    <button>Register</button>
+                </a>
             </div>
+            @endif
+            <div class="user_items header_buttons">
+                <a href="{{ route('login') }}">
+                    <button>Sign in</button>
+                </a>
+            </div>
+            @endauth
+            @endif
         </div>
     </div>
+
     <div class="internal">
         <div class="internal_wrapper">
             <div class="left">

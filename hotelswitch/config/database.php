@@ -67,6 +67,18 @@ return [
             ],
         ],
 
+        'mongodb_modified_static' => [
+            'driver' => 'mongodb',
+            'host' => env('DB_HOST', 'localhost'),
+            'port' => env('DB_PORT', 27017),
+            'database' => 'modified_static_content',
+            'username' => env('DB_USERNAME'),
+            'password' => env('DB_PASSWORD'),
+            'options' => [
+                'database' => env('DB_AUTHENTICATION_DATABASE', 'admin'), // required with Mongo 3+
+            ],
+        ],
+
         'hotelbeds' => [
             'driver' => 'mongodb',
             'host' => env('DB_HOST', 'localhost'),

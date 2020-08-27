@@ -206,7 +206,7 @@
 <div id=search_page class="right">
     <div class="search_top">
         <div class="destination_header_wrapper">
-            <span class="destination_header">Lisbon, Portugal </span>
+            <span class="destination_header">{{$m->destination ?? 'Lisbon, Portugal'}} </span>
         </div>
         <div class="sort_by">
             <span>Sort by:</span>
@@ -238,51 +238,58 @@
         </div>
     </div>
     <div class="hotel_boxes_wrapper" id="hotel_boxes_wrapper">
-        <div class="hotelbox" id="hotelbox">
+        @php
+        $nr_results = 2;
+        if(isset($hotel)){$nr_results = count($hotel);}
+        @endphp
+
+        @for ($i = 0; $i < $nr_results ; $i++) <div class="hotelbox" id="hotelbox">
             <div class="hotelbox_inside">
                 <div class="hotel_photo">
-                    <img src="./images/search/hotel_cover.jpg" class="search_cover_photo" alt="hotel_cover"
-                        onerror="image_error(this);" />
+                    <img src={{$hotel[$i]->search_cover_photo ?? './images/search/hotel_cover.jpg'}}
+                        class="search_cover_photo" alt="hotel_cover" onerror="image_error(this);" />
                 </div>
                 <div class="hotel_content">
                     <div class="hotel_head">
-                        <a class="link_name" href="hotel.php" target="_blank">
-                            <span class="name">Hotel Royal Sample</span>
+                        <a class="link_name"
+                            href='hotel?hotel_id={{$hotel[$i]->id ?? ''}}&m={{isset($m) ? json_encode($m) :''}}'
+                            target="_blank">
+                            <span class="name">{{$hotel[$i]->name ?? 'Hotel Royal Sample'}}</span>
                         </a>
                         <div class="stars_wrapper">
-                            <span class="stars">★★★★★</span>
+                            <span class="stars">{{$hotel[$i]->stars_symbol ?? '★★★★★'}}</span>
                         </div>
                     </div>
                     <div class="hotel_review">
                         <div class="quality_number">
                             <div class="quality_wrapper">
-                                <span class="quality">Good</span>
+                                <span class="quality">{{$hotel[$i]->quality ?? 'Good'}}</span>
                             </div>
                             <div class="nr_reviews_wrapper">
-                                <span class="nr_reviews">1,654</span>
+                                <span class="nr_reviews">{{$hotel[$i]->nr_reviews ?? '1,654'}}</span>
                                 <span>reviews</span>
                             </div>
                         </div>
                         <div class="score_wrapper">
-                            <span class="score">9.5</span>
+                            <span class="score">{{$hotel[$i]->score ?? '9.5'}}</span>
                         </div>
                     </div>
                     <div class="address_wrapper">
                         <div class="address">
-                            <span class="district">District</span>
-                            <span class="city">City</span>
+                            <span class="district">{{$hotel[$i]->district ?? ''}}</span>
+                            <span class="city">{{$hotel[$i]->city ?? 'City'}}</span>
                         </div>
                         <div class="address_separator">
                             <span>.</span>
                         </div>
                         <div class="distance_center_wrapper">
-                            <span class="distance_center">250m from center</span>
+                            <span class="distance_center">{{$hotel[$i]->distance_center ??  '250m from center'}}</span>
                         </div>
                     </div>
                     <div class="hotel_room">
                         <div class="room_title">
                             <div class="room_name_wrapper">
-                                <span class="room_name">Standard Double Room</span>
+                                <span class="room_name">{{$hotel[$i]->room_name ?? 'Standard Double Room'}}</span>
                             </div>
                             <div class="room_separator">
                                 <span>-</span>
@@ -292,52 +299,57 @@
                                 <img src="./images/search/guest_icon.png" alt="guest_icon" />
                             </div>
                             <div class="nights_guests">
-                                <span class="nights">2 nights</span>
+                                <span class="nights">{{$m->nights_text ?? '2 nights'}}</span>
                                 <span>, </span>
-                                <span class="adults">2 adults</span>
+                                <span class="adults">{{$m->adults_text ?? '2 adults'}}</span>
                             </div>
                         </div>
                         <div class="bed_type_wrapper">
-                            <span class="bed_type">1 Double Bed</span>
+                            <span class="bed_type">{{$hotel[$i]->bed_type ?? '1 Double Bed'}}</span>
                         </div>
                         <div class="policy_price_wrapper">
                             <div class="room_policy">
                                 <div class="cancellation_policy_wrapper">
-                                    <span class="cancellation_policy">Free cancellation</span>
+                                    <span
+                                        class="cancellation_policy">{{$hotel[$i]->cancellation_policy ?? 'Free cancellation'}}</span>
                                 </div>
                                 <div class="policy_separator">
                                     <span>.</span>
                                 </div>
                                 <div class="payment_policy_wrapper">
-                                    <span class="payment_policy">No prepayment needed</span>
+                                    <span
+                                        class="payment_policy">{{$hotel[$i]->payment_policy ?? 'No prepayment needed'}}</span>
                                 </div>
                             </div>
                             <div class="price_wrapper">
-                                <span class="price">€ 99</span>
+                                <span class="price">{{$hotel[$i]->price ?? '€99'}}</span>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="hotel_book">
-                    <a class="link" href="hotel.php" target="_blank">
+                    <a class="link" href='hotel?hotel_id={{$hotel[$i]->id ?? ''}}&m={{isset($m) ? json_encode($m) :''}}'
+                        target="_blank">
                         <button>Select Room</button>
                     </a>
                 </div>
             </div>
-        </div>
     </div>
-    <div class="page_loading_wrapper">
-        <div class="page_loading">
-            <img src="images/search/page_loading.gif" alt="page_loading">
-        </div>
+    @endfor
+
+</div>
+<div class="page_loading_wrapper">
+    <div class="page_loading">
+        <img src="images/search/page_loading.gif" alt="page_loading">
     </div>
-    <div class="page_end_wrapper">
-        <div class="page_end_icon">
-            <img src="./images/search/information_icon.jpg" alt="page_end_icon">
-        </div>
-        <div class="page_end_message">
-            <span>There are no more properties that match your search criteria.</span>
-        </div>
+</div>
+<div class="page_end_wrapper">
+    <div class="page_end_icon">
+        <img src="./images/search/information_icon.jpg" alt="page_end_icon">
     </div>
+    <div class="page_end_message">
+        <span>There are no more properties that match your search criteria.</span>
+    </div>
+</div>
 </div>
 @endsection

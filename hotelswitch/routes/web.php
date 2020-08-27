@@ -20,8 +20,18 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+//pages
 Route::get('/search', 'SearchController@index')->name('search');
 Route::get('/hotel', 'HotelController@index')->name('hotel');
+
+//xhr
+Route::get('/xhr', 'XhrController@index')->name('xhr');
+Route::get('/autocomplete', 'AutocompleteController@index')->name('autocomplete');
+
+
+
+//template
 Route::get('/template', 'TemplateController@index')->name('template');
 
 
