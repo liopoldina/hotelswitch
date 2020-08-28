@@ -13,15 +13,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
 
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
 //pages
+Route::get('/', 'WelcomeController@index')->name('welcome');
 Route::get('/search', 'SearchController@index')->name('search');
 Route::get('/hotel', 'HotelController@index')->name('hotel');
 

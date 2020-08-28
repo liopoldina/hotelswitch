@@ -44,18 +44,9 @@
         </div>
     </div>
 
-    <div class="internal">
-        <div class="internal_wrapper">
-            <div class="left">
-                @yield('search_box')
-                {{-- @yield ('hopping') --}}
-                @yield ('left_search')
-                @yield ('left_hotel')
-            </div>
-            @yield ('right_search')
-            @yield ('right_hotel')
-        </div>
-    </div>
+
+    @yield('content')
+
 
     <div class="footer">
         <div class="first_footer">

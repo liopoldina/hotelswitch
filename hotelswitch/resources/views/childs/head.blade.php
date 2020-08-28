@@ -8,13 +8,11 @@
 <link rel="stylesheet" href="./jquery-ui/jquery-ui.structure.css" />
 <link rel="stylesheet" href="./jquery-ui/jquery-ui.theme.css" />
 <link rel="stylesheet" type="text/css" href="./css/daterangepicker.css" />
+
 <!-- js -->
 <script src="./js/jquery.min.js"></script>
 <script src="./jquery-ui/jquery-ui.min.js"></script>
 <script src="./js/main.js"></script>
-@if(Route::currentRouteName() == 'hotel')
-<script src="./js/hotel.js"></script>
-@endif
 <script src="https://kit.fontawesome.com/93e6a1962d.js" crossorigin="anonymous"></script>
 <script src="./js/moment.min.js"></script>
 <script src="./js/daterangepicker.js"></script>
