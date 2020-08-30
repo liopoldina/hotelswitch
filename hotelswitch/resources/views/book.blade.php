@@ -3,12 +3,11 @@
 @include('childs.head')
 
 @section('head')
-<link rel="stylesheet" href="./css/welcome.css" />
+<link rel="stylesheet" href={{asset('css/book.css')}} />
 @append
 
 @section('content')
 <div class="internal">
     <div class='first_section'></div>
-    <div class='second_section'></div>
 </div>
 @endsection

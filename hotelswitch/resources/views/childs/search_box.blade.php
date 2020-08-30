@@ -1,5 +1,6 @@
 @section('search_box')
 <form id="search" action="search" method="get">
+    @csrf
     <div class="search">
         <div class="search_wrapper">
             <div class="search_title">Search</div>

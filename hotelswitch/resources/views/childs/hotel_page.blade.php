@@ -20,7 +20,7 @@
         </div>
         <div class="hp_location_item">
             <i class="fas fa-medal gold"></i>
-            <span><strong class="gold_background">Exceptional location</strong> - City Center
+            <span><strong class="gold_background">Exceptional location</strong> - Downtown
             </span>
         </div>
         <div class="hp_location_item">
@@ -579,7 +579,9 @@
             @endif
         </div>
         <div class="hp_room_reserve">
-            <button>I'll reserve</button>
+            <a href="book">
+                <button>I'll reserve</button>
+            </a>
             <ul>
                 <li>Confirmation is immediate</li>
                 <li>No registration required

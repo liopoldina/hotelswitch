@@ -1,12 +1,14 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Ajax;
+
+use App\Http\Controllers\Controller;
 
 use Illuminate\Http\Request;
 
 use App\Repositories\SearchRepository;
 
-class XhrController extends Controller
+class ResultsController extends Controller
 {   
     private  $searchRepository;
 

@@ -7,7 +7,7 @@
 
 <body>
     <div class="header">
-        <a href="search">
+        <a href="{{ route('homepage') }}">
             <div class="logo_wrapper">
                 <span class="hotel">Hotel</span><span class="hopping">Switch</span><span class="com">.com</span>
             </div>
@@ -17,31 +17,48 @@
                 <div id="currency_wrapper"><a id="currency" href="#">€</a></div>
             </div>
             <div class="user_items">
-                <img id="flag" src="./images/header/bandeira.png" alt="idioma" />
+                <img id="flag" src={{asset('images/header/bandeira.png')}} alt="idioma" />
             </div>
-            @if (Route::has('login'))
-            @auth
-            <div class="user_items header_buttons">
-                <a href="{{ url('/home') }}">
-                    <button>Home</button>
-                </a>
-            </div>
-            @else
-            @if (Route::has('register'))
+            @guest
             <div class="user_items header_buttons">
                 <a href="{{ route('register') }}">
                     <button>Register</button>
                 </a>
             </div>
-            @endif
             <div class="user_items header_buttons">
                 <a href="{{ route('login') }}">
-                    <button>Sign in</button>
+                    <button>Login</button>
                 </a>
             </div>
-            @endauth
-            @endif
+            @endguest
+            @auth
+            <div class="user_items account_dropdown">
+                {{ Auth::user()->name }} <span class="caret"></span>
+            </div>
+            <div class='dropdown_menu'>
+                <a class="dropdown_item" href="{{ route('dashboard') }}">
+                    Dashboard
+                </a>
+                <a class="dropdown_item" href="{{ route('reservations') }}">
+                    Reservations
+                </a>
+                <a class="dropdown_item" href="{{ route('settings') }}">
+                    Settings
+                </a>
+                <a class="dropdown_item" href="{{ route('logout') }}" onclick="event.preventDefault();
+                                     document.getElementById('logout-form').submit();">
+                    {{ __('Logout') }}
+                </a>
+                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                    @csrf
+                </form>
+            </div>
+
+
         </div>
+        @endauth
+
+    </div>
     </div>
 
 

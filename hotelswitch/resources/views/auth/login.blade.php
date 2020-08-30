@@ -3,11 +3,9 @@
 @include('childs.head')
 
 @section('head')
-<link rel="stylesheet" href="./css/auth.css" />
-<link href="{{ asset('css/app.css') }}" rel="stylesheet">
-<script src="{{ asset('js/app.js') }}" defer></script>
-
-
+<link href={{asset('css/auth.css')}} rel="stylesheet">
+<link href={{asset('css/app.css')}} rel="stylesheet">
+<script src={{asset('js/app.js')}} defer></script>
 @append
 
 @section('content')

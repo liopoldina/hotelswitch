@@ -13,21 +13,23 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-
+//auth
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+//account
+Route::get('/dashboard', 'Account\DashboardController@index')->name('dashboard');
+Route::get('/reservations', 'Account\ReservationsController@index')->name('reservations');
+Route::get('/settings', 'Account\SettingsController@index')->name('settings');
 
 //pages
-Route::get('/', 'WelcomeController@index')->name('welcome');
+Route::get('/', 'HomepageController@index')->name('homepage');
 Route::get('/search', 'SearchController@index')->name('search');
 Route::get('/hotel', 'HotelController@index')->name('hotel');
+Route::get('/book', 'BookController@index')->name('book');
 
-//xhr
-Route::get('/xhr', 'XhrController@index')->name('xhr');
-Route::get('/autocomplete', 'AutocompleteController@index')->name('autocomplete');
-
-
+//ajax
+Route::get('/results', 'Ajax\ResultsController@index')->name('results');
+Route::get('/autocomplete', 'Ajax\AutocompleteController@index')->name('autocomplete');
 
 //template
 Route::get('/template', 'TemplateController@index')->name('template');

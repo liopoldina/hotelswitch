@@ -5,7 +5,7 @@ html {
 * {
     margin: 0px;
     box-sizing: border-box;
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: Roboto, Arial, Helvetica, sans-serif;
     --main-color: #005743;
     --main-color-light: #008c6c;
     --secondary-color: #c6c013;
@@ -14,16 +14,17 @@ html {
     --min_width: 1125px;
 }
 
-div,
-form {
-    border: 1px solid grey;
-    border: 1px solid transparent;
+body {
+    color: #333;
+
 }
 
 .header {
     background: var(--main-color);
     height: 60px;
     min-width: var(--min_width);
+    position: relative;
+    z-index: 1;
 }
 
 .logo_wrapper {
@@ -84,6 +85,7 @@ form {
 
 .user_wrapper {
     float: right;
+    display: flex;
     height: 60%;
     width: auto;
     position: relative;
@@ -92,7 +94,6 @@ form {
 }
 
 .user_items {
-    float: left;
     height: 90%;
     width: auto;
     margin: 0px 10px;
@@ -137,6 +138,63 @@ form {
     cursor: pointer;
 }
 
+.account_dropdown {
+    height: fit-content;
+    color: white;
+}
+
+.account_dropdown:hover,
+.account_dropdown:focus {
+    color: rgba(255, 255, 255, 0.85)
+}
+
+.caret {
+    display: inline-block;
+    margin-left: 0.255em;
+    vertical-align: 0.255em;
+    content: "";
+    border-top: 0.3em solid;
+    border-right: 0.3em solid transparent;
+    border-bottom: 0;
+    border-left: 0.3em solid transparent;
+}
+
+
+.dropdown_menu {
+    display: none;
+    position: absolute;
+    right: 0;
+    top: 100%;
+    min-width: 150px;
+    padding: 8px 0px;
+    font-size: 14px;
+    background-color: white;
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    border-radius: 3px;
+}
+
+.dropdown_menu_show {
+    display: block;
+}
+
+.dropdown_item {
+    display: block;
+    width: 100%;
+    padding: 8px 25px;
+    text-decoration: none;
+}
+
+.dropdown_item:hover,
+.dropdown_item:focus {
+    background-color: rgba(var(--main-color-rgb), 0.10);
+}
+
+.dropdown_item.active,
+.dropdown_item:active {
+    color: white;
+    background-color: var(--main-color);
+}
+
 .internal {
     min-width: var(--min_width);
 }
@@ -148,11 +206,13 @@ form {
 
 .left {
     float: left;
+    padding: 10px 5px;
     width: 265px;
 }
 
 .right {
     position: relative;
+    padding: 18px 18px;
     float: left;
     width: calc(100% - 265px);
     background-color: var(--main-background);
@@ -162,14 +222,14 @@ form {
     height: auto;
     width: auto;
     margin: 0px, 12px;
-    margin-top: 10px;
+    margin-top: 5px;
+    padding: 20px 20px;
     background-color: var(--secondary-color);
     border-radius: 4px;
 }
 
 .search_wrapper {
     font-size: 14px;
-    margin: 18px;
     overflow: auto;
 }
 
@@ -179,18 +239,18 @@ form {
 }
 
 .search_label {
-    margin-top: 10px;
-    margin-bottom: 1px;
+    margin-top: 12px;
+    margin-bottom: 3px;
     width: fit-content;
 }
 
 .search_select {
-    margin-top: 10px;
+    margin-top: 12px;
 }
 
 .search_input input,
 .search_select select {
-    height: 30px;
+    height: 32px;
     width: 100%;
     border-radius: 3px;
     border: none;
@@ -199,6 +259,10 @@ form {
 
 .search_input_destination input {
     cursor: auto;
+}
+
+#nights {
+    margin-top: 3px;
 }
 
 #children {
@@ -351,9 +415,7 @@ input:checked+.slider:before {
 .hopping_select {
     display: block;
     font-size: 15px;
-    font-family: sans-serif;
     font-weight: 700;
-    color: #333;
     line-height: 1.3;
     padding: 3px 23px 4px 6px;
     width: 100%;
@@ -387,7 +449,6 @@ input:checked+.slider:before {
     border-color: #aaa;
     box-shadow: 0 0 1px 3px var(--main-color-light);
     box-shadow: 0 0 0 3px -moz-mac-focusring;
-    color: #222;
     outline: none;
 }
 
@@ -436,11 +497,11 @@ input:checked+.slider:before {
 }
 
 .filter_wrapper {
+    padding: 4px 4px;
     margin-top: 15px;
     background-color: white;
     border: 1px solid #bdbdbd;
     border-radius: 4px;
-    color: #333;
 }
 
 .filter_section {
@@ -574,9 +635,6 @@ input:checked+.slider:before {
 
 .search_top {
     display: inline-block;
-    margin: 15px;
-    margin-top: 10px;
-    margin-bottom: 0px;
     width: 826px;
     position: relative;
 }
@@ -586,7 +644,6 @@ input:checked+.slider:before {
     width: fit-content;
     font-size: 23px;
     font-weight: bold;
-    color: #333;
 }
 
 .sort_by {
@@ -609,6 +666,7 @@ input:checked+.slider:before {
     cursor: pointer;
     border-radius: 2px;
     box-shadow: 0 0 3px var(--main-color);
+    margin-right: 3px;
 }
 
 .map_wrapper:hover {
@@ -646,7 +704,6 @@ input:checked+.slider:before {
 }
 
 .sort_wrapper {
-    margin: 15px;
     margin-top: 10px;
     margin-bottom: 0px;
     height: 35px;
@@ -696,10 +753,12 @@ input:checked+.slider:before {
 }
 
 .hotelbox {
-    margin: 15px;
+    display: flex;
+    margin: 15px 0px;
     overflow: auto;
     border: 1px solid #c6c6c6;
     border-radius: 3px;
+    padding: 17px;
 }
 
 .hotelbox:hover {
@@ -707,12 +766,10 @@ input:checked+.slider:before {
 }
 
 .hotelbox_inside {
-    margin: 17px;
     overflow: auto;
 }
 
 .hotel_photo {
-    float: left;
     height: 200px;
     width: 200px;
     border-radius: 3px;
@@ -727,14 +784,13 @@ input:checked+.slider:before {
 }
 
 .hotel_content {
-    float: left;
-    width: 571px;
-    margin-left: 17px;
+    margin-left: 20px;
+    flex-grow: 1;
 }
 
 .hotel_book {
+    margin-top: 5px;
     float: right;
-    margin-top: 3px;
 }
 
 .hotel_book button {
@@ -753,7 +809,7 @@ input:checked+.slider:before {
 }
 
 .hotel_room {
-    margin-top: 17px;
+    margin-top: 20px;
     overflow: auto;
     cursor: pointer;
 }
@@ -839,28 +895,21 @@ input:checked+.slider:before {
 }
 
 .address_wrapper {
-    margin-top: 17px;
+    margin-top: 20px;
     width: fit-content;
-    overflow: auto;
-    font-size: 12px;
+    font-size: 13px;
     cursor: pointer;
-}
-
-.address {
-    float: left;
+    display: flex;
 }
 
 .address_separator {
-    float: left;
     margin-left: 3px;
     transform: translateY(-3px);
     font-weight: bolder;
 }
 
 .distance_center_wrapper {
-    float: left;
     margin-left: 3px;
-    line-height: 15px;
     transform: translateY(+1px);
 }
 
@@ -875,12 +924,10 @@ input:checked+.slider:before {
 
 .address_separator span {
     font-weight: bolder;
-    color: #333;
 }
 
 .distance_center span {
     font-size: 12px;
-    color: #333;
 }
 
 .room_title {
@@ -914,10 +961,9 @@ input:checked+.slider:before {
 }
 
 .bed_type_wrapper {
-    color: #333;
     font-size: 13px;
     width: fit-content;
-    margin-top: 5px;
+    margin-top: 8px;
 }
 
 .policy_price_wrapper {
@@ -930,7 +976,7 @@ input:checked+.slider:before {
     font-size: 13px;
     font-weight: bold;
     color: #008009;
-    margin-top: 5px;
+    margin-top: 8px;
     overflow: auto;
 }
 
@@ -938,7 +984,6 @@ input:checked+.slider:before {
     float: right;
     font-size: 20px;
     font-weight: bold;
-    color: #333;
     transform: translateY(-15px);
 }
 
@@ -955,7 +1000,6 @@ input:checked+.slider:before {
 .page_loading_wrapper {
     transform: translateY(-10px);
     height: 80px;
-    margin: 0px 15px;
 }
 
 .page_loading {
@@ -992,7 +1036,6 @@ input:checked+.slider:before {
     display: none;
     height: 50px;
     background-color: rgba(var(--main-color-rgb), 0.15);
-    margin: 0px 15px;
     border-radius: 3px;
     margin-bottom: 50px;
 }
@@ -1114,6 +1157,7 @@ input:checked+.slider:before {
     min-width: var(--min_width);
     min-height: 720px;
     background-color: rgba(0, 0, 0, 0.4);
+    z-index: 2;
 }
 
 .display_map_overlay {
@@ -1356,7 +1400,7 @@ input:checked+.slider:before {
 
 .hp_head {
     overflow: auto;
-    margin: 5px 0px 10px 0px;
+    margin: 10px 0px 10px 0px;
 }
 
 .hp_head_tittle {
@@ -1506,6 +1550,7 @@ input:checked+.slider:before {
     height: 100%;
     width: 100%;
     object-fit: cover;
+    border-radius: 2px;
 }
 
 .arrow_left,
@@ -1546,6 +1591,10 @@ input:checked+.slider:before {
 
 .arrow_left i {
     left: 30%;
+}
+
+.hp_slides_index {
+    margin-top: 5px;
 }
 
 .hp_min_slide {
@@ -1660,6 +1709,7 @@ input:checked+.slider:before {
 
 .hp_availability {
     margin-top: 15px;
+    padding: 25px;
     background-color: rgb(242, 242, 242);
     border-radius: 5px;
 }
@@ -1667,46 +1717,43 @@ input:checked+.slider:before {
 .hp_section_tittle {
     width: fit-content;
     font-size: 24px;
-    margin: 15px;
+    margin-bottom: 15px;
 }
 
 .hp_search {
-    overflow: auto;
+    padding: 15px 20px;
+    display: flex;
     border: 1px solid #c6c6c6;
     border-radius: 3px;
     background-color: white;
-    margin: 15px;
+    margin-bottom: 15px;
+
 }
 
 .hp_search_box {
     height: 60px;
-    margin: 15px;
     border: 1px solid #c6c6c6;
     border-radius: 3px;
     cursor: pointer;
 }
 
-.hp_dates_wrapper {
-    float: left;
-    width: fit-content;
-}
+.hp_dates_wrapper {}
 
 .hp_guests_wrapper {
-    float: left;
-    width: 200px;
+    padding: 0px 30px;
+    margin: 0px 20px
 }
 
 .hp_update_wrapper {
-    float: right;
-    width: 150px;
-    background-color: ;
-    border: none;
+    margin-left: auto;
+
 }
 
 .hp_dates_box {
+    padding: 0px 30px;
     float: left;
     height: 100%;
-    width: 175px;
+    width: fit-content;
     margin: 0px;
 }
 
@@ -1715,30 +1762,27 @@ input:checked+.slider:before {
 }
 
 .hp_box_wrapper {
-    width: fit-content;
     position: relative;
     top: 50%;
     transform: translateY(-50%);
-    margin-left: 5px;
 }
 
 .hp_box_title {
     width: fit-content;
-    margin-bottom: 5px;
     color: rgb(102, 102, 102);
     font-size: 14px;
-    margin-bottom: 3px;
+    margin-bottom: 5px;
 }
 
 .hp_box_text {
     width: fit-content;
     font-size: 14px;
-    color: #444;
     font-size: 16px;
     font-weight: bold;
 }
 
 .hp_update_wrapper button {
+    padding: 0px 30px;
     height: 100%;
     width: 100%;
     color: white;
@@ -1756,16 +1800,15 @@ input:checked+.slider:before {
 
 .hp_rooms_header {
     background-color: var(--main-color-light);
-    height: 40px;
+    height: 45px;
     border: 1px solid #c6c6c6;
-    margin: 15px 15px 0px 15px;
     transform: translateY(3px);
     z-index: -1000;
 }
 
 .hp_header_box {
     float: left;
-    height: 39px;
+    height: 100%;
     width: 150px;
     border: none;
     color: white;
@@ -1786,8 +1829,6 @@ input:checked+.slider:before {
     border: 1px solid #c6c6c6;
     border-radius: 3px;
     background-color: white;
-    margin: 15px;
-    margin-top: 0px;
 }
 
 .hp_room_wrapper {
@@ -1816,7 +1857,8 @@ input:checked+.slider:before {
 }
 
 .hp_room_reserve {
-    width: 282px;
+    padding: 20px;
+    width: 278px;
 }
 
 .hp_room_type {
@@ -1848,7 +1890,7 @@ input:checked+.slider:before {
 
 .hp_room_type,
 .hp_room_offer {
-    padding: 15px;
+    padding: 20px;
 }
 
 .hp_room_offer_select {
@@ -1859,7 +1901,7 @@ input:checked+.slider:before {
 }
 
 .hp_room_offer_select select {
-    margin-top: 5px;
+    margin-top: 10px;
     height: 25px;
     width: 40px;
 }
@@ -1867,7 +1909,6 @@ input:checked+.slider:before {
 .hp_nr_rooms {
     font-size: 14px;
     font-weight: bold;
-    color: #333;
     padding: 3px 23px 4px 6px;
     appearance: none;
     background-color: white;
@@ -1986,7 +2027,6 @@ input:checked+.slider:before {
     position: relative;
     left: 50%;
     transform: translateX(-50%);
-    margin-top: 15px;
     margin-bottom: 15px;
     padding: 7px 15px;
     width: 140px;
@@ -2006,6 +2046,8 @@ input:checked+.slider:before {
 
 .hp_room_reserve ul {
     font-size: 13px;
+    padding-inline-start: 20px;
+
 }
 
 .hp_room_reserve li {
@@ -2016,15 +2058,10 @@ input:checked+.slider:before {
     margin-top: 15px;
     background-color: rgb(242, 242, 242);
     border-radius: 5px;
-}
-
-.hp_facilities .hp_section_tittle {
-    margin-bottom: 0px;
-    margin-left: 25px;
+    padding: 25px;
 }
 
 .hp_facilities_wrapper {
-    margin: 25px;
     column-count: 3;
     margin-top: 5px;
 }
@@ -2066,20 +2103,17 @@ input:checked+.slider:before {
 
 .hp_house_rules {
     margin-top: 15px;
+    padding: 25px;
     background-color: rgb(242, 242, 242);
     border-radius: 5px;
 }
 
-.hp_house_rules .hp_section_tittle {
-    margin-left: 25px;
-}
 
 .hp_rule {
     display: flex;
     padding-bottom: 20px;
     padding-top: 10px;
     border-top: 1px solid rgba(133, 135, 139, 0.3);
-    margin: 0px 25px;
 }
 
 .hp_rule_tittle {

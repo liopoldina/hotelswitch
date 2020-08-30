@@ -7,7 +7,7 @@
 @include('childs.hotel_page')
 
 @section('head')
-<script src="./js/hotel.js"></script>
+<script src={{asset('js/hotel.js')}}></script>
 @append
 
 @section('content')

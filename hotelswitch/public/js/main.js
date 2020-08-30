@@ -1,4 +1,28 @@
 $(function() {
+    // 0) dropdown menu
+    $(".account_dropdown").click(function() {
+        if ($(".dropdown_menu").hasClass("dropdown_menu_show")) {
+            $(".dropdown_menu").removeClass("dropdown_menu_show");
+        } else {
+            $(".dropdown_menu").addClass("dropdown_menu_show");
+        }
+    });
+
+    //hide if click outside
+    $(document).click(function(e) {
+        var dropdown = $(".account_dropdown");
+        var container = $(".dropdown_menu");
+
+        // if the target of the click isn't the container nor a descendant of the container
+        if (
+            !container.is(e.target) &&
+            container.has(e.target).length === 0 &&
+            !dropdown.is(e.target)
+        ) {
+            $(".dropdown_menu").removeClass("dropdown_menu_show");
+        }
+    });
+
     // 1) destination autocomplete
     $("#destination")
         .autocomplete(
@@ -270,7 +294,7 @@ $(function() {
 
         function filter(callback) {
             $.ajax({
-                url: "xhr",
+                url: "results",
                 method: "GET",
                 dataType: "json",
                 data: {
@@ -387,7 +411,7 @@ $(function() {
 
         function getpage(callback) {
             $.ajax({
-                url: "xhr",
+                url: "results",
                 method: "GET",
                 dataType: "json",
                 data: {
