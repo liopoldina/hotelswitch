@@ -179,7 +179,7 @@
                 @if(isset($h))
 
                 @foreach ($h->paragraphs as $paragraph)
-                <p>{{ $paragraph }}</p>
+                <p>{{ htmlspecialchars_decode($paragraph) }}</p>
                 @endforeach
 
                 @else

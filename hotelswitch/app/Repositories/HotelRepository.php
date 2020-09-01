@@ -217,7 +217,7 @@ class Hotel {
                 break;
             }
 
-            $missing_icons = ['Maestro','Visa Electrón','EuroCard', 'EC'];
+            $missing_icons = ['Maestro','Visa Electrón','EuroCard', 'EC', 'Euro 6000'];
     
             if ($facilities[$i]["facilityGroupCode"]==30) {
 

@@ -10,7 +10,6 @@ use App\Libraries\MyLibrary;
 
 class SearchRepository{
 
-
     public static function get_collection($m) {
     
         $client = new Client([
@@ -108,7 +107,7 @@ class SearchRepository{
 
         $inputs = DB::connection('hotelbeds')
                     ->table($m->collection_name)
-                    ->whereBetween('minRate',[$m->filters["price_range"]["minimum_price"],$m->filters["price_range"]["maximum_price"]])
+                    ->whereBetween('minRate',[$m->filters["price_range"]["minimum_price"]*$m->nights,$m->filters["price_range"]["maximum_price"]*$m->nights])
                     ->whereIn('categoryCode', $star_rating )
                     ->where('distance_center','<=', $m->filters["distance_center"])
                     ->where('score','>=', $m->filters["minimum_score"])

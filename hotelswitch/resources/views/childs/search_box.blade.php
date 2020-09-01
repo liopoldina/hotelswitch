@@ -9,8 +9,6 @@
             </div>
             <div class="search_input_destination search_input">
                 <input type="text" id="destination" name="destination" value='{{$m->destination ?? "" }}' />
-                <input type="hidden" id="destination_id" name="destination_id" />
-
                 <input type="hidden" id="lat" name="lat" value='{{$m->lat ?? "" }}' />
                 <input type="hidden" id="lon" name="lon" value='{{$m->lon ?? "" }}' />
             </div>

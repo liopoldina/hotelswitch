@@ -1648,6 +1648,7 @@ input:checked+.slider:before {
 
 .hp_descrition_text p {
     margin: 14px 0px;
+    text-align: justify;
 }
 
 .hp_top_facilities {

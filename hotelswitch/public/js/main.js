@@ -30,7 +30,6 @@ $(function() {
                 select: function(event, ui) {
                     event.preventDefault();
                     $("#destination").val(ui.item.label); // display the label
-                    $("#destination_id").val(ui.item.value); // save value to hidden input
                     $("#lat").val(ui.item.coords.lat);
                     $("#lon").val(ui.item.coords.lon);
                 },

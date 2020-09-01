@@ -231,6 +231,6 @@ var options = {
     background: "images/homepage/main_background.jpg",
     interactive: true,
     speed: "medium",
-    density: "high"
+    density: "medium"
 };
 var particleCanvas = new ParticleNetwork(canvasDiv, options);
