@@ -144,56 +144,56 @@
             <div class="popular_tittle">Top Hotels</div>
             <div class="slick hotels">
                 <div>
-                    <a href="">
-                        <img src={{asset("images/homepage/hotels/the_brando.jpg")}} alt="">
-                        <span><strong>The Brando</strong></span>
-                        <span>Tetiaroa, French Polynesia</span>
+                    <a href="hotel?hotel_id=61830">
+                        <img src={{asset("images/homepage/hotels/komaneka_at_monkey_forest.jpg")}} alt="">
+                        <span><strong>Komaneka at Monkey Forest</strong></span>
+                        <span>Ubud, Bali</span>
                     </a>
                 </div>
                 <div>
-                    <a href="">
-                        <img src={{asset("images/homepage/hotels/burj_al_arab_jumeirah.jpg")}} alt="">
-                        <span><strong>Burj Al Arab Jumeirah</strong></span>
+                    <a href="hotel?hotel_id=142659">
+                        <img src={{asset("images/homepage/hotels/armani_hotel_dubai.jpg")}} alt="">
+                        <span><strong>Armani Hotel Dubai</strong></span>
                         <span>Dubai, UAE</span>
                     </a>
                 </div>
                 <div>
-                    <a href="">
-                        <img src={{asset("images/homepage/hotels/the_plaza.jpg")}} alt="">
-                        <span><strong>The Plaza</strong></span>
+                    <a href="hotel?hotel_id=573311">
+                        <img src={{asset("images/homepage/hotels/the_knickerbocker.jpg")}} alt="">
+                        <span><strong>The Knickerbocker</strong></span>
                         <span>New York, US</span>
                     </a>
                 </div>
                 <div>
-                    <a href="">
-                        <img src={{asset("images/homepage/hotels/marina_bay_sands.jpg")}} alt="">
-                        <span><strong>Marina Bay Sands</strong></span>
+                    <a href="hotel?hotel_id=74316">
+                        <img src={{asset("images/homepage/hotels/the_fullerton_hotel.jpg")}} alt="">
+                        <span><strong>The Fullerton Hotel</strong></span>
                         <span>Singapore</span>
                     </a>
                 </div>
                 <div>
-                    <a href="">
-                        <img src={{asset("images/homepage/hotels/browns_hotel.jpg")}} alt="">
-                        <span><strong>Brown’s Hotel</strong></span>
+                    <a href="hotel?hotel_id=6638">
+                        <img src={{asset("images/homepage/hotels/the_langham_london.jpg")}} alt="">
+                        <span><strong>The Langham London</strong></span>
                         <span>London, UK</span>
                     </a>
                 </div>
                 <div>
-                    <a href="">
-                        <img src={{asset("images/homepage/hotels/the_royal_at_atlantis.jpg")}} alt="">
-                        <span><strong>The Royal at Atlantis</strong></span>
-                        <span>Nassau, Bahamas</span>
+                    <a href="hotel?hotel_id=79400">
+                        <img src={{asset("images/homepage/hotels/the_tongsai_bay.jpg")}} alt="">
+                        <span><strong>The Tongsai Bay</strong></span>
+                        <span>Koh Samui, Thailand</span>
                     </a>
                 </div>
                 <div>
-                    <a href="">
-                        <img src={{asset("images/homepage/hotels/the_beverly_hills_hotel.jpg")}} alt="">
-                        <span><strong>The Beverly Hills Hotel</strong></span>
+                    <a href="hotel?hotel_id=542606">
+                        <img src={{asset("images/homepage/hotels/waldorf_astoria_beverly_hills.jpg")}} alt="">
+                        <span><strong>Waldorf Astoria Beverly Hills</strong></span>
                         <span>Los Angeles, US</span>
                     </a>
                 </div>
                 <div>
-                    <a href="">
+                    <a href="hotel?hotel_id=363373">
                         <img src={{asset("images/homepage/hotels/rossio_garden_hotel.jpg")}} alt="">
                         <span><strong>Rossio Garden Hotel</strong></span>
                         <span>Lisbon, Portugal</span>

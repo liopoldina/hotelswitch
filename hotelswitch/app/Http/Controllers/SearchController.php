@@ -34,7 +34,7 @@ class SearchController extends Controller
         $m->collection_name = $m->lat ."_". $m->lon ."_".$m->check_in ."_". $m->check_out ."_". $m->rooms ."_". $m->adults ."_".$m->children;
 
         if (!Schema::connection('hotelbeds')->hasTable($m->collection_name)){
-        SearchRepository::get_collection($m);
+        SearchRepository::get_collection($m, 'geolocation');
         }
 
         // filters

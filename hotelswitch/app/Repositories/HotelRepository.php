@@ -5,7 +5,6 @@ namespace App\Repositories;
 use Illuminate\Support\Facades\DB;
 
 use App\Models\Static_Hotel;
-use App\Models\Countries;
 use App\Models\FacilityGroups;
 use App\Models\Facilities;
 use App\Libraries\MyLibrary;
@@ -14,11 +13,11 @@ class HotelRepository{
 
     public static function get_hotel($m){
     
-        $static = Static_Hotel::find($m->hotel_id);
+        $Static_Hotel = Static_Hotel::find($m->hotel_id);
         $info   = DB::connection('hotelbeds')->table($m->collection_name)->where('info', 'exists', true)->first();
         $offer  = DB::connection('hotelbeds')->table($m->collection_name)->where('code', $m->hotel_id)->get();
 
-        $h = new Hotel($static,$offer[0],$info);
+        $h = new Hotel($Static_Hotel,$offer[0],$info);
         
         return $h;
     }
@@ -40,7 +39,6 @@ class Hotel {
     var $stars_symbol;
 
     var $city;
-    var $country_code;
     var $country;
     var $address;
 
@@ -85,8 +83,7 @@ class Hotel {
                 $this->stars_symbol = MyLibrary::set_stars_symbol($this->stars );
 
                 $this->city=$static["city"]["content"];
-                $this->country_code = $static["countryCode"];
-                $this->country =  Countries::find($this->country_code)['description']['content']; 
+                $this->country =  $static["country"]['description']['content']; 
 
                 $this->address = MyLibrary::titleCase($static["address"]["content"]).", ".MyLibrary::titleCase($this->city). ", " . $static["postalCode"] . ", " . $this->country;
 
@@ -103,8 +100,6 @@ class Hotel {
             
                 $this->description=$static["description"]["content"];
                 $this->get_paragraphs();
-
-                $this->facilitites_aux=$static["facilities"];
 
                 $facilities_aux=$this->get_facilities($static["facilities"]); // instead of feeding $static["facilities"] to function get_policies, we feed $facilities_aux that is equal but already contains the description of the facility
                 $this->get_policies($facilities_aux);

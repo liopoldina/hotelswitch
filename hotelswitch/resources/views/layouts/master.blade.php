@@ -9,7 +9,7 @@
     <div class="header">
         <a href="{{ route('homepage') }}">
             <div class="logo_wrapper">
-                <span class="hotel">Hotel</span><span class="hopping">Switch</span><span class="com">.com</span>
+                <span class="hotel">H</span><span class="hopping">S</span><span class="com">.c</span>
             </div>
         </a>
         <div class="user_wrapper">
@@ -83,16 +83,13 @@
             </div>
             <div class="second_footer_items_wrapper">
                 <div class="second_footer_item">
-                    <a href="#">Investor Relationships</a>
-                </div>
-                <div class="second_footer_item">
-                    <a href="#">Careers</a>
-                </div>
-                <div class="second_footer_item">
                     <a href="#">About HotelHopping.com</a>
                 </div>
                 <div class="second_footer_item">
-                    <a href="#">Terms &amp; Conditions</a>
+                    <a href="#">Terms of Service</a>
+                </div>
+                <div class="second_footer_item">
+                    <a href="#">Privacy Policy</a>
                 </div>
             </div>
         </div>

@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Jenssegers\Mongodb\Eloquent\Model as Eloquent;
 
-class Countries extends Eloquent
+class Country extends Eloquent
 {   
     //    Database connection 
     protected $connection = 'mongodb_static';

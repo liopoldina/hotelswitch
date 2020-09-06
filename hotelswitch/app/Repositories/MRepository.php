@@ -14,7 +14,7 @@ class MRepository{
     public static function m($m) { 
 
         // set default attributes in case of missing
-        $m->date_range = (request()->has('date_range') ? request()->date_range : date("m/d/yy") . " - " . date("m/d/yy", strtotime(date('m/d/yy') . "+1 days")));
+        $m->date_range = (request()->has('date_range') ? request()->date_range : date("m/d/yy", strtotime(date('m/d/yy') . "+1 days")) . " - " . date("m/d/yy", strtotime(date('m/d/yy') . "+2 days")));
         $m->adults = (request()->has('adults') ? request()->adults :"2");
         $m->children = (request()->has('children') ? request()->children :"0");
         $m->rooms = (request()->has('rooms') ? request()->rooms :"1");

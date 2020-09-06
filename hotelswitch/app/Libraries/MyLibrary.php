@@ -59,7 +59,7 @@ Class MyLibrary {
     
     
 
-    public static function titleCase($string, $delimiters = array(" ", "-", ".", "'", "O'", "Mc"), $exceptions = array("or", "VIII"))
+    public static function titleCase($string, $delimiters = array(" ", "-", ".", "'", "O'", "Mc"), $exceptions = array("or", "VIII", "–"))
     {
         /*
          * Exceptions in lower case are words you don't want converted

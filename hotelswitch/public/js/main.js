@@ -265,7 +265,7 @@ $(function() {
             $("input:radio[name=distance_center]:checked").val()
         );
         if (isNaN(m.filters.distance_center)) {
-            m.filters.distance_center = 10;
+            m.filters.distance_center = 50;
         }
 
         // cancellation policy

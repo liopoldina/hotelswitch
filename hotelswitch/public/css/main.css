@@ -1249,6 +1249,7 @@ input:checked+.slider:before {
     cursor: pointer;
     border-radius: 2px;
     box-shadow: 0 0 3px var(--main-color);
+    border: 1px solid transparent;
 }
 
 .hp_map_wrapper:hover {
@@ -1471,6 +1472,7 @@ input:checked+.slider:before {
     border-radius: 4px;
     margin-left: 60px;
     padding: 20px;
+    height: fit-content;
 }
 
 .hp_spotlight_wrapper {
@@ -1747,7 +1749,7 @@ input:checked+.slider:before {
 
 .hp_update_wrapper {
     margin-left: auto;
-
+    border: none
 }
 
 .hp_dates_box {
@@ -1782,7 +1784,7 @@ input:checked+.slider:before {
     font-weight: bold;
 }
 
-.hp_update_wrapper button {
+.hp_search_box button {
     padding: 0px 30px;
     height: 100%;
     width: 100%;
@@ -1793,9 +1795,11 @@ input:checked+.slider:before {
     font-size: 14px;
     font-weight: bold;
     cursor: pointer;
+    border: 1px solid #c6c6c6;
+
 }
 
-.hp_update_wrapper button:hover {
+.hp_search_box button:hover {
     background-color: var(--main-color);
 }
 

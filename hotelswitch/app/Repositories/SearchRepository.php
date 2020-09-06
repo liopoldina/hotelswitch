@@ -10,7 +10,7 @@ use App\Libraries\MyLibrary;
 
 class SearchRepository{
 
-    public static function get_collection($m) {
+    public static function get_collection($m,$mode) {
     
         $client = new Client([
             'base_uri' => 'https://api.test.hotelbeds.com/hotel-api/1.0/'
@@ -29,38 +29,75 @@ class SearchRepository{
             'Content-Type'    => 'application/json'
         ];
         
-        $body=[
-            "stay"=> [
-                "checkIn"  => $m->check_in,
-                "checkOut" => $m->check_out
-            ],
-            "occupancies"=> [
-                [
-                "rooms"   => $m->rooms,
-                "adults"  => $m->adults,
-                "children"=> $m->children
-                ]
-            ],
-            "geolocation" => [
-                "latitude"=> $m->lat,
-                "longitude"=> $m->lon,
-                "radius"=> 20,
-                "unit"=> "km"
-            ],
-            "accommodations"=> ["HOTEL"],
-            "dailyRate"=>"true",
-            "reviews"=>[
-                [
-                "type"=>"TRIPADVISOR",
-                "maxRate"=> 5,
-                "minRate"=> 1,
-                "minReviewCount"=> 100
-                ]
-            ],
-            "filter"=>[
-                "paymentType"=> "AT_WEB"
-            ]
-        ];
+        switch ($mode){
+            case 'geolocation':
+                $body=[
+                    "stay"=> [
+                        "checkIn"  => $m->check_in,
+                        "checkOut" => $m->check_out
+                    ],
+                    "occupancies"=> [
+                        [
+                        "rooms"   => $m->rooms,
+                        "adults"  => $m->adults,
+                        "children"=> $m->children
+                        ]
+                    ],
+                    "geolocation" => [
+                        "latitude"=> $m->lat,
+                        "longitude"=> $m->lon,
+                        "radius"=> 20,
+                        "unit"=> "km"
+                    ],
+                    "accommodations"=> ["HOTEL"],
+                    "dailyRate"=>"true",
+                    "reviews"=>[
+                        [
+                        "type"=>"TRIPADVISOR",
+                        "maxRate"=> 5,
+                        "minRate"=> 1,
+                        "minReviewCount"=> 100
+                        ]
+                    ],
+                    "filter"=>[
+                        "paymentType"=> "AT_WEB"
+                    ]
+                ];
+                break;
+
+
+            case 'id':
+                $body=[
+                    "stay"=> [
+                        "checkIn"  => $m->check_in,
+                        "checkOut" => $m->check_out
+                    ],
+                    "occupancies"=> [
+                        [
+                        "rooms"   => $m->rooms,
+                        "adults"  => $m->adults,
+                        "children"=> $m->children
+                        ]
+                    ],
+                    "hotels" => [
+                        "hotel"=> [$m->hotel_id]
+                    ],                    "accommodations"=> ["HOTEL"],
+                    "dailyRate"=>"true",
+                    "reviews"=>[
+                        [
+                        "type"=>"TRIPADVISOR",
+                        "maxRate"=> 5,
+                        "minRate"=> 1,
+                        "minReviewCount"=> 100
+                        ]
+                    ],
+                    "filter"=>[
+                        "paymentType"=> "AT_WEB"
+                    ]
+                ];
+                break;
+
+        }
         
         $response = $client->request('POST', 'hotels',  ['headers' => $headers,'json' => $body,]);
         
@@ -150,6 +187,9 @@ function transform_collection($response_json, $m){
     $hotel->latitude = (float) $hotel->latitude;
     $hotel->longitude = (float) $hotel->longitude;
     // calculate distance center
+    if(!isset($m->lat)){
+    [$m->lat, $m->lon]= MyLibrary::geocode($hotel->destinationName);
+    }
     $hotel->distance_center = MyLibrary::distance($hotel->latitude, $hotel->longitude,$m->lat,$m->lon);
     // cancellation policy
     $hotel->cancellation_policy = MyLibrary::cancellation_policy($hotel->rooms[0]->rates[0]->cancellationPolicies[0]->from);
@@ -206,7 +246,7 @@ class Result {
                 $this->coords = ['lat'=>$input["latitude"],'lon'=>$input["longitude"]];
                 $this->distance_center = round(MyLibrary::distance(
                     $this->coords["lat"],  $this->coords["lon"], $m->lat, $m->lon),1). " km from center";
-
+                    
                 $this->room_name = MyLibrary::titleCase($input["rooms"][0]["name"]);
                 $this->set_bed_type();
 
