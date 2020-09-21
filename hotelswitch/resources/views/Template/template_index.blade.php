@@ -2,11 +2,11 @@
 
 @include('childs.head')
 
-@include('childs.search_box')
+@include('Search.search_form')
 
-@include('childs.search_page')
+@include('Search.search_sections')
 
-@include('childs.hotel_page')
+@include('Hotel.hotel_sections')
 
 @section('content')
 @parent

@@ -22,10 +22,6 @@
 <script src='https://kit.fontawesome.com/93e6a1962d.js' crossorigin="anonymous"></script>
 <script src={{asset('js/moment.min.js')}}></script>
 <script src={{asset('js/daterangepicker.js')}}></script>
-<script async defer
-    src='https://maps.googleapis.com/maps/api/js?key=AIzaSyByN9fh3nvC4R9vn7G6BkNRnhoPbKYdMwk&callback=initMap'>
-</script>
-
 
 <script>
     @isset($h)

@@ -7,7 +7,7 @@
 
 <body>
     <div class="header">
-        <a href="{{ route('homepage') }}">
+        <a href="{{ route('homepage.index') }}">
             <div class="logo_wrapper">
                 <span class="hotel">H</span><span class="hopping">S</span><span class="com">.c</span>
             </div>

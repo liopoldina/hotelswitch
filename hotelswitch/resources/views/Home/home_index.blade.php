@@ -31,14 +31,13 @@
                 <div class='destination_wrapper'>
                     <i class="fas fa-map-marker-alt fa-lg"></i>
                     <input type="text" id="destination" name="destination" placeholder="where are you travelling to?"
-                        class="ui-autocomplete-input bar_box destination_input" autocomplete="off">
+                        class="ui-autocomplete-input bar_box destination_input" autocomplete="off" required>
                     <input type="hidden" id="lat" name="lat" value="">
                     <input type="hidden" id="lon" name="lon" value="">
                 </div>
                 <div class="dates_wrapper">
                     <i class="fas fa-calendar-alt fa-lg"></i>
-                    <input type="text" id="date_range" name="date_range" value="08/29/2020 - 08/30/2020"
-                        class='bar_box dates_input'>
+                    <input type="text" id="date_range" name="date_range" class='bar_box dates_input' required>
                     <span class='check_in'>Check-in</span>
                     <span class='check_out'>Check-out</span>
                 </div>
@@ -46,9 +45,9 @@
                     <i class="fas fa-user-friends fa-lg"></i>
                     <span class='box_tittle'>Guests</span>
                     <span class='box_content'>1 room, 2 adults </span>
-                    <input type="hidden" id="adults" name="adults" value="2">
-                    <input type="hidden" id="children" name="children" value="0">
-                    <input type="hidden" id="rooms" name="rooms" value="1">
+                    <input type="hidden" id="adults" name="adults" value="2" required>
+                    <input type="hidden" id="children" name="children" value="0" required>
+                    <input type="hidden" id="rooms" name="rooms" value="1" required>
                 </div>
                 <button class='bar_button' type="submit">Search</button>
             </form>
@@ -57,7 +56,7 @@
     <div class='why_section'>
         <div class="why_tittle">Let us find you the best deals</div>
         <div class=why_element>
-            <i class="fas fa-brain"></i>
+            <i class="fas fa-network-wired"></i>
             <div class="why_section_tittle">Artifical Intelligence</div>
             <div class="why_section_text">Our proprietary artificial intelligence algorithm analyses reservations trends
                 and millions of hotel

@@ -10,6 +10,10 @@
     z-index: 2;
 }
 
+.header {
+    z-index: 3;
+}
+
 .tittle_wrapper {
     position: absolute;
     top: 175px;

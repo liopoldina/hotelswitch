@@ -21,18 +21,27 @@ Route::get('/dashboard', 'Account\DashboardController@index')->name('dashboard')
 Route::get('/reservations', 'Account\ReservationsController@index')->name('reservations');
 Route::get('/settings', 'Account\SettingsController@index')->name('settings');
 
-//pages
-Route::get('/', 'HomepageController@index')->name('homepage');
-Route::get('/search', 'SearchController@index')->name('search');
-Route::get('/hotel', 'HotelController@index')->name('hotel');
-Route::get('/book', 'BookController@index')->name('book');
+//homepage
+Route::get('/', 'HomepageController@index')->name('homepage.index');
 
-//ajax
-Route::get('/results', 'Ajax\ResultsController@index')->name('results');
-Route::get('/autocomplete', 'Ajax\AutocompleteController@index')->name('autocomplete');
+//search
+Route::get('/search', 'SearchController@index')->name('search.index');
+Route::get('/results', 'SearchController@show')->name('search.show');
+
+//hotel
+Route::get('/hotel', 'HotelController@index')->name('hotel.index'); 
+
+//reservations
+Route::get('/book', 'ReservationsController@create')->name('reservations.create');
+Route::post('/book', 'ReservationsController@store')->name('reservations.store');
+Route::get('/confirmation', 'ReservationsController@confirmation')->name('reservations.confirmation');
+
+
+//autocomplete
+Route::get('/autocomplete', 'Autocomplete\ExpediaController@index')->name('autocomplete.index');
 
 //template
-Route::get('/template', 'TemplateController@index')->name('template');
+Route::get('/template', 'TemplateController@index')->name('template.index');
 
 
 

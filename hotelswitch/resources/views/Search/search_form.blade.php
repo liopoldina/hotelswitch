@@ -8,7 +8,7 @@
                 <span>Destination</span>
             </div>
             <div class="search_input_destination search_input">
-                <input type="text" id="destination" name="destination" value='{{$m->destination ?? "" }}' />
+                <input type="text" id="destination" name="destination" value='{{$m->destination ?? "" }}' required />
                 <input type="hidden" id="lat" name="lat" value='{{$m->lat ?? "" }}' />
                 <input type="hidden" id="lon" name="lon" value='{{$m->lon ?? "" }}' />
             </div>
@@ -16,13 +16,13 @@
                 <label for="check-in">Check-in/Check-out</label>
             </div>
             <div class="search_input">
-                <input type="text" id="date_range" name="date_range" value='{{$m->date_range ?? "" }}' />
+                <input type="text" id="date_range" name="date_range" value='{{$m->date_range ?? "" }}' required />
             </div>
 
             <div id="nights">{{isset($m) ? $m->nights_text . ' stay' : '1 night stay'}}</div>
 
             <div class="search_select">
-                <select type="text" id="adults" name="adults">
+                <select type="text" id="adults" name="adults" required>
                     <option name="adults" value="1" id="1_adult" @isset($m->
                         adults){{ $m->adults == 1 ? 'selected' : ''}}@endisset>
                         1 adult
@@ -42,7 +42,7 @@
                 </select>
             </div>
             <div class="search_select">
-                <select type="text" id="children" name="children">
+                <select type="text" id="children" name="children" required>
                     <option value="0" id="no_children" @isset($m->
                         children){{ $m->children == 0 ? 'selected' : ''}}@endisset>
                         No children
@@ -56,7 +56,7 @@
                         2 children
                     </option>
                 </select>
-                <select type="text" id="rooms" name="rooms">
+                <select type="text" id="rooms" name="rooms" required>
                     <option value="1" id="1_room" @isset($m->
                         rooms){{ $m->rooms == 1 ? 'selected' : ''}}@endisset>
                         1 room

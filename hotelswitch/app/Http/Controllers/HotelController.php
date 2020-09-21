@@ -18,16 +18,21 @@ class HotelController extends Controller
 {
     public function index()
     {
-        if(request()->has('m')){
+        $data = (object) request()->validate([
+            'm' => 'json',
+            'hotel_id' => 'required|numeric|min:0|max:999999',
+        ]);
+
+        if(isset($data->m)){
         // case directly from search results
-        $m = json_decode(request()->m);
-        $m->hotel_id =intval(request()->hotel_id);
+        $m = json_decode($data->m);
+        $m->hotel_id =intval($data->hotel_id);
         } 
         else{
         // case loading hotel page with just id (needs to get collection first)
         $m=  new \stdClass();
         $m = MRepository::m($m);   
-        $m->hotel_id =intval(request()->hotel_id);
+        $m->hotel_id =intval($data->hotel_id);
         $m->collection_name = $m->hotel_id ."_". $m->check_in ."_". $m->check_out ."_". $m->rooms ."_". $m->adults ."_".$m->children;
         if (!Schema::connection('hotelbeds')->hasTable($m->collection_name)){
             SearchRepository::get_collection($m, 'id');
@@ -42,7 +47,7 @@ class HotelController extends Controller
             $m->lon = $h->coords["lon"];
         }
         
-        return view('hotel',[
+        return view('Hotel.hotel_index',[
                     'h' => $h,
                     'm' => $m
                 ]);

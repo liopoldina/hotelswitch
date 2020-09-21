@@ -2,21 +2,22 @@
 
 @include('childs.head')
 
-@yield('internal_left_right')
+@include('Search.search_form')
 
-@include('childs.search_box')
+@include('Hotel.hotel_sections')
 
-@include('childs.search_page')
+@section('head')
+<script src={{asset('js/hotel.js')}}></script>
+@append
 
 @section('content')
 <div class="internal">
     <div class="internal_wrapper">
         <div class="left">
             @yield('search_box')
-            {{-- @yield ('hopping') --}}
-            @yield ('left_search')
+            @yield ('left_hotel')
         </div>
-        @yield ('right_search')
+        @yield ('right_hotel')
     </div>
 </div>
 @endsection

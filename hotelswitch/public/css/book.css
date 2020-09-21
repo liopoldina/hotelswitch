@@ -180,6 +180,7 @@
 
 .name_wrapper {
     display: flex;
+    max-width: 450px;
 }
 
 .name_wrapper div:nth-of-type(2) {
@@ -203,7 +204,9 @@
     margin-left: 3px;
 }
 
-.input_wrapper input {
+.input_wrapper input,
+.input_wrapper select {
+    display: inline-block;
     height: 30px;
     border: 1px solid #aaa;
     border-radius: 3px;
@@ -211,11 +214,24 @@
     padding: 4px 5px;
 }
 
-.input_wrapper span {
+.is-invalid {
+    border: 2px solid red;
+}
+
+.info {
     display: inline-block;
     margin-left: 10px;
     font-style: italic;
     font-size: 12px;
+}
+
+.invalid-feedback,
+.error {
+    color: red;
+    display: block;
+    margin-top: 5px;
+    margin-left: 2px;
+    font-weight: bold;
 }
 
 .mandatory_wrapper {
@@ -240,7 +256,7 @@ input[type="number"]::-webkit-outer-spin-button {
 }
 
 #email,
-#confirm_email {
+#email_confirmation {
     width: 270px;
 }
 
@@ -251,7 +267,7 @@ input[type="number"]::-webkit-outer-spin-button {
 
 #expiry_month,
 #expiry_year {
-    width: 50px;
+    width: 60px;
 }
 
 #cvc {
@@ -264,13 +280,47 @@ input[type="number"]::-webkit-outer-spin-button {
     margin: 0px 3px;
 }
 
+.room_box {
+    display: flex;
+}
+
+.room_left {}
+
+.room_right {
+    padding-left: 20px;
+    width: 100%;
+}
+
+.room_left img {
+    width: 225px;
+    height: 155px;
+    border: 2px solid white;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
 .room_name {
     font-weight: bold;
+    font-size: 17px;
+}
+
+.room_capacity {
+    display: flex;
+    margin-bottom: 10px;
+}
+
+.guests_icon img {
+    width: 12px;
+}
+
+.offer_guests {
+    font-size: 14px;
+    margin-left: 5px;
 }
 
 .amenities {
     display: flex;
-    margin-top: 15px;
+    flex-wrap: wrap;
+    margin: 10px 0px;
 }
 
 .amenity {
@@ -279,8 +329,9 @@ input[type="number"]::-webkit-outer-spin-button {
     width: fit-content;
     border-radius: 3px;
     padding: 3px 4px;
-    font-size: 13px;
-    margin-right: 10px;
+    font-size: 12px;
+    margin-right: 8px;
+    margin-bottom: 5px;
 }
 
 .amenity i {
@@ -290,6 +341,20 @@ input[type="number"]::-webkit-outer-spin-button {
 
 .amenity span {
     margin-left: 5px;
+}
+
+.room_right label {
+    font-size: 13px;
+    font-weight: bold;
+}
+
+#special_requests {
+    margin-top: 5px;
+    display: block;
+    width: 100%;
+    height: 100px;
+    border: 1px solid #aaa;
+    border-radius: 3px;
 }
 
 .payment_info {

@@ -579,7 +579,7 @@
             @endif
         </div>
         <div class="hp_room_reserve">
-            <a href="book">
+            <a href="book?rateKey={{$h->offer[0]["rates"][0]["rateKey"]}}&collection_name={{$m->collection_name}}">
                 <button>I'll reserve</button>
             </a>
             <ul>

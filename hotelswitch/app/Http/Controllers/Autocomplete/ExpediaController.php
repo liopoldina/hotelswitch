@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\Ajax;
+namespace App\Http\Controllers\Autocomplete;
 
 use App\Http\Controllers\Controller;
 
 use Illuminate\Http\Request;
 
-class AutocompleteController extends Controller
+class ExpediaController extends Controller
 {   
 
     public function index()
