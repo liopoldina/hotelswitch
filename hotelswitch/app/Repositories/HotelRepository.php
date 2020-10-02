@@ -243,8 +243,6 @@ class Hotel {
                 if (isset($rooms[$i]["rates"][$n]["cancellationPolicies"][0]["from"])){   
                 $rooms[$i]["rates"][$n]["cancellationPolicies"][0]["description"] =  MyLibrary::cancellation_policy($rooms[$i]["rates"][$n]["cancellationPolicies"][0]["from"]);         
                 }
-    
-                //other
             }
         }
         $this->offer=$rooms;

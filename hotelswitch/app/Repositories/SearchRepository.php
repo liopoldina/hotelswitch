@@ -144,7 +144,7 @@ class SearchRepository{
 
         $inputs = DB::connection('hotelbeds')
                     ->table($m->collection_name)
-                    ->whereBetween('minRate',[$m->filters["price_range"]["minimum_price"]*$m->nights,$m->filters["price_range"]["maximum_price"]*$m->nights])
+                    ->whereBetween('rooms.0.rates.0.sellingRate',[$m->filters["price_range"]["minimum_price"]*$m->nights,$m->filters["price_range"]["maximum_price"]*$m->nights])
                     ->whereIn('categoryCode', $star_rating )
                     ->where('distance_center','<=', $m->filters["distance_center"])
                     ->where('score','>=', $m->filters["minimum_score"])
@@ -155,6 +155,8 @@ class SearchRepository{
                     ->take(10)
                     ->get();
 
+
+//rooms.0.rates.0.sellingRate    minRate
 
         foreach ($inputs as $input){
             $hotel[] = new Result($input,$m);
@@ -183,19 +185,35 @@ function transform_collection($response_json, $m){
     
     foreach($response_json->hotels->hotels as $hotel){
     // string to float
-    $hotel->minRate = (float) $hotel->minRate;
-    $hotel->latitude = (float) $hotel->latitude;
-    $hotel->longitude = (float) $hotel->longitude;
-    // calculate distance center
-    if(!isset($m->lat)){
-    [$m->lat, $m->lon]= MyLibrary::geocode($hotel->destinationName);
+        $hotel->minRate = (float) $hotel->minRate;
+        $hotel->latitude = (float) $hotel->latitude;
+        $hotel->longitude = (float) $hotel->longitude;
+        // calculate distance center
+        if(!isset($m->lat)){
+        [$m->lat, $m->lon]= MyLibrary::geocode($hotel->destinationName);
+        }
+        $hotel->distance_center = MyLibrary::distance($hotel->latitude, $hotel->longitude,$m->lat,$m->lon);
+        // cancellation policy
+        $hotel->cancellation_policy = MyLibrary::cancellation_policy($hotel->rooms[0]->rates[0]->cancellationPolicies[0]->from);
+        // score
+        $hotel->score =  $hotel->reviews[0]->rate * 2;
+       
+        // sellingRate
+        for($i=0; $i < count($hotel->rooms); $i++){
+
+            for($n=0; $n < count($hotel->rooms[$i]->rates); $n++) {
+
+              // set selling rate if not defined
+              if (!isset($hotel->rooms[$i]->rates[$n]->sellingRate)){   
+                $hotel->rooms[$i]->rates[$n]->sellingRate = round($hotel->rooms[$i]->rates[$n]->net * 1.06,2);
+                }
+                $hotel->rooms[$i]->rates[$n]->sellingRate = (float) $hotel->rooms[$i]->rates[$n]->sellingRate;  
+            }
+
+        }
+     
     }
-    $hotel->distance_center = MyLibrary::distance($hotel->latitude, $hotel->longitude,$m->lat,$m->lon);
-    // cancellation policy
-    $hotel->cancellation_policy = MyLibrary::cancellation_policy($hotel->rooms[0]->rates[0]->cancellationPolicies[0]->from);
-    // score
-    $hotel->score =  $hotel->reviews[0]->rate * 2;
-    } 
+    
     
     return [$info, $response_json->hotels->hotels];
 }
@@ -256,7 +274,7 @@ class Result {
                 
                 $this->payment_policy = '';
 
-                $this->price = "€" . round($input["rooms"][0]["rates"][0]["net"]);
+                $this->price = "€" . round($input["rooms"][0]["rates"][0]["sellingRate"]);
                     
                 $this->sanitize();
     }

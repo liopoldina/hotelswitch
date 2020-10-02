@@ -116,14 +116,14 @@
         <div class="hp_head_book">
             <div class="hp_nightly_price">
                 <span class="hp_header_price">€
-                    {{isset($h) ? intval($h->offer[0]["rates"][0]["net"])/$h->nights : '99' }}</span>
+                    {{isset($h) ? intval($h->offer[0]["rates"][0]["sellingRate"])/$h->nights : '99' }}</span>
             </div>
             <div class="hp_head_nightly_text">
                 <span>nightly price per room</span>
             </div>
             <div class="hp_total_price">
                 <strong
-                    class="hp_total_price_text">{{isset($h) ? intval($h->offer[0]["rates"][0]["net"]) : '198' }}€</strong>
+                    class="hp_total_price_text">{{isset($h) ? intval($h->offer[0]["rates"][0]["sellingRate"]) : '198' }}€</strong>
                 <span class="hp_header_nights">for {{isset($h) ? $h->nights_text : 'for 2 nights'}}</span>
             </div>
             <div class="hp_head_button">
@@ -314,7 +314,7 @@
                                 <div class="hp_room_offer">
                                     <div class="hp_room_total">
                                         <span class="hp_room_total_price">€
-                                            {{intval($h->offer[$r]["rates"][$i]["net"])}}</span>
+                                            {{intval($h->offer[$r]["rates"][$i]["sellingRate"])}}</span>
                                     </div>
                                     <div class="hp_room_nights">
                                         <span class='hp_nights_text'>for {{$h->nights_text}}</span>

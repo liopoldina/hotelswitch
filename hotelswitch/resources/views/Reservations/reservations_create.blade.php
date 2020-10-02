@@ -22,7 +22,8 @@
                 </div>
                 <img src="{{ $h->images[0]  ?? 'http://photos.hotelbeds.com/giata/bigger/36/363373/363373a_hb_a_001.jpg'}}"
                     alt="">
-                <span class='hotel_name'>{{ $rate->hotel->name  ?? 'Rossio Garden Hotel'}}</span>
+                <span
+                    class='hotel_name'>{{ $rate->hotel->name  ?? 'Rossio Garden Hotel'}}<sup>{{ $h->stars_symbol ?? '★★★'}}</sup></span>
                 <span
                     class='hotel_address'>{{ $h->address  ?? 'Rua Jardim do Regedor, 24, Lisboa, 1150-194, Portugal'}}</span>
                 <div class="score">
@@ -108,8 +109,8 @@
         <div class="right">
             <form id='booking_form' action="book" method='post'>
                 @csrf
-                <input type="hidden" name="rateKey"
-                    value="20200918|20200919|W|59|363373|DBL.ST|NRF-BAR|BB||1~2~0||N@03~~200e1~338881005~S~6CB7A556AFB24DC160042323544400AWUK00001590000000010248d8">
+                <input type="hidden" name="rateKey" value="{{$rate->hotel->rooms[0]->rates[0]->rateKey}}">
+                <input type="hidden" name="collection_name" value="{{$m->collection_name}}">
                 <div class="step">
                     <i class="fas fa-user"></i>
                     <span>Step 1: Your details</span>
@@ -192,7 +193,8 @@
                     </div>
                     <div class="room_box">
                         <div class="room_left">
-                            <img src="http://photos.hotelbeds.com/giata/bigger/41/419658/419658a_hb_ro_023.jpg" alt="">
+                            <img src={{isset($rate) ? 'http://photos.hotelbeds.com/giata/bigger/' .  $rate->hotel->rooms[0]->image : 'http://photos.hotelbeds.com/giata/bigger/41/419658/419658a_hb_ro_023.jpg"'}}
+                                alt="">
                         </div>
                         <div class="room_right">
 
