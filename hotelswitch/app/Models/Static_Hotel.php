@@ -19,6 +19,7 @@ class Static_Hotel extends Eloquent
     const UPDATED_AT = 'lastUpdate'; // customize colum name
     protected $dateFormat = 'Y-m-d'; // customize timestamp format
 
+    //    Relationships
     public function country(){
         return $this->hasOne(Country::class,'code','countryCode');
 

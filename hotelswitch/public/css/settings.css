@@ -1,0 +1,144 @@
+.container {
+    min-height: 100vh;
+    min-width: var(--min_width);
+    padding: 50px;
+    background-color: #f8fafc;
+}
+
+.wrapper {
+    width: 725px;
+    margin: 0px auto;
+
+}
+
+.tittle_wrapper {
+    background-color: #f7f7f7;
+    padding: 20px;
+    border: 1px solid rgba(0, 0, 0, 0.125);
+    border-bottom: none;
+    border-radius: 4px 4px 0px 0px;
+    font-size: 14px;
+}
+
+.content_wrapper {
+    background-color: white;
+    border: 1px solid rgba(0, 0, 0, 0.125);
+    border-radius: 0px 0px 4px 4px;
+    padding: 35px 0px;
+}
+
+.form_wrapper {
+    width: fit-content;
+    margin: 0px auto;
+}
+
+.item_wrapper {
+    display: flex;
+    margin-top: 10px;
+    align-items: center;
+}
+
+.section_margin {
+    margin-bottom: 50px;
+}
+
+.item_wrapper label {
+    font-size: 14px;
+    margin-right: 25px;
+    width: 150px;
+    text-align: end;
+}
+
+input,
+select {
+    width: 300px;
+}
+
+#b_day {
+    width: 55px;
+    margin-right: 10px;
+}
+
+#b_month {
+    width: 145px;
+    margin-right: 10px;
+}
+
+#b_year {
+    width: 80px;
+}
+
+input,
+select {
+    height: 35px;
+    border: 1px solid #ced4da;
+    border-radius: 3px;
+}
+
+
+input:focus,
+select:focus {
+    border-color: #a1cbef;
+    box-shadow: 0 0 0 0.2rem rgba(52, 144, 220, 0.25);
+    outline: 0;
+}
+
+.loading_wrapper{
+    width: 100px;
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+.loading_gif{
+    height: 25px;
+    margin-left: 5px;
+    display: none;
+}
+
+.loading_wrapper i{
+    margin-left: 10px;
+    text-align: center;
+    color: var(--main-color-light)
+}
+
+.loading_text{
+    margin-left: 5px;
+    font-size: 13px;
+    color: #999;
+    position: absolute;
+    left: 30px;
+
+}
+
+.note_wrapper {
+    width: 300px;
+    margin-left: auto;
+}
+
+.input_note {
+    font-size: 11px;
+}
+
+.error_message{
+    display:block;
+    color:red;
+    font-size: 13px;
+    margin-left: 175px;
+    margin-top:10px;
+}
+
+
+.password_reset {
+    color: #fff;
+    background-color: #3490dc;
+    border-color: #3490dc;
+    padding: 7px 14px;
+    border-radius: 3px;
+    border: none;
+    cursor: pointer;
+}
+
+.password_reset:hover {
+    background-color: #227dc7;
+}

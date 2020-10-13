@@ -14,6 +14,4 @@ class Reservation extends Eloquent
 
     // Guarded attributes
     protected $guarded = [];
-
-
 }

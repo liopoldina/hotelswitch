@@ -17,26 +17,20 @@ class ReservationsController extends Controller
     {
         $data = request()->validate([
             'rateKey' => 'string|max:200',
-            'collection_name' => 'string|max:200'
         ]);
 
         $rate = ReservationsRepository::CheckRate($data['rateKey']); 
         
-        if (!isset($rate->hotel->rooms[0]->rates[0]->sellingRate)){   // set selling rate
+        if (!isset($rate->hotel->rooms[0]->rates[0]->sellingRate)){   // set selling rate if not set
         $rate->hotel->rooms[0]->rates[0]->sellingRate =  round($rate->hotel->rooms[0]->rates[0]->net * 1.06,2);
         }
         
-        $m=  new \stdClass();
-        
-        $m->collection_name = $data["collection_name"];
-        $m->hotel_id = $rate->hotel->code;
-        
-        $h = ReservationsRepository::get_hotel($m);
+        $h = ReservationsRepository::get_hotel($rate->hotel->code, $rate);
         
         // get room image
-        foreach($h->offer as $offer){
-            if($offer["code"] == $rate->hotel->rooms[0]->code){
-                $rate->hotel->rooms[0]->image = $offer["images"][0]["path"];
+        foreach($h->images as $image){
+            if(isset($image["roomCode"]) && $image["roomCode"] == $rate->hotel->rooms[0]->code){
+                $rate->hotel->rooms[0]->image = $image["path"];
                 break;
             }
         }
@@ -44,7 +38,6 @@ class ReservationsController extends Controller
         return view('Reservations.reservations_create',[
             'rate' => $rate,
             'h' => $h,
-            'm' => $m
         ]);
         
     }
@@ -53,7 +46,6 @@ class ReservationsController extends Controller
     {
         $data = request()->validate([
             'rateKey' => 'required|string|max:200',
-            'collection_name' =>'required|string|max:200',
             'first_name' => 'required|string|max:30',
             'last_name' => 'required|string|max:30',
             'email' => 'required|email',
@@ -70,24 +62,28 @@ class ReservationsController extends Controller
         // hotelbeds book
         $reservation = ReservationsRepository::Book($data); 
 
+        // set selling rate if not set
         if(!isset($reservation->booking->hotel->rooms[0]->rates[0]->sellingRate)){
             $reservation->booking->hotel->rooms[0]->rates[0]->sellingRate = round($reservation->booking->hotel->rooms[0]->rates[0]->net * 1.06,2);
         }
 
-        $data = ['reservation' => $reservation] + $data;
-
         // generate id
         $permitted_chars = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-        $length = rand ( 200 , 300 );        ;
+        $length = rand ( 200 , 300 );
         $id = substr(str_shuffle(str_repeat($permitted_chars, ceil($length/strlen($permitted_chars )) )),1,$length);
 
-        $data = ['id' => $id] + $data;
+        Reservation::create(
+            [
+            'id' => $id,
+            'reservation' => $reservation 
+            ] +
+            $data
+        );
 
-        Reservation::create($data);
-
-        return redirect()->route('reservations.confirmation',  ['id'=> $data['id']]);
+        return redirect()->route('reservations.confirmation',  ['id'=> $id]);
     }
 
+    
     public function confirmation(){
 
         $data = request()->validate([
@@ -97,11 +93,8 @@ class ReservationsController extends Controller
         $reservation = Reservation::find($data['id']);
 
         if(isset($reservation)){
-            $m=  new \stdClass();
-            $m->collection_name = $reservation["collection_name"];
-            $m->hotel_id = $reservation["reservation"]["booking"]["hotel"]["code"];
             
-            $h = ReservationsRepository::get_hotel($m);
+            $h = ReservationsRepository::get_hotel($reservation["reservation"]["booking"]["hotel"]["code"], $reservation);
             
             return view('Reservations.reservations_confirmation',[
                 'r' => $reservation,

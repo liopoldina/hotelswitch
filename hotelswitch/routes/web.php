@@ -14,12 +14,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 //auth
-Auth::routes();
-
-//account
-Route::get('/dashboard', 'Account\DashboardController@index')->name('dashboard');
-Route::get('/reservations', 'Account\ReservationsController@index')->name('reservations');
-Route::get('/settings', 'Account\SettingsController@index')->name('settings');
+Auth::routes(['verify' => true]);
 
 //homepage
 Route::get('/', 'HomepageController@index')->name('homepage.index');
@@ -36,6 +31,10 @@ Route::get('/book', 'ReservationsController@create')->name('reservations.create'
 Route::post('/book', 'ReservationsController@store')->name('reservations.store');
 Route::get('/confirmation', 'ReservationsController@confirmation')->name('reservations.confirmation');
 
+//account
+Route::get('/my_reservations', 'Account\MyReservationsController@index')->name('my_reservations');
+Route::get('/settings', 'Account\SettingsController@index')->name('settings');
+Route::put('/settings', 'Account\SettingsController@update')->name('settings.update');
 
 //autocomplete
 Route::get('/autocomplete', 'Autocomplete\ExpediaController@index')->name('autocomplete.index');

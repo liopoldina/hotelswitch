@@ -1,0 +1,160 @@
+.container {
+    min-height: 100vh;
+    min-width: var(--min_width);
+    padding: 50px;
+    background-color: #f8fafc;
+}
+
+.wrapper {
+    width: 900px;
+    margin: 0px auto;
+
+}
+
+.content_wrapper a {
+    text-decoration: none;
+    color: #333;
+}
+
+.no_reservations {
+    font-size: 15px;
+}
+
+.no_reservations a {
+    text-decoration: underline;
+    font-weight: bold;
+}
+
+.tittle_wrapper {
+    background-color: #f7f7f7;
+    padding: 20px;
+    border: 1px solid rgba(0, 0, 0, 0.125);
+    border-bottom: none;
+    border-radius: 4px 4px 0px 0px;
+    font-size: 14px;
+}
+
+.content_wrapper {
+    background-color: white;
+    border: 1px solid rgba(0, 0, 0, 0.125);
+    border-radius: 0px 0px 4px 4px;
+    padding: 35px;
+}
+
+.reservation_wrapper {
+    display: flex;
+    width: 80%;
+    margin: 0px auto;
+    background-color: rgba(var(--main-color-rgb), 0.10);
+    ;
+    border: 1px solid rgba(0, 0, 0, 0.125);
+    border-radius: 4px;
+    padding: 15px;
+    cursor: pointer;
+    margin-bottom: 20px;
+}
+
+.reservation_wrapper:hover {
+    background-color: rgba(var(--main-color-rgb), 0.15);
+    ;
+}
+
+.reservation_left {
+    display: flex;
+    flex-direction: column;
+}
+
+.reservation_center {
+    display: flex;
+    flex-direction: column;
+    margin-left: 10px;
+    position: relative;
+}
+
+.reservation_info {
+    font-size: 13px;
+    margin-bottom: 12px;
+}
+
+.reservation_wrapper img {
+    width: 200px;
+    height: 150px;
+    border: 2px solid white;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+.name_stars_wrapper {
+    display: flex;
+}
+
+.hotel_name {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 2px;
+    color: var(--main-color);
+}
+
+.hotel_stars {
+    color: var(--secondary-color);
+    font-size: 14px;
+    margin-left: 5px;
+}
+
+.hotel_address {
+    margin-top: 5px;
+    font-size: 13px;
+    display: block;
+}
+
+.hotel_address i {
+    margin-right: 5px;
+    color: var(--main-color);
+}
+
+.length_wrapper {
+    margin-bottom: 10px
+}
+
+.lenght_tittle {
+    font-size: 14px;
+}
+
+.lenght {
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.dates_wrapper {
+    margin-top: 15px;
+}
+
+.dates {
+    display: flex;
+}
+
+.divider {
+    border-right: 1px solid #999;
+    height: 32px;
+    margin: auto 15px 0px;
+}
+
+.date_box span {
+    display: block;
+    width: fit-content;
+}
+
+.date_tittle {
+    font-size: 14px;
+    margin-bottom: 8px;
+}
+
+.date {
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 3px;
+}
+
+.hour {
+    font-size: 13px;
+    color: #555;
+}

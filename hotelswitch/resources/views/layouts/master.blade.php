@@ -36,11 +36,8 @@
                 {{ Auth::user()->name }} <span class="caret"></span>
             </div>
             <div class='dropdown_menu'>
-                <a class="dropdown_item" href="{{ route('dashboard') }}">
-                    Dashboard
-                </a>
-                <a class="dropdown_item" href="{{ route('reservations') }}">
-                    Reservations
+                <a class="dropdown_item" href="{{ route('my_reservations') }}">
+                    My Reservations
                 </a>
                 <a class="dropdown_item" href="{{ route('settings') }}">
                     Settings

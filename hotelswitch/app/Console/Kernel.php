@@ -24,7 +24,10 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')->hourly();
+        // delete unverified users hourly or everyMinute
+        $schedule->call(function () {
+            User::whereNull('email_verified_at')->delete();
+        })->everyMinute();
     }
 
     /**
