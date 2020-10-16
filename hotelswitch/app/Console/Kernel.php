@@ -28,6 +28,10 @@ class Kernel extends ConsoleKernel
         $schedule->call(function () {
             User::whereNull('email_verified_at')->delete();
         })->everyMinute();
+
+        // prune telescope
+        $schedule->command('telescope:prune')->daily();
+
     }
 
     /**
