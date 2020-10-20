@@ -16,6 +16,9 @@ use Illuminate\Auth\Authenticatable as AuthenticableTrait;
 use Illuminate\Auth\MustVerifyEmail as MustVerifyEmailTrait;
 use Illuminate\Auth\Passwords\CanResetPassword as CanResetPasswordTrait;
 
+use Illuminate\Support\Facades\Mail;
+use App\Mail\NewUserWelcomeMail;
+
 class User extends Eloquent implements AuthenticatableContract, MustVerifyEmailContract, CanResetPasswordContract
 {
     use Notifiable;
@@ -44,4 +47,13 @@ class User extends Eloquent implements AuthenticatableContract, MustVerifyEmailC
     public function reservation(){
         return $this->hasMany(Reservation::class,'email','email')->orderBy('created_at', 'DESC');
     } 
+
+    protected static function boot()
+    {
+        parent::boot();    
+
+        static::created(function($user){
+            Mail::to($user->email)->send(new NewUserWelcomeMail());
+        });
+    }
 }

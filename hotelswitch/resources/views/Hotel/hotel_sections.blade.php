@@ -113,6 +113,7 @@
                 </div>
             </div>
         </div>
+        @if(isset($h->offer))
         <div class="hp_head_book">
             <div class="hp_nightly_price">
                 <span class="hp_header_price">€
@@ -132,6 +133,7 @@
                 </a>
             </div>
         </div>
+        @endif
     </div>
     <div class="hp_gallery">
         <div class="hp_slideshow">
@@ -247,12 +249,12 @@
                 <div class="hp_box_wrapper">
                     <div class="hp_box_title"><span>Guests</span></div>
                     <div class="hp_box_text"><span
-                            class="hp_box_guests">{{isset($h) ? $h->rooms_text . ", " . $h->adults_text  : '1 room, 2 adults'}}</span>
+                            class="hp_box_guests">{{isset($h->adults) ? $h->rooms_text . ", " . $h->adults_text  : '1 room, 2 adults'}}</span>
                     </div>
                 </div>
             </div>
             <div class="hp_update_wrapper hp_search_box">
-                <button>Update prices</button>
+                <button>Change search</button>
             </div>
         </div>
         <div class="hp_rooms_header">
@@ -268,8 +270,8 @@
             </div>
         </div>
         <div class="hp_room">
+            @if(isset($h->offer))
             <div class="hp_room_wrapper">
-                @if(isset($h))
                 @for($r=0; $r<count($h->offer); $r++)
                     <div class="hp_room_content">
                         <div class="hp_room_type">
@@ -283,9 +285,8 @@
                             </div>
                             <div class="hp_room_capacity">
                                 <div class="room_guests_icon">
-                                    @for($g=0; $g < $h->adults; $g++)
-                                        <img src="./images/search/guest_icon.png" alt="guest_icon">
-                                        @endfor
+                                    @for($g=0; $g < $h->adults; $g++)<img src="./images/search/guest_icon.png"
+                                            alt="guest_icon">@endfor
                                 </div>
                                 <span class="hp_offer_guests">{{$h->adults_text}}</span>
                             </div>
@@ -300,7 +301,8 @@
                                 <i class="fas fa-fan"></i> <span>Air conditioning</span>
                             </div>
                             <ul class="hp_room_ul">
-                                <li class="hp_room_li_price">The price shown is the final price for {{$h->nights_text}}
+                                <li class="hp_room_li_price">The price shown is the final price for
+                                    {{$h->nights_text}}
                                 </li>
                                 <li><strong>VAT already included</strong></li>
                                 @isset($h->tourist_tax)
@@ -378,208 +380,9 @@
                     </div>
             </div>
             @endfor
-
-            @else
-            <div class="hp_room_content">
-                <div class="hp_room_type">
-                    <div class="hp_room_image">
-                        <img class="hp_room_img"
-                            src="https://cf.bstatic.com/xdata/images/hotel/max1024x768/76168891.jpg?k=070d49a1fe9b29714fb19f97f6bfa5a942f9077d1caf048018dc1ba7fe3a35b0&o="
-                            alt="">
-                    </div>
-                    <div class="hp_room_name">
-                        <span class="room_name">Double Standard</span>
-                    </div>
-                    <div class="hp_room_capacity">
-                        <div class="room_guests_icon">
-                            <img src="./images/search/guest_icon.png" alt="guest_icon">
-                            <img src="./images/search/guest_icon.png" alt="guest_icon">
-                        </div>
-                        <span class="hp_offer_guests">2 adults</span>
-                    </div>
-                    <div class="hp_more_details">
-                        <span>See room details</span>
-                    </div>
-                    <div class="hp_amenity">
-                        <i class="fas fa-wifi"></i>
-                        <span>Wi-fi</span>
-                    </div>
-                    <div class="hp_amenity">
-                        <i class="fas fa-fan"></i> <span>Air conditioning</span>
-                    </div>
-                    <ul class="hp_room_ul">
-                        <li class="hp_room_li_price">The price shown is the final price for 2 nights
-                        </li>
-                        <li><strong>VAT already included</strong></li>
-                        <li class="hp_tourist_tax">At the accommodation you will have to pay the
-                            touristic tax of €2 per night not included in the price.</li>
-                    </ul>
-                </div>
-                <div class="hp_room_offers">
-                    <div class="hp_room_offer">
-                        <div class="hp_room_total">
-                            <span class="hp_room_total_price">€ 198</span>
-                        </div>
-                        <div class="hp_room_nights">
-                            <span class='hp_nights_text'>for 2 nights</span>
-                        </div>
-                        <div class="hp_offer" name="board">
-                            <i class="fas fa-bed" name="board_icon"></i>
-                            <span class="hp_board_name">Room only</span>
-                        </div>
-                        <div class="hp_offer" name="policy">
-                            <i class="fas fa-bookmark"></i>
-                            <span class="hp_policy">Non-refundable rate</span>
-                        </div>
-                        <div class="hp_offer hp_rooms_left" name="rooms_left">
-                            <i class="fas fa-bell"></i>
-                            <span class="hp_rooms_left">Only 4 rooms left</span>
-                        </div>
-                    </div>
-                    <div class="hp_room_offer">
-                        <div class="hp_room_total">
-                            <span class="hp_room_total_price">€ 228</span>
-                        </div>
-                        <div class="hp_room_nights">
-                            <span class='hp_nights_text'>for 2 nights</span>
-                        </div>
-                        <div class="hp_offer hp_breakfast_included">
-                            <i class="fas fa-coffee"></i>
-                            <span class="hp_board_name">Breakfast included</span>
-                        </div>
-                        <div class="hp_offer hp_refundable">
-                            <i class="fas fa-bookmark"></i>
-                            <span class="hp_policy">Free cancellation</span>
-                        </div>
-                        <div class="hp_offer hp_rooms_left">
-                            <i class="fas fa-bell"></i>
-                            <span class="hp_rooms_left">Only 4 rooms left</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="hp_select_rooms">
-                    <div class="hp_room_offer_select">
-                        <select class="hp_nr_rooms" type="text" name="nr_rooms">
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
-                            <option value="4">4</option>
-                            <option value="5">5</option>
-                        </select>
-                    </div>
-                    <div class="hp_room_offer_select">
-                        <select class="hp_nr_rooms" type="text" name="nr_rooms">
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
-                            <option value="4">4</option>
-                            <option value="5">5</option>
-                        </select>
-                    </div>
-                </div>
-            </div>
-            <div class="hp_room_content">
-                <div class="hp_room_type">
-                    <div class="hp_room_image">
-                        <img class="hp_room_img"
-                            src="https://cf.bstatic.com/xdata/images/hotel/max1024x768/68967572.jpg?k=03c826bff712d342618947560b97f1de9ef26f0ec33cf079ce00c44b80fc7d04&o="
-                            alt="">
-                    </div>
-                    <div class="hp_room_name">
-                        <span class="room_name">Double Classic</span>
-                    </div>
-                    <div class="hp_room_capacity">
-                        <div class="room_guests_icon">
-                            <img src="./images/search/guest_icon.png" alt="guest_icon">
-                            <img src="./images/search/guest_icon.png" alt="guest_icon">
-                        </div>
-                        <span class="hp_offer_guests">2 adults</span>
-                    </div>
-                    <div class="hp_more_details">
-                        <span>See room details</span>
-                    </div>
-                    <div class="hp_amenity">
-                        <i class="fas fa-wifi"></i>
-                        <span>Wi-fi</span>
-                    </div>
-                    <div class="hp_amenity">
-                        <i class="fas fa-fan"></i> <span>Air conditioning</span>
-                    </div>
-                    <ul class="hp_room_ul">
-                        <li class="hp_room_li_price">The price shown is the final price for 2 nights
-                        </li>
-                        <li><strong>VAT already included</strong></li>
-                        <li class="hp_tourist_tax">At the accommodation you will have to pay the
-                            touristic tax of €2 per night not included in the price.</li>
-                    </ul>
-                </div>
-                <div class="hp_room_offers">
-                    <div class="hp_room_offer">
-                        <div class="hp_room_total">
-                            <span class="hp_room_total_price">€ 248</span>
-                        </div>
-                        <div class="hp_room_nights">
-                            <span class='hp_nights_text'>for 2 nights</span>
-                        </div>
-                        <div class="hp_offer" name="board">
-                            <i class="fas fa-bed" name="board_icon"></i>
-                            <span class="hp_board_name">Room only</span>
-                        </div>
-                        <div class="hp_offer" name="policy">
-                            <i class="fas fa-bookmark"></i>
-                            <span class="hp_policy">Non-refundable rate</span>
-                        </div>
-                        <div class="hp_offer hp_rooms_left" name="rooms_left">
-                            <i class="fas fa-bell"></i>
-                            <span class="hp_rooms_left">Only 2 rooms left</span>
-                        </div>
-                    </div>
-                    <div class="hp_room_offer">
-                        <div class="hp_room_total">
-                            <span class="hp_room_total_price">€ 278</span>
-                        </div>
-                        <div class="hp_room_nights">
-                            <span class='hp_nights_text'>for 2 nights</span>
-                        </div>
-                        <div class="hp_offer hp_breakfast_included">
-                            <i class="fas fa-coffee"></i>
-                            <span class="hp_board_name">Breakfast included</span>
-                        </div>
-                        <div class="hp_offer hp_refundable">
-                            <i class="fas fa-bookmark"></i>
-                            <span class="hp_policy">Free cancellation</span>
-                        </div>
-                        <div class="hp_offer hp_rooms_left">
-                            <i class="fas fa-bell"></i>
-                            <span class="hp_rooms_left">Only 2 rooms left</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="hp_select_rooms">
-                    <div class="hp_room_offer_select">
-                        <select class="hp_nr_rooms" type="text" name="nr_rooms">
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
-                            <option value="4">4</option>
-                            <option value="5">5</option>
-                        </select>
-                    </div>
-                    <div class="hp_room_offer_select">
-                        <select class="hp_nr_rooms" type="text" name="nr_rooms">
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
-                            <option value="4">4</option>
-                            <option value="5">5</option>
-                        </select>
-                    </div>
-                </div>
-            </div>
-            @endif
         </div>
         <div class="hp_room_reserve">
-            <a href="book?rateKey={{$h->offer[0]["rates"][0]["rateKey"]}}">
+            <a href="book?rateKey={{$h->offer[0]["rates"][0]["rateKey"] ?? ''}}">
                 <button>I'll reserve</button>
             </a>
             <ul>
@@ -589,6 +392,19 @@
                 <li>No booking or credit card fees!</li>
             </ul>
         </div>
+
+        @else
+        <div class="no_avail_wrapper">
+            <div class="no_avail_icon">
+                <img src="./images/search/information_icon.jpg" alt="no_avail_icon">
+            </div>
+            <div class="no_avail_message">
+                <span>This property has no availability on our site from {{date("j M",strtotime($m->check_in))}} to
+                    {{date("j M",strtotime($m->check_out))}}.</span>
+            </div>
+        </div>
+        @endif
+
     </div>
 </div>
 <div class="hp_facilities" id="facilities">
@@ -988,5 +804,38 @@
             </div>
         </div>
 </div>
+</div>
+@endsection
+
+@section('update_overlay')
+<div class="update_overlay" id=update_overlay>
+    <div class="update_popup" id="update_popup">
+        <div class="update_tittle">Change your search</div>
+        <div class="search_bar">
+            <form action="hotel" method="get">
+                @csrf
+                <input type="hidden" name="hotel_id" value={{$m->hotel_id}}>
+                <div class="dates_wrapper">
+                    <i class="fas fa-calendar-alt fa-lg" aria-hidden="true"></i>
+                    <input type="text" id="update_range" name="date_range" class="bar_box dates_input"
+                        value='{{$m->date_range ?? "" }}' required="">
+                    <span class="check_in">Check-in</span>
+                    <span class="check_out">Check-out</span>
+                </div>
+                <div class="guests_wrapper bar_box">
+                    <i class="fas fa-user-friends fa-lg" aria-hidden="true"></i>
+                    <span class="box_tittle">Guests</span>
+                    <span class="box_content">1 room, 2 adults </span>
+                    <input type="hidden" name="adults" value="2" required="">
+                    <input type="hidden" name="children" value="0" required="">
+                    <input type="hidden" name="rooms" value="1" required="">
+                </div>
+                <button class="bar_button" type="submit">Search</button>
+            </form>
+        </div>
+        <div class="update_close">
+            <div class="close"></div>
+        </div>
+    </div>
 </div>
 @endsection

@@ -51,6 +51,6 @@ class HotelController extends Controller
                     'h' => $h,
                     'm' => $m
                 ]);
-    }
+    }    
     
 }

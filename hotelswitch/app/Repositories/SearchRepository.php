@@ -110,12 +110,15 @@ class SearchRepository{
         DB::connection('hotelbeds')->table($m->collection_name)->raw( function ($collection) use ($info) {
 
             return $collection->insertone($info);
-        });    
+        }); 
+        
+        if(!empty($hotels)){
 
         DB::connection('hotelbeds')->table($m->collection_name)->raw( function ($collection) use ($hotels) {
 
             return $collection->insertMany($hotels);
         });
+    }
         
         
                 
@@ -156,8 +159,6 @@ class SearchRepository{
                     ->get();
 
 
-//rooms.0.rates.0.sellingRate    minRate
-
         foreach ($inputs as $input){
             $hotel[] = new Result($input,$m);
         }
@@ -176,6 +177,17 @@ class SearchRepository{
 }
 
 function transform_collection($response_json, $m){
+
+    if($response_json->hotels->total == 0){
+        $info = ["info"=> [ 
+            "checkIn"  =>  $m->check_in,
+            "checkOut" =>  $m->check_out,   
+            "total"    =>  $response_json->hotels->total,
+            "auditData"=>  $response_json->auditData]];
+
+        return [$info, []];
+    }
+
 
     $info = ["info"=> [
         "checkIn"  =>  $response_json->hotels->checkIn,

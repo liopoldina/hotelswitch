@@ -39,8 +39,15 @@ Route::put('/settings', 'Account\SettingsController@update')->name('settings.upd
 //autocomplete
 Route::get('/autocomplete', 'Autocomplete\ExpediaController@index')->name('autocomplete.index');
 
-//template
-Route::get('/template', 'TemplateController@index')->name('template.index');
+// TEMPORARY ROUTES
 
+//see new useremail 
+Route::get('/email',function(){
+    return new App\Mail\NewUserWelcomeMail();
+}); 
+//app  example
+Route::get('/app',function(){
+    return view('app_test.app');
+}); 
 
 

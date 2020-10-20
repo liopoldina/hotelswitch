@@ -1,29 +1,17 @@
 $(function() {
-    // 1) loading
-    $(".switch, .hopping_select").click(function() {
-        $(".hotel_boxes_wrapper").addClass("hotelbox_loading");
-        $(".page_loading_wrapper ").addClass("filter_loading_wrapper_show");
-        setTimeout(function() {
-            $(".hotel_boxes_wrapper").removeClass("hotelbox_loading");
-            $(".page_loading_wrapper ").removeClass(
-                "filter_loading_wrapper_show"
-            );
-        }, 1000);
-    });
-
-    // 2) Delete policy separator dot if payment policy doesn't exists
+    // 1) Delete policy separator dot if payment policy doesn't exists
     if ($(".payment_policy").is(":empty")) {
         $(".policy_separator")
             .children()
             .text("");
     }
 
-    // 3) Delete hotel reviews wrapper if there is no reviews
+    // 2) Delete hotel reviews wrapper if there is no reviews
     $(".hotel_review")
         .has(".score:empty")
         .remove();
 
-    // 4) Open and close map
+    // 3) Open and close map
     //open map
     $(".map_wrapper").click(function() {
         $("#map_overlay").addClass("display_map_overlay");
@@ -48,7 +36,7 @@ $(function() {
         }
     });
 
-    // 5) Price Range Slider
+    // 4) Price Range Slider
     $("#slider-range").slider({
         range: true,
         min: 0,
@@ -71,7 +59,7 @@ $(function() {
             }
         },
         stop: function(event, ui) {
-            get_filter_results();
+            results("filter");
         }
     });
 
@@ -83,7 +71,7 @@ $(function() {
             "+"
     );
 
-    // 6) Uncheck radio button on clicked
+    // 5) Uncheck radio button on clicked
     $("input:radio").on("click", function(e) {
         var inp = $(this); //cache the selector
         if (inp.is(".theone")) {
@@ -97,51 +85,35 @@ $(function() {
         inp.addClass("theone");
     });
 
-    // 7) Sort
+    // 6) Sort
     $(".sort_item", this).click(function() {
-        $(".sort_item").removeClass("sort_selected");
-        $(this).addClass("sort_selected");
-        console.log($(this).attr("id"));
-        switch ($(this).attr("id")) {
-            case "sort_our_top_picks":
-                m.filters.sort = "minRate";
-                m.filters.sort_order = 1;
-                break;
-            case "sort_lowest_price_first":
-                m.filters.sort = "minRate";
-                m.filters.sort_order = 1;
-                break;
-            case "sort_stars":
-                if (m.filters.sort == "categoryCode") {
-                    m.filters.sort_order = -1 * m.filters.sort_order;
-                } else {
-                    m.filters.sort_order = -1;
-                }
-                m.filters.sort = "categoryCode";
-                break;
-            case "sort_distance_from_center":
-                if (m.filters.sort == "distance_center") {
-                    m.filters.sort_order = -1 * m.filters.sort_order;
-                } else {
-                    m.filters.sort_order = 1;
-                }
-                m.filters.sort = "distance_center";
-                break;
-            case "sort_review_score":
-                if (m.filters.sort == "score") {
-                    m.filters.sort_order = -1 * m.filters.sort_order;
-                } else {
-                    m.filters.sort_order = -1;
-                }
-                m.filters.sort = "score";
-                break;
+        if ($(this).hasClass("sort_selected")) {
+            m.filters.sort_order = -1 * m.filters.sort_order;
+            $(this)
+                .children()
+                .removeClass();
+            if (m.filters.sort_order == 1) {
+                $(this)
+                    .children()
+                    .addClass("fas fa-arrow-up");
+            } else {
+                $(this)
+                    .children()
+                    .addClass("fas fa-arrow-down");
+            }
+        } else {
+            $(".sort_item").removeClass("sort_selected");
+            $(this).addClass("sort_selected");
+            m.filters.sort_order = $(this).attr("value");
         }
-        get_filter_results();
+
+        m.filters.sort = $(this).attr("name");
+
+        results("filter");
     });
 
-    // 8) Filter
+    // 7) Filter
     var template = $("#hotelbox").clone();
-
     // get value of selected filter
     $(".check_box").click(function() {
         m.filters.price_range = {};
@@ -188,117 +160,10 @@ $(function() {
             $("input:radio[name=minimum_score]:checked").val()
         );
 
-        // call function get_filter_results
-        get_filter_results();
+        results("filter");
     });
 
-    function get_filter_results() {
-        $(".hotel_boxes_wrapper").addClass("hotelbox_loading");
-        $(".page_loading_wrapper").addClass("filter_loading_wrapper_show");
-        $(".page_loading").addClass("page_loading_show");
-        $(".page_end_wrapper").removeClass("page_end_wrapper_show");
-
-        function filter(callback) {
-            $.ajax({
-                url: "results",
-                method: "GET",
-                dataType: "json",
-                data: {
-                    mode: "filter",
-                    m: m
-                },
-                success: callback
-            });
-        }
-
-        filter(function(result) {
-            m.destination_header = result["m"]["destination_header"];
-            m.index = result["m"]["index"];
-            m.next_index = result["m"]["next_index"];
-
-            if (result["hotels"] == null) {
-                $(".hotelbox").remove();
-                $(".hotel_boxes_wrapper").removeClass("hotelbox_loading");
-                $(".page_loading_wrapper ").removeClass(
-                    "filter_loading_wrapper_show"
-                );
-                $(".page_loading").removeClass("page_loading_show");
-                $(".page_end_message span").text(
-                    "There are no properties that match your search criteria."
-                );
-                $(".page_end_wrapper").addClass("page_end_wrapper_show");
-                $("html, body").animate({ scrollTop: 0 }, "slow");
-            } else {
-                hotel = result["hotels"];
-                $(".hotelbox").remove();
-                for (var i = 0; i < hotel.length; i++) {
-                    var box = template.clone();
-                    $(box)
-                        .find(".search_cover_photo")
-                        .attr("src", hotel[i].search_cover_photo);
-                    $(box)
-                        .find(".name")
-                        .text(hotel[i].name);
-                    $(box)
-                        .find(".stars")
-                        .text(hotel[i].stars_symbol);
-                    $(box)
-                        .find(".quality")
-                        .text(hotel[i].quality);
-                    $(box)
-                        .find(".nr_reviews")
-                        .text(hotel[i].nr_reviews);
-                    $(box)
-                        .find(".score")
-                        .text(hotel[i].score);
-                    $(box)
-                        .find(".district")
-                        .text(hotel[i].district);
-                    $(box)
-                        .find(".distance_center")
-                        .text(hotel[i].distance_center);
-                    $(box)
-                        .find(".city")
-                        .text(hotel[i].city);
-                    $(box)
-                        .find(".room_name")
-                        .text(hotel[i].room_name);
-                    $(box)
-                        .find(".cancellation_policy")
-                        .text(hotel[i].cancellation_policy);
-                    $(box)
-                        .find(".price")
-                        .text(hotel[i].price);
-                    $(box)
-                        .find(".link")
-                        .attr(
-                            "href",
-                            "hotel?hotel_id=" +
-                                hotel[i].id +
-                                "&m=" +
-                                JSON.stringify(m)
-                        );
-                    $(box)
-                        .find(".link_name")
-                        .attr(
-                            "href",
-                            "hotel?hotel_id=" +
-                                hotel[i].id +
-                                "&m=" +
-                                JSON.stringify(m)
-                        );
-                    $(".hotel_boxes_wrapper").append($(box));
-                }
-                $(".hotel_boxes_wrapper").removeClass("hotelbox_loading");
-                $(".page_loading_wrapper ").removeClass(
-                    "filter_loading_wrapper_show"
-                );
-                $(".page_loading").removeClass("page_loading_show");
-            }
-        });
-    }
-
-    // 9) load more results if scrooll all the way down
+    // 8) Pagination
     $(window).scroll(function() {
         if (
             Math.ceil($(window).scrollTop() + $(window).height()) >=
@@ -307,102 +172,150 @@ $(function() {
             // call function get_page_results
             if (m.next_index == "no more results") {
             } else {
-                get_page_results();
+                results("page");
             }
         }
     });
 
-    function get_page_results() {
-        $(".page_loading").addClass("page_loading_show");
+    // 9 function results
+    function results(mode) {
+        loading(mode, "start");
 
-        function getpage(callback) {
+        function filter(callback) {
             $.ajax({
                 url: "results",
                 method: "GET",
                 dataType: "json",
                 data: {
-                    mode: "page",
+                    mode: mode,
                     m: m
                 },
                 success: callback
             });
         }
 
-        getpage(function(result) {
+        filter(function(result) {
             m.index = result["m"]["index"];
             m.next_index = result["m"]["next_index"];
 
-            if (m.next_index == "no more results") {
-                $(".page_loading").removeClass("page_loading_show");
-                $(".page_end_message span").text(
-                    "There are no more properties that match your search criteria."
-                );
-                $(".page_end_wrapper").addClass("page_end_wrapper_show");
-            } else {
-                initial_length = hotel.length;
-                hotel = hotel.concat(result["hotels"]);
-                $(".page_loading").removeClass("page_loading_show");
-                for (var i = initial_length; i < hotel.length; i++) {
-                    var box = template.clone();
-                    $(box)
-                        .find(".search_cover_photo")
-                        .attr("src", hotel[i].search_cover_photo);
-                    $(box)
-                        .find(".name")
-                        .text(hotel[i].name);
-                    $(box)
-                        .find(".stars")
-                        .text(hotel[i].stars_symbol);
-                    $(box)
-                        .find(".quality")
-                        .text(hotel[i].quality);
-                    $(box)
-                        .find(".nr_reviews")
-                        .text(hotel[i].nr_reviews);
-                    $(box)
-                        .find(".score")
-                        .text(hotel[i].score);
-                    $(box)
-                        .find(".district")
-                        .text(hotel[i].district);
-                    $(box)
-                        .find(".distance_center")
-                        .text(hotel[i].distance_center);
-                    $(box)
-                        .find(".city")
-                        .text(hotel[i].city);
-                    $(box)
-                        .find(".room_name")
-                        .text(hotel[i].room_name);
+            switch (mode) {
+                case "filter":
+                    $(".hotelbox").remove();
+                    if (result["hotels"].length == 0) {
+                        $(".no_results_message span").text(
+                            "There are no properties that match your search criteria."
+                        );
+                        $(".no_results_wrapper").addClass(
+                            "no_results_filter_show"
+                        );
+                        $("html, body").animate({ scrollTop: 0 }, "slow");
+                    } else {
+                        hotel = result["hotels"];
+                        build(0);
+                    }
+                    break;
+                case "page":
+                    if (result["hotels"].length == 0) {
+                        $(".no_results_message span").text(
+                            "There are no more properties that match your search criteria."
+                        );
+                        $(".no_results_wrapper").addClass(
+                            "no_results_page_show"
+                        );
+                    } else {
+                        initial_length = hotel.length;
+                        hotel = hotel.concat(result["hotels"]);
 
-                    $(box)
-                        .find(".cancellation_policy")
-                        .text(hotel[i].cancellation_policy);
-                    $(box)
-                        .find(".price")
-                        .text(hotel[i].price);
-                    $(box)
-                        .find(".link")
-                        .attr(
-                            "href",
-                            "hotel?hotel_id=" +
-                                hotel[i].id +
-                                "&m=" +
-                                JSON.stringify(m)
-                        );
-                    $(box)
-                        .find(".link_name")
-                        .attr(
-                            "href",
-                            "hotel?hotel_id=" +
-                                hotel[i].id +
-                                "&m=" +
-                                JSON.stringify(m)
-                        );
-                    $(".hotel_boxes_wrapper").append($(box));
-                }
+                        build(initial_length);
+                    }
+                    break;
             }
+
+            loading(mode, "stop");
         });
+    }
+
+    function loading(mode, state) {
+        switch (mode + state) {
+            case "filter" + "start":
+                $(".hotel_boxes_wrapper").addClass("hotelbox_loading");
+                $(".page_loading_wrapper").addClass(
+                    "filter_loading_wrapper_show"
+                );
+                $(".page_loading").addClass("page_loading_show");
+                $(".no_results_wrapper").removeClass("no_results_filter_show");
+                $(".no_results_wrapper").removeClass("no_results_page_show");
+                break;
+            case "filter" + "stop":
+                $(".hotel_boxes_wrapper").removeClass("hotelbox_loading");
+                $(".page_loading_wrapper ").removeClass(
+                    "filter_loading_wrapper_show"
+                );
+                $(".page_loading").removeClass("page_loading_show");
+                break;
+            case "page" + "start":
+                $(".page_loading").addClass("page_loading_show");
+                break;
+            case "page" + "stop":
+                $(".page_loading").removeClass("page_loading_show");
+                break;
+        }
+    }
+
+    function build(start_index) {
+        for (i = start_index; i < hotel.length; i++) {
+            var box = template.clone();
+            $(box)
+                .find(".search_cover_photo")
+                .attr("src", hotel[i].search_cover_photo);
+            $(box)
+                .find(".name")
+                .text(hotel[i].name);
+            $(box)
+                .find(".stars")
+                .text(hotel[i].stars_symbol);
+            $(box)
+                .find(".quality")
+                .text(hotel[i].quality);
+            $(box)
+                .find(".nr_reviews")
+                .text(hotel[i].nr_reviews);
+            $(box)
+                .find(".score")
+                .text(hotel[i].score);
+            $(box)
+                .find(".district")
+                .text(hotel[i].district);
+            $(box)
+                .find(".distance_center")
+                .text(hotel[i].distance_center);
+            $(box)
+                .find(".city")
+                .text(hotel[i].city);
+            $(box)
+                .find(".room_name")
+                .text(hotel[i].room_name);
+
+            $(box)
+                .find(".cancellation_policy")
+                .text(hotel[i].cancellation_policy);
+            $(box)
+                .find(".price")
+                .text(hotel[i].price);
+            $(box)
+                .find(".link")
+                .attr(
+                    "href",
+                    "hotel?hotel_id=" + hotel[i].id + "&m=" + JSON.stringify(m)
+                );
+            $(box)
+                .find(".link_name")
+                .attr(
+                    "href",
+                    "hotel?hotel_id=" + hotel[i].id + "&m=" + JSON.stringify(m)
+                );
+            $(".hotel_boxes_wrapper").append($(box));
+        }
     }
 });
 //end jquery

@@ -91,14 +91,6 @@
             </div>
         </div>
     </div>
-    <div class="map_overlay" id=map_overlay>
-        <div class="map_popup" id="map_popup">
-            <div class="map_left"></div>
-            <div class="map_right" id="map"></div>
-        </div>
-        <div class="map_close">
-            <div class="close"></div>
-        </div>
 </body>
 
 </html>

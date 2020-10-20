@@ -17,7 +17,7 @@ class HotelRepository{
         $info   = DB::connection('hotelbeds')->table($m->collection_name)->where('info', 'exists', true)->first();
         $offer  = DB::connection('hotelbeds')->table($m->collection_name)->where('code', $m->hotel_id)->get();
 
-        $h = new Hotel($Static_Hotel,$offer[0],$info);
+        $h = new Hotel($Static_Hotel,$offer,$info);
         
         return $h;
     }
@@ -66,17 +66,35 @@ class Hotel {
 
     function __construct($static, $offer, $info)
     {           
+                // dynamic content
+                if($info["info"]["total"] > 0){ 
+                    $this->adults =$offer[0]["rooms"][0]["rates"][0]["adults"]; 
+                    $this->adults_text = $this->adults . " adults";
+                    if ($this->adults == 1){$this->adults_text = $this->adults . " adult";}
+                    $this->rooms = $offer[0]["rooms"][0]["rates"][0]["rooms"];
+                    $this->rooms_text = $this->rooms . " rooms";
+                    if ($this->rooms == 1){$this->rooms_text = $this->rooms . " room";}
+
+
+                    $this->score = $offer[0]["reviews"][0]["rate"] * 2;
+                    $this->quality = MyLibrary::set_quality($this->score );
+                    $this->nr_reviews= $offer[0]["reviews"][0]["reviewCount"];
+                    
+                    $this->get_offer($offer[0]['rooms'],$static);
+    
+                    if(isset($offer[0]["rooms"][0]["rates"][0]["taxes"]["allIncluded"])){
+                        if($offer[0]["rooms"][0]["rates"][0]["taxes"]["allIncluded"] == false){
+                            $this->tourist_tax = intval($offer[0]["rooms"][0]["rates"][0]["taxes"]["taxes"][0]["amount"])/$this->adults;
+                        }
+                    }
+                }
+                
+                // static content
                 $this->check_in=$info["info"]["checkIn"];
                 $this->check_out=$info["info"]["checkOut"];
                 $this->nights= (strtotime($this->check_out) - strtotime($this->check_in))/86400;
                 $this->nights_text = $this->nights . " nights";
-                if ($this->nights=1){$this->nights_text = $this->nights . " night";}
-                $this->adults =$offer["rooms"][0]["rates"][0]["adults"]; 
-                $this->adults_text = $this->adults . " adults";
-                if ($this->adults == 1){$this->adults_text = $this->adults . " adult";}
-                $this->rooms = $offer["rooms"][0]["rates"][0]["rooms"];
-                $this->rooms_text = $this->rooms . " rooms";
-                if ($this->rooms == 1){$this->rooms_text = $this->rooms . " room";}
+                if ($this->nights==1){$this->nights_text = $this->nights . " night";}
 
                 $this->name = $static["name"]["content"];
                 $this->stars = (int)$static["categoryCode"];
@@ -92,10 +110,6 @@ class Hotel {
 
                 $this->distance_center = round(MyLibrary::distance($this->coords["lat"],  $this->coords["lon"], $this->city_coords["lat"], $this->city_coords["lon"]),1). " km from center";
 
-                $this->score = $offer["reviews"][0]["rate"] * 2;
-                $this->quality = MyLibrary::set_quality($this->score );
-                $this->nr_reviews= $offer["reviews"][0]["reviewCount"];
-
                 $this->get_images($static["images"]);
             
                 $this->description=$static["description"]["content"];
@@ -103,14 +117,6 @@ class Hotel {
 
                 $facilities_aux=$this->get_facilities($static["facilities"]); // instead of feeding $static["facilities"] to function get_policies, we feed $facilities_aux that is equal but already contains the description of the facility
                 $this->get_policies($facilities_aux);
-
-                $this->get_offer($offer['rooms'],$static);
-
-                if(isset($offer["rooms"][0]["rates"][0]["taxes"]["allIncluded"])){
-                    if($offer["rooms"][0]["rates"][0]["taxes"]["allIncluded"] == false){
-                        $this->tourist_tax = intval($offer["rooms"][0]["rates"][0]["taxes"]["taxes"][0]["amount"])/$this->adults;
-                    }
-                }
 
                 $this->get_icons();
 

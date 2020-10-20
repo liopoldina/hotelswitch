@@ -7,6 +7,7 @@
 @include('Hotel.hotel_sections')
 
 @section('head')
+<link rel="stylesheet" href={{asset('css/hotel.css')}} />
 <script src={{asset('js/hotel.js')}}></script>
 @append
 
@@ -20,4 +21,5 @@
         @yield ('right_hotel')
     </div>
 </div>
+@yield ('update_overlay')
 @endsection

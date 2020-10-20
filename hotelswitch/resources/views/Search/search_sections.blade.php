@@ -221,20 +221,25 @@
         </div>
     </div>
     <div class="sort_wrapper">
-        <div id="sort_our_top_picks" class="sort_item">
-            <span>Our Top Picks</span>
+        <div class="sort_item" name="minRate" value=1>
+            Our Top Picks
+            <i class="fas fa-arrow-up"></i>
         </div>
-        <div id="sort_lowest_price_first" class="sort_item sort_selected">
-            <span>Lowest Price First</span>
+        <div class="sort_item sort_selected" name="minRate" value=1>
+            Price
+            <i class="fas fa-arrow-up"></i>
         </div>
-        <div id="sort_stars" class="sort_item">
-            <span>Stars</span>
+        <div class="sort_item" name="categoryCode" value=-1>
+            Stars
+            <i class="fas fa-arrow-down"></i>
         </div>
-        <div id="sort_distance_from_center" class="sort_item">
-            <span>Distance from center</span>
+        <div class="sort_item" name="distance_center" value=1>
+            Distance center
+            <i class="fas fa-arrow-up"></i>
         </div>
-        <div id="sort_review_score" class="sort_item sort_item_last_border">
-            <span>Review Score</span>
+        <div class="sort_item" name="score" value=-1>
+            Review Score
+            <i class="fas fa-arrow-down"></i>
         </div>
     </div>
     <div class="hotel_boxes_wrapper" id="hotel_boxes_wrapper">
@@ -342,11 +347,11 @@
         <img src="images/search/page_loading.gif" alt="page_loading">
     </div>
 </div>
-<div class="page_end_wrapper">
-    <div class="page_end_icon">
+<div class="no_results_wrapper">
+    <div class="no_results_icon">
         <img src="./images/search/information_icon.jpg" alt="page_end_icon">
     </div>
-    <div class="page_end_message">
+    <div class="no_results_message">
         <span>There are no more properties that match your search criteria.</span>
     </div>
 </div>
