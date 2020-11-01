@@ -293,9 +293,11 @@ $(function() {
                 .find(".city")
                 .text(hotel[i].city);
             $(box)
+                .find(".pick_score")
+                .text(hotel[i].pick_score);
+            $(box)
                 .find(".room_name")
                 .text(hotel[i].room_name);
-
             $(box)
                 .find(".cancellation_policy")
                 .text(hotel[i].cancellation_policy);

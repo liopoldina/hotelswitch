@@ -7,57 +7,54 @@
 
 <body>
     <div class="header">
-        <a href="{{ route('homepage.index') }}">
+        <div class="header_content">
             <div class="logo_wrapper">
-                <span class="hotel">H</span><span class="hopping">S</span><span class="com">.c</span>
-            </div>
-        </a>
-        <div class="user_wrapper">
-            <div class="user_items">
-                <div id="currency_wrapper"><a id="currency" href="#">€</a></div>
-            </div>
-            <div class="user_items">
-                <img id="flag" src={{asset('images/header/bandeira.png')}} alt="idioma" />
-            </div>
-            @guest
-            <div class="user_items header_buttons">
-                <a href="{{ route('register') }}">
-                    <button>Register</button>
+                <a href="{{ route('homepage.index') }}">
+                    <span class="logo_hotel">H</span><span class="logo_switch">S</span><span class="logo_com">.c</span>
                 </a>
             </div>
-            <div class="user_items header_buttons">
-                <a href="{{ route('login') }}">
-                    <button>Login</button>
-                </a>
-            </div>
-            @endguest
-            @auth
-            <div class="user_items account_dropdown">
-                {{ Auth::user()->name }} <span class="caret"></span>
-            </div>
-            <div class='dropdown_menu'>
-                <a class="dropdown_item" href="{{ route('my_reservations') }}">
-                    My Reservations
-                </a>
-                <a class="dropdown_item" href="{{ route('settings') }}">
-                    Settings
-                </a>
-                <a class="dropdown_item" href="{{ route('logout') }}" onclick="event.preventDefault();
+            <div class="user_wrapper">
+                <div class="user_items">
+                    <a id="currency" href="#">€</a>
+                </div>
+                <div class="user_items">
+                    <img id="flag" src={{asset('images/header/bandeira.png')}} alt="idioma" />
+                </div>
+                @guest
+                <div class="user_items header_buttons">
+                    <a href="{{ route('register') }}">
+                        <button>Register</button>
+                    </a>
+                </div>
+                <div class="user_items header_buttons">
+                    <a href="{{ route('login') }}">
+                        <button>Login</button>
+                    </a>
+                </div>
+                @endguest
+                @auth
+                <div class="user_items account_dropdown">
+                    {{ Auth::user()->name }} <span class="caret"></span>
+                </div>
+                <div class='dropdown_menu'>
+                    <a class="dropdown_item" href="{{ route('my_reservations') }}">
+                        My Reservations
+                    </a>
+                    <a class="dropdown_item" href="{{ route('settings') }}">
+                        Settings
+                    </a>
+                    <a class="dropdown_item" href="{{ route('logout') }}" onclick="event.preventDefault();
                                      document.getElementById('logout-form').submit();">
-                    {{ __('Logout') }}
-                </a>
-                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                    @csrf
-                </form>
+                        {{ __('Logout') }}
+                    </a>
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                        @csrf
+                    </form>
+                </div>
+                @endauth
             </div>
-
-
         </div>
-        @endauth
-
     </div>
-    </div>
-
 
     @yield('content')
 

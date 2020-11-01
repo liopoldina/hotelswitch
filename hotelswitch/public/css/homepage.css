@@ -2,10 +2,12 @@
     height: 500px;
     background-repeat: no-repeat;
     background-size: cover;
+    padding: 0px 50px;
 }
 
 #particle-canvas {
-    width: 100%;
+    /* ignore parent padding */
+    margin: 0px -50px; 
     height: 100%;
     z-index: 2;
 }
@@ -25,13 +27,10 @@
 }
 
 .search_bar {
-    position: absolute;
+    position: relative;
     z-index: 3;
-    top: 300px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: fit-content;
-    margin-top: 70px;
+    top: -200px;
+    margin: 0 auto;
     width: fit-content;
     background-color: white;
     border-radius: 5px;
@@ -54,6 +53,7 @@
 
 .search_bar form {
     display: flex;
+    flex-wrap: wrap;
 }
 
 .bar_box {
@@ -155,28 +155,26 @@
 
 .why_section {
     padding: 40px 0px 50px 0px;
-    position: relative;
-    left: 50%;
-    width: fit-content;
-    transform: translateX(-50%);
-    display: grid;
-    grid-template-columns: 300px 300px 300px 300px;
-    grid-template-rows: auto auto;
 }
 
 .why_tittle {
     font-size: 32px;
     font-weight: bold;
-    grid-column-start: 1;
-    grid-column-end: 5;
-    justify-self: center;
-    margin-bottom: 60px;
+    text-align: center;
+    margin-bottom:30px;
+}
+
+.why_element_wrapper{
+    display:flex;
+    justify-content: center;
+    flex-wrap: wrap;
 }
 
 .why_element {
-    grid-row-start: 2;
+    margin-top:30px;
     padding: 0px 20px;
     text-align: center;
+    max-width: 300px;
 }
 
 .why_element i {
@@ -203,12 +201,12 @@
 
 .popular_section {
     background-color: rgba(var(--main-color-rgb), 0.05);
-    padding: 60px 0px;
+    padding: 60px 20px;
 }
 
 .carrousel {
-    width: fit-content;
     margin: 0 auto 70px auto;
+    max-width: fit-content;
 }
 
 .carrousel_last {
@@ -222,7 +220,7 @@
 }
 
 .slick {
-    max-width: var(--min_width);
+    max-width: var(--max_internal_width);
     margin: auto;
 }
 
@@ -275,10 +273,15 @@
     opacity: 0 !important;
 }
 
+.slick-dots{
+    bottom: -40px !important;
+}
+
 .distinctive_section {
-    padding: 40px 15px 30px 15px;
+    padding: 20px 15px 30px 15px;
     background-color: var(--main-color);
     display: flex;
+    flex-wrap: wrap;
     justify-content: center;
 }
 
@@ -287,7 +290,7 @@
     width: 250px;
     padding: 0px 15px;
     text-align: center;
-    margin: 0px 30px;
+    margin: 20px 30px;
 }
 
 .distinction_wrapper span {

@@ -221,7 +221,7 @@
         </div>
     </div>
     <div class="sort_wrapper">
-        <div class="sort_item" name="minRate" value=1>
+        <div class="sort_item" name="top_picks" value=1>
             Our Top Picks
             <i class="fas fa-arrow-up"></i>
         </div>
@@ -288,6 +288,10 @@
                     </div>
                     <div class="distance_center_wrapper">
                         <span class="distance_center">{{$hotel[$i]->distance_center ??  '250m from center'}}</span>
+                        @isset($hotel[$i]->pick_score)
+                        <span class="pick_score">{{$hotel[$i]->pick_score}}</span>
+                        @endisset
+
                     </div>
                 </div>
                 <div class="hotel_room">

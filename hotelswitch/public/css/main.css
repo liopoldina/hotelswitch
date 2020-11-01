@@ -7,48 +7,58 @@ html {
     --main-color: #005743;
     --main-color-light: #008c6c;
     --secondary-color: #c6c013;
-    --main-background: white;
     --main-color-rgb: 0, 87, 67;
-    --min_width: 1125px;
+    --max_internal_width: 1125px;
+    --min-width: 320px;
 }
 
 body {
     color: #333;
     font-family: Roboto, Arial, Helvetica, sans-serif;
     margin: 0px;
+    min-width: var(--min-width);
 }
 
 .header {
     background: var(--main-color);
     height: 60px;
-    min-width: var(--min_width);
     position: relative;
     z-index: 1;
 }
 
+.header_content{
+    display:flex;
+    height: 100%;
+    max-width: var(--max_internal_width);
+    margin:0px auto;
+    align-items: center;
+}
+
 .logo_wrapper {
-    float: left;
-    height: auto;
-    width: auto;
-    position: relative;
-    left: 10px;
-    top: 50%;
-    transform: translateY(-50%);
+    margin-left: 15px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+
 }
 
-.logo_wrapper span.hotel {
+.logo_wrapper a{
+text-decoration: none;
+}
+
+.logo_hotel {
     color: white;
     font-size: 26px;
     font-weight: bold;
 }
 
-.logo_wrapper span.hopping {
+.logo_switch {
     color: white;
     font-size: 26px;
     font-weight: bold;
 }
 
-.logo_wrapper span.com {
+.logo_com {
     color: var(--main-color-light);
     filter: brightness(150%);
     margin-left: 0px;
@@ -56,57 +66,22 @@ body {
     font-weight: bold;
 }
 
-/* substituir sempre 1250px pela nova min width */
-@media only screen and (min-width: 1125px) {
-    .logo_wrapper {
-        left: calc((100% - var(--min_width)) / 2 + 10px);
-    }
-
-    .user_wrapper {
-        right: calc((100% - var(--min_width)) / 2);
-    }
-
-    .internal {
-        background-color: var(--main-background);
-    }
-
-    .internal_wrapper {
-        position: relative;
-        left: 50%;
-        transform: translateX(-50%);
-    }
-}
-
 .logo_wrapper img {
     width: 150px;
-    height: 25px;
 }
 
 .user_wrapper {
-    float: right;
+    position:relative;
+    height: 100%;
+    margin: 0px 15px 0px auto;
     display: flex;
-    height: 60%;
-    width: auto;
-    position: relative;
-    top: 50%;
-    transform: translateY(-50%);
+    align-items: center;
 }
 
 .user_items {
-    height: 90%;
-    width: auto;
     margin: 0px 10px;
     padding: 0px 5px;
-    position: relative;
-    top: 50%;
-    transform: translateY(-50%);
     cursor: pointer;
-}
-
-#currency_wrapper {
-    position: relative;
-    top: 50%;
-    transform: translateY(-50%);
 }
 
 #currency {
@@ -119,15 +94,9 @@ body {
     display: block;
     margin: auto;
     width: 70%;
-    position: relative;
-    top: 50%;
-    transform: translateY(-50%);
 }
 
 .user_items button {
-    position: relative;
-    top: 50%;
-    transform: translateY(-50%);
     height: 30px;
     background-color: white;
     border: none;
@@ -160,10 +129,10 @@ body {
 
 
 .dropdown_menu {
-    display: none;
     position: absolute;
-    right: 0;
-    top: 100%;
+    right:0px;
+    top:50px;
+    display: none;
     min-width: 150px;
     padding: 8px 0px;
     font-size: 14px;
@@ -196,12 +165,12 @@ body {
 }
 
 .internal {
-    min-width: var(--min_width);
 }
 
 .internal_wrapper {
-    width: var(--min_width);
+    width: var(--max_internal_width);
     overflow: auto;
+    margin: 0px auto;
 }
 
 .left {
@@ -215,7 +184,6 @@ body {
     padding: 18px 18px;
     float: left;
     width: calc(100% - 265px);
-    background-color: var(--main-background);
 }
 
 .search {
@@ -298,13 +266,12 @@ body {
 }
 
 .footer {
-    min-width: var(--min_width);
 }
 
 .first_footer {
-    height: 50px;
     background-color: var(--main-color-light);
-    position: relative;
+    display: flex;
+    padding-bottom: 10px;
 }
 
 .second_footer {
@@ -313,18 +280,16 @@ body {
     position: relative;
 }
 
-.first_footer_items_wrapper {
-    position: absolute;
-    width: fit-content;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
+.first_footer_items_wrapper{
+    display: flex;
+    flex-wrap: wrap;
+    margin:0px auto;
+    justify-content: center;
 }
 
 .first_footer_item {
-    width: fit-content;
-    float: left;
-    padding: 0px 50px;
+    margin-top:10px;
+    padding:0px 10px;
 }
 
 .first_footer_item button {

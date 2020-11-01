@@ -49,5 +49,3 @@ Route::get('/email',function(){
 Route::get('/app',function(){
     return view('app_test.app');
 }); 
-
-

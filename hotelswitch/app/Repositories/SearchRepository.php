@@ -3,10 +3,10 @@
 namespace App\Repositories;
 
 use GuzzleHttp\Client;
-
 use Illuminate\Support\Facades\DB;
-
 use App\Libraries\MyLibrary;
+use Symfony\Component\Process\Process;
+use Symfony\Component\Process\Exception\ProcessFailedException;
 
 class SearchRepository{
 
@@ -113,15 +113,21 @@ class SearchRepository{
         }); 
         
         if(!empty($hotels)){
-
-        DB::connection('hotelbeds')->table($m->collection_name)->raw( function ($collection) use ($hotels) {
-
-            return $collection->insertMany($hotels);
-        });
-    }
+            DB::connection('hotelbeds')->table($m->collection_name)->raw( function ($collection) use ($hotels) {
+    
+                return $collection->insertMany($hotels);
+            });
+        }
         
+        $process = new Process(['python', 'C:\wamp64\www\hotelhopping.com\science\client.py',$m->collection_name]);
+        $process->run();
+
+        // executes after the command finishes
+        if (!$process->isSuccessful()) {
+            throw new ProcessFailedException($process);
+        }
         
-                
+        // $r2 = $process->getOutput();
     }
 
 
@@ -209,6 +215,10 @@ function transform_collection($response_json, $m){
         $hotel->cancellation_policy = MyLibrary::cancellation_policy($hotel->rooms[0]->rates[0]->cancellationPolicies[0]->from);
         // score
         $hotel->score =  $hotel->reviews[0]->rate * 2;
+        // top_pick score
+        if(!isset($hotel->top_picks)){
+            $hotel->top_picks = 0;
+            }
        
         // sellingRate
         for($i=0; $i < count($hotel->rooms); $i++){
@@ -246,6 +256,8 @@ class Result {
     var $distance_center;
     var $coords;
 
+    var $pick_score;
+
     var $room_name;
     var $bed_type;
 
@@ -276,7 +288,9 @@ class Result {
                 $this->coords = ['lat'=>$input["latitude"],'lon'=>$input["longitude"]];
                 $this->distance_center = round(MyLibrary::distance(
                     $this->coords["lat"],  $this->coords["lon"], $m->lat, $m->lon),1). " km from center";
-                    
+                 
+                if(isset($input["top_picks"])){ $this->pick_score =  $input["top_picks"];}
+
                 $this->room_name = MyLibrary::titleCase($input["rooms"][0]["name"]);
                 $this->set_bed_type();
 

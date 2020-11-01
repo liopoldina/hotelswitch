@@ -55,34 +55,39 @@
     </div>
     <div class='why_section'>
         <div class="why_tittle">Let us find you the best deals</div>
-        <div class=why_element>
-            <i class="fas fa-network-wired"></i>
-            <div class="why_section_tittle">Artifical Intelligence</div>
-            <div class="why_section_text">Our proprietary artificial intelligence algorithm analyses reservations trends
-                and millions of hotel
-                prices to suggests you the <strong>best deals</strong>.</div>
-        </div>
-        <div class=why_element>
-            <i class="fas fa-tags"></i>
-            <div class="why_section_tittle">No Fake Promotions</div>
-            <div class="why_section_text">Why would you care to have a big discount if the hotel is still too
-                expensive for what it is? We only take into acccount <strong>what really matters</strong> to you such as
-                location, reviews, room size etc. </div>
-        </div>
-        <div class=why_element>
-            <i class="fas fa-thumbs-up"></i>
-            <div class="why_section_tittle">Best Results</div>
-            <div class="why_section_text">Most travel websites show you first the hotels that pay them the highest
-                commission. We always show you the <strong>best results</strong> upfront.</div>
-        </div>
+        <div class="why_element_wrapper">
+            <div class=why_element>
+                <i class="fas fa-network-wired"></i>
+                <div class="why_section_tittle">Artifical Intelligence</div>
+                <div class="why_section_text">Our proprietary artificial intelligence algorithm analyses reservations
+                    trends
+                    and millions of hotel
+                    prices to suggests you the <strong>best deals</strong>.</div>
+            </div>
+            <div class=why_element>
+                <i class="fas fa-tags"></i>
+                <div class="why_section_tittle">No Fake Promotions</div>
+                <div class="why_section_text">Why would you care to have a big discount if the hotel is still too
+                    expensive for what it is? We only take into acccount <strong>what really matters</strong> to you
+                    such as
+                    location, reviews, room size etc. </div>
+            </div>
+            <div class=why_element>
+                <i class="fas fa-thumbs-up"></i>
+                <div class="why_section_tittle">Best Results</div>
+                <div class="why_section_text">Most travel websites show you first the hotels that pay them the highest
+                    commission. We always show you the <strong>best results</strong> upfront.</div>
+            </div>
 
-        <div class=why_element>
-            <i class="fas fa-city"></i>
-            <div class="why_section_tittle">Switch Hotels</div>
-            <div class="why_section_text">Sometimes variations in daily rates generate great deals if you are
-                willing to stay in more than one hotel. We will also show you these <strong>opportunities</strong> in
-                case you are up
-                to switch hotels during your trip.</div>
+            <div class=why_element>
+                <i class="fas fa-city"></i>
+                <div class="why_section_tittle">Switch Hotels</div>
+                <div class="why_section_text">Sometimes variations in daily rates generate great deals if you are
+                    willing to stay in more than one hotel. We will also show you these <strong>opportunities</strong>
+                    in
+                    case you are up
+                    to switch hotels during your trip.</div>
+            </div>
         </div>
     </div>
     <div class="popular_section">
@@ -225,6 +230,5 @@
         </div>
     </div>
 
-</div>
 </div>
 @endsection
