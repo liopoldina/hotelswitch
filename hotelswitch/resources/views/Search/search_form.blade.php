@@ -16,7 +16,8 @@
                 <label for="check-in">Check-in/Check-out</label>
             </div>
             <div class="search_input">
-                <input type="text" id="date_range" name="date_range" value='{{$m->date_range ?? "" }}' required />
+                <input type="text" id="date_range" name="date_range" value='{{$m->date_range ?? "" }}' required
+                    readonly />
             </div>
 
             <div id="nights">{{isset($m) ? $m->nights_text . ' stay' : '1 night stay'}}</div>

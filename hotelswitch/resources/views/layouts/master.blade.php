@@ -63,7 +63,7 @@
         <div class="first_footer">
             <div class="first_footer_items_wrapper">
                 <div class="first_footer_item">
-                    <button>Manage your Booking</button>
+                    <a href="{{ route('login') }}"><button>Manage your Booking</button></a>
                 </div>
                 <div class="first_footer_item">
                     <button>Customer Service Help</button>
@@ -72,20 +72,14 @@
         </div>
         <div class="second_footer">
             <div class="copyright_wrapper">
-                <span>Copyright &#169; 2020 HotelHopping.com&#174;</span>
-                <span>All rights reserved</span>
+                <span>Copyright &#169; 2020 HotelSwitch.com&#174; All rights reserved</span>
             </div>
-            <div class="second_footer_items_wrapper">
-                <div class="second_footer_item">
-                    <a href="#">About HotelHopping.com</a>
-                </div>
-                <div class="second_footer_item">
-                    <a href="#">Terms of Service</a>
-                </div>
-                <div class="second_footer_item">
-                    <a href="#">Privacy Policy</a>
-                </div>
+            <div class="second_footer_links">
+                <a href="#">About HotelSwitch.com</a>
+                <a href="#">Terms of Service</a>
+                <a href="#">Privacy Policy</a>
             </div>
+            <div class="center_auxiliar"></div>
         </div>
     </div>
 </body>

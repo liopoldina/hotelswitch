@@ -32,6 +32,10 @@ $(function() {
                     $("#destination").val(ui.item.label); // display the label
                     $("#lat").val(ui.item.coords.lat);
                     $("#lon").val(ui.item.coords.lon);
+                    $(event.target).autocomplete("close");
+                    setTimeout(function() {
+                        $(event.target).blur();
+                    });
                 },
                 source: function(request, cb) {
                     $.ajax({

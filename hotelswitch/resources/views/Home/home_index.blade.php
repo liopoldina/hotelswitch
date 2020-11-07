@@ -29,20 +29,21 @@
             <form id="search" action="search" method="get" target="_blank">
                 @csrf
                 <div class='destination_wrapper'>
-                    <i class="fas fa-map-marker-alt fa-lg"></i>
+                    <label class="icon_label" for="destination"> <i class="fas fa-map-marker-alt fa-lg"></i></label>
                     <input type="text" id="destination" name="destination" placeholder="where are you travelling to?"
                         class="ui-autocomplete-input bar_box destination_input" autocomplete="off" required>
                     <input type="hidden" id="lat" name="lat" value="">
                     <input type="hidden" id="lon" name="lon" value="">
                 </div>
                 <div class="dates_wrapper">
-                    <i class="fas fa-calendar-alt fa-lg"></i>
-                    <input type="text" id="date_range" name="date_range" class='bar_box dates_input' required>
-                    <span class='check_in'>Check-in</span>
-                    <span class='check_out'>Check-out</span>
+                    <label class="icon_label" for="date_range"><i class="fas fa-calendar-alt fa-lg"></i>
+                    </label>
+                    <input type="text" id="date_range" name="date_range" class='bar_box dates_input' required readonly>
+                    <label class='check_in' for="date_range">Check-in</label>
+                    <label class='check_out' for="date_range">Check-out</label>
                 </div>
-                <div class="guests_wrapper bar_box">
-                    <i class="fas fa-user-friends fa-lg"></i>
+                <div class=" guests_wrapper bar_box">
+                    <label class="icon_label"> <i class="fas fa-user-friends fa-lg"></i></label>
                     <span class='box_tittle'>Guests</span>
                     <span class='box_content'>1 room, 2 adults </span>
                     <input type="hidden" id="adults" name="adults" value="2" required>
@@ -65,20 +66,19 @@
                     prices to suggests you the <strong>best deals</strong>.</div>
             </div>
             <div class=why_element>
-                <i class="fas fa-tags"></i>
-                <div class="why_section_tittle">No Fake Promotions</div>
-                <div class="why_section_text">Why would you care to have a big discount if the hotel is still too
-                    expensive for what it is? We only take into acccount <strong>what really matters</strong> to you
-                    such as
-                    location, reviews, room size etc. </div>
-            </div>
-            <div class=why_element>
                 <i class="fas fa-thumbs-up"></i>
                 <div class="why_section_tittle">Best Results</div>
                 <div class="why_section_text">Most travel websites show you first the hotels that pay them the highest
                     commission. We always show you the <strong>best results</strong> upfront.</div>
             </div>
-
+            <div class=why_element>
+                <i class="fas fa-tags"></i>
+                <div class="why_section_tittle">No Fake Promotions</div>
+                <div class="why_section_text">Why would it matter to have a big discount if the hotel is still
+                    overpriced? We only take into acccount <strong>what really matters</strong> to you
+                    such as
+                    location, reviews, room size etc. </div>
+            </div>
             <div class=why_element>
                 <i class="fas fa-city"></i>
                 <div class="why_section_tittle">Switch Hotels</div>
@@ -207,26 +207,28 @@
         </div>
     </div>
     <div class="distinctive_section">
-        <div class="distinction_wrapper">
-            <i class="fas fa-hotel"></i>
-            <span class='distinction_tittle'>More than 200.000 hotels</span>
-            <span class='distinction_text'>In 65 countries worldwide</span>
-        </div>
-        <div class="distinction_wrapper">
-            <i class="fas fa-thumbs-up"></i>
-            <span class='distinction_tittle'>Instant confirmation</span>
-            <span class='distinction_text'>You will receive your confirmation immediately</span>
-        </div>
-        <div class="distinction_wrapper">
-            <i class="fas fa-piggy-bank"></i>
-            <span class='distinction_tittle'>Best price</span>
-            <span class='distinction_text'>Save money with our competitive rates
-            </span>
-        </div>
-        <div class="distinction_wrapper">
-            <i class="fas fa-headset"></i>
-            <span class='distinction_tittle'>Professional customer support</span>
-            <span class='distinction_text'>Dedicated service staff will assist you</span>
+        <div class="distinctive_section_wrapper">
+            <div class="distinction_wrapper">
+                <i class="fas fa-hotel"></i>
+                <span class='distinction_tittle'>More than 200.000 hotels</span>
+                <span class='distinction_text'>In 65 countries worldwide</span>
+            </div>
+            <div class="distinction_wrapper">
+                <i class="fas fa-thumbs-up"></i>
+                <span class='distinction_tittle'>Instant confirmation</span>
+                <span class='distinction_text'>You will receive your confirmation immediately</span>
+            </div>
+            <div class="distinction_wrapper">
+                <i class="fas fa-piggy-bank"></i>
+                <span class='distinction_tittle'>Best price</span>
+                <span class='distinction_text'>Save money with our competitive rates
+                </span>
+            </div>
+            <div class="distinction_wrapper">
+                <i class="fas fa-headset"></i>
+                <span class='distinction_tittle'>Professional customer support</span>
+                <span class='distinction_text'>Dedicated service staff will assist you</span>
+            </div>
         </div>
     </div>
 

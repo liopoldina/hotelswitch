@@ -28,3 +28,5 @@ while True:
     else:
         R2 = tp.top_picks(data)
         conn.sendall(R2.encode('utf-8'))
+
+# pythonw.exe server.py
