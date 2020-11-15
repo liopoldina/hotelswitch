@@ -1,5 +1,7 @@
-.internal_wrapper {
+.confirmation_wrapper {
     padding: 30px 100px;
+    max-width: var(--max_internal_width);
+    margin: 0px auto;
 }
 
 .top {

@@ -35,13 +35,13 @@ def top_picks(collection):
             df["minRate"])/np.mean(df[df.categoryCode == i]["minRate"])
 
     # CREATE LOCATION SCORE
-    # location score: 6, 7, 8, 9 ou 10
+    # location score: 1, 2, 3, 4 or 5
     n_class = 5
     quantiles = np.linspace(0, 1,
                             num=n_class+1, endpoint=True)
     bins = np.quantile(df["rate_control"], quantiles)
     df["location"] = pd.cut(df["rate_control"], bins,
-                            right=True, include_lowest=True, labels=[6, 7, 8, 9, 10])
+                            right=True, include_lowest=True, labels=[1, 2, 3, 4, 5])
 
     # KNN LOCATION SCORE
     n_neighbors = 4
@@ -78,7 +78,10 @@ def top_picks(collection):
     # print(linear_model.summary())
 
     # save
-    df["discount"] = round((df["minRate"] / df["price_pred"] - 1)*100)
+    df["discount"] = - np.minimum(df["minRate"] / df["price_pred"] - 1, 1)
+
+    df["discount"] = (df["discount"] - min(df["discount"])) / \
+        (max(df["discount"])-min(df["discount"]))*100
 
     for index in df.index:
         collection.update_one({"code": int(df["code"][index])}, {
@@ -88,4 +91,4 @@ def top_picks(collection):
     return str(r2_predictions)
 
 
-# print(top_picks("38.7123_-9.13833_2020-10-30_2020-10-31_1_2_0"))
+# print(top_picks("38.7123_-9.13833_2020-11-16_2020-11-17_1_2_0"))

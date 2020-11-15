@@ -39,6 +39,9 @@ Route::put('/settings', 'Account\SettingsController@update')->name('settings.upd
 //autocomplete
 Route::get('/autocomplete', 'Autocomplete\ExpediaController@index')->name('autocomplete.index');
 
+//cover images
+Route::get('/cover_image', 'CoverImageController@show')->name('coverimage.show');
+
 // TEMPORARY ROUTES
 
 //see new useremail 

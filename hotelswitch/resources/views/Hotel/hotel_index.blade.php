@@ -14,7 +14,7 @@
 @section('content')
 <div class="internal">
     <div class="internal_wrapper">
-        <div class="left">
+        <div class="left_content">
             @yield('search_box')
             @yield ('left_hotel')
         </div>

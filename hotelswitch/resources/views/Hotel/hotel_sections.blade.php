@@ -74,7 +74,7 @@
 @endsection
 
 @section('right_hotel')
-<div id=hotel_page class="right">
+<div id=hotel_page class="right_content">
     <div class="hp_top_bar">
         <a href="#availability">Info & Prices</a>
         <a href="#facilities">Facilities</a>

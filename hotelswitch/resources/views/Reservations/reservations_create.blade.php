@@ -15,7 +15,7 @@
 @section('content')
 <div class="internal">
     <div class="internal_wrapper">
-        <div class="left">
+        <div class="left_content">
             <div class="left_box">
                 <div class="box_tittle">
                     <span>Property Details</span>
@@ -106,7 +106,7 @@
             </div>
         </div>
     </div>
-    <div class="right">
+    <div class="right_content">
         <form id='booking_form' action="book" method='post'>
             @csrf
             <input type="hidden" name="rateKey" value="{{$rate->hotel->rooms[0]->rates[0]->rateKey}}">

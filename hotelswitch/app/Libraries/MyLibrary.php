@@ -29,21 +29,24 @@ Class MyLibrary {
 
     public static function set_quality($score) {
         switch ($score) {
-            case $score>=9.5:
+            case $score>=5:
                 $quality="Exceptional";
                 break;
-            case $score>=9:
+            case $score>=4.5:
                 $quality="Wonderful";
                 break;
-            case $score>=8:
+            case $score>=4:
                 $quality="Very Good";
                 break;
-            case $score>=7:
+            case $score>=3.5:
                 $quality="Good";
                 break;
-            case $score<7:
+            case $score>=3:
                 $quality="Plesant";
-                break;;  }
+                break; 
+            case $score<=2.5:
+                $quality="OK";
+                break; }
 
         return $quality;
     }  

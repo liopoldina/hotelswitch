@@ -214,10 +214,10 @@ function transform_collection($response_json, $m){
         // cancellation policy
         $hotel->cancellation_policy = MyLibrary::cancellation_policy($hotel->rooms[0]->rates[0]->cancellationPolicies[0]->from);
         // score
-        $hotel->score =  $hotel->reviews[0]->rate * 2;
+        $hotel->score =  $hotel->reviews[0]->rate;
         // top_pick score
         if(!isset($hotel->top_picks)){
-            $hotel->top_picks = 0;
+            $hotel->top_picks = 50;
             }
        
         // sellingRate
@@ -272,13 +272,20 @@ class Result {
     // construct
     function __construct($input,$m){ 
                 $this->id = $input["code"];
-                $this->search_cover_photo = "http://photos.hotelbeds.com/giata/bigger/" . substr(str_pad($this->id, 6, '0', STR_PAD_LEFT), 0, -4) . "/" . str_pad($this->id, 6, '0', STR_PAD_LEFT) . "/" . str_pad($this->id, 6, '0', STR_PAD_LEFT) .  "a_hb_a_001.jpg";  //TTFB 0.3s
+                $this->search_cover_photo = "http://photos.hotelbeds.com/giata/bigger/" . substr(str_pad($this->id, 6, '0', STR_PAD_LEFT), 0, -4) . "/" . str_pad($this->id, 6, '0', STR_PAD_LEFT) . "/" . str_pad($this->id, 6, '0', STR_PAD_LEFT) .  "a_hb_a_001.jpg";  //Time  0.8s
+
+                // $this->images = DB::connection('mongodb_static') 
+                // ->table("hotels")
+                // ->where('code',   $this->id)
+                // ->pluck('images')[0];
+
+                // $this->search_cover_photo = "http://photos.hotelbeds.com/giata/bigger/" .$this->images[0]['path']; //Time  4.5s
 
                 $this->name = $input["name"];
                 $this->stars = (int)$input["categoryName"];
                 $this->stars_symbol = MyLibrary::set_stars_symbol($this->stars);
 
-                $this->score = $input["reviews"][0]["rate"] * 2;
+                $this->score = $input["score"];
                 $this->quality = MyLibrary::set_quality($this->score);
                 $this->nr_reviews= $input["reviews"][0]["reviewCount"];
 
@@ -298,7 +305,7 @@ class Result {
                 $this->cancellation_deadline = $input["rooms"][0]["rates"][0]["cancellationPolicies"][0]["from"];
                 $this->cancellation_policy = MyLibrary::cancellation_policy($this->cancellation_deadline);}
                 
-                $this->payment_policy = '';
+                // $this->payment_policy = 'Prepayment';
 
                 $this->price = "€" . round($input["rooms"][0]["rates"][0]["sellingRate"]);
                     
@@ -326,31 +333,5 @@ class Result {
         else {$this->bed_type = "1 Double Bed";}
         
     }
-
-    function get_cover_images($hotel){ //TTFB 1.5s
-    
-        $c = new MongoDB\Client('mongodb://localhost:27017');
-        $db = $c->static_content;
-    
-        $collection=$db->hotels;
-    
-        for ($i=0; $i<count($hotel); $i++){
-        $codes[]= ['code'=>  $hotel[$i]->id];
-        }
-    
-        $filter=[
-            '$or' => $codes
-        ];
-    
-        $options = [ 'projection' => ['_id' => 0, 'images' => 2]];
-    
-        $cursor=$collection->find ($filter, $options);
-        $cursor_decode = json_decode(json_encode($cursor->toArray()),true);
-    
-        for ($i=0; $i<count($hotel); $i++){
-            $hotel[$i]->search_cover_photo =  "http://photos.hotelbeds.com/giata/bigger/" .$cursor_decode[$i]["images"][0]["path"];
-        }
-    }
-
 }
 ?>

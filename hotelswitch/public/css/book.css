@@ -1,11 +1,10 @@
-.left {
+.left_content {
     width: 300px;
-    padding: 15px 0px;
 }
 
-.right {
+.right_content {
     width: calc(100% - 300px);
-    padding: 15px 20px;
+    margin-left:20px
 }
 
 .left_box {

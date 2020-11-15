@@ -1,17 +1,15 @@
 $(function() {
-    // 1) Delete policy separator dot if payment policy doesn't exists
-    if ($(".payment_policy").is(":empty")) {
-        $(".policy_separator")
-            .children()
-            .text("");
-    }
+    // 1) Delete policy separator and hotel reviews if not set
+    $(".room_policy")
+        .has(".payment_policy:not(:empty)")
+        .children(".policy_separator")
+        .text(".");
 
-    // 2) Delete hotel reviews wrapper if there is no reviews
     $(".hotel_review")
         .has(".score:empty")
         .remove();
 
-    // 3) Open and close map
+    // 2) Open and close map
     //open map
     $(".map_wrapper").click(function() {
         $("#map_overlay").addClass("display_map_overlay");
@@ -36,7 +34,7 @@ $(function() {
         }
     });
 
-    // 4) Price Range Slider
+    // 3) Price Range Slider
     $("#slider-range").slider({
         range: true,
         min: 0,
@@ -71,7 +69,7 @@ $(function() {
             "+"
     );
 
-    // 5) Uncheck radio button on clicked
+    // 4) Uncheck radio button on clicked
     $("input:radio").on("click", function(e) {
         var inp = $(this); //cache the selector
         if (inp.is(".theone")) {
@@ -85,20 +83,23 @@ $(function() {
         inp.addClass("theone");
     });
 
-    // 6) Sort
+    // 5) Sort
     $(".sort_item", this).click(function() {
         if ($(this).hasClass("sort_selected")) {
             m.filters.sort_order = -1 * m.filters.sort_order;
             $(this)
                 .children()
+                .children("i")
                 .removeClass();
             if (m.filters.sort_order == 1) {
                 $(this)
                     .children()
+                    .children("i")
                     .addClass("fas fa-arrow-up");
             } else {
                 $(this)
                     .children()
+                    .children("i")
                     .addClass("fas fa-arrow-down");
             }
         } else {
@@ -112,7 +113,7 @@ $(function() {
         results("filter");
     });
 
-    // 7) Filter
+    // 6) Filter
     var template = $("#hotelbox").clone();
     // get value of selected filter
     $(".check_box").click(function() {
@@ -163,7 +164,7 @@ $(function() {
         results("filter");
     });
 
-    // 8) Pagination
+    // 7) Pagination
     $(window).scroll(function() {
         if (
             Math.ceil($(window).scrollTop() + $(window).height()) >=
@@ -177,7 +178,7 @@ $(function() {
         }
     });
 
-    // 9 function results
+    // 8) Function results
     function results(mode) {
         loading(mode, "start");
 
@@ -269,8 +270,17 @@ $(function() {
                 .find(".search_cover_photo")
                 .attr("src", hotel[i].search_cover_photo);
             $(box)
+                .find(".search_cover_photo")
+                .attr("data-hotel-id", hotel[i].id);
+            $(box)
+                .find(".search_cover_photo")
+                .attr("data-index", 1);
+            $(box)
                 .find(".name")
-                .text(hotel[i].name);
+                .text(hotel[i].name + " ");
+            $(box)
+                .find(".name")
+                .append($('<div class="stars"></div>'));
             $(box)
                 .find(".stars")
                 .text(hotel[i].stars_symbol);
@@ -279,10 +289,10 @@ $(function() {
                 .text(hotel[i].quality);
             $(box)
                 .find(".nr_reviews")
-                .text(hotel[i].nr_reviews);
+                .text(hotel[i].nr_reviews + " reviews");
             $(box)
-                .find(".score")
-                .text(hotel[i].score);
+                .find(".score_value")
+                .text(hotel[i].score.toFixed(1));
             $(box)
                 .find(".district")
                 .text(hotel[i].district);
@@ -294,7 +304,10 @@ $(function() {
                 .text(hotel[i].city);
             $(box)
                 .find(".pick_score")
-                .text(hotel[i].pick_score);
+                .text(Math.round(hotel[i].pick_score) + "%");
+            $(box)
+                .find("meter")
+                .attr("value", hotel[i].pick_score);
             $(box)
                 .find(".room_name")
                 .text(hotel[i].room_name);
@@ -324,15 +337,58 @@ $(function() {
 
 // JUST JAVASCRIPT
 
-// 10) fix image error
+// 9) replace non-existant hotel photo
 function image_error(image) {
-    image.onerror = "";
+    image_types = ["a", "ro", "r", "f", "l", "ba", "w", "p", "k", "t"];
+
+    id = $(image)
+        .attr("data-hotel-id")
+        .padStart(6, "0");
+    index = parseInt($(image).attr("data-index")) + 1;
+    type_index = parseInt($(image).attr("data-type-index"));
+
+    $(image).attr("data-index", index);
+
+    index_string = String(index).padStart(3, "0");
+
     image.src =
-        "http://photos.hotelbeds.com/giata/bigger/36/363373/363373a_hb_ro_008.jpg";
+        "http://photos.hotelbeds.com/giata/bigger/" +
+        id.substring(0, 2) +
+        "/" +
+        id +
+        "/" +
+        id +
+        "a_hb_" +
+        image_types[type_index] +
+        "_" +
+        index_string +
+        ".jpg";
+
+    if (index == 2) {
+        type_index = type_index + 1;
+        index = 0;
+        $(image).attr("data-index", index);
+        $(image).attr("data-type-index", type_index);
+    }
+
+    if (type_index == image_types.length) {
+        $.ajax({
+            url: "cover_image",
+            method: "GET",
+            data: {
+                hotel_id: $(image).attr("data-hotel-id")
+            },
+            success: function(res) {
+                image.src = res;
+            }
+        });
+        image.onerror = "";
+        console.log("laravel image");
+    }
     return true;
 }
 
-// 11) Google Maps
+// 10) Google Maps
 
 // Map options
 var options = {

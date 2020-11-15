@@ -8,7 +8,7 @@ html {
     --main-color-light: #008c6c;
     --secondary-color: #c6c013;
     --main-color-rgb: 0, 87, 67;
-    --max_internal_width: 1125px;
+    --max_internal_width: 1165px;
     --min-width: 320px;
 }
 
@@ -168,29 +168,25 @@ text-decoration: none;
 }
 
 .internal_wrapper {
-    width: var(--max_internal_width);
-    overflow: auto;
+    max-width: var(--max_internal_width);
     margin: 0px auto;
+    display: flex;
+    padding: 15px 20px;
 }
 
-.left {
-    float: left;
-    padding: 10px 5px;
+.left_content {
     width: 265px;
 }
 
-.right {
-    position: relative;
-    padding: 18px 18px;
-    float: left;
-    width: calc(100% - 265px);
+.right_content {
+    margin-left:18px;
+    max-width: 860px;
+    flex:1;
 }
 
 .search {
     height: auto;
     width: auto;
-    margin: 0px, 12px;
-    margin-top: 5px;
     padding: 20px 20px;
     background-color: var(--secondary-color);
     border-radius: 4px;
@@ -265,10 +261,62 @@ text-decoration: none;
     background-color: var(--main-color);
 }
 
+.dates_wrapper{
+    flex: 0 0 auto;
+    position: relative;
+}
+
+.bar_box {
+    background-color: white;
+    border: 2px solid rgb(224, 224, 224);
+    border-radius: 8px;
+    color: #444;
+}
+
+.dates_input {
+    width: 100%;
+    height: 100%;
+    padding: 20px 0px 0px 45px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.icon_label {
+    position: absolute;
+    top: 33%;
+    left: 15px;
+    cursor:pointer;
+}
+
+.check_in, .check_out {
+    position: absolute;
+    top: 8px;
+    font-size: 14px;
+    cursor:pointer;
+}
+
+.check_in {
+    left: 47px;
+}
+
+.check_out {
+    left: 141px;
+}
+
+
+
+
+
+
+
+.daterangepicker{
+    width: fit-content !important;
+}
+
 @media (max-width:590px){
 
     .daterangepicker{
-        width:fit-content !important;
         font-size:13px !important;
         left: 50% !important;
         transform: translateX(-50%);

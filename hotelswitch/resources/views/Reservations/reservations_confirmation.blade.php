@@ -9,143 +9,141 @@
 @inject('MyLibrary', 'App\Libraries\MyLibrary')
 
 @section('content')
-<div class="internal">
-    <div class="internal_wrapper">
-        <div class='top'>
-            <div class='thank_you'> Thank you {{$r->first_name ?? 'John Doe'}}!</div>
-            <div class='congratulations'><i class="far fa-thumbs-up"></i>Congratulations! Your Booking is confirmed.
-            </div>
-            <ul class="fa-ul">
-                <li><i class="fa-li fa fa-check"></i>We sent you a confirmation email to
-                    <strong>{{$r->email ?? 'johndoe@gmail.com'}}</strong>
-                </li>
-                <li><i
-                        class="fa-li fa fa-check"></i><strong>{{$r['reservation']['booking']['hotel']['name'] ?? 'Royal Hotel'}}</strong>
-                    is
-                    expecting you on the
-                    <strong>{{isset($r) ? date('j \of F',strtotime($r['reservation']['booking']['hotel']['checkIn'])) : '11 of October'}}</strong>
-                </li>
-                <li><i class="fa-li fa fa-check"></i>You can contact the property directly by email to
-                    <strong>{{$h->email ?? 'info@royalhotel.com'}}</strong> or by
-                    phone to <strong>{{$h->phone ?? '123456789'}}</strong></li>
-            </ul>
-
-            <button class='print' onclick="window.print()"><i class="fas fa-print"></i>Print your reservation</button>
-
+<div class="confirmation_wrapper">
+    <div class='top'>
+        <div class='thank_you'> Thank you {{$r->first_name ?? 'John Doe'}}!</div>
+        <div class='congratulations'><i class="far fa-thumbs-up"></i>Congratulations! Your Booking is confirmed.
         </div>
-        <div class="hotel_wrapper">
-            <img src="http://photos.hotelbeds.com/giata/bigger/{{ $h->images[0]["path"]  ?? '36/363373/363373a_hb_a_001.jpg'}}"
-                alt="">
-            <div class="hotel_info">
-                <div class='hotel_name'>{{$r['reservation']['booking']['hotel']['name'] ?? 'Royal Hotel'}}
-                    <sup>{{ $h->stars_symbol ?? '★★★★★'}}</sup></div>
-                <div class="hotel_address"><i
-                        class="fas fa-map-marker-alt"></i>{{ $h->address ?? 'Rua John Doe 99, 1234-123 Lisboa'}}
+        <ul class="fa-ul">
+            <li><i class="fa-li fa fa-check"></i>We sent you a confirmation email to
+                <strong>{{$r->email ?? 'johndoe@gmail.com'}}</strong>
+            </li>
+            <li><i
+                    class="fa-li fa fa-check"></i><strong>{{$r['reservation']['booking']['hotel']['name'] ?? 'Royal Hotel'}}</strong>
+                is
+                expecting you on the
+                <strong>{{isset($r) ? date('j \of F',strtotime($r['reservation']['booking']['hotel']['checkIn'])) : '11 of October'}}</strong>
+            </li>
+            <li><i class="fa-li fa fa-check"></i>You can contact the property directly by email to
+                <strong>{{$h->email ?? 'info@royalhotel.com'}}</strong> or by
+                phone to <strong>{{$h->phone ?? '123456789'}}</strong></li>
+        </ul>
+
+        <button class='print' onclick="window.print()"><i class="fas fa-print"></i>Print your reservation</button>
+
+    </div>
+    <div class="hotel_wrapper">
+        <img src="http://photos.hotelbeds.com/giata/bigger/{{ $h->images[0]["path"]  ?? '36/363373/363373a_hb_a_001.jpg'}}"
+            alt="">
+        <div class="hotel_info">
+            <div class='hotel_name'>{{$r['reservation']['booking']['hotel']['name'] ?? 'Royal Hotel'}}
+                <sup>{{ $h->stars_symbol ?? '★★★★★'}}</sup></div>
+            <div class="hotel_address"><i
+                    class="fas fa-map-marker-alt"></i>{{ $h->address ?? 'Rua John Doe 99, 1234-123 Lisboa'}}
+            </div>
+            <div class="phone"><i class="fas fa-phone"></i>{{$h->phone ?? '123456789'}}</div>
+            <div class="email"><i class="fas fa-envelope"></i>{{$h->email ?? 'info@royalhotel.com'}}
+            </div>
+            <div class="dates_wrapper">
+                <div class="date_box">
+                    <span class="date_tittle">Check-in</span>
+                    <span
+                        class="date">{{isset($r) ? date('D j  M  Y',strtotime($r['reservation']['booking']['hotel']['checkIn'])) : 'Sun 11 Oct 2020'}}</span>
+                    <span class="hour">From {{substr($h->policies['Check-in and check-out'][0]??'15:00',-5)}}</span>
                 </div>
-                <div class="phone"><i class="fas fa-phone"></i>{{$h->phone ?? '123456789'}}</div>
-                <div class="email"><i class="fas fa-envelope"></i>{{$h->email ?? 'info@royalhotel.com'}}
-                </div>
-                <div class="dates_wrapper">
-                    <div class="date_box">
-                        <span class="date_tittle">Check-in</span>
-                        <span
-                            class="date">{{isset($r) ? date('D j  M  Y',strtotime($r['reservation']['booking']['hotel']['checkIn'])) : 'Sun 11 Oct 2020'}}</span>
-                        <span class="hour">From {{substr($h->policies['Check-in and check-out'][0]??'15:00',-5)}}</span>
-                    </div>
-                    <div class="divider"></div>
-                    <div class="date_box">
-                        <span class="date_tittle">Check-out</span>
-                        <span
-                            class="date">{{isset($r) ? date('D j  M  Y',strtotime($r['reservation']['booking']['hotel']['checkOut'])) :  'Thu 15 Oct 2020'}}</span>
-                        <span class="hour">Until
-                            {{substr($h->policies['Check-in and check-out'][1]??'11:00',-5)}}</span>
-                    </div>
+                <div class="divider"></div>
+                <div class="date_box">
+                    <span class="date_tittle">Check-out</span>
+                    <span
+                        class="date">{{isset($r) ? date('D j  M  Y',strtotime($r['reservation']['booking']['hotel']['checkOut'])) :  'Thu 15 Oct 2020'}}</span>
+                    <span class="hour">Until
+                        {{substr($h->policies['Check-in and check-out'][1]??'11:00',-5)}}</span>
                 </div>
             </div>
         </div>
+    </div>
 
-        <div class='reservations_details'>
-            <div class='detail'>
-                <span class='detail_tittle'>Reservation Number</span>
-                <span class='detail_content'>{{$r['reservation']['booking']['reference'] ?? 1122334455}}</span>
-            </div>
-            <div class='detail'>
-                <span class='detail_tittle'>Holder Name</span>
-                <span
-                    class='detail_content'>{{isset($r) ? $MyLibrary->titleCase($r['reservation']['booking']['holder']['name'] . " " . $r['reservation']['booking']['holder']['surname']) : 'Pedro Costa'}}</span>
-            </div>
-            <div class='detail'>
-                <span class='detail_tittle'>Number of Guests</span>
-                <span class='detail_content'>{{$h->adults_text ?? '2 adults' }}</span>
-            </div>
-            <div class='detail'>
-                <span class='detail_tittle'>Room Type</span>
-                <span class='detail_content'>1 x {{isset($r) ?$MyLibrary->titleCase($r['reservation']['booking']['hotel']['rooms'][0]['name']) : 'Double or Twin Room with Private Ensuite
+    <div class='reservations_details'>
+        <div class='detail'>
+            <span class='detail_tittle'>Reservation Number</span>
+            <span class='detail_content'>{{$r['reservation']['booking']['reference'] ?? 1122334455}}</span>
+        </div>
+        <div class='detail'>
+            <span class='detail_tittle'>Holder Name</span>
+            <span
+                class='detail_content'>{{isset($r) ? $MyLibrary->titleCase($r['reservation']['booking']['holder']['name'] . " " . $r['reservation']['booking']['holder']['surname']) : 'Pedro Costa'}}</span>
+        </div>
+        <div class='detail'>
+            <span class='detail_tittle'>Number of Guests</span>
+            <span class='detail_content'>{{$h->adults_text ?? '2 adults' }}</span>
+        </div>
+        <div class='detail'>
+            <span class='detail_tittle'>Room Type</span>
+            <span class='detail_content'>1 x {{isset($r) ?$MyLibrary->titleCase($r['reservation']['booking']['hotel']['rooms'][0]['name']) : 'Double or Twin Room with Private Ensuite
                     Bathroom'}}</span>
-            </div>
-            <div class='detail'>
-                <span class='detail_tittle'>Total length of stay</span>
-                <span class='detail_content'>{{$h->nights_text ?? '4 nights' }}</span>
-            </div>
-            <div class='detail'>
-                <span class='detail_tittle'>Check-in</span>
-                <span
-                    class='detail_content'>{{isset($r) ? date('D j  M  Y',strtotime($r['reservation']['booking']['hotel']['checkIn'])) : 'Sun 11 Oct 2020'}}</span>
-            </div>
-            <div class='detail'>
-                <span class='detail_tittle'>Check-out</span>
-                <span
-                    class='detail_content'>{{isset($r) ? date('D j  M  Y',strtotime($r['reservation']['booking']['hotel']['checkOut'])) :  'Thu 15 Oct 2020'}}</span>
-            </div>
-            <div class='detail'>
-                <span class='detail_tittle'>Cancellation Policy</span>
-                <span
-                    class='detail_content'>{{isset($r) ? $MyLibrary->cancellation_policy($r['reservation']['booking']['hotel']['rooms'][0]['rates'][0]['cancellationPolicies'][0]['from'])  : 'Non-refundable rate'}}:
-                    If cancelled, modified
-                    or in case of
-                    no-show, the total price of the reservation will not be refunded.</span>
-            </div>
-            @isset($r['special_requests'])
-            <div class='detail'>
-                <span class='detail_tittle'>Special requests</span>
-                <span class='detail_content'>{{$r['special_requests']}}</span>
-            </div>
-            @endisset
-            @if(!isset($r))
-            <div class='detail'>
-                <span class='detail_tittle'>Special requests</span>
-                <span class='detail_content'>If possible, we would a love a room in a top floor with a view. Thank
-                    you!</span>
-            </div>
-            @endisset
         </div>
+        <div class='detail'>
+            <span class='detail_tittle'>Total length of stay</span>
+            <span class='detail_content'>{{$h->nights_text ?? '4 nights' }}</span>
+        </div>
+        <div class='detail'>
+            <span class='detail_tittle'>Check-in</span>
+            <span
+                class='detail_content'>{{isset($r) ? date('D j  M  Y',strtotime($r['reservation']['booking']['hotel']['checkIn'])) : 'Sun 11 Oct 2020'}}</span>
+        </div>
+        <div class='detail'>
+            <span class='detail_tittle'>Check-out</span>
+            <span
+                class='detail_content'>{{isset($r) ? date('D j  M  Y',strtotime($r['reservation']['booking']['hotel']['checkOut'])) :  'Thu 15 Oct 2020'}}</span>
+        </div>
+        <div class='detail'>
+            <span class='detail_tittle'>Cancellation Policy</span>
+            <span
+                class='detail_content'>{{isset($r) ? $MyLibrary->cancellation_policy($r['reservation']['booking']['hotel']['rooms'][0]['rates'][0]['cancellationPolicies'][0]['from'])  : 'Non-refundable rate'}}:
+                If cancelled, modified
+                or in case of
+                no-show, the total price of the reservation will not be refunded.</span>
+        </div>
+        @isset($r['special_requests'])
+        <div class='detail'>
+            <span class='detail_tittle'>Special requests</span>
+            <span class='detail_content'>{{$r['special_requests']}}</span>
+        </div>
+        @endisset
+        @if(!isset($r))
+        <div class='detail'>
+            <span class='detail_tittle'>Special requests</span>
+            <span class='detail_content'>If possible, we would a love a room in a top floor with a view. Thank
+                you!</span>
+        </div>
+        @endisset
+    </div>
 
-        <div class='price_details'>
-            <div class='price'>
-                <span class='price_tittle'>1 x Double or Twin Room with Private Ensuite Bathroom</span>
-                <span class='price_content'>€
-                    {{isset($r) ? round($r['reservation']['booking']['hotel']['rooms'][0]['rates'][0]['sellingRate']/1.06,2) : '54.57'}}</span>
-            </div>
-            <div class='price'>
-                <span class='price_tittle'>6% VAT Included</span>
-                <span class='price_content'>€
-                    {{isset($r) ? round($r['reservation']['booking']['hotel']['rooms'][0]['rates'][0]['sellingRate']/1.06*0.06,2) : '3.27'}}</span>
-            </div>
-            <div class='price total'>
-                <span class='price_tittle'>Total Price</span>
-                <span class='price_content'>€
-                    {{isset($r) ? $r['reservation']['booking']['hotel']['rooms'][0]['rates'][0]['sellingRate'] : '57.84'}}</span>
-            </div>
-            <div class="price_info">The full amount of the reservation was already paid and the booking is confirmed.
-            </div>
-            <div class="price_info">Please note that this is a non-refundable reservation and if cancelled, modified or
-                in case of no-show, the total price of the reservation will not be refunded.</div>
-            <div class="price_info">On arrival to the property it is due the city tourist
-                tax of 2€ per person per night which is not included in the price.</div>
-            <div class="price_info">All Special Requests are subject to availability and additional
-                charges may apply.</div>
-            <div class="price_info">Guests are required to show identification upon check-in.</div>
+    <div class='price_details'>
+        <div class='price'>
+            <span class='price_tittle'>1 x Double or Twin Room with Private Ensuite Bathroom</span>
+            <span class='price_content'>€
+                {{isset($r) ? round($r['reservation']['booking']['hotel']['rooms'][0]['rates'][0]['sellingRate']/1.06,2) : '54.57'}}</span>
         </div>
+        <div class='price'>
+            <span class='price_tittle'>6% VAT Included</span>
+            <span class='price_content'>€
+                {{isset($r) ? round($r['reservation']['booking']['hotel']['rooms'][0]['rates'][0]['sellingRate']/1.06*0.06,2) : '3.27'}}</span>
+        </div>
+        <div class='price total'>
+            <span class='price_tittle'>Total Price</span>
+            <span class='price_content'>€
+                {{isset($r) ? $r['reservation']['booking']['hotel']['rooms'][0]['rates'][0]['sellingRate'] : '57.84'}}</span>
+        </div>
+        <div class="price_info">The full amount of the reservation was already paid and the booking is confirmed.
+        </div>
+        <div class="price_info">Please note that this is a non-refundable reservation and if cancelled, modified or
+            in case of no-show, the total price of the reservation will not be refunded.</div>
+        <div class="price_info">On arrival to the property it is due the city tourist
+            tax of 2€ per person per night which is not included in the price.</div>
+        <div class="price_info">All Special Requests are subject to availability and additional
+            charges may apply.</div>
+        <div class="price_info">Guests are required to show identification upon check-in.</div>
     </div>
 </div>
 @endsection

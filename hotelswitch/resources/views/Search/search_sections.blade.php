@@ -171,31 +171,38 @@
     <div class="filter_section">
         <div class="section_title">Minimum Score</div>
         <div class="section_item">
-            <input type="radio" id="wonderful" class="check_box" name="minimum_score" value="9" />
+            <input type="radio" id="exceptional" class="check_box" name="minimum_score" value="5" />
             <div class="check_box"></div>
             <div class="label_wrapper">
-                <label for="wonderful">Wonderful: 9</label>
+                <label for="exceptional">Exceptional: 5.0</label>
             </div>
         </div>
         <div class="section_item">
-            <input type="radio" id="very_good" class="check_box" name="minimum_score" value="8" />
+            <input type="radio" id="wonderful" class="check_box" name="minimum_score" value="4.5" />
             <div class="check_box"></div>
             <div class="label_wrapper">
-                <label for="very_good">Very Good: 8</label>
+                <label for="wonderful">Wonderful: 4.5</label>
             </div>
         </div>
         <div class="section_item">
-            <input type="radio" id="good" class="check_box" name="minimum_score" value="7" />
+            <input type="radio" id="very_good" class="check_box" name="minimum_score" value="4" />
             <div class="check_box"></div>
             <div class="label_wrapper">
-                <label for="good">Good: 7</label>
+                <label for="very_good">Very Good: 4.0</label>
             </div>
         </div>
         <div class="section_item">
-            <input type="radio" id="pleasant" class="check_box" name="minimum_score" value="6" />
+            <input type="radio" id="good" class="check_box" name="minimum_score" value="3.5" />
             <div class="check_box"></div>
             <div class="label_wrapper">
-                <label for="pleasant">Pleasant: 6</label>
+                <label for="good">Good: 3.5</label>
+            </div>
+        </div>
+        <div class="section_item">
+            <input type="radio" id="pleasant" class="check_box" name="minimum_score" value="3" />
+            <div class="check_box"></div>
+            <div class="label_wrapper">
+                <label for="pleasant">Pleasant: 3.0</label>
             </div>
         </div>
     </div>
@@ -203,13 +210,11 @@
 @endsection
 
 @section('right_search')
-<div id=search_page class="right">
+<div id=search_page class="right_content">
     <div class="search_top">
         <div class="destination_header_wrapper">
             <span class="destination_header">{{$m->destination ?? 'Lisbon, Portugal'}} </span>
-        </div>
-        <div class="sort_by">
-            <span>Sort by:</span>
+            <span class="sort_by">Sort by:</span>
         </div>
         <div class="map_wrapper" id="map_wrapper">
             <div class="position_icon">
@@ -221,25 +226,35 @@
         </div>
     </div>
     <div class="sort_wrapper">
-        <div class="sort_item" name="top_picks" value=1>
-            Our Top Picks
-            <i class="fas fa-arrow-up"></i>
+        <div class="sort_item" name="top_picks" value=-1>
+            <div class="sort_item_wrapper">
+                <span>Top Bargains</span>
+                <i class="fas fa-arrow-down"></i>
+            </div>
         </div>
         <div class="sort_item sort_selected" name="minRate" value=1>
-            Price
-            <i class="fas fa-arrow-up"></i>
+            <div class="sort_item_wrapper">
+                <span>Price</span>
+                <i class="fas fa-arrow-up"></i>
+            </div>
         </div>
         <div class="sort_item" name="categoryCode" value=-1>
-            Stars
-            <i class="fas fa-arrow-down"></i>
+            <div class="sort_item_wrapper">
+                <span>Stars</span>
+                <i class="fas fa-arrow-down"></i>
+            </div>
         </div>
         <div class="sort_item" name="distance_center" value=1>
-            Distance center
-            <i class="fas fa-arrow-up"></i>
+            <div class="sort_item_wrapper">
+                <span>Distance center</span>
+                <i class="fas fa-arrow-up"></i>
+            </div>
         </div>
         <div class="sort_item" name="score" value=-1>
-            Review Score
-            <i class="fas fa-arrow-down"></i>
+            <div class="sort_item_wrapper">
+                <span>Review Score</span>
+                <i class="fas fa-arrow-down"></i>
+            </div>
         </div>
     </div>
     <div class="hotel_boxes_wrapper" id="hotel_boxes_wrapper">
@@ -251,60 +266,44 @@
         @for ($i = 0; $i < $nr_results ; $i++) <div class="hotelbox" id="hotelbox">
             <div class="hotel_photo">
                 <img src={{$hotel[$i]->search_cover_photo ?? './images/search/hotel_cover.jpg'}}
-                    class="search_cover_photo" alt="hotel_cover" onerror="image_error(this);" />
+                    class="search_cover_photo loading_image" alt="hotel_cover" data-hotel-id={{$hotel[$i]->id}}
+                    data-index=1 data-type-index=0 onerror=image_error(this) />
             </div>
             <div class="hotel_content">
                 <div class="hotel_head">
                     <a class="link_name"
                         href='hotel?hotel_id={{$hotel[$i]->id ?? ''}}&m={{isset($m) ? json_encode($m) :''}}'
                         target="_blank">
-                        <span class="name">{{$hotel[$i]->name ?? 'Hotel Royal Sample'}}</span>
+                        <div class="name">{{$hotel[$i]->name ?? 'Hotel Royal Sample'}} <div class="stars">
+                                {{$hotel[$i]->stars_symbol ?? '★★★★★'}}</div>
+                        </div>
                     </a>
-                    <div class="stars_wrapper">
-                        <span class="stars">{{$hotel[$i]->stars_symbol ?? '★★★★★'}}</span>
-                    </div>
-                </div>
-                <div class="hotel_review">
-                    <div class="quality_number">
-                        <div class="quality_wrapper">
+                    <div class="quality_score_wrapper">
+                        <div class="quality_nr_reviews">
                             <span class="quality">{{$hotel[$i]->quality ?? 'Good'}}</span>
+                            <span class="nr_reviews">{{$hotel[$i]->nr_reviews ?? '1,654'}} reviews</span>
                         </div>
-                        <div class="nr_reviews_wrapper">
-                            <span class="nr_reviews">{{$hotel[$i]->nr_reviews ?? '1,654'}}</span>
-                            <span>reviews</span>
+                        <div class="score_wrapper">
+                            <img src={{asset("images/search/tripadvisor_logo.png")}} alt="tripadvisor_logo">
+                            <span class="score"><strong
+                                    class="score_value">{{number_format($hotel[$i]->score,1)?? '4.5'}}</strong>/5.0</span>
                         </div>
-                    </div>
-                    <div class="score_wrapper">
-                        <span class="score">{{$hotel[$i]->score ?? '9.5'}}</span>
                     </div>
                 </div>
                 <div class="address_wrapper">
-                    <div class="address">
-                        <span class="district">{{$hotel[$i]->district ?? ''}}</span>
-                        <span class="city">{{$hotel[$i]->city ?? 'City'}}</span>
-                    </div>
-                    <div class="address_separator">
-                        <span>.</span>
-                    </div>
-                    <div class="distance_center_wrapper">
-                        <span class="distance_center">{{$hotel[$i]->distance_center ??  '250m from center'}}</span>
-                        @isset($hotel[$i]->pick_score)
-                        <span class="pick_score">{{$hotel[$i]->pick_score}}</span>
-                        @endisset
-
-                    </div>
+                    <span class="district">{{$hotel[$i]->district ?? ''}}</span>
+                    <span class="city">{{$hotel[$i]->city ?? 'City'}}</span>
+                    <span class="address_separator">.</span>
+                    <span class="distance_center"> {{$hotel[$i]->distance_center ??  '250m from center'}}</span>
                 </div>
                 <div class="hotel_room">
                     <div class="room_title">
-                        <div class="room_name_wrapper">
-                            <span class="room_name">{{$hotel[$i]->room_name ?? 'Standard Double Room'}}</span>
-                        </div>
-                        <div class="room_separator">
-                            <span>-</span>
-                        </div>
-                        <div class="room_guests_icon">
-                            <img src="./images/search/guest_icon.png" alt="guest_icon" />
-                            <img src="./images/search/guest_icon.png" alt="guest_icon" />
+                        <div class="room_name">{{$hotel[$i]->room_name ?? 'Standard Double Room'}}
+                            <div class="room_guests_icon">
+                                <span class="room_separator">-</span>
+                                <img class=guest_icon src="./images/search/guest_icon.png" alt="guest_icon" />
+                                <img class=guest_icon src="./images/search/guest_icon.png" alt="guest_icon" />
+                            </div>
                         </div>
                         <div class="nights_guests">
                             <span class="nights">{{$m->nights_text ?? '2 nights'}}</span>
@@ -312,26 +311,17 @@
                             <span class="adults">{{$m->adults_text ?? '2 adults'}}</span>
                         </div>
                     </div>
-                    <div class="bed_type_wrapper">
-                        <span class="bed_type">{{$hotel[$i]->bed_type ?? '1 Double Bed'}}</span>
-                    </div>
-                    <div class="policy_price_wrapper">
-                        <div class="room_policy">
-                            <div class="cancellation_policy_wrapper">
+                    <div class="rate_wrapper">
+                        <div class="rate_left">
+                            <span class="bed_type">{{$hotel[$i]->bed_type ?? '1 Double Bed'}}</span>
+                            <div class="room_policy">
                                 <span
                                     class="cancellation_policy">{{$hotel[$i]->cancellation_policy ?? 'Free cancellation'}}</span>
-                            </div>
-                            <div class="policy_separator">
-                                <span>.</span>
-                            </div>
-                            <div class="payment_policy_wrapper">
-                                <span
-                                    class="payment_policy">{{$hotel[$i]->payment_policy ?? 'No prepayment needed'}}</span>
+                                <span class="policy_separator"></span>
+                                <span class="payment_policy">{{$hotel[$i]->payment_policy ?? ''}}</span>
                             </div>
                         </div>
-                        <div class="price_wrapper">
-                            <span class="price">{{$hotel[$i]->price ?? '€99'}}</span>
-                        </div>
+                        <span class="price">{{$hotel[$i]->price ?? '€99'}}</span>
                     </div>
                 </div>
                 <div class="hotel_book">
@@ -341,6 +331,14 @@
                     </a>
                 </div>
             </div>
+            @isset($hotel[$i]->pick_score)
+            <div class="deal_wrapper">
+                <meter min="0" low="33" high="66" max="100" optimum="100" value={{$hotel[$i]->pick_score}}></meter>
+                <span class="pick_tittle">Bargain Score:</span>
+                <span class="pick_score">{{round($hotel[$i]->pick_score)}}%</span>
+
+            </div>
+            @endisset
 
     </div>
     @endfor
