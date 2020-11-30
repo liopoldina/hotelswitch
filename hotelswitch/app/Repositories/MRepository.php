@@ -24,8 +24,8 @@ class MRepository{
         $m->check_in = strtotime($date_range_array[0]);
         $m->check_out = strtotime($date_range_array[2]);
         $m->nights = ($m->check_out - $m->check_in)/86400;
-        $m->check_in = date("yy-m-d", $m->check_in );
-        $m->check_out = date("yy-m-d", $m->check_out );
+        $m->check_in = date("Y-m-d", $m->check_in );
+        $m->check_out = date("Y-m-d", $m->check_out );
 
         if ($m->nights==1) {$m->nights_text = $m->nights." night";}
         else  {$m->nights_text = $m->nights." nights";}

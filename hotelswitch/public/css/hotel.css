@@ -632,6 +632,7 @@
 
 .update_popup {
     position: absolute;
+    width: fit-content;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
@@ -711,45 +712,47 @@
     margin-top: 20px;
 }
 
-.search_bar form {
+.search_bar_update form {
     display: flex;
 }
 
-.bar_box {
+.bar_box_update {
     background-color: white;
     border: 2px solid rgb(224, 224, 224);
     border-radius: 8px;
     color: #444;
 }
 
-.dates_wrapper,
-.guests_wrapper {
+.dates_wrapper_update,
+.guests_wrapper_update {
     margin-right: 40px;
     position: relative;
+    height:60px;
 }
 
-
-.dates_wrapper i {
+.icon_label_update{
     position: absolute;
     top: 33%;
     left: 15px;
+    cursor:pointer;
 }
 
-.dates_wrapper span {
+.check_in_update, .check_out_update {
     position: absolute;
     top: 8px;
     font-size: 14px;
+    cursor:pointer;
 }
 
-.check_in {
+.check_in_update {
     left: 47px;
 }
 
-.check_out {
+.check_out_update {
     left: 141px;
 }
 
-.dates_input {
+.dates_input_update {
     width: 245px;
     height: 100%;
     padding: 20px 0px 0px 45px;
@@ -758,32 +761,29 @@
     cursor: pointer;
 }
 
-.guests_wrapper {
+.guests_wrapper_update {
     cursor: pointer;
     padding: 6px 20px 6px 55px;
+    flex-shrink: 0;
 }
 
-.guests_wrapper i {
+.guests_wrapper_update i {
     position: absolute;
     top: 33%;
     left: 15px;
 }
 
-.guests_wrapper span {
-    display: block;
-}
-
-.box_tittle {
+.box_tittle_update {
     font-size: 14px;
     margin-bottom: 5px;
 }
 
-.box_content {
+.box_content_update {
     font-size: 16px;
     font-weight: bold;
 }
 
-.bar_button {
+.bar_button_update {
     background-color: var(--main-color-light);
     font-size: 22px;
     color: white;
@@ -794,7 +794,7 @@
     margin-left: auto;
 }
 
-.bar_button:hover {
+.bar_button_update:hover {
     background-color: var(--main-color);
 }
 
@@ -1095,13 +1095,6 @@
     font-size: 16px;
     white-space: nowrap;
 }
-
-
-
-
-
-
-
 
 .hp_facilities {
     margin-top: 15px;

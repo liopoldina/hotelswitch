@@ -4,82 +4,38 @@
     <div class="search">
         <div class="search_wrapper">
             <div class="search_title">Search</div>
-            <div class="search_label">
-                <span>Destination</span>
-            </div>
-            <div class="search_input_destination search_input">
-                <input type="text" id="destination" name="destination" value='{{$m->destination ?? "" }}' required />
+            <div class="destination_wrapper input_wrapper">
+                <label class="icon_label" for="destination"> <i class="fas fa-map-marker-alt fa-lg"
+                        aria-hidden="true"></i></label>
+                <input type="text" id="destination" name="destination" value='{{$m->destination ?? "" }}'
+                    placeholder="where are you travelling to?" class="ui-autocomplete-input bar_box destination_input"
+                    autocomplete="off" required="">
                 <input type="hidden" id="lat" name="lat" value='{{$m->lat ?? "" }}' />
                 <input type="hidden" id="lon" name="lon" value='{{$m->lon ?? "" }}' />
             </div>
-            <div class="search_label">
-                <label for="check-in">Check-in/Check-out</label>
-            </div>
-            <div class="search_input">
-                <input type="text" id="date_range" name="date_range" value='{{$m->date_range ?? "" }}' required
-                    readonly />
-            </div>
-            {{-- <div class="dates_wrapper">
+            <div class="dates_wrapper input_wrapper">
                 <label class="icon_label" for="date_range"><i class="fas fa-calendar-alt fa-lg" aria-hidden="true"></i>
                 </label>
                 <input type="text" id="date_range" name="date_range" class="bar_box dates_input"
                     value='{{$m->date_range ?? "" }}' required readonly />
-            <label class="check_in" for="date_range">Check-in</label>
-            <label class="check_out" for="date_range">Check-out</label>
-        </div> --}}
+                <label class="check_in" for="date_range">Check-in</label>
+                <label class="check_out" for="date_range">Check-out</label>
+            </div>
 
-        <div id="nights">{{isset($m) ? $m->nights_text . ' stay' : '1 night stay'}}</div>
+            <div id="nights">{{isset($m) ? $m->nights_text . ' stay' : '1 night stay'}}</div>
 
-        <div class="search_select">
-            <select type="text" id="adults" name="adults" required>
-                <option name="adults" value="1" id="1_adult" @isset($m->
-                    adults){{ $m->adults == 1 ? 'selected' : ''}}@endisset>
-                    1 adult
-                </option>
-                <option name="adults" value="2" id="2_adults" @isset($m->
-                    adults){{ $m->adults == 2 ? 'selected' : ''}}@endisset>
-                    2 adults
-                </option>
-                <option name="adults" value="3" id="3_adults" @isset($m->
-                    adults){{ $m->adults == 3 ? 'selected' : ''}}@endisset>
-                    3 adults
-                </option>
-                <option name="adults" value="4" id="4_adults" @isset($m->
-                    adults){{ $m->adults == 4 ? 'selected' : ''}}@endisset>
-                    4 adults
-                </option>
-            </select>
+            <div class=" guests_wrapper bar_box">
+                <label class="icon_label"> <i class="fas fa-user-friends fa-lg" aria-hidden="true"></i></label>
+                <span class="box_tittle">Guests</span>
+                <span class="box_content">1 room, 1 adults </span>
+                <input type="hidden" id="adults" name="adults" value="2" required="">
+                <input type="hidden" id="children" name="children" value="0" required="">
+                <input type="hidden" id="rooms" name="rooms" value="1" required="">
+            </div>
+            <div class="search_button">
+                <button type="submit">Search</button>
+            </div>
         </div>
-        <div class="search_select">
-            <select type="text" id="children" name="children" required>
-                <option value="0" id="no_children" @isset($m->
-                    children){{ $m->children == 0 ? 'selected' : ''}}@endisset>
-                    No children
-                </option>
-                <option value="1" id="1_child" @isset($m->
-                    children){{ $m->children == 1 ? 'selected' : ''}}@endisset>
-                    1 child
-                </option>
-                <option value="2" id="2_children" @isset($m->
-                    children){{ $m->children == 2 ? 'selected' : ''}}@endisset>
-                    2 children
-                </option>
-            </select>
-            <select type="text" id="rooms" name="rooms" required>
-                <option value="1" id="1_room" @isset($m->
-                    rooms){{ $m->rooms == 1 ? 'selected' : ''}}@endisset>
-                    1 room
-                </option>
-                <option value="2" id="2_rooms" @isset($m->
-                    rooms){{ $m->rooms == 2 ? 'selected' : ''}}@endisset>
-                    2 rooms
-                </option>
-            </select>
-        </div>
-        <div class="search_button">
-            <button type="submit">Search</button>
-        </div>
-    </div>
     </div>
 </form>
 @endsection

@@ -11,7 +11,7 @@ $(function() {
 
     // 2) Open and close map
     //open map
-    $(".map_wrapper").click(function() {
+    $(".map_wrapper, .map_wrapper_mobile").click(function() {
         $("#map_overlay").addClass("display_map_overlay");
         $("body").css("overflow", "hidden"); //disable scroll
     });
@@ -84,27 +84,28 @@ $(function() {
     });
 
     // 5) Sort
-    $(".sort_item", this).click(function() {
+    $(".sort_item, .sort_item_mobile", this).click(function() {
+        // mobile
+
+        setTimeout(function() {
+            $(".sort_wrapper_mobile").css("display", "none");
+        }, 500);
+
+        //desktop
         if ($(this).hasClass("sort_selected")) {
             m.filters.sort_order = -1 * m.filters.sort_order;
-            $(this)
-                .children()
-                .children("i")
-                .removeClass();
             if (m.filters.sort_order == 1) {
-                $(this)
-                    .children()
-                    .children("i")
-                    .addClass("fas fa-arrow-up");
+                $("[name=" + $(this).attr("name") + "]")
+                    .find("i")
+                    .attr("class", "fas fa-arrow-up");
             } else {
-                $(this)
-                    .children()
-                    .children("i")
-                    .addClass("fas fa-arrow-down");
+                $("[name=" + $(this).attr("name") + "]")
+                    .find("i")
+                    .attr("class", "fas fa-arrow-down");
             }
         } else {
-            $(".sort_item").removeClass("sort_selected");
-            $(this).addClass("sort_selected");
+            $(".sort_selected").removeClass("sort_selected");
+            $("[name=" + $(this).attr("name") + "]").addClass("sort_selected");
             m.filters.sort_order = $(this).attr("value");
         }
 
@@ -113,10 +114,42 @@ $(function() {
         results("filter");
     });
 
-    // 6) Filter
+    // 6) Sort Mobile
+    $(".sort_mobile", this).click(function(e) {
+        if (
+            !$(e.target).hasClass("sort_item_mobile") &&
+            !$(e.target)
+                .parent()
+                .hasClass("sort_item_mobile")
+        ) {
+            if ($(".sort_wrapper_mobile").css("display") == "none") {
+                $(".sort_wrapper_mobile").css("display", "block");
+            } else {
+                $(".sort_wrapper_mobile").css("display", "none");
+            }
+        }
+    });
+
+    //hide if click outside
+    $(document).click(function(e) {
+        var dropdown = $(".mobile_bar_item");
+        var container = $(".sort_wrapper_mobile");
+
+        // if the target of the click isn't the container nor a descendant of the container
+        if (
+            !container.is(e.target) &&
+            container.has(e.target).length === 0 &&
+            !dropdown.is(e.target) &&
+            dropdown.has(e.target).length === 0
+        ) {
+            $(".sort_wrapper_mobile").css("display", "none");
+        }
+    });
+
+    // 7) Filter
     var template = $("#hotelbox").clone();
     // get value of selected filter
-    $(".check_box").click(function() {
+    $(".check_box, .show_results button").click(function() {
         m.filters.price_range = {};
         m.filters.price_range.minimum_price = $("#slider-range").slider(
             "values",
@@ -164,10 +197,21 @@ $(function() {
         results("filter");
     });
 
-    // 7) Pagination
+    //Filter Mobile
+    $(".filter_mobile, .filter_close, .show_results button").click(function() {
+        if ($(".filter_wrapper").css("display") == "none") {
+            $("body").addClass("no_scroll");
+            $(".filter_wrapper").addClass("show");
+        } else {
+            $(".filter_wrapper").removeClass("show");
+            $("body").removeClass("no_scroll");
+        }
+    });
+
+    // 8) Pagination
     $(window).scroll(function() {
         if (
-            Math.ceil($(window).scrollTop() + $(window).height()) >=
+            Math.ceil($(window).scrollTop() + $(window).outerHeight()) >=
             $(document).height()
         ) {
             // call function get_page_results
@@ -178,7 +222,7 @@ $(function() {
         }
     });
 
-    // 8) Function results
+    // 9) Function results
     function results(mode) {
         loading(mode, "start");
 
@@ -337,7 +381,7 @@ $(function() {
 
 // JUST JAVASCRIPT
 
-// 9) replace non-existant hotel photo
+// 10) replace non-existant hotel photo
 function image_error(image) {
     image_types = ["a", "ro", "r", "f", "l", "ba", "w", "p", "k", "t"];
 
@@ -388,13 +432,16 @@ function image_error(image) {
     return true;
 }
 
-// 10) Google Maps
+// 11) Google Maps
 
 // Map options
 var options = {
-    center: { lat: 38.715, lng: -9.142685 },
+    center: { lat: parseFloat(m.lat), lng: parseFloat(m.lon) },
     zoom: 15,
-    gestureHandling: "greedy" //no need to press ctrl to mouse zoom
+    gestureHandling: "greedy", //no need to press ctrl to mouse zoom
+    mapTypeControl: false,
+    streetViewControl: false,
+    fullscreenControl: false
 };
 // New map
 function initMap() {

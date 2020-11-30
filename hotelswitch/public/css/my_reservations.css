@@ -1,8 +1,8 @@
 .container {
-    min-height: 100vh;
     min-width: var(--min_width);
     padding: 50px;
     background-color: #f8fafc;
+    flex:1;
 }
 
 .wrapper {

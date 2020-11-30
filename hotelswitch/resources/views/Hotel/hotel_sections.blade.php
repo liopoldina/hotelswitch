@@ -117,7 +117,7 @@
         <div class="hp_head_book">
             <div class="hp_nightly_price">
                 <span class="hp_header_price">€
-                    {{isset($h) ? intval($h->offer[0]["rates"][0]["sellingRate"])/$h->nights : '99' }}</span>
+                    {{isset($h) ? round(intval($h->offer[0]["rates"][0]["sellingRate"])/$h->nights) : '99' }}</span>
             </div>
             <div class="hp_head_nightly_text">
                 <span>nightly price per room</span>
@@ -811,26 +811,28 @@
 <div class="update_overlay" id=update_overlay>
     <div class="update_popup" id="update_popup">
         <div class="update_tittle">Change your search</div>
-        <div class="search_bar">
+        <div class="search_bar_update">
             <form action="hotel" method="get">
                 @csrf
                 <input type="hidden" name="hotel_id" value={{$m->hotel_id}}>
-                <div class="dates_wrapper">
-                    <i class="fas fa-calendar-alt fa-lg" aria-hidden="true"></i>
-                    <input type="text" id="update_range" name="date_range" class="bar_box dates_input"
+                <div class="dates_wrapper_update">
+                    <label class="icon_label_update" for="update_range"><i class="fas fa-calendar-alt fa-lg"
+                            aria-hidden="true"></i>
+                    </label>
+                    <input type="text" id="update_range" name="date_range" class="bar_box_update dates_input_update"
                         value='{{$m->date_range ?? "" }}' required="">
-                    <span class="check_in">Check-in</span>
-                    <span class="check_out">Check-out</span>
+                    <label for="update_range" class="check_in_update">Check-in</label>
+                    <label for="update_range" class="check_out_update">Check-out</label>
                 </div>
-                <div class="guests_wrapper bar_box">
+                <div class="guests_wrapper_update bar_box_update">
                     <i class="fas fa-user-friends fa-lg" aria-hidden="true"></i>
-                    <span class="box_tittle">Guests</span>
-                    <span class="box_content">1 room, 2 adults </span>
+                    <div class="box_tittle_update">Guests</div>
+                    <div class="box_content_update">1 room, 2 adults </div>
                     <input type="hidden" name="adults" value="2" required="">
                     <input type="hidden" name="children" value="0" required="">
                     <input type="hidden" name="rooms" value="1" required="">
                 </div>
-                <button class="bar_button" type="submit">Search</button>
+                <button class="bar_button_update" type="submit">Search</button>
             </form>
         </div>
         <div class="update_close">
