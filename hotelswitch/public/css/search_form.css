@@ -1,17 +1,17 @@
-.internal_wrapper{
+.internal_wrapper {
     flex-wrap: wrap;
 }
 
-.left_content{
-    flex:1;
-    max-width:265px;
-    min-width:250px;
+.left_content {
+    flex: 1;
+    max-width: 265px;
+    min-width: 250px;
 }
 
-.right_content{
-    flex:2.5;
+.right_content {
+    flex: 2.5;
     position: relative;
-    margin-top:3px;
+    margin-top: 3px;
 }
 
 .search {
@@ -24,14 +24,14 @@
 
 .search_wrapper {
     font-size: 14px;
-    display:flex;
+    display: flex;
     flex-direction: column;
 }
 
 .search_title {
     font-size: 25px;
     width: fit-content;
-    color:white;
+    color: white;
 }
 
 .search_label {
@@ -57,11 +57,10 @@
     cursor: auto;
 }
 
-
 #nights {
     margin-top: 3px;
     margin-left: 3px;
-    color:white;
+    color: white;
 }
 
 .search_button {
@@ -72,7 +71,7 @@
     width: 100%;
     font-size: 22px;
     background-color: var(--main-color-light);
-    color:white;
+    color: white;
     border: none;
     padding: 8px 10px;
     border-radius: 4px;
@@ -83,28 +82,22 @@
     filter: brightness(110%);
 }
 
-.input_wrapper, .guests_wrapper{
-    margin-top:12px;
+.input_wrapper,
+.guests_wrapper {
+    margin-top: 12px;
     position: relative;
-}
-
-.destination_wrapper{
-}
-
-.dates_wrapper{
 }
 
 .guests_wrapper {
     height: 45px;
     cursor: pointer;
     padding: 6px 20px 6px 40px;
-    background-color:white;
+    background-color: white;
 }
 
 .guests_wrapper > span {
     display: block;
 }
-
 
 .bar_box {
     border: 2px solid rgb(224, 224, 224);
@@ -114,8 +107,8 @@
 
 .destination_input {
     width: 100%;
-    height:45px;
-    padding-left:30px;
+    height: 45px;
+    padding-left: 30px;
     font-size: 15px;
 }
 
@@ -130,18 +123,19 @@
 }
 
 .icon_label {
-    font-size:12px;
+    font-size: 12px;
     position: absolute;
     top: 33%;
     left: 10px;
-    cursor:pointer;
+    cursor: pointer;
 }
 
-.check_in, .check_out {
+.check_in,
+.check_out {
     position: absolute;
     top: 4px;
     font-size: 14px;
-    cursor:pointer;
+    cursor: pointer;
 }
 
 .check_in {
@@ -152,122 +146,127 @@
     left: 121px;
 }
 
-@media (max-width:675px){
-    .internal_wrapper{
-        padding:15px;
+@media (max-width: 675px) {
+    .internal_wrapper {
+        padding: 15px;
     }
-    .left_content{
-        flex-basis:100%;
-        max-width:none;
+    .left_content {
+        flex-basis: 100%;
+        max-width: none;
     }
-    .right_content{
-        flex-basis:100%;
-        margin-left:0px;
+    .right_content {
+        flex-basis: 100%;
+        margin-left: 0px;
     }
-    .mobile_bar{
-        display:flex;
+    .mobile_bar {
+        display: flex;
     }
-    .hp_location {
-        display:none;
+    .location {
+        display: none;
     }
-    .filter_wrapper{
-        display:none;
+    .filter_wrapper {
+        display: none;
         position: fixed;
         z-index: 2;
-        margin-top:0px;
-        top:0px;
-        left:50%;
-        transform:translateX(-50%);
-        border:none;
+        margin-top: 0px;
+        top: 0px;
+        left: 50%;
+        transform: translateX(-50%);
+        border: none;
         border-radius: 0px;
-        width:100%;
-        height:100%;
-        padding:0px;
+        width: 100%;
+        height: 100%;
+        padding: 0px;
     }
-    .filter_mobile_scroll{
+    .filter_mobile_scroll {
         overflow-y: auto;
     }
-    .filter_close{
-        display:block;
+    .filter_close {
+        display: block;
     }
-    .slider_range_wrapper, .ui-slider-handle {
-        cursor:default !important;
+    .slider_range_wrapper,
+    .ui-slider-handle {
+        cursor: default !important;
     }
-    .show_results{
-        display:flex;
+    .show_results {
+        display: flex;
         justify-content: center;
-        padding:8px 0px;
-        border-top:1px solid #bdbdbd;
+        padding: 8px 0px;
+        border-top: 1px solid #bdbdbd;
     }
-    .show_results > button{
-        background:var(--main-color);
+    .show_results > button {
+        background: var(--main-color);
         width: 80%;
-        border:none;
-        color:white;
-        padding:15px 0px;
-        border-radius:3px;
-        font-weight:bold;
-        font-size:15px;
+        border: none;
+        color: white;
+        padding: 15px 0px;
+        border-radius: 3px;
+        font-weight: bold;
+        font-size: 15px;
     }
-    .show{
-        display:flex;
+    .show {
+        display: flex;
     }
-    .no_scroll{
-        overflow:hidden;
+    .no_scroll {
+        overflow: hidden;
     }
-    .search_top, .sort_wrapper{
-        display:none;
+    .search_top,
+    .sort_wrapper {
+        display: none;
     }
-    .search{
-        padding:10px;
+    .search {
+        padding: 10px;
         min-width: 300px;
     }
-    .search_wrapper{
-        flex-direction:row;
+    .search_wrapper {
+        flex-direction: row;
         flex-wrap: wrap;
         justify-content: space-evenly;
     }
-    .destination_wrapper{
-        flex-basis:100%;
-        margin-top:0px;
+    .destination_wrapper {
+        flex-basis: 100%;
+        margin-top: 0px;
     }
     .ui-menu .ui-menu-item-wrapper {
-        padding: 7px 1em 7px .4em;
+        padding: 7px 1em 7px 0.4em;
         font-size: 18px;
-        }
-    .dates_wrapper, .guests_wrapper{
-        flex-basis:calc(50% - 5px);
     }
-    .dates_wrapper{
+    .dates_wrapper,
+    .guests_wrapper {
+        flex-basis: calc(50% - 5px);
+    }
+    .dates_wrapper {
         padding-right: 10px;
     }
-    .search_button{
-        flex-basis:100%;
+    .search_button {
+        flex-basis: 100%;
     }
-    .search_title, #nights{
-        display:none;
+    .search_title,
+    #nights {
+        display: none;
     }
     .search_button > button {
-        height:100%;
+        height: 100%;
     }
-    .map_left{
-        display:none;
+    .map_left {
+        display: none;
     }
-    .map_popup{
-        height:100%;
+    .map_popup {
+        height: 100%;
         width: 100%;
     }
-    .map_close{
+    .map_close {
         top: 5px;
         right: 5px;
     }
 }
 
-@media (max-width:480px){
-    .dates_wrapper, .guests_wrapper{
-        flex-basis:100%;
+@media (max-width: 480px) {
+    .dates_wrapper,
+    .guests_wrapper {
+        flex-basis: 100%;
     }
-    .dates_wrapper{
+    .dates_wrapper {
         padding-right: 0px;
     }
 }

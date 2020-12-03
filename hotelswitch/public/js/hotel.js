@@ -10,10 +10,10 @@ $(function() {
         } else {
             h.image_index++;
         }
-        $(".hp_min_slide").removeClass("hp_min_slide_selected");
-        $(".hp_slide_img[index=" + h.image_index + "]")
+        $(".min_slide").removeClass("min_slide_selected");
+        $(".slide_img[index=" + h.image_index + "]")
             .parent()
-            .addClass("hp_min_slide_selected");
+            .addClass("min_slide_selected");
         $("#slide").attr("src", h.images[h.image_index]);
     });
 
@@ -23,31 +23,29 @@ $(function() {
         } else {
             h.image_index--;
         }
-        $(".hp_min_slide").removeClass("hp_min_slide_selected");
-        $(".hp_slide_img[index=" + h.image_index + "]")
+        $(".min_slide").removeClass("min_slide_selected");
+        $(".slide_img[index=" + h.image_index + "]")
             .parent()
-            .addClass("hp_min_slide_selected");
+            .addClass("min_slide_selected");
         $("#slide").attr("src", h.images[h.image_index]);
     });
 
     // 2) Slideshow index
-    $(".hp_slide_img", this).click(function() {
-        $(".hp_min_slide").removeClass("hp_min_slide_selected");
+    $(".slide_img", this).click(function() {
+        $(".min_slide").removeClass("min_slide_selected");
         $(this)
             .parent()
-            .addClass("hp_min_slide_selected");
+            .addClass("min_slide_selected");
         $("#slide").attr("src", $(this).attr("main"));
         h.image_index = parseInt($(this).attr("index"));
     });
 
     // 3) Change Search
     //open map
-    $(".hp_dates_wrapper, .hp_guests_wrapper, .hp_update_wrapper").click(
-        function() {
-            $("#update_overlay").addClass("display_update_overlay");
-            $("body").css("overflow", "hidden"); //disable scroll
-        }
-    );
+    $(".dates_wrapper, .guests_wrapper, .update_wrapper").click(function() {
+        $("#update_overlay").addClass("display_update_overlay");
+        $("body").css("overflow", "hidden"); //disable scroll
+    });
     //close map on cross
     $(".update_close").click(function() {
         $("#update_overlay").removeClass("display_update_overlay");

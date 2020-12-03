@@ -147,6 +147,8 @@ class SearchRepository{
         $filter['cancellation_policy'] = 'Free Cancellation';
         }
 
+        if($m->filters["sort"] == 'minRate'){$m->filters["sort"] = "rooms.0.rates.0.sellingRate";}
+
         if($m->filters["sort_order"] == 1){$sort_order = 'asc';}
         else{$sort_order = 'desc';}
     

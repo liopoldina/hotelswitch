@@ -10,7 +10,7 @@ class CoverImageController extends Controller
 {
     public function show()
     {
-        $data = (object) request()->validate([
+            $data = (object) request()->validate([
             'hotel_id' => 'required|numeric|min:0|max:999999',
         ]);
 
