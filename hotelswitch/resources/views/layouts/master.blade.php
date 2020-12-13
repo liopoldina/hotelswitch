@@ -10,7 +10,10 @@
         <div class="header_content">
             <div class="logo_wrapper">
                 <a href="{{ route('homepage.index') }}">
-                    <span class="logo_hotel">H</span><span class="logo_switch">S</span><span class="logo_com">.c</span>
+                    <img class="logo_img" src="{{asset('images/header/logo.png')}}" alt="">
+                    <div class="logo_text">
+                        <span class="logo_hotel">hotel</span><span class="logo_brand">Mind</span>
+                    </div>
                 </a>
             </div>
             <div class="user_wrapper">

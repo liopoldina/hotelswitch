@@ -41,17 +41,17 @@ $(function() {
     });
 
     // 3) Change Search
-    //open map
-    $(".dates_wrapper, .guests_wrapper, .update_wrapper").click(function() {
+    //open update
+    $(".dates_boxes, .guests_box, .update_wrapper").click(function() {
         $("#update_overlay").addClass("display_update_overlay");
         $("body").css("overflow", "hidden"); //disable scroll
     });
-    //close map on cross
+    //close update
     $(".update_close").click(function() {
         $("#update_overlay").removeClass("display_update_overlay");
         $("body").css("overflow", "auto"); //enable scroll
     });
-    //close map on clicked outside (on overlay)
+    //close update on clicked outside (on overlay)
     $(document).mousedown(function(e) {
         if ($("#update_overlay").hasClass("display_update_overlay")) {
             var overlay = $(".update_overlay");
@@ -98,4 +98,17 @@ $(function() {
             }
         });
     }
+
+    // 4) Mobile Responsive
+    // if ($(window).width() < 1000) {
+    //     $(".availability_facilitites_rules").appendTo(".internal_wrapper");
+    // }
+
+    // $(window).resize(function() {
+    //     if ($(window).width() < 1000) {
+    //         $(".availability_facilitites_rules").appendTo(".internal_wrapper");
+    //     } else {
+    //         $(".availability_facilitites_rules").appendTo(".right_content");
+    //     }
+    // });
 });

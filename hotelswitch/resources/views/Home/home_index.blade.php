@@ -21,8 +21,8 @@
     <div class='first_section'>
         <div id="particle-canvas"></div>
         <div class='tittle_wrapper'>
-            <div class="section_tittle">Book the Best Hotel Deals</div>
-            <div class="section_text">Get the best prices on 200,000+ properties, worldwide
+            <div class="section_tittle">Let us choose your Hotel</div>
+            <div class="section_text">We find for you the best deals on 200,000+ properties worldwide
             </div>
         </div>
         <div class="search_bar">
@@ -55,7 +55,8 @@
         </div>
     </div>
     <div class='why_section'>
-        <div class="why_tittle">Let us find you the best deals</div>
+        <div class="why_tittle">The hotel<span>Mind</span><sup>&#174</sup>
+            algorithm</div>
         <div class="why_element_wrapper">
             <div class=why_element>
                 <i class="fas fa-network-wired"></i>

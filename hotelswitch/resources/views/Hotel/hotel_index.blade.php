@@ -7,8 +7,8 @@
 @include('Hotel.hotel_sections')
 
 @section('head')
-    <link rel="stylesheet" href={{ asset('css/hotel.css') }} />
     <link rel="stylesheet" href={{ asset('css/search_form.css') }} />
+    <link rel="stylesheet" href={{ asset('css/hotel.css') }} />
     <script src={{ asset('js/hotel.js') }}></script>
     @append
 

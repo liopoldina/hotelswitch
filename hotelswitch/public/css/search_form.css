@@ -221,7 +221,7 @@
     .search_wrapper {
         flex-direction: row;
         flex-wrap: wrap;
-        justify-content: space-evenly;
+        justify-content: space-between;
     }
     .destination_wrapper {
         flex-basis: 100%;
@@ -231,12 +231,14 @@
         padding: 7px 1em 7px 0.4em;
         font-size: 18px;
     }
+    .destination_wrapper {
+        flex-basis: 100% !important;
+    }
     .dates_wrapper,
     .guests_wrapper {
         flex-basis: calc(50% - 5px);
-    }
-    .dates_wrapper {
-        padding-right: 10px;
+        margin-top: 12px !important;
+        margin-left: 0 !important;
     }
     .search_button {
         flex-basis: 100%;

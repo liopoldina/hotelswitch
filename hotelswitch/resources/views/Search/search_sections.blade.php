@@ -224,7 +224,7 @@
                     <div class="triangle-up">
                     </div>
                     <div class="sort_item_mobile" name="top_picks" value=-1>
-                        <span>Top Bargains</span>
+                        <span>Top Deals</span>
                         <i class="fas fa-arrow-down"></i>
                     </div>
                     <div class="sort_item_mobile sort_selected" name="minRate" value=1>
@@ -271,7 +271,7 @@
         <div class="sort_wrapper">
             <div class="sort_item" name="top_picks" value=-1>
                 <div class="sort_item_wrapper">
-                    <span>Top Bargains</span>
+                    <span>Top Deals</span>
                     <i class="fas fa-arrow-down"></i>
                 </div>
             </div>
@@ -382,7 +382,12 @@
                         <div class="deal_wrapper">
                             <meter min="0" low="33" high="66" max="100" optimum="100"
                                 value={{ $hotel[$i]->pick_score }}></meter>
-                            <span class="pick_tittle">Bargain Score:</span>
+                            <div class="pick_tittle">
+                                <span class="hotel_bold">hotel</span>
+                                <span class="mind_green">Mind</span>
+                                <span class="mind_register">&#174</span> 
+                                <span class="score_text">Score</span>
+                            </div>
                             <span class="pick_score">{{ round($hotel[$i]->pick_score) }}%</span>
 
                         </div>

@@ -41,7 +41,7 @@
 
 .section_tittle {
     font-size: 46px;
-    padding:0px 10px;
+    padding: 0px 10px;
     color: white;
     top: 100px;
     text-align: center;
@@ -49,6 +49,7 @@
 
 .section_text {
     font-size: 22px;
+    padding: 0px 10px;
     color: white;
     margin-top: 20px;
     text-align: center;
@@ -59,7 +60,8 @@
     flex-wrap: wrap;
 }
 
-.search_bar > form > div, .search_bar > form button{
+.search_bar > form > div,
+.search_bar > form button {
     margin-top: 20px;
 }
 
@@ -70,17 +72,18 @@
     color: #444;
 }
 
-.destination_wrapper{
-    flex: 1 0 300px
+.destination_wrapper {
+    flex: 1 0 300px;
 }
 
 .dates_wrapper,
-.guests_wrapper{
+.guests_wrapper {
     flex: 0 0 auto;
 }
 
 .dates_wrapper,
-.guests_wrapper, .destination_wrapper {
+.guests_wrapper,
+.destination_wrapper {
     margin-right: 15px;
     position: relative;
 }
@@ -100,67 +103,66 @@
 }
 
 @media (max-width: 1070px) {
-    .destination_wrapper{
+    .destination_wrapper {
         flex: 1 0 100%;
     }
-    .bar_button{
+    .bar_button {
         flex: 1;
     }
-    .tittle_wrapper{
-        top:150px;
+    .tittle_wrapper {
+        top: 150px;
     }
-    .search_bar{
-        top:-50px;
+    .search_bar {
+        top: -50px;
     }
 }
 
 @media (max-width: 720px) {
-    .dates_wrapper{
+    .dates_wrapper {
         flex: 1 0 auto;
     }
-    .guests_wrapper{
+    .guests_wrapper {
         flex: 1 0 auto;
         margin-right: 0px;
     }
-    .bar_button{
+    .bar_button {
         flex: 1 1 100%;
     }
-    .tittle_wrapper{
-        top:125px;
-    } 
-    .search_bar{
-        top:-25px;
+    .tittle_wrapper {
+        top: 125px;
     }
-    
+    .search_bar {
+        top: -25px;
+    }
 }
 
 @media (max-width: 570px) {
-    .dates_wrapper{
+    .dates_wrapper {
         height: 57px;
         margin-right: 0px;
     }
-    .guests_wrapper{
+    .guests_wrapper {
         flex: 1 1 100%;
-    } 
-    .first_section{
+    }
+    .first_section {
         height: 450px;
     }
-    .tittle_wrapper{
-        top:100px;
-    } 
-    .section_tittle{
+    .tittle_wrapper {
+        top: 100px;
+    }
+    .section_tittle {
         font-size: 36px;
     }
-    .section_text{
+    .section_text {
         display: none;
     }
 }
 
 @media (max-width: 435px) {
-    .tittle_wrapper{
-        top:75px;
+    .tittle_wrapper {
+        top: 75px;
         min-width: 325px;
-    } 
+    }
 }
 
 .destination_input {
@@ -175,14 +177,15 @@
     position: absolute;
     top: 33%;
     left: 15px;
-    cursor:pointer;
+    cursor: pointer;
 }
 
-.check_in, .check_out {
+.check_in,
+.check_out {
     position: absolute;
     top: 8px;
     font-size: 14px;
-    cursor:pointer;
+    cursor: pointer;
 }
 
 .check_in {
@@ -206,7 +209,6 @@
     cursor: pointer;
     padding: 6px 20px 6px 55px;
 }
-
 
 .guests_wrapper > span {
     display: block;
@@ -246,7 +248,17 @@
     text-align: center;
 }
 
-.why_element_wrapper{
+.why_tittle > span {
+    font-weight: normal;
+    color: var(--main-color-light);
+}
+
+.why_tittle > sup {
+    font-size: 16px;
+    color: var(--main-color-light);
+}
+
+.why_element_wrapper {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-evenly;
@@ -255,7 +267,7 @@
 }
 
 .why_element {
-    margin-top:60px;
+    margin-top: 60px;
     padding: 0px 15px;
     text-align: center;
     min-width: 300px;
@@ -285,23 +297,25 @@
     color: var(--main-color-light);
 }
 
-@media (max-width:1200px){
+@media (max-width: 1200px) {
     .why_element {
         flex: 0 0 35%;
     }
 }
 
-@media (max-width:600px){
+@media (max-width: 600px) {
     .why_element {
         flex: 0 0 70%;
     }
 
-    .why_element:nth-child(2),.why_element:nth-child(3){
-        display:none;
+    .why_element:nth-child(2),
+    .why_element:nth-child(3) {
+        display: none;
     }
 
-    .why_tittle,.popular_tittle{
-        font-size:28px !important;
+    .why_tittle,
+    .popular_tittle {
+        font-size: 28px !important;
     }
 }
 
@@ -341,11 +355,11 @@
 
 .slick-slide {
     margin: 0 3px;
-  }
+}
 
 .slick-list {
     margin: 0 -3px;
-  }
+}
 
 .slick div img {
     width: 100%;
@@ -386,7 +400,7 @@
     opacity: 0 !important;
 }
 
-.slick-dots{
+.slick-dots {
     bottom: -40px !important;
 }
 
@@ -395,13 +409,12 @@
     background-color: var(--main-color);
 }
 
-.distinctive_section_wrapper{
+.distinctive_section_wrapper {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-evenly;
     margin: 0px auto;
     max-width: 1300px;
-
 }
 
 .distinction_wrapper {
@@ -433,7 +446,7 @@
     font-size: 12px;
 }
 
-@media (max-width:850px){
+@media (max-width: 850px) {
     .distinction_wrapper {
         flex: 1 0 35%;
     }

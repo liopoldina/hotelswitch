@@ -20,13 +20,16 @@
     border: 1px solid transparent;
 }
 
-.map_wrapper:hover {
+.map_wrapper:hover,
+.head_map:hover {
     border: 1px solid var(--main-color-light);
     box-shadow: 0 0 5px var(--main-color-light);
 }
 
 .map_wrapper:hover .map_text,
-.map_wrapper:hover .fa-map-marker-alt {
+.map_wrapper:hover .fa-map-marker-alt,
+.head_map:hover .map_text,
+.head_map:hover .fa-map-marker-alt {
     color: var(--main-color-light);
 }
 
@@ -173,6 +176,7 @@
 
 .head_tittle {
     max-width: 650px;
+    margin-right: 20px;
 }
 
 .head_book {
@@ -253,6 +257,27 @@
 
 .spotlight span {
     margin-left: 10px;
+}
+
+.head_map {
+    display: none;
+    margin-left: auto;
+    margin-right: 3px;
+    position: relative;
+    height: 70px;
+    width: 120px;
+    background: url(../images/search/map.jpeg);
+    background-size: 250px;
+    cursor: pointer;
+    border-radius: 2px;
+    box-shadow: 0 0 3px var(--main-color);
+}
+
+.head_map_icon {
+    font-size: 20px;
+    width: fit-content;
+    margin: 8px auto 0px;
+    color: var(--main-color);
 }
 
 .nightly_price {
@@ -490,17 +515,19 @@
     color: rgb(10, 10, 143);
 }
 
+.top_facilities > a {
+    display: flex;
+    justify-content: center;
+    text-decoration: none;
+}
+
 .top_facilities button {
     margin-top: 10px;
-    position: relative;
-    left: 50%;
-    transform: translateX(-50%);
-    padding: 7px 15px;
-    height: 40px;
+    padding: 12px 15px;
     color: white;
     background-color: var(--main-color-light);
     border: none;
-    border-radius: 2px;
+    border-radius: 3px;
     font-size: 14px;
     font-weight: bold;
     cursor: pointer;
@@ -532,17 +559,27 @@
 }
 
 .search_box {
+    align-items: center;
     height: 60px;
     border: 1px solid #c6c6c6;
     border-radius: 3px;
     cursor: pointer;
-    flex-shrink: 0;
+}
+
+.dates_boxes {
+    flex: 1 0 auto;
+    justify-content: space-evenly;
+    max-width: 300px;
+    display: flex;
 }
 
 .guests_box {
+    flex: 1 0 auto;
+    max-width: fit-content;
     margin-left: 20px;
     padding: 0px 20px;
     flex-shrink: 0;
+    display: flex;
 }
 
 /* doesn't allow range of 0 to be picked */
@@ -553,26 +590,18 @@
 .update_wrapper {
     margin-left: auto;
     border: none;
-    flex: 0 1 auto;
+    flex: 1 0 75px;
+    max-width: 165px;
     padding-left: 20px;
 }
 
 .dates_box {
-    padding: 0px 30px;
-    float: left;
-    height: 100%;
-    width: fit-content;
-    margin: 0px;
+    padding: 0px 8px;
 }
 
 .box_divider {
     border-left: 1px solid #c6c6c6;
-}
-
-.box_wrapper {
-    position: relative;
-    top: 50%;
-    transform: translateY(-50%);
+    height: 100%;
 }
 
 .box_title {
@@ -590,9 +619,9 @@
 }
 
 .search_box button {
-    padding: 0px 30px;
     height: 100%;
     width: 100%;
+    padding: 0px 10px;
     color: white;
     background-color: var(--main-color-light);
     border-radius: 3px;
@@ -1015,13 +1044,16 @@
     padding: 3px 6px;
 }
 
+.room_reserve a {
+    display: flex;
+    margin-bottom: 20px;
+    justify-content: center;
+    text-decoration: none;
+}
+
 .room_reserve button {
-    position: relative;
-    left: 50%;
-    transform: translateX(-50%);
-    margin-bottom: 15px;
-    padding: 7px 15px;
-    width: 140px;
+    flex: 1;
+    max-width: 150px;
     height: 40px;
     color: white;
     background-color: var(--main-color-light);
@@ -1122,6 +1154,7 @@
     background-size: 10px auto, 100%;
     font-size: 13px;
     margin-bottom: 5px;
+    padding-right: 15px;
 }
 
 .house_rules {
@@ -1172,4 +1205,190 @@
 .rule_content i {
     width: 30px;
     margin: 0px 5px;
+}
+
+@media (max-width: 1000px) {
+    .internal_wrapper {
+        flex-direction: column;
+        /* padding: 15px; */
+    }
+    .left_content {
+        width: 100%;
+        max-width: none;
+    }
+    .right_content {
+        margin-left: 0px;
+    }
+    .location {
+        display: none;
+    }
+    .search {
+        padding: 10px;
+        min-width: 300px;
+    }
+    .search_wrapper {
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+    .destination_wrapper {
+        flex: 1;
+    }
+    .destination_wrapper,
+    .dates_wrapper,
+    .guests_wrapper,
+    .search_button {
+        margin-top: 0px;
+    }
+    .dates_wrapper,
+    .guests_wrapper,
+    .search_button {
+        margin-left: 10px;
+    }
+    .search_button > button {
+        height: 100%;
+    }
+    .search_title,
+    #nights {
+        display: none;
+    }
+    .head_book {
+        display: none;
+    }
+    .head_map {
+        display: block;
+    }
+}
+
+@media (max-width: 800px) {
+    .search_button {
+        margin-top: 12px;
+        flex-basis: 100%;
+        margin-left: 0px;
+    }
+    .drp-calendar {
+        float: none !important;
+    }
+}
+
+@media (max-width: 675px) {
+    .drp-calendar {
+        float: left !important;
+    }
+    .availability {
+        margin: 15px -15px 0px -15px;
+        border-radius: 0px;
+        padding: 25px 15px;
+    }
+    .search_update {
+        padding: 15px 0px;
+        background-color: rgb(242, 242, 242);
+        border: none;
+    }
+    .search_box {
+        background-color: white;
+    }
+    .update_wrapper {
+        background-color: rgb(242, 242, 242);
+    }
+    .guests_box {
+        margin-left: 10px;
+        padding: 0px 10px;
+    }
+    .update_wrapper {
+        padding-left: 10px;
+    }
+}
+
+@media (max-width: 650px) {
+    .offer_select {
+        flex-direction: column;
+    }
+    .room_select {
+        order: -1;
+        border-left: none;
+        margin: 0px auto;
+        height: unset;
+    }
+    .header_offers {
+        display: none;
+    }
+    .header_select_rooms {
+        flex: 1;
+        border-left: 1px solid #c6c6c6;
+    }
+}
+
+@media (max-width: 590px) {
+    .drp-calendar {
+        float: none !important;
+    }
+    .gallery {
+        margin: 0px -15px;
+    }
+    .slides_index {
+        padding: 0px 5px;
+    }
+    .hotel_review {
+        padding: 7px 7px 7px 15px;
+    }
+    .room_type,
+    .room_reserve {
+        padding: 20px 10px;
+    }
+    .room_ul {
+        padding-inline-start: 20px;
+    }
+    .facilities_wrapper {
+        column-count: 2;
+    }
+}
+
+@media (max-width: 550px) {
+    .guests_box {
+        display: none;
+    }
+    .update_wrapper {
+        max-width: 125px;
+    }
+}
+
+@media (max-width: 500px) {
+    .top_facilities {
+        min-width: 165px;
+        padding: 20px 15px;
+        margin-left: 20px;
+    }
+    .top_facilities button {
+        padding: 12px 10px;
+    }
+    .top_bar a:last-child {
+        display: none;
+    }
+    .facilities,
+    .house_rules {
+        margin: 15px -15px 0px -15px;
+        border-radius: 0px;
+    }
+}
+
+@media (max-width: 425px) {
+    .description_wrapper {
+        flex-direction: column;
+    }
+    .availability {
+        padding: 25px 0px;
+    }
+    .availability > .section_tittle,
+    .dates_boxes {
+        margin-left: 10px;
+    }
+    .search_box {
+        margin-right: 10px;
+    }
+    .room_reserve ul {
+        display: none;
+    }
+    .rooms_left {
+        display: none;
+    }
 }
