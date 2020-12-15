@@ -148,7 +148,12 @@
 
 @media (max-width: 675px) {
     .internal_wrapper {
-        padding: 15px;
+        padding: 0px 15px 15px;
+        margin-top: -1px;
+    }
+    .search {
+        margin: 0 -15px;
+        border-radius: 0px;
     }
     .left_content {
         flex-basis: 100%;
@@ -263,7 +268,7 @@
     }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 450px) {
     .dates_wrapper,
     .guests_wrapper {
         flex-basis: 100%;

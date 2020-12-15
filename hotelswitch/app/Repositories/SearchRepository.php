@@ -119,6 +119,7 @@ class SearchRepository{
             });
         }
         
+        if(count($hotels) > 1){
         $process = new Process(['python', 'C:\wamp64\www\hotelhopping.com\science\client.py',$m->collection_name]);
         $process->run();
 
@@ -126,8 +127,9 @@ class SearchRepository{
         if (!$process->isSuccessful()) {
             throw new ProcessFailedException($process);
         }
+         // $r2 = $process->getOutput();
+        }
         
-        // $r2 = $process->getOutput();
     }
 
 

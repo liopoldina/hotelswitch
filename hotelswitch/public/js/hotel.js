@@ -4,31 +4,48 @@ $(function() {
 
     $("#slide").attr("src", h.images[0]);
 
-    $(".arrow_right ", this).click(function() {
-        if (h.image_index == h.images.length - 1) {
-            h.image_index = 0;
-        } else {
-            h.image_index++;
-        }
-        $(".min_slide").removeClass("min_slide_selected");
-        $(".slide_img[index=" + h.image_index + "]")
-            .parent()
-            .addClass("min_slide_selected");
-        $("#slide").attr("src", h.images[h.image_index]);
-    });
+    $(".min_slide")
+        .first()
+        .addClass("min_slide_selected");
 
     $(".arrow_left", this).click(function() {
-        if (h.image_index == 0) {
-            h.image_index = h.images.length - 1;
-        } else {
+        slide("left");
+    });
+    $(".arrow_right", this).click(function() {
+        slide("right");
+    });
+
+    //mobile Swipe
+    var slideshow = document.getElementById("slideshow");
+    var hammertime = new Hammer(slideshow);
+
+    hammertime.on("swiperight", function() {
+        slide("left");
+    });
+
+    hammertime.on("swipeleft", function() {
+        slide("right");
+    });
+
+    function slide(direction) {
+        if (direction == "left") {
             h.image_index--;
+        }
+        if (direction == "right") {
+            h.image_index++;
+        }
+        if (h.image_index >= h.images.length) {
+            h.image_index = 0;
+        }
+        if (h.image_index < 0) {
+            h.image_index = h.images.length - 1;
         }
         $(".min_slide").removeClass("min_slide_selected");
         $(".slide_img[index=" + h.image_index + "]")
             .parent()
             .addClass("min_slide_selected");
         $("#slide").attr("src", h.images[h.image_index]);
-    });
+    }
 
     // 2) Slideshow index
     $(".slide_img", this).click(function() {
@@ -73,42 +90,35 @@ $(function() {
     // date_range_picker
 
     if ($("#update_range").val() == "") {
-        $("#update_range").daterangepicker({
-            autoApply: true,
-            minDate: today,
-            maxDate: "12/31/2021",
-            endDate: moment().add(1, "days"),
-            maxSpan: {
-                days: 27
-            },
-            locale: {
-                // format: "DD/MM/YY",
-            }
-        });
+        $("#update_range")
+            .daterangepicker({
+                autoApply: true,
+                minDate: today,
+                maxDate: "12/31/2021",
+                endDate: moment().add(1, "days"),
+                maxSpan: {
+                    days: 27
+                },
+                locale: {
+                    // format: "DD/MM/YY",
+                }
+            })
+            .data("daterangepicker")
+            .container.addClass("daterangepicker_update");
     } else {
-        $("#update_range").daterangepicker({
-            autoApply: true,
-            minDate: today,
-            maxDate: "12/31/2021",
-            maxSpan: {
-                days: 27
-            },
-            locale: {
-                // format: "DD/MM/YY",
-            }
-        });
+        $("#update_range")
+            .daterangepicker({
+                autoApply: true,
+                minDate: today,
+                maxDate: "12/31/2021",
+                maxSpan: {
+                    days: 27
+                },
+                locale: {
+                    // format: "DD/MM/YY",
+                }
+            })
+            .data("daterangepicker")
+            .container.addClass("daterangepicker_update");
     }
-
-    // 4) Mobile Responsive
-    // if ($(window).width() < 1000) {
-    //     $(".availability_facilitites_rules").appendTo(".internal_wrapper");
-    // }
-
-    // $(window).resize(function() {
-    //     if ($(window).width() < 1000) {
-    //         $(".availability_facilitites_rules").appendTo(".internal_wrapper");
-    //     } else {
-    //         $(".availability_facilitites_rules").appendTo(".right_content");
-    //     }
-    // });
 });

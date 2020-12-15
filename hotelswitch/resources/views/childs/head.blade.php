@@ -19,6 +19,7 @@
 <script src={{asset('js/jquery.min.js')}}></script>
 <script src={{asset('jquery-ui/jquery-ui.min.js')}}></script>
 <script src={{asset('jquery-ui/jquery.ui.touch-punch.js')}}></script>
+<script src={{asset('js/hammer.min.js')}}></script>
 <script src={{asset('js/main.js')}}></script>
 <script src='https://kit.fontawesome.com/93e6a1962d.js' crossorigin="anonymous"></script>
 <script src={{asset('js/moment.min.js')}}></script>

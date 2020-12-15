@@ -93,7 +93,7 @@
                     <i class="fas fa-map-marker-alt map_icon" aria-hidden="true"></i>
                     <span class="address_content">{{$h->address ?? 'Av. D. João II, n.º 27, Parque das Nações, Lisboa,
                     1990-083, Portugal'}}</span>
-                    <span>-</span>
+                    <span class="map_divider">-</span>
                     <span class="see_map">See Map</span>
                 </div>
                 <div class="distance_center">
@@ -144,7 +144,7 @@
             @endif
         </div>
         <div class="gallery">
-            <div class="slideshow">
+            <div class="slideshow" id="slideshow">
                 <div class="slide">
                     <img id=slide
                          src={{isset($h) ? $h->images[0] : 'http://photos.hotelbeds.com/giata/bigger/36/363373/363373a_hb_a_002.jpg' }}
@@ -210,24 +210,27 @@
             <div class="top_facilities">
             <span class="top_facilities_tittle">Most popular facilities
             </span>
-                <div class="top_facility">
-                    <i class="fas fa-wifi green"></i><span>Free Wi-fi</span>
-                </div>
-                <div class="top_facility">
-                    <i class="fas fa-parking blue"></i><span>Private parking</span>
-                </div>
-                <div class="top_facility ">
-                    <i class="fas fa-concierge-bell gold"></i><span>Room service</span>
-                </div>
-                <div class="top_facility ">
-                    <i class="fas fa-utensils"></i><span>Restaurant</span>
-                </div>
-                <div class="top_facility ">
-                    <i class="fas fa-smoking-ban"></i><span>Non-smoking rooms</span>
+                <div class="top_facilities_wrapper">
+                    <div class="top_facility">
+                        <i class="fas fa-wifi green"></i><span>Free Wi-fi</span>
+                    </div>
+                    <div class="top_facility">
+                        <i class="fas fa-parking blue"></i><span>Private parking</span>
+                    </div>
+                    <div class="top_facility ">
+                        <i class="fas fa-concierge-bell gold"></i><span>Room service</span>
+                    </div>
+                    <div class="top_facility ">
+                        <i class="fas fa-utensils"></i><span>Restaurant</span>
+                    </div>
+                    <div class="top_facility ">
+                        <i class="fas fa-smoking-ban"></i><span>Non-smoking rooms</span>
+                    </div>
                 </div>
                 <a href="#facilities">
                     <button>See All Facilities</button>
                 </a>
+            
             </div>
 
         </div>
@@ -282,7 +285,7 @@
                                     <div class="room_type">
                                         <div class="room_image">
                                             <img class="room_img"
-                                                 src="http://photos.hotelbeds.com/giata/bigger/{{$h->offer[$r]["images"][0]["path"]}}"
+                                                 src="http://photos.hotelbeds.com/giata/bigger/{{$h->offer[$r]["images"][0]["path"] ?? "36/363373/363373a_hb_ro_008.jpg"}}"
                                                  alt="">
                                         </div>
                                         <div class="room_name">
@@ -829,7 +832,7 @@
                                                                                aria-hidden="true"></i>
                         </label>
                         <input type="text" id="update_range" name="date_range" class="bar_box_update dates_input_update"
-                               value='{{$m->date_range ?? "" }}' required="">
+                               value='{{$m->date_range ?? "" }}' required="" readonly>
                         <label for="update_range" class="check_in_update">Check-in</label>
                         <label for="update_range" class="check_out_update">Check-out</label>
                     </div>
