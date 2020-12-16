@@ -1,6 +1,6 @@
 .confirmation_wrapper {
-    padding: 30px 100px;
-    max-width: var(--max_internal_width);
+    padding: 30px 20px;
+    max-width: 840px;
     margin: 0px auto;
 }
 
@@ -31,7 +31,7 @@
 }
 
 .fa-ul i {
-    color: var(--main-color-light)
+    color: var(--main-color-light);
 }
 
 .print {
@@ -46,7 +46,7 @@
     align-items: center;
     position: absolute;
     top: 20px;
-    right: 62.5px;
+    right: 0px;
 }
 
 .print:hover {
@@ -64,19 +64,20 @@
     padding: 20px;
     border-radius: 3px;
     display: flex;
-    width: 800px;
 }
 
 .hotel_info {
     margin-left: 25px;
-    flex-grow: 1;
+    max-width: 435px;
 }
 
 .hotel_wrapper img {
-    width: 300px;
+    flex-shrink: 1;
+    max-width: min(300px, 50%);
     height: 200px;
     border: 2px solid white;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+    object-fit: cover;
 }
 
 .hotel_name {
@@ -117,8 +118,8 @@
 
 .dates_wrapper {
     display: flex;
-    margin-top: 20px;
-    justify-content: center;
+    margin: 20px auto 0px;
+    width: fit-content;
 }
 
 .divider {
@@ -149,7 +150,6 @@
 }
 
 .reservations_details {
-    width: 800px;
     margin: 30px auto;
 }
 
@@ -166,12 +166,14 @@
 
 .detail_tittle {
     font-weight: bold;
+    flex-shrink: 0;
 }
 
 .detail_content {
     margin-left: auto;
     max-width: 400px;
     text-align: justify;
+    padding-left: 20px;
 }
 
 .detail_tittle em {
@@ -182,7 +184,6 @@
 .price_details {
     background-color: rgba(var(--main-color-rgb), 0.05);
     padding: 25px 35px;
-    width: 800px;
     margin: auto;
     border: 1px solid rgba(var(--main-color-rgb), 0.15);
     border-radius: 3px;
@@ -208,6 +209,8 @@
     margin-left: auto;
     text-align: justify;
     font-weight: bold;
+    padding-left: 20px;
+    flex-shrink: 0;
 }
 
 .price_info {
@@ -218,4 +221,48 @@
 
 .price_info:last-child {
     margin-bottom: 0px;
+}
+
+@media (max-width: 800px) {
+    .print {
+        position: unset;
+        margin-bottom: 25px;
+    }
+    .congratulations {
+        margin-bottom: 20px;
+    }
+}
+
+@media (max-width: 700px) {
+    .hotel_info {
+        margin-left: 15px;
+    }
+}
+
+@media (max-width: 600px) {
+    .hotel_wrapper {
+        flex-direction: column;
+        align-items: center;
+        width: fit-content;
+    }
+    .hotel_wrapper img {
+        max-width: unset;
+    }
+    .hotel_info {
+        margin-left: 0px;
+        margin-top: 20px;
+    }
+}
+
+@media (max-width: 450px) {
+    .detail_tittle {
+        flex-shrink: 1;
+    }
+}
+
+@media (max-width: 400px) {
+    .hotel_wrapper img {
+        width: 100%;
+        height: unset;
+    }
 }

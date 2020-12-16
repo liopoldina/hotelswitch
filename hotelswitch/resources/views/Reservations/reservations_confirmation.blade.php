@@ -14,6 +14,7 @@
         <div class='thank_you'> Thank you {{$r->first_name ?? 'John Doe'}}!</div>
         <div class='congratulations'><i class="far fa-thumbs-up"></i>Congratulations! Your Booking is confirmed.
         </div>
+        <button class='print' onclick="window.print()"><i class="fas fa-print"></i>Print your reservation</button>
         <ul class="fa-ul">
             <li><i class="fa-li fa fa-check"></i>We sent you a confirmation email to
                 <strong>{{$r->email ?? 'johndoe@gmail.com'}}</strong>
@@ -28,9 +29,6 @@
                 <strong>{{$h->email ?? 'info@royalhotel.com'}}</strong> or by
                 phone to <strong>{{$h->phone ?? '123456789'}}</strong></li>
         </ul>
-
-        <button class='print' onclick="window.print()"><i class="fas fa-print"></i>Print your reservation</button>
-
     </div>
     <div class="hotel_wrapper">
         <img src="http://photos.hotelbeds.com/giata/bigger/{{ $h->images[0]["path"]  ?? '36/363373/363373a_hb_a_001.jpg'}}"

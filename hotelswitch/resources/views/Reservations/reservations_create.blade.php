@@ -115,22 +115,27 @@
                 <span>Step 1: Your details</span>
             </div>
             <div class="right_box">
-                <div class="name_wrapper">
-                    <div class="input_wrapper">
-                        <label for="first_name">First name</label>
-                        <input type="text" id='first_name' name='first_name' required maxlength="30"
-                            value={{old('first_name')}}>
-                        @error('first_name')
-                        <span class="invalid-feedback" role="alert">{{ $message }}</span>
-                        @enderror
+                <div class="name-mandatory-wrapper">
+                    <div class="name_wrapper">
+                        <div class="input_wrapper">
+                            <label for="first_name">First name</label>
+                            <input type="text" id='first_name' name='first_name' required maxlength="30"
+                                value={{old('first_name')}}>
+                            @error('first_name')
+                            <span class="invalid-feedback" role="alert">{{ $message }}</span>
+                            @enderror
+                        </div>
+                        <div class="input_wrapper">
+                            <label for="last_name">Last name<span class='mandatory'>*</span></label>
+                            <input type="text" id='last_name' name='last_name' required maxlength="30"
+                                value={{old('last_name')}}>
+                            @error('last_name')
+                            <span class="invalid-feedback" role="alert">{{ $message }}</span>
+                            @enderror
+                        </div>
                     </div>
-                    <div class="input_wrapper">
-                        <label for="last_name">Last name<span class='mandatory'>*</span></label>
-                        <input type="text" id='last_name' name='last_name' required maxlength="30"
-                            value={{old('last_name')}}>
-                        @error('last_name')
-                        <span class="invalid-feedback" role="alert">{{ $message }}</span>
-                        @enderror
+                    <div class='mandatory_wrapper'>
+                        Almost done! Just fill in the <em>*</em> required info
                     </div>
                 </div>
                 <div class="input_wrapper">
@@ -157,9 +162,6 @@
                     <span class="invalid-feedback" role="alert">{{ $message }}</span>
                     @enderror
                 </div>
-                <div class='mandatory_wrapper'>
-                    Almost done! Just fill in the <em>*</em> required info
-                </div>
             </div>
             <div class="step">
                 <i class="fas fa-bed"></i>
@@ -170,16 +172,16 @@
                     class='room_name'>{{isset($rate) ? $MyLibrary->titleCase($rate->hotel->rooms[0]->name) : 'Double or Twin Room with Private Ensuite Bathroom'}}</span>
                 <div class="amenities">
                     <div class="amenity">
-                        <i class="fas fa-wifi" aria-hidden="true"></i>
-                        <span>Free Wi-fi</span>
+                        <i class="fas fa-bath"></i>
+                        <span>Ensuite bathroom</span>
                     </div>
                     <div class="amenity">
                         <i class="fas fa-fan" aria-hidden="true"></i>
                         <span>Air conditioning</span>
                     </div>
                     <div class="amenity">
-                        <i class="fas fa-bath"></i>
-                        <span>Ensuite bathroom</span>
+                        <i class="fas fa-wifi" aria-hidden="true"></i>
+                        <span>Free Wi-fi</span>
                     </div>
                     <div class="amenity">
                         <i class="fas fa-tv"></i>
@@ -216,60 +218,62 @@
                 <i class="fas fa-lock"></i>
                 <span>Step 3: Payment details</span>
             </div>
-            <div class="right_box">
-                <div class="input_wrapper">
-                    <label for="card_name">Cardholder's name<span class='mandatory'>*</span></label>
-                    <input type="text" maxlength="30" id='card_name' name='card_name' required
-                        value={{old('card_name')}}>
-                    @error('card_name')
-                    <span class="invalid-feedback" role="alert">{{ $message }}</span>
-                    @enderror
-                </div>
-                <div class="input_wrapper">
-                    <label for="card_number">Card number<span class='mandatory'>*</span></label>
-                    <input type="number" id='card_number' name='card_number' required value={{old('card_number')}}>
-                    @error('card_number')
-                    <span class="invalid-feedback" role="alert">{{ $message }}</span>
-                    @enderror
-                </div>
-                <div class="input_wrapper">
-                    <label for="expiry_month">Expiry date<span class='mandatory'>*</span></label>
-                    <select name="expiry_month" id="expiry_month" placeholder='MM' required
-                        value={{old('expiry_month')}}>
-                        <option value="MM">MM</option>
-                        <option value="01">01</option>
-                        <option value="02">02</option>
-                        <option value="03">03</option>
-                        <option value="04">04</option>
-                        <option value="05">05</option>
-                        <option value="06">06</option>
-                        <option value="07">07</option>
-                        <option value="08">08</option>
-                        <option value="09">09</option>
-                        <option value="10">10</option>
-                        <option value="11">11</option>
-                        <option value="12">12</option>
-                    </select>
-                    <span id=expiry_divider>/</span>
-                    <select name="expiry_year" id="expiry_year" placeholder='YY' required value={{old('expiry_year')}}>
-                        <option value="YY">YY</option>
-                        @for($i=20;$i<=50;$i++) <option value={{$i}}>{{$i}}</option>
-                            @endfor
-                    </select>
-                    @error('expiry_month')
-                    <span class="invalid-feedback" role="alert">{{ $message }}</span>
-                    @enderror
-                    @error('expiry_year')
-                    <span class="invalid-feedback" role="alert">{{ $message }}</span>
-                    @enderror
-                </div>
-                <div class="input_wrapper">
-                    <label for="cvc">CVC-code<span class='mandatory'>*</span></label>
-                    <input type="text" id='cvc' name='cvc' placeholder='000' maxlength="4" required
-                        value={{old('cvc')}}>
-                    @error('cvc')
-                    <span class="invalid-feedback" role="alert">{{ $message }}</span>
-                    @enderror
+            <div class="right_box payment_box">
+                <div class="payment_inputs">
+                    <div class="input_wrapper">
+                        <label for="card_name">Cardholder's name<span class='mandatory'>*</span></label>
+                        <input type="text" maxlength="30" id='card_name' name='card_name' required
+                            value={{old('card_name')}}>
+                        @error('card_name')
+                        <span class="invalid-feedback" role="alert">{{ $message }}</span>
+                        @enderror
+                    </div>
+                    <div class="input_wrapper">
+                        <label for="card_number">Card number<span class='mandatory'>*</span></label>
+                        <input type="number" id='card_number' name='card_number' required value={{old('card_number')}}>
+                        @error('card_number')
+                        <span class="invalid-feedback" role="alert">{{ $message }}</span>
+                        @enderror
+                    </div>
+                    <div class="input_wrapper">
+                        <label for="expiry_month">Expiry date<span class='mandatory'>*</span></label>
+                        <select name="expiry_month" id="expiry_month" placeholder='MM' required
+                            value={{old('expiry_month')}}>
+                            <option value="MM">MM</option>
+                            <option value="01">01</option>
+                            <option value="02">02</option>
+                            <option value="03">03</option>
+                            <option value="04">04</option>
+                            <option value="05">05</option>
+                            <option value="06">06</option>
+                            <option value="07">07</option>
+                            <option value="08">08</option>
+                            <option value="09">09</option>
+                            <option value="10">10</option>
+                            <option value="11">11</option>
+                            <option value="12">12</option>
+                        </select>
+                        <span id=expiry_divider>/</span>
+                        <select name="expiry_year" id="expiry_year" placeholder='YY' required value={{old('expiry_year')}}>
+                            <option value="YY">YY</option>
+                            @for($i=20;$i<=50;$i++) <option value={{$i}}>{{$i}}</option>
+                                @endfor
+                        </select>
+                        @error('expiry_month')
+                        <span class="invalid-feedback" role="alert">{{ $message }}</span>
+                        @enderror
+                        @error('expiry_year')
+                        <span class="invalid-feedback" role="alert">{{ $message }}</span>
+                        @enderror
+                    </div>
+                    <div class="input_wrapper">
+                        <label for="cvc">CVC-code<span class='mandatory'>*</span></label>
+                        <input type="text" id='cvc' name='cvc' placeholder='000' maxlength="4" required
+                            value={{old('cvc')}}>
+                        @error('cvc')
+                        <span class="invalid-feedback" role="alert">{{ $message }}</span>
+                        @enderror
+                    </div>
                 </div>
                 <div class='payment_info'>
                     <span>We accept the following payment methods</span>

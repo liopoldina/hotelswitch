@@ -4,7 +4,8 @@
 
 .right_content {
     width: calc(100% - 300px);
-    margin-left:20px
+    min-width: var(--min-width);
+    margin-left: 20px;
 }
 
 .left_box {
@@ -186,18 +187,42 @@
     margin-left: 10px;
 }
 
-.name_wrapper {
+.name-mandatory-wrapper {
     display: flex;
-    max-width: 450px;
+    flex-wrap: wrap-reverse;
 }
 
-.name_wrapper div:nth-of-type(2) {
-    margin-left: 30px;
+.name_wrapper {
+    flex: 1;
+    display: flex;
+    flex-wrap: wrap;
+    max-width: 375px;
+    justify-content: space-between;
+    margin-right: auto;
+}
+
+.name_wrapper > div {
+    margin-right: 15px;
+}
+
+.mandatory_wrapper {
+    align-self: flex-end;
+    flex-shrink: 0;
+    height: fit-content;
+    font-size: 13px;
+    background-color: rgba(var(--main-color-rgb), 0.2);
+    padding: 7px;
+    border-radius: 3px;
+    color: var(--main-color);
+    margin-bottom: 20px;
+}
+
+em {
+    color: red;
 }
 
 .input_wrapper {
     font-size: 13px;
-    width: fit-content;
     margin-bottom: 20px;
 }
 
@@ -205,6 +230,7 @@
     font-weight: bold;
     margin-left: 2px;
     display: block;
+    width: fit-content;
 }
 
 .input_wrapper label .mandatory {
@@ -228,7 +254,7 @@
 
 .info {
     display: inline-block;
-    margin-left: 10px;
+    margin-top: 5px;
     font-style: italic;
     font-size: 12px;
 }
@@ -242,21 +268,6 @@
     font-weight: bold;
 }
 
-.mandatory_wrapper {
-    font-size: 13px;
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    background-color: rgba(var(--main-color-rgb), 0.2);
-    padding: 7px;
-    border-radius: 3px;
-    color: var(--main-color);
-}
-
-em {
-    color: red;
-}
-
 input[type="number"]::-webkit-inner-spin-button,
 input[type="number"]::-webkit-outer-spin-button {
     -webkit-appearance: none;
@@ -264,8 +275,14 @@ input[type="number"]::-webkit-outer-spin-button {
 }
 
 #email,
+#phone {
+    margin-right: 10px;
+}
+
+#email,
 #email_confirmation {
-    width: 270px;
+    width: 100%;
+    max-width: 270px;
 }
 
 #card_name,
@@ -290,18 +307,29 @@ input[type="number"]::-webkit-outer-spin-button {
 
 .room_box {
     display: flex;
+    flex-wrap: wrap;
 }
 
-.room_left {}
+.room_right,
+.room_left {
+    margin-top: 10px;
+}
+
+.room_left {
+    padding-right: 20px;
+    height: 155px;
+    max-width: 255px;
+}
 
 .room_right {
-    padding-left: 20px;
-    width: 100%;
+    flex: 1;
+    min-width: 150px;
+    display: flex;
+    flex-direction: column;
 }
 
 .room_left img {
-    width: 225px;
-    height: 155px;
+    height: 100%;
     border: 2px solid white;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
 }
@@ -313,7 +341,8 @@ input[type="number"]::-webkit-outer-spin-button {
 
 .room_capacity {
     display: flex;
-    margin-bottom: 10px;
+    margin-bottom: auto;
+    padding-bottom: 5px;
 }
 
 .guests_icon img {
@@ -328,7 +357,7 @@ input[type="number"]::-webkit-outer-spin-button {
 .amenities {
     display: flex;
     flex-wrap: wrap;
-    margin: 10px 0px;
+    margin: 10px 0px 0px;
 }
 
 .amenity {
@@ -365,12 +394,13 @@ input[type="number"]::-webkit-outer-spin-button {
     border-radius: 3px;
 }
 
+.payment_box {
+    display: flex;
+}
+
 .payment_info {
-    position: absolute;
-    right: 150px;
-    top: 20px;
     width: 300px;
-    margin-top: 20px;
+    margin: 20px auto 0px;
 }
 
 .payment_info span {
@@ -397,7 +427,7 @@ input[type="number"]::-webkit-outer-spin-button {
 }
 
 .secure_item i {
-    color: var(--main-color)
+    color: var(--main-color);
 }
 
 .secure_item span {
@@ -440,7 +470,6 @@ input[type="number"]::-webkit-outer-spin-button {
     font-style: italic;
     font-size: 14px;
     margin-right: 15px;
-
 }
 
 .confirm_button {
@@ -460,4 +489,23 @@ input[type="number"]::-webkit-outer-spin-button {
 .confirm_button i {
     margin-right: 10px;
     font-size: 16px;
+}
+
+@media (max-width: 1000px) {
+    .payment_info {
+        padding-left: 20px;
+        width: 320px;
+        margin: 20px 0px 0px auto;
+    }
+}
+
+@media (max-width: 900px) {
+    .payment_box {
+        flex-direction: column;
+    }
+    .payment_info {
+        order: -1;
+        padding-left: 0px;
+        margin: 0px 0px 20px;
+    }
 }

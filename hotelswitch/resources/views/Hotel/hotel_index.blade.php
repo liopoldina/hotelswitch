@@ -9,6 +9,7 @@
 @section('head')
     <link rel="stylesheet" href={{ asset('css/search_form.css') }} />
     <link rel="stylesheet" href={{ asset('css/hotel.css') }} />
+    <script src={{asset('js/hammer.min.js')}}></script>
     <script src={{ asset('js/hotel.js') }}></script>
     @append
 
