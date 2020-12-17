@@ -1,14 +1,17 @@
-.container {
-    min-width: var(--min_width);
-    padding: 50px;
+body {
+    display: flex;
     background-color: #f8fafc;
-    flex:1;
+}
+
+.container {
+    flex-grow: 1;
 }
 
 .wrapper {
-    width: 725px;
+    padding: 50px;
+    width: 100%;
+    max-width: 825px;
     margin: 0px auto;
-
 }
 
 .tittle_wrapper {
@@ -24,11 +27,13 @@
     background-color: white;
     border: 1px solid rgba(0, 0, 0, 0.125);
     border-radius: 0px 0px 4px 4px;
-    padding: 35px 0px;
+    padding: 35px 35px 35px 55px;
 }
 
 .form_wrapper {
-    width: fit-content;
+    display: flex;
+    flex-direction: column;
+    max-width: fit-content;
     margin: 0px auto;
 }
 
@@ -38,6 +43,10 @@
     align-items: center;
 }
 
+.email_wrapper {
+    margin-right: 100px;
+}
+
 .section_margin {
     margin-bottom: 50px;
 }
@@ -45,27 +54,37 @@
 .item_wrapper label {
     font-size: 14px;
     margin-right: 25px;
-    width: 150px;
+    width: 125px;
+    flex-shrink: 0;
     text-align: end;
 }
 
 input,
+#country {
+    min-width: 200px;
+}
+
+input,
 select {
-    width: 300px;
+    width: 100%;
+    max-width: 300px;
 }
 
 #b_day {
     width: 55px;
+    min-width: 40px;
     margin-right: 10px;
 }
 
 #b_month {
     width: 145px;
+    min-width: 85px;
     margin-right: 10px;
 }
 
 #b_year {
     width: 80px;
+    min-width: 55px;
 }
 
 input,
@@ -75,7 +94,6 @@ select {
     border-radius: 3px;
 }
 
-
 input:focus,
 select:focus {
     border-color: #a1cbef;
@@ -83,51 +101,50 @@ select:focus {
     outline: 0;
 }
 
-.loading_wrapper{
+.loading_wrapper {
     width: 100px;
     display: flex;
     align-items: center;
     position: relative;
+    flex-shrink: 0;
 }
 
-.loading_gif{
+.loading_gif {
     height: 25px;
     margin-left: 5px;
     display: none;
 }
 
-.loading_wrapper i{
+.loading_wrapper i {
     margin-left: 10px;
     text-align: center;
-    color: var(--main-color-light)
+    color: var(--main-color-light);
 }
 
-.loading_text{
+.loading_text {
     margin-left: 5px;
     font-size: 13px;
     color: #999;
     position: absolute;
     left: 30px;
-
 }
 
 .note_wrapper {
     width: 300px;
-    margin-left: auto;
+    margin-left: 150px;
 }
 
 .input_note {
     font-size: 11px;
 }
 
-.error_message{
-    display:block;
-    color:red;
+.error_message {
+    display: block;
+    color: red;
     font-size: 13px;
-    margin-left: 175px;
-    margin-top:10px;
+    margin-left: 150px;
+    margin-top: 10px;
 }
-
 
 .password_reset {
     color: #fff;
@@ -141,4 +158,63 @@ select:focus {
 
 .password_reset:hover {
     background-color: #227dc7;
+}
+
+@media (max-width: 600px) {
+    .wrapper {
+        padding: 0px;
+    }
+    .tittle_wrapper {
+        border-radius: 0px;
+    }
+    .content_wrapper {
+        border-radius: 0px;
+        padding: 35px 20px;
+    }
+}
+
+@media (max-width: 500px) {
+    .content_wrapper {
+        padding: 20px 10px 20px 20px;
+    }
+    .form_wrapper {
+        width: 290px;
+    }
+    .item_wrapper {
+        flex-wrap: wrap;
+    }
+    .item_wrapper label {
+        width: 100%;
+        text-align: start;
+        margin-bottom: 10px;
+        margin-top: 5px;
+    }
+    .note_wrapper,
+    .error_message {
+        margin-left: 0;
+    }
+    .password_wrapper label {
+        width: fit-content;
+        margin-bottom: 0px;
+    }
+
+    .email_wrapper {
+        width: 100%;
+    }
+    .loading_text {
+        display: none;
+    }
+    .section_margin {
+        margin-bottom: 25px;
+    }
+    .loading_wrapper {
+        width: 30px;
+    }
+    input,
+    #country {
+        width: calc(100% - 30px);
+    }
+    #b_month {
+        width: 105px;
+    }
 }

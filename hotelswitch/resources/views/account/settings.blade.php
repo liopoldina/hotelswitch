@@ -8,13 +8,13 @@
 @append
 
 @section('content')
-<div class='container'>
+<div class="container">
     <div class="wrapper">
         <div class="tittle_wrapper">Settings</div>
         <div class="content_wrapper">
             <div class="form_wrapper">
                 @csrf
-                <div class="item_wrapper">
+                <div class="item_wrapper email_wrapper">
                     <label>E-Mail Address*</label>
                     <input value="{{$user->email}}" disabled>
                 </div>
@@ -83,7 +83,7 @@
                         <span class="loading_text"></span>
                     </div>
                 </div>
-                <div class="item_wrapper">
+                <div class="item_wrapper password_wrapper">
                     <label>Change Password</label>
                     <a href="password/reset">
                         <button type="submit" class="password_reset">Reset Password</button>
