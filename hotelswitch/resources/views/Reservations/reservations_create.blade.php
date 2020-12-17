@@ -36,25 +36,28 @@
             <div class="box_tittle">
                 <span>Stay Dates</span>
             </div>
-
-            <div class="dates_wrapper">
-                <div class="date_box">
-                    <span class="date_tittle">Check-in</span>
-                    <span
-                        class="date">{{ isset($rate) ? date("D j M Y",strtotime($rate->hotel->checkIn))  : 'Sun 11 Oct 2020'}}</span>
-                    <span class="hour">From {{substr($h->policies['Check-in and check-out'][0]??'14:00',-5)}}</span>
+            <div class="dates_length_wrapper">
+                <div class="dates_wrapper">
+                    <div class="date_box">
+                        <span class="date_tittle">Check-in</span>
+                        <span
+                            class="date">{{ isset($rate) ? date("D j M Y",strtotime($rate->hotel->checkIn))  : 'Sun 11 Oct 2020'}}</span>
+                        <span class="hour">From {{substr($h->policies['Check-in and check-out'][0]??'14:00',-5)}}</span>
+                    </div>
+                    <div class='divider'></div>
+                    <div class="date_box">
+                        <span class="date_tittle">Check-out</span>
+                        <span
+                            class="date">{{ isset($rate) ? date("D j M Y",strtotime($rate->hotel->checkOut)) : 'Thu 15 Oct 2020'}}</span>
+                        <span class="hour">Until
+                            {{substr($h->policies['Check-in and check-out'][1]??'12:00',-5)}}</span>
+                    </div>
                 </div>
-                <div class='divider'></div>
-                <div class="date_box">
-                    <span class="date_tittle">Check-out</span>
-                    <span
-                        class="date">{{ isset($rate) ? date("D j M Y",strtotime($rate->hotel->checkOut)) : 'Thu 15 Oct 2020'}}</span>
-                    <span class="hour">Until
-                        {{substr($h->policies['Check-in and check-out'][1]??'12:00',-5)}}</span>
+                <div class="length_wrapper">
+                    <span class='lenght_tittle'>Length of stay:</span>
+                    <span class='lenght'>{{ $h->nights_text  ?? '4 nights'}}</span>
                 </div>
             </div>
-            <span class='lenght_tittle'>Total length of stay:</span>
-            <span class='lenght'>{{ $h->nights_text  ?? '4 nights'}}</span>
         </div>
         <div class="left_box">
             <div class="box_tittle">
