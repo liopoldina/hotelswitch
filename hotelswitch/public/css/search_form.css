@@ -3,9 +3,7 @@
 }
 
 .left_content {
-    flex: 1;
-    max-width: 265px;
-    min-width: 250px;
+    width: 265px;
 }
 
 .right_content {
@@ -17,6 +15,7 @@
 .search {
     height: auto;
     width: auto;
+    min-width: fit-content;
     padding: 20px;
     background-color: var(--main-color);
     border-radius: 4px;
@@ -91,12 +90,18 @@
 .guests_wrapper {
     height: 45px;
     cursor: pointer;
-    padding: 6px 20px 6px 40px;
+    padding: 6px 0px 6px 39px;
     background-color: white;
+    display: flex;
+    flex-direction: column;
+    min-width: fit-content;
 }
 
-.guests_wrapper > span {
-    display: block;
+.box_content {
+    font-weight: bold;
+    white-space: nowrap;
+    padding-right: 3px;
+    min-width: 115px;
 }
 
 .bar_box {

@@ -20,9 +20,9 @@ class SearchController extends Controller
             'lat' => 'min:-90|max:90',
             'lon' => 'min:-180|max:180',
             'date_range' => 'string',
-            'adults' => 'numeric|min:1|max:4',
+            'adults' => 'numeric|min:1|max:8',
             'children' => 'numeric|min:0|max:2',
-            'rooms' => 'numeric|min:1|max:2'
+            'rooms' => 'numeric|min:1|max:4'
         ]);
 
         // get parameters

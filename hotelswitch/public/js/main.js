@@ -1,29 +1,130 @@
 $(function() {
-    // 1) dropdown menu
-    $(".account_dropdown").click(function() {
-        if ($(".dropdown_menu").hasClass("dropdown_menu_show")) {
-            $(".dropdown_menu").removeClass("dropdown_menu_show");
-        } else {
-            $(".dropdown_menu").addClass("dropdown_menu_show");
-        }
-    });
-
-    //hide if click outside
+    // 1) show hide if click outside
+    // user menu
     $(document).click(function(e) {
-        var dropdown = $(".account_dropdown");
-        var container = $(".dropdown_menu");
-
-        // if the target of the click isn't the container nor a descendant of the container
         if (
-            !container.is(e.target) &&
-            container.has(e.target).length === 0 &&
-            !dropdown.is(e.target)
+            ($(".account_dropdown").is(e.target) ||
+                !$(".account_dropdown").has(e.target).length == 0) &&
+            $(".dropdown_menu").css("display") == "none"
         ) {
-            $(".dropdown_menu").removeClass("dropdown_menu_show");
+            $(".dropdown_menu").css("display", "block");
+        } else if (
+            !$(".dropdown_menu").is(e.target) &&
+            $(".dropdown_menu").has(e.target).length == 0
+        ) {
+            $(".dropdown_menu").css("display", "none");
         }
     });
 
-    // 2) destination autocomplete
+    // guests_selection
+    $(document).click(function(e) {
+        if (
+            ($(".guests_wrapper").is(e.target) ||
+                !$(".guests_wrapper").has(e.target).length == 0) &&
+            $(".guests_selection").css("display") == "none"
+        ) {
+            $(".guests_selection").css("display", "flex");
+            $(".guests_wrapper").css(
+                "outline",
+                "-webkit-focus-ring-color auto 1px"
+            );
+        } else if (
+            !$(".guests_selection").is(e.target) &&
+            $(".guests_selection").has(e.target).length == 0
+        ) {
+            $(".guests_selection").css("display", "none");
+            $(".guests_wrapper").css("outline", "none");
+        }
+    });
+
+    // 2) guests selection
+
+    $(".item_selection i").click(function() {
+        number =
+            parseInt(
+                $(this)
+                    .siblings("input")
+                    .val()
+            ) + parseInt($(this).data("value"));
+
+        // min max
+        min = $(this)
+            .siblings("input")
+            .attr("min");
+        max = $(this)
+            .siblings("input")
+            .attr("max");
+        if (number > max) {
+            number = max;
+        }
+        if (number < min) {
+            number = min;
+        }
+
+        // singular or plural
+        if (number == 1) {
+            number_text = $(this)
+                .siblings("input")
+                .data("singular");
+        } else {
+            number_text = $(this)
+                .siblings("input")
+                .data("plural");
+        }
+        $(this)
+            .siblings("div")
+            .children(".item_type")
+            .text(number_text);
+
+        // change input value
+        $(this)
+            .siblings("input")
+            .val(number);
+
+        // change individual box text
+        $(this)
+            .siblings("div")
+            .children(".item_number")
+            .text(number);
+
+        // change total box text
+        total_text =
+            $(".item_number")
+                .eq(0)
+                .text() +
+            " " +
+            $(".item_type")
+                .eq(0)
+                .text() +
+            ", " +
+            $(".item_number")
+                .eq(1)
+                .text() +
+            " " +
+            $(".item_type")
+                .eq(1)
+                .text();
+        if ($("#children").val() > 0) {
+            total_text =
+                total_text +
+                ", " +
+                $(".item_number")
+                    .eq(2)
+                    .text() +
+                " " +
+                $(".item_type")
+                    .eq(2)
+                    .text();
+        }
+
+        $(this)
+            .parent()
+            .parent()
+            .siblings(".box_content")
+            .text(total_text);
+    });
+
+    // 3) destination autocomplete
     $("#destination")
         .autocomplete(
             {
@@ -63,7 +164,7 @@ $(function() {
             $(this).autocomplete("search");
         });
 
-    // 3) date_range_picker
+    // 4) date_range_picker
     // get today date
     var today = new Date();
     var dd = String(today.getDate()).padStart(2, "0");

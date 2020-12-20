@@ -243,19 +243,18 @@
                     <div class="dates_boxes search_box">
                         <div class="dates_box">
                             <div class="box_title">Check-in</div>
-                            <div class="box_text">{{$h->check_in ?? '2020-07-22'}}</div>
+                            <div class="box_text">{{date("m/d/Y",strtotime($h->check_in))}}</div>
                         </div>
                         <div class="box_divider"></div>
                         <div class="dates_box">
                             <div class="box_title">Checkout</div>
-                            <div class="box_text">{{$h->check_out ?? '2020-07-25'}}</div>
+                            <div class="box_text">{{date("m/d/Y",strtotime($h->check_out))}}</div>
                         </div>
                     </div>
                     <div class="guests_box search_box">
                         <div class="box_guests_wrapper">
                             <div class="box_title">Guests</div>
-                            <div
-                                class="box_text">{{isset($h->adults) ? $h->rooms_text . ", " . $h->adults_text  : '1 room, 2 adults'}}</div>
+                            <div class="box_text">{{$m->rooms_text . ", " . $m->adults_text . ($m->children > 0 ? ", ".$m->children_text : "")}}</div>
                         </div>
                     </div>
                     <div class="update_wrapper search_box">
@@ -839,7 +838,7 @@
                     <div class="guests_wrapper_update bar_box_update">
                         <i class="fas fa-user-friends fa-lg" aria-hidden="true"></i>
                         <div class="box_tittle_update">Guests</div>
-                        <div class="box_content_update">1 room, 2 adults</div>
+                        <div class="box_content_update">{{$m->rooms_text . ", " . $m->adults_text . ($m->children > 0 ? ", ".$m->children_text : "")}}</div>
                         <input type="hidden" name="adults" value="2" required="">
                         <input type="hidden" name="children" value="0" required="">
                         <input type="hidden" name="rooms" value="1" required="">

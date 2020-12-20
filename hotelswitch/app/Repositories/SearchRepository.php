@@ -39,8 +39,8 @@ class SearchRepository{
                     "occupancies"=> [
                         [
                         "rooms"   => $m->rooms,
-                        "adults"  => $m->adults,
-                        "children"=> $m->children
+                        "adults"  => $m->adults_per_room,
+                        "children"=> $m->children_per_room
                         ]
                     ],
                     "geolocation" => [
@@ -99,6 +99,10 @@ class SearchRepository{
 
         }
         
+        for ($i = 0; $i < $m->children_per_room; $i++){
+            $body["occupancies"][0]["paxes"] [] = [ "type"=> "CH", "age"=> 12 ];
+        }
+
         $response = $client->request('POST', 'hotels',  ['headers' => $headers,'json' => $body,]);
         
         $response_json = json_decode($response->getBody()->getContents());
@@ -262,7 +266,10 @@ class Result {
 
     var $pick_score;
 
+    var $room_number;
     var $room_name;
+    var $adults;
+    var $children;
     var $bed_type;
 
     var $cancellation_deadline;
@@ -302,7 +309,11 @@ class Result {
                  
                 if(isset($input["top_picks"])){ $this->pick_score =  $input["top_picks"];}
 
+                $this->room_number = $input["rooms"][0]["rates"][0]["rooms"];
                 $this->room_name = MyLibrary::titleCase($input["rooms"][0]["name"]);
+                $this->adults = $input["rooms"][0]["rates"][0]["adults"];
+                $this->children = $input["rooms"][0]["rates"][0]["children"];
+
                 $this->set_bed_type();
 
                 if (isset($input["rooms"][0]["rates"][0]["cancellationPolicies"][0]["from"])){

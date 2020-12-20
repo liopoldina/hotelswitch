@@ -319,12 +319,8 @@ $(function() {
             $(box)
                 .find(".search_cover_photo")
                 .attr("data-index", 1);
-            $(box)
-                .find(".name")
-                .text(hotel[i].name + " ");
-            $(box)
-                .find(".name")
-                .append($('<div class="stars"></div>'));
+            $(box).find(".name")[0].childNodes[0].nodeValue =
+                hotel[i].name + " ";
             $(box)
                 .find(".stars")
                 .text(hotel[i].stars_symbol);
@@ -352,9 +348,41 @@ $(function() {
             $(box)
                 .find("meter")
                 .attr("value", hotel[i].pick_score);
+            $(box).find(".room_name")[0].childNodes[0].nodeValue =
+                hotel[i].room_number + " x " + hotel[i].room_name;
             $(box)
-                .find(".room_name")
-                .text(hotel[i].room_name);
+                .find("i")
+                .remove();
+            $(box)
+                .find(".adults_multiplier, .children_multiplier")
+                .text("");
+            if (hotel[i].adults > 3) {
+                $('<i class="fas fa-user"></i>').insertBefore(
+                    $(box).find(".adults_multiplier")
+                );
+                $(box)
+                    .find(".adults_multiplier")
+                    .text("x " + hotel[i].adults);
+                if (hotel[i].children > 0) {
+                    $('<i class="fas fa-child"></i>').insertBefore(
+                        $(box).find(".children_multiplier")
+                    );
+                    $(box)
+                        .find(".children_multiplier")
+                        .text("x " + hotel[i].children);
+                }
+            } else {
+                for (g = 0; g < hotel[i].adults; g++) {
+                    $(box)
+                        .find(".room_guests_icon")
+                        .append(' <i class="fas fa-user"></i>');
+                }
+                for (c = 0; c < hotel[i].children; c++) {
+                    $(box)
+                        .find(".room_guests_icon")
+                        .append('<i class="fas fa-child"></i>');
+                }
+            }
             $(box)
                 .find(".cancellation_policy")
                 .text(hotel[i].cancellation_policy);

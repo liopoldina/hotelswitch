@@ -27,10 +27,36 @@
                 <div class=" guests_wrapper bar_box">
                     <label class="icon_label"> <i class="fas fa-user-friends fa-lg" aria-hidden="true"></i></label>
                     <span class="box_tittle">Guests</span>
-                    <span class="box_content">1 room, 1 adults </span>
-                    <input type="hidden" id="adults" name="adults" value="2" required="">
-                    <input type="hidden" id="children" name="children" value="0" required="">
-                    <input type="hidden" id="rooms" name="rooms" value="1" required="">
+                    <span class="box_content">{{$m->rooms_text}}, {{$m->adults_text}}{{$m->children > 0 ? ", " .$m->children_text : ""}} </span>
+                    <div class="guests_selection">
+                        <div class="item_selection">
+                            <i class="fas fa-minus" data-value=-1></i>
+                            <div class="item_text">
+                                <span class="item_number">{{$m->rooms}}</span>
+                                <span class="item_type">{{$m->rooms == 1 ? "room" : "rooms"}}</span>
+                            </div>
+                            <i class="fas fa-plus" data-value=1></i>
+                            <input type="hidden" id="rooms" name="rooms" value={{$m->rooms}} min=1 max=4 data-singular="room" data-plural="rooms" required>
+                        </div>
+                        <div class="item_selection">
+                            <i class="fas fa-minus" data-value=-1></i>
+                            <div class="item_text">
+                                <span class="item_number">{{$m->adults}}</span>
+                                <span class="item_type">{{$m->adults == 1 ? "adult" : "adults"}}</span>
+                            </div>
+                            <i class="fas fa-plus" data-value=1></i>
+                            <input type="hidden" id="adults" name="adults" value={{$m->adults}} min=1 max=8 data-singular="adult" data-plural="adults" required>
+                        </div>
+                        <div class="item_selection">
+                            <i class="fas fa-minus" data-value=-1></i>
+                            <div class="item_text">
+                                <span class="item_number">{{$m->children}}</span>
+                                <span class="item_type">{{$m->children == 1 ? "child" : "children"}}</span>
+                            </div>
+                            <i class="fas fa-plus" data-value=1></i>
+                            <input type="hidden" id="children" name="children" value={{$m->children}} min=0 max=2 data-singular="child" data-plural="children" required>
+                        </div>
+                    </div>
                 </div>
                 <div class="search_button">
                     <button type="submit">Search</button>

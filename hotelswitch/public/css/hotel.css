@@ -773,8 +773,10 @@
 
 .guests_wrapper_update {
     cursor: pointer;
-    padding: 6px 20px 6px 55px;
+    padding: 6px 15px 6px 55px;
     flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
 }
 
 .guests_wrapper_update i {
@@ -1292,7 +1294,7 @@
     }
 }
 
-@media (max-width: 700px) {
+@media (max-width: 790px) {
     .search_bar_update form {
         flex-direction: column;
     }
@@ -1302,6 +1304,9 @@
     .dates_wrapper_update,
     .guests_wrapper_update {
         margin-bottom: 15px;
+    }
+    .dates_input_update {
+        width: 100%;
     }
     .bar_button_update {
         height: 55px;

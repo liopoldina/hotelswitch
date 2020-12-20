@@ -46,9 +46,35 @@
                     <label class="icon_label"> <i class="fas fa-user-friends fa-lg"></i></label>
                     <span class='box_tittle'>Guests</span>
                     <span class='box_content'>1 room, 2 adults </span>
-                    <input type="hidden" id="adults" name="adults" value="2" required>
-                    <input type="hidden" id="children" name="children" value="0" required>
-                    <input type="hidden" id="rooms" name="rooms" value="1" required>
+                    <div class="guests_selection">
+                        <div class="item_selection">
+                            <i class="fas fa-minus" data-value=-1></i>
+                            <div class="item_text">
+                                <span class="item_number">1</span>
+                                <span class="item_type">room</span>
+                            </div>
+                            <i class="fas fa-plus" data-value=1></i>
+                            <input type="hidden" id="rooms" name="rooms" value="1" min=1 max=4 data-singular="room" data-plural="rooms" required>
+                        </div>
+                        <div class="item_selection">
+                            <i class="fas fa-minus" data-value=-1></i>
+                            <div class="item_text">
+                                <span class="item_number">2</span>
+                                <span class="item_type">adults</span>
+                            </div>
+                            <i class="fas fa-plus" data-value=1></i>
+                            <input type="hidden" id="adults" name="adults" value="2" min=1 max=8 data-singular="adult" data-plural="adults" required>
+                        </div>
+                        <div class="item_selection">
+                            <i class="fas fa-minus" data-value=-1></i>
+                            <div class="item_text">
+                                <span class="item_number">0</span>
+                                <span class="item_type">children</span>
+                            </div>
+                            <i class="fas fa-plus" data-value=1></i>
+                            <input type="hidden" id="children" name="children" value="0" min=0 max=2 data-singular="child" data-plural="children" required>
+                        </div>
+                    </div>
                 </div>
                 <button class='bar_button' type="submit">Search</button>
             </form>

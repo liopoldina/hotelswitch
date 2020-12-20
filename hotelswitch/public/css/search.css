@@ -859,12 +859,16 @@ input:checked + .slider:before {
 
 .room_guests_icon {
     display: inline-flex;
+    align-items: flex-end;
 }
 
-.guest_icon {
-    height: 12px;
-    width: 12px;
-    margin-top: 1.5px;
+.room_guests_icon i {
+    padding: 0px 1px 3px;
+}
+
+.adults_multiplier {
+    margin-left: 2px;
+    margin-right: 5px;
 }
 
 .nights_guests {

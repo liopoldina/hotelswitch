@@ -338,23 +338,37 @@
                         </div>
                         <div class="address_wrapper">
                             <span class="district">{{ $hotel[$i]->district ?? '' }}</span>
-                            <span class="city">{{ $hotel[$i]->city ?? 'City' }}</span>
+                            <span class="city">{{ $hotel[$i]->city}}</span>
                             <span class="address_separator">.</span>
-                            <span class="distance_center"> {{ $hotel[$i]->distance_center ?? '250m from center' }}</span>
+                            <span class="distance_center"> {{ $hotel[$i]->distance_center}}</span>
                         </div>
                         <div class="hotel_room">
                             <div class="room_title">
-                                <div class="room_name">{{ $hotel[$i]->room_name ?? 'Standard Double Room' }}
+                                <div class="room_name">{{ $hotel[$i]->room_number}} x {{ $hotel[$i]->room_name}}
                                     <div class="room_guests_icon">
                                         <span class="room_separator">-</span>
-                                        <img class=guest_icon src="./images/search/guest_icon.png" alt="guest_icon" />
-                                        <img class=guest_icon src="./images/search/guest_icon.png" alt="guest_icon" />
+                                        @if($hotel[$i]->adults > 3)
+                                        <i class="fas fa-user"></i>
+                                        <span class="adults_multiplier">x {{$hotel[$i]->adults}}</span>
+                                        @if($hotel[$i]->children > 0)
+                                            <i class="fas fa-child"></i>
+                                            <span class="children_multiplier">x {{$hotel[$i]->children}}</span>
+                                        @endif
+                                        @else
+                                        @for ($g = 0; $g < $hotel[$i]->adults; $g++)
+                                            <i class="fas fa-user"></i>
+                                        @endfor
+                                        @for ($c = 0; $c < $hotel[$i]->children; $c++)
+                                            <i class="fas fa-child"></i>
+                                        @endfor
+                                        @endif
                                     </div>
                                 </div>
                                 <div class="nights_guests">
-                                    <span class="nights">{{ $m->nights_text ?? '2 nights' }}</span>
+                                    <span class="nights">{{ $m->nights_text}}</span>
                                     <span>, </span>
-                                    <span class="adults">{{ $m->adults_text ?? '2 adults' }}</span>
+                                    <span class="adults">{{ $m->adults > 1 ? $m->adults . " adults" : $m->adults . " adult"   }}</span>
+                                    <span class="children">{{ $m->children > 1 ? ", " . $m->children . " children" : ($m->children == 1 ? ", " . $m->children . " child" : "") }}</span>
                                 </div>
                             </div>
                             <div class="rate_wrapper">
@@ -402,7 +416,7 @@
                 <img src="images/search/page_loading.gif" alt="page_loading">
             </div>
         </div>
-        <div class="no_results_wrapper">
+        <div class="no_results_wrapper {{empty($hotel) ? "no_results_filter_show" :""}}">
             <img class="no_results_icon" src="./images/search/information_icon.jpg" alt="page_end_icon">
             <span class="no_results_message">There are no more properties that match your search criteria.</span>
         </div>

@@ -19,6 +19,15 @@ class MRepository{
         $m->children = (request()->has('children') ? request()->children :"0");
         $m->rooms = (request()->has('rooms') ? request()->rooms :"1");
 
+        $m->adults_per_room = ceil($m->adults /  $m->rooms);
+        $m->children_per_room = ceil($m->children /  $m->rooms);
+
+        if(  $m->adults % 2 == 1 && $m->children % 2 == 1 && $m->adults >1){ 
+            //odd
+            $m->adults_per_room = $m->adults_per_room - 1; 
+        } 
+        
+
         // format variables
         $date_range_array = explode(' ',trim($m->date_range));
         $m->check_in = strtotime($date_range_array[0]);
@@ -32,6 +41,13 @@ class MRepository{
 
         if ($m->adults==1) {$m->adults_text = $m->adults." adult";}
         else  {$m->adults_text = $m->adults." adults";}
+
+        if ($m->rooms==1) {$m->rooms_text = $m->rooms." room";}
+        else  {$m->rooms_text = $m->rooms." rooms";}
+
+        if ($m->children==1) {$m->children_text = $m->children." child";}
+        elseif ($m->children==0) {$m->children_text = "";}
+        else  {$m->children_text = $m->children." children";}
 
         return $m;
     }
