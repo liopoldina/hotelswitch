@@ -116,10 +116,12 @@ class Hotel {
     var $check_out;
     var $nights;
     var $nights_text;
-    var $adults;
-    var $adults_text;
     var $rooms;
     var $rooms_text;
+    var $adults;
+    var $adults_text;
+    var $children;
+    var $children_text;
 
     var $name;
     var $stars;
@@ -146,15 +148,18 @@ class Hotel {
     {           
                 $this->check_in = $r->hotel->checkIn ??  $r["reservation"]["booking"]["hotel"]["checkIn"];
                 $this->check_out = $r->hotel->checkOut ??  $r["reservation"]["booking"]["hotel"]["checkOut"];
+                
                 $this->nights = (strtotime($this->check_out) - strtotime($this->check_in))/86400;
-                $this->nights_text = $this->nights . " nights";
-                if ($this->nights=1){$this->nights_text = $this->nights . " night";}
-                $this->adults = $r->hotel->rooms[0]->rates[0]->adults ?? $r["reservation"]["booking"]["hotel"]["rooms"][0]["rates"][0]["adults"];
-                $this->adults_text = $this->adults . " adults";
-                if ($this->adults == 1){$this->adults_text = $this->adults . " adult";}
+                $this->nights_text = $this->nights .  ($this->nights == 1 ? " night" :" nights");
+
                 $this->rooms = $r->hotel->rooms[0]->rates[0]->rooms ?? $r["reservation"]["booking"]["hotel"]["rooms"][0]["rates"][0]["rooms"];
-                $this->rooms_text = $this->rooms . " rooms";
-                if ($this->rooms == 1){$this->rooms_text = $this->rooms . " room";}
+                $this->rooms_text = $this->rooms .  ($this->adults == 1 ? " room" :" rooms");
+
+                $this->adults = $r->hotel->rooms[0]->rates[0]->adults ?? $r["reservation"]["booking"]["hotel"]["rooms"][0]["rates"][0]["adults"];
+                $this->adults_text = $this->adults .  ($this->adults == 1 ? " adult" :" adults");
+
+                $this->children = $r->hotel->rooms[0]->rates[0]->children ?? $r["reservation"]["booking"]["hotel"]["rooms"][0]["rates"][0]["children"];
+                $this->children_text = $this->children .  ($this->adults == 1 ? " child" :" children");
 
                 $this->name = $static["name"]["content"];
                 $this->stars = (int)$static["categoryCode"];

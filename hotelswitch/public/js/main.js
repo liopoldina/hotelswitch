@@ -89,30 +89,48 @@ $(function() {
 
         // change total box text
         total_text =
-            $(".item_number")
+            $(this)
+                .parent()
+                .parent()
+                .find(".item_number")
                 .eq(0)
                 .text() +
             " " +
-            $(".item_type")
+            $(this)
+                .parent()
+                .parent()
+                .find(".item_type")
                 .eq(0)
                 .text() +
             ", " +
-            $(".item_number")
+            $(this)
+                .parent()
+                .parent()
+                .find(".item_number")
                 .eq(1)
                 .text() +
             " " +
-            $(".item_type")
+            $(this)
+                .parent()
+                .parent()
+                .find(".item_type")
                 .eq(1)
                 .text();
         if ($("#children").val() > 0) {
             total_text =
                 total_text +
                 ", " +
-                $(".item_number")
+                $(this)
+                    .parent()
+                    .parent()
+                    .find(".item_number")
                     .eq(2)
                     .text() +
                 " " +
-                $(".item_type")
+                $(this)
+                    .parent()
+                    .parent()
+                    .find(".item_type")
                     .eq(2)
                     .text();
         }

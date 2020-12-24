@@ -359,7 +359,8 @@
                                             <i class="fas fa-user"></i>
                                         @endfor
                                         @for ($c = 0; $c < $hotel[$i]->children; $c++)
-                                            <i class="fas fa-child"></i>
+                                            {{-- <i class="fas fa-child"></i> --}}
+                                            <i class="fas fa-user"></i>
                                         @endfor
                                         @endif
                                     </div>

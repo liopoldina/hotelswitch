@@ -75,8 +75,8 @@ class SearchRepository{
                     "occupancies"=> [
                         [
                         "rooms"   => $m->rooms,
-                        "adults"  => $m->adults,
-                        "children"=> $m->children
+                        "adults"  => $m->adults_per_room,
+                        "children"=> $m->children_per_room
                         ]
                     ],
                     "hotels" => [

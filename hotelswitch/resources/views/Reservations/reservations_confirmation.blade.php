@@ -11,23 +11,23 @@
 @section('content')
 <div class="confirmation_wrapper">
     <div class='top'>
-        <div class='thank_you'> Thank you {{$r->first_name ?? 'John Doe'}}!</div>
+        <div class='thank_you'> Thank you {{$r->first_name}}!</div>
         <div class='congratulations'><i class="far fa-thumbs-up"></i>Congratulations! Your Booking is confirmed.
         </div>
         <button class='print' onclick="window.print()"><i class="fas fa-print"></i>Print your reservation</button>
         <ul class="fa-ul">
             <li><i class="fa-li fa fa-check"></i>We sent you a confirmation email to
-                <strong>{{$r->email ?? 'johndoe@gmail.com'}}</strong>
+                <strong>{{$r->email}}</strong>
             </li>
             <li><i
-                    class="fa-li fa fa-check"></i><strong>{{$r['reservation']['booking']['hotel']['name'] ?? 'Royal Hotel'}}</strong>
+                    class="fa-li fa fa-check"></i><strong>{{$r['reservation']['booking']['hotel']['name']}}</strong>
                 is
                 expecting you on the
-                <strong>{{isset($r) ? date('j \of F',strtotime($r['reservation']['booking']['hotel']['checkIn'])) : '11 of October'}}</strong>
+                <strong>{{date('j \of F',strtotime($r['reservation']['booking']['hotel']['checkIn']))}}</strong>
             </li>
             <li><i class="fa-li fa fa-check"></i>You can contact the property directly by email to
-                <strong>{{$h->email ?? 'info@royalhotel.com'}}</strong> or by
-                phone to <strong>{{$h->phone ?? '123456789'}}</strong></li>
+                <strong>{{$h->email}}</strong> or by
+                phone to <strong>{{$h->phone}}</strong></li>
         </ul>
     </div>
     <div class="hotel_wrapper">
@@ -64,35 +64,34 @@
     <div class='reservations_details'>
         <div class='detail'>
             <span class='detail_tittle'>Reservation Number</span>
-            <span class='detail_content'>{{$r['reservation']['booking']['reference'] ?? 1122334455}}</span>
+            <span class='detail_content'>{{$r['reservation']['booking']['reference']}}</span>
         </div>
         <div class='detail'>
             <span class='detail_tittle'>Holder Name</span>
             <span
-                class='detail_content'>{{isset($r) ? $MyLibrary->titleCase($r['reservation']['booking']['holder']['name'] . " " . $r['reservation']['booking']['holder']['surname']) : 'Pedro Costa'}}</span>
+                class='detail_content'>{{$MyLibrary->titleCase($r['reservation']['booking']['holder']['name'] . " " . $r['reservation']['booking']['holder']['surname'])}}</span>
         </div>
         <div class='detail'>
             <span class='detail_tittle'>Number of Guests</span>
             <span class='detail_content'>{{$h->adults_text ?? '2 adults' }}</span>
         </div>
         <div class='detail'>
-            <span class='detail_tittle'>Room Type</span>
-            <span class='detail_content'>1 x {{isset($r) ?$MyLibrary->titleCase($r['reservation']['booking']['hotel']['rooms'][0]['name']) : 'Double or Twin Room with Private Ensuite
-                    Bathroom'}}</span>
+            <span class='detail_tittle'>Rooms</span>
+            <span class='detail_content'>{{$r['reservation']['booking']['hotel']['rooms'][0]['rates']['0']['rooms']}} x {{$MyLibrary->titleCase($r['reservation']['booking']['hotel']['rooms'][0]['name'])}}</span>
         </div>
         <div class='detail'>
             <span class='detail_tittle'>Total length of stay</span>
-            <span class='detail_content'>{{$h->nights_text ?? '4 nights' }}</span>
+            <span class='detail_content'>{{$h->nights_text}}</span>
         </div>
         <div class='detail'>
             <span class='detail_tittle'>Check-in</span>
             <span
-                class='detail_content'>{{isset($r) ? date('D j  M  Y',strtotime($r['reservation']['booking']['hotel']['checkIn'])) : 'Sun 11 Oct 2020'}}</span>
+                class='detail_content'>{{date('D j  M  Y',strtotime($r['reservation']['booking']['hotel']['checkIn']))}}</span>
         </div>
         <div class='detail'>
             <span class='detail_tittle'>Check-out</span>
             <span
-                class='detail_content'>{{isset($r) ? date('D j  M  Y',strtotime($r['reservation']['booking']['hotel']['checkOut'])) :  'Thu 15 Oct 2020'}}</span>
+                class='detail_content'>{{date('D j  M  Y',strtotime($r['reservation']['booking']['hotel']['checkOut']))}}</span>
         </div>
         <div class='detail'>
             <span class='detail_tittle'>Cancellation Policy</span>

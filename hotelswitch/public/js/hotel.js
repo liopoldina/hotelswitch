@@ -79,6 +79,27 @@ $(function() {
         }
     });
 
+    // show hide guests_selection
+    $(document).click(function(e) {
+        if (
+            ($(".guests_wrapper_update").is(e.target) ||
+                !$(".guests_wrapper_update").has(e.target).length == 0) &&
+            $(".guests_selection_update").css("display") == "none"
+        ) {
+            $(".guests_selection_update").css("display", "flex");
+            $(".guests_wrapper_update").css(
+                "outline",
+                "-webkit-focus-ring-color auto 1px"
+            );
+        } else if (
+            !$(".guests_selection_update").is(e.target) &&
+            $(".guests_selection_update").has(e.target).length == 0
+        ) {
+            $(".guests_selection_update").css("display", "none");
+            $(".guests_wrapper_update").css("outline", "none");
+        }
+    });
+
     // date_range_picker update
     // get today date
     var today = new Date();

@@ -69,12 +69,13 @@ class Hotel {
                 // dynamic content
                 if($info["info"]["total"] > 0){ 
                     $this->adults =$offer[0]["rooms"][0]["rates"][0]["adults"]; 
-                    $this->adults_text = $this->adults . " adults";
-                    if ($this->adults == 1){$this->adults_text = $this->adults . " adult";}
-                    $this->rooms = $offer[0]["rooms"][0]["rates"][0]["rooms"];
-                    $this->rooms_text = $this->rooms . " rooms";
-                    if ($this->rooms == 1){$this->rooms_text = $this->rooms . " room";}
+                    $this->adults_text = $this->adults .  ($this->adults == 1 ? " adult" :" adults");
 
+                    $this->children =$offer[0]["rooms"][0]["rates"][0]["children"]; 
+                    $this->children_text = $this->children .  ($this->children == 1 ? " child" :" children");
+
+                    $this->rooms = $offer[0]["rooms"][0]["rates"][0]["rooms"];
+                    $this->rooms_text = $this->rooms .  ($this->rooms == 1 ? " room" :" rooms");
 
                     $this->score = $offer[0]["reviews"][0]["rate"] * 2;
                     $this->quality = MyLibrary::set_quality($this->score );
@@ -232,6 +233,15 @@ class Hotel {
     function get_offer($rooms,$static){
 
         for ($i=0; $i < count($rooms); $i++){
+            // occupancy text
+            $rooms[$i]["rates"][0]["adults_text"] = $rooms[$i]["rates"][0]["adults"] . " adults";
+
+            if($rooms[$i]["rates"][0]["children"]==0){
+                $rooms[$i]["rates"][0]["children_text"] = "";
+            }else{
+            $rooms[$i]["rates"][0]["children_text"] = ", " .  ($rooms[$i]["rates"][0]["children"]==1 ? "child" : "children");
+            }
+
             // get room images
             foreach($static["images"] as $image){
                 if (isset($image["roomCode"]))
@@ -242,7 +252,7 @@ class Hotel {
     
     
             for ($n=0; $n < count($rooms[$i]["rates"]); $n++){
-    
+
                 // set cancellaton policy
                 $rooms[$i]["rates"][$n]["cancellationPolicies"][0]["description"] = "Non-refundable rate"; //default
     

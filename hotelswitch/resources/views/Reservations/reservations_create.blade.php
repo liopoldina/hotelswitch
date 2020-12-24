@@ -53,9 +53,16 @@
                             {{substr($h->policies['Check-in and check-out'][1]??'12:00',-5)}}</span>
                     </div>
                 </div>
-                <div class="length_wrapper">
-                    <span class='lenght_tittle'>Length of stay:</span>
-                    <span class='lenght'>{{ $h->nights_text  ?? '4 nights'}}</span>
+                <div class="dates_wrapper">
+                    <div class="date_box">
+                        <span class='date_tittle'>Length of stay:</span>
+                        <span class='date'>{{ $h->nights_text  ?? '4 nights'}}</span>
+                    </div>
+                    <div class='divider divider_no_border'></div>
+                    <div class="date_box">
+                        <span class='date_tittle'>Guests:</span>
+                        <span class='date'>{{$h->adults_text}}{{$h->children > 0 ? ", " . $h->children_text : ""}}</span>
+                    </div>
                 </div>
             </div>
         </div>
@@ -64,9 +71,9 @@
                 <span>Room Selection</span>
             </div>
             <div class='room_type'>
-                <span>1</span>
+                <span>{{$rate->hotel->rooms[0]->rates[0]->rooms}}</span>
                 <span>x</span>
-                <span>{{isset($rate) ? $MyLibrary->titleCase($rate->hotel->rooms[0]->name) : 'Double or Twin Room with Private Ensuite Bathroom'}}</span>
+                <span>{{$MyLibrary->titleCase($rate->hotel->rooms[0]->name)}}</span>
             </div>
         </div>
         <div class="left_box">
@@ -171,8 +178,10 @@
                 <span>Step 2: Room details</span>
             </div>
             <div class="right_box">
+                <strong>{{$rate->hotel->rooms[0]->rates[0]->rooms}}</strong>
+                <strong>x</strong>
                 <span
-                    class='room_name'>{{isset($rate) ? $MyLibrary->titleCase($rate->hotel->rooms[0]->name) : 'Double or Twin Room with Private Ensuite Bathroom'}}</span>
+                    class='room_name'>{{$MyLibrary->titleCase($rate->hotel->rooms[0]->name)}}</span>
                 <div class="amenities">
                     <div class="amenity">
                         <i class="fas fa-bath"></i>
@@ -201,13 +210,12 @@
                             alt="">
                     </div>
                     <div class="room_right">
-
                         <div class="room_capacity">
                             <div class="guests_icon">
                                 @for($g=0; $g < $h->adults; $g++)<img src="./images/search/guest_icon.png"
                                         alt="guest_icon">@endfor
                             </div>
-                            <span class="offer_guests">{{$h->adults_text}}</span>
+                            <span class="offer_guests">{{$h->adults_text}}{{$h->children > 0 ? ", " . $h->children_text : ""}}</span>
                         </div>
                         <label for='special_requests'>Special Requests</label>
                         <textarea type="text" id='special_requests' name='special_requests' maxlength="350"></textarea>

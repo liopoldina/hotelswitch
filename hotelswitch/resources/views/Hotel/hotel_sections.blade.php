@@ -124,16 +124,16 @@
             @if(isset($h->offer))
                 <div class="head_book">
                     <div class="nightly_price"><span class="header_price">€
-                    {{isset($h) ? round(intval($h->offer[0]["rates"][0]["sellingRate"])/$h->nights) : '99' }}</span>
+                    {{round(intval($h->offer[0]["rates"][0]["sellingRate"])/($h->nights*$h->offer[0]["rates"][0]["rooms"]))}}</span>
                     </div>
                     <div class="head_nightly_text">
                         <span>nightly price per room</span>
                     </div>
                     <div class="total_price">
                         <strong
-                            class="total_price_text">{{isset($h) ? intval($h->offer[0]["rates"][0]["sellingRate"]) : '198' }}
+                            class="total_price_text">{{intval($h->offer[0]["rates"][0]["sellingRate"])}}
                             €</strong>
-                        <span class="header_nights">for {{isset($h) ? $h->nights_text : 'for 2 nights'}}</span>
+                        <span class="header_nights">for {{$h->rooms_text}}</span>
                     </div>
                     <div class="head_button">
                         <a href="">
@@ -289,15 +289,19 @@
                                         </div>
                                         <div class="room_name">
                                             <span
-                                                class="room_name">{{MyLibrary::titleCase($h->offer[$r]["name"])}}</span>
+                                                class="room_name">{{$h->offer[$r]["rates"][0]["rooms"]}} x {{MyLibrary::titleCase($h->offer[$r]["name"])}}</span>
                                         </div>
+                                        <span class="room_capacity_tittle" >Room Capacity:</span>
                                         <div class="room_capacity">
                                             <div class="room_guests_icon">
-                                                @for($g=0; $g < $h->adults; $g++)<img
-                                                    src="./images/search/guest_icon.png"
-                                                    alt="guest_icon">@endfor
+                                                @for($a=0; $a < $h->offer[$r]["rates"][0]["adults"]; $a++)
+                                                <i class="fas fa-user" aria-hidden="true"></i>
+                                                @endfor
+                                                @for($c=0; $c < $h->offer[$r]["rates"][0]["children"]; $c++)
+                                                <i class="fas fa-child" aria-hidden="true"></i>
+                                                @endfor
                                             </div>
-                                            <span class="offer_guests">{{$h->adults_text}}</span>
+                                            <span class="offer_guests">{{$h->offer[$r]["rates"][0]["adults_text"]}}{{$h->offer[$r]["rates"][0]["children_text"]}}</span>
                                         </div>
                                         <div class="more_details">
                                             <span>See room details</span>
@@ -310,8 +314,7 @@
                                             <i class="fas fa-fan"></i> <span>Air conditioning</span>
                                         </div>
                                         <ul class="room_ul">
-                                            <li class="room_li_price">The price shown is the final price for
-                                                {{$h->nights_text}}
+                                            <li class="room_li_price">The price shown is the final price for {{$h->rooms_text}} for {{$h->nights_text}}
                                             </li>
                                             <li><strong>VAT already included</strong></li>
                                             @isset($h->tourist_tax)
@@ -326,13 +329,6 @@
                                         @for ($i=0; $i<count($h->offer[$r]["rates"]); $i++)
                                             <div class="offer_select">
                                                 <div class="room_offer">
-                                                    <div class="room_total">
-                                                <span
-                                                    class="room_total_price">€{{intval($h->offer[$r]["rates"][$i]["sellingRate"])}}</span>
-                                                    </div>
-                                                    <div class="room_nights">
-                                                        <span class='nights_text'>for {{$h->nights_text}}</span>
-                                                    </div>
                                                     @if($h->offer[$r]["rates"][$i]["boardName"] == 'BED AND BREAKFAST')
                                                         <div class="offer breakfast_included" name="board">
                                                             <i class="fas fa-coffee" name="board_icon"></i>
@@ -368,22 +364,18 @@
                                                         </div>
                                                     @endif
                                                 </div>
-                                                <div class="room_select">
-                                                    <select class="nr_rooms" type="text" name="nr_rooms">
-                                                        @if (isset($h))
-                                                            @for ($n=0; $n <= $h->offer[$r]["rates"][$i]["allotment"]; $n++)
-                                                                <option value={{$n}}>{{$n}}</option>
-
-                                                            @endfor
-
-                                                        @else
-                                                            <option value="1">1</option>
-                                                            <option value="2">2</option>
-                                                            <option value="3">3</option>
-                                                            <option value="4">4</option>
-                                                            <option value="5">5</option>
-                                                        @endif
-                                                    </select>
+                                                <div class="room_reserve">
+                                                    <div class="room_total">
+                                                        <span class="room_total_price">€{{intval($h->offer[$r]["rates"][$i]["sellingRate"])}}</span>
+                                                    </div>
+                                                    <span class='nights_text'>for {{$h->offer[$r]["rates"][$i]["rooms"]}} {{$h->offer[$r]["rates"][$i]["rooms"]>1?"rooms": "room"}} for {{$h->nights_text}}</span>
+                                                    <a href="book?rateKey={{$h->offer[$r]["rates"][$i]["rateKey"] ?? ''}}" target="_blank">
+                                                        <button>Reserve</button>
+                                                    </a>
+                                                    <span class='price_per_night'>(<strong>{{round(intval($h->offer[$r]["rates"][$i]["sellingRate"])/($h->nights*$h->offer[$r]["rates"][$i]["rooms"]))}}€</strong> per night per room)</span>
+                                                    <span class='total_guests_text'>Total guests: </span>
+                                                    <span class='total_guests'>{{$h->adults_text . ($h->children > 0 ? ", ".$h->children_text : "")}} </span>
+ 
                                                 </div>
                                             </div>
                                         @endfor
@@ -391,18 +383,6 @@
                                 </div>
                             @endfor
                         </div>
-                        <div class="room_reserve">
-                            <a href="book?rateKey={{$h->offer[0]["rates"][0]["rateKey"] ?? ''}}">
-                                <button>Reserve</button>
-                            </a>
-                            <ul>
-                                <li>Confirmation is immediate</li>
-                                <li>No registration required
-                                </li>
-                                <li>No booking or credit card fees!</li>
-                            </ul>
-                        </div>
-
                     @else
                         <div class="no_avail_wrapper">
                             <div class="no_avail_icon">
@@ -838,10 +818,36 @@
                     <div class="guests_wrapper_update bar_box_update">
                         <i class="fas fa-user-friends fa-lg" aria-hidden="true"></i>
                         <div class="box_tittle_update">Guests</div>
-                        <div class="box_content_update">{{$m->rooms_text . ", " . $m->adults_text . ($m->children > 0 ? ", ".$m->children_text : "")}}</div>
-                        <input type="hidden" name="adults" value="2" required="">
-                        <input type="hidden" name="children" value="0" required="">
-                        <input type="hidden" name="rooms" value="1" required="">
+                        <div class="box_content_update box_content">{{$m->rooms_text . ", " . $m->adults_text . ($m->children > 0 ? ", ".$m->children_text : "")}}</div>
+                        <div class="guests_selection guests_selection_update">
+                            <div class="item_selection">
+                                <i class="fas fa-minus" data-value=-1></i>
+                                <div class="item_text">
+                                    <span class="item_number">{{$m->rooms}}</span>
+                                    <span class="item_type">{{$m->rooms == 1 ? "room" : "rooms"}}</span>
+                                </div>
+                                <i class="fas fa-plus" data-value=1></i>
+                                <input type="hidden" id="rooms" name="rooms" value={{$m->rooms}} min=1 max=4 data-singular="room" data-plural="rooms" required>
+                            </div>
+                            <div class="item_selection">
+                                <i class="fas fa-minus" data-value=-1></i>
+                                <div class="item_text">
+                                    <span class="item_number">{{$m->adults}}</span>
+                                    <span class="item_type">{{$m->adults == 1 ? "adult" : "adults"}}</span>
+                                </div>
+                                <i class="fas fa-plus" data-value=1></i>
+                                <input type="hidden" id="adults" name="adults" value={{$m->adults}} min=1 max=8 data-singular="adult" data-plural="adults" required>
+                            </div>
+                            <div class="item_selection">
+                                <i class="fas fa-minus" data-value=-1></i>
+                                <div class="item_text">
+                                    <span class="item_number">{{$m->children}}</span>
+                                    <span class="item_type">{{$m->children == 1 ? "child" : "children"}}</span>
+                                </div>
+                                <i class="fas fa-plus" data-value=1></i>
+                                <input type="hidden" id="children" name="children" value={{$m->children}} min=0 max=2 data-singular="child" data-plural="children" required>
+                            </div>
+                        </div>
                     </div>
                     <button class="bar_button_update" type="submit">Search</button>
                 </form>

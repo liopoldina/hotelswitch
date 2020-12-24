@@ -411,6 +411,7 @@
     width: 100%;
     height: 100%;
     cursor: pointer;
+    border-radius: 1px;
 }
 
 .hotel_review {
@@ -779,7 +780,7 @@
     flex-direction: column;
 }
 
-.guests_wrapper_update i {
+.guests_wrapper_update > i {
     position: absolute;
     top: 33%;
     left: 15px;
@@ -793,6 +794,9 @@
 .box_content_update {
     font-size: 16px;
     font-weight: bold;
+    white-space: unset;
+    padding-right: unset;
+    min-width: unset;
 }
 
 .bar_button_update {
@@ -849,8 +853,8 @@
 
 .room_wrapper,
 .room_header_wrapper {
-    width: 70%;
-    min-width: 70%;
+    width: 100%;
+    min-width: 100%;
 }
 
 .room_content {
@@ -867,18 +871,29 @@
     flex: 1;
 }
 
-.room_reserve {
-    flex: 1;
+.room_offers {
+    display: flex;
+    flex-direction: column;
+}
+
+.room_offer {
+    display: flex;
+    flex-direction: column;
     padding: 20px;
+}
+
+.room_offer,
+.header_offers {
+    width: 50%;
+}
+
+.room_reserve,
+.header_select_rooms {
+    flex: 1;
 }
 
 .room_content {
     border-bottom: 1px solid #c6c6c6;
-}
-
-.room_content:last-child,
-.offer_select:last-child {
-    border-bottom: none;
 }
 
 .room_offers,
@@ -896,41 +911,25 @@
     border-right: 1px solid #c6c6c6;
 }
 
-.room_offer {
-    flex: 1;
-    height: 250px;
-    padding: 20px 10px;
-}
-
 .offer_select:last-child {
+    flex: 1;
     border-bottom: none;
 }
 
 .room_type,
 .header_room_type {
-    width: 55%;
+    width: 40%;
 }
 
 .room_type {
     padding: 20px;
 }
 
-.room_select,
-.header_select_rooms {
-    width: 55px;
-}
-
-.room_select {
-    height: 250px;
+.room_reserve {
     display: flex;
-    justify-content: center;
+    flex-direction: column;
     border-left: 1px solid #c6c6c6;
-    padding-top: 12px;
-}
-
-.room_select select {
-    height: 25px;
-    width: 40px;
+    padding: 20px;
 }
 
 .nr_rooms {
@@ -962,17 +961,26 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
+    border-radius: 2px;
 }
 
 .room_name {
-    font-size: 21px;
+    font-size: 20px;
     font-weight: bold;
     margin-bottom: 9px;
 }
 
+.room_capacity_tittle {
+    font-size: 13px;
+    margin-bottom: 5px;
+    display: block;
+    font-weight: bold;
+}
+
 .room_capacity {
-    margin-bottom: 8px;
+    margin-bottom: 12px;
     display: flex;
+    align-items: baseline;
 }
 
 .room_capacity span {
@@ -980,9 +988,8 @@
     margin-left: 5px;
 }
 
-.room_guests_icon img {
-    width: 12px;
-    margin-top: 1.5px;
+.room_guests_icon i {
+    font-size: 14px;
 }
 
 .more_details {
@@ -1016,10 +1023,24 @@
     font-weight: bold;
 }
 
-.room_nights {
-    text-align: center;
+.room_reserve > span {
     font-size: 13px;
-    margin-bottom: 25px;
+    text-align: center;
+}
+
+.nights_text {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.price_per_night {
+    margin-top: 5px;
+}
+
+.total_guests_text {
+    margin-top: 10px;
+    font-weight: bold;
+    color: rgb(102, 102, 102);
 }
 
 .offer {
@@ -1061,7 +1082,6 @@
 
 .room_reserve a {
     display: flex;
-    margin-bottom: 20px;
     justify-content: center;
     text-decoration: none;
 }
@@ -1081,15 +1101,6 @@
 
 .room_reserve button:hover {
     background-color: var(--main-color);
-}
-
-.room_reserve ul {
-    font-size: 13px;
-    padding-inline-start: 20px;
-}
-
-.room_reserve li {
-    margin-bottom: 5px;
 }
 
 .no_avail_wrapper {
@@ -1350,22 +1361,41 @@
     }
 }
 
-@media (max-width: 650px) {
+@media (max-width: 600px) {
+    .room_type,
+    .header_room_type {
+        width: 50%;
+    }
     .offer_select {
         flex-direction: column;
     }
-    .room_select {
-        order: -1;
+    .room_reserve {
         border-left: none;
         margin: 0px auto;
         height: unset;
+        order: -1;
     }
-    .header_offers {
+    .room_offer {
+        width: fit-content;
+        align-self: center;
+        padding-top: 0px;
+        padding-bottom: 25px;
+    }
+    .header_select_rooms {
         display: none;
     }
     .header_select_rooms {
         flex: 1;
         border-left: 1px solid #c6c6c6;
+    }
+    .offer:first-child {
+        margin-top: 0px;
+    }
+    .room_reserve a {
+        margin-bottom: 10px;
+    }
+    .reserve_info {
+        margin-bottom: 0px;
     }
 }
 
@@ -1494,18 +1524,6 @@
     }
     .search_box {
         margin-right: 10px;
-    }
-    .room_reserve ul {
-        padding-inline-start: 5px;
-        word-break: break-word;
-        list-style-type: none;
-        font-size: 12px;
-    }
-    .room_reserve li {
-        margin-bottom: 10px;
-    }
-    .rooms_left {
-        display: none;
     }
 }
 
