@@ -354,38 +354,40 @@ $(function() {
                 .find("i")
                 .remove();
             $(box)
-                .find(".adults_multiplier, .children_multiplier")
+                .find(".guests_multiplier, .children_multiplier")
                 .text("");
-            if (hotel[i].adults > 3) {
+            if (m.adults_per_room + m.children_per_room > 3) {
                 $('<i class="fas fa-user"></i>').insertBefore(
-                    $(box).find(".adults_multiplier")
+                    $(box).find(".guests_multiplier")
                 );
                 $(box)
                     .find(".adults_multiplier")
-                    .text("x " + hotel[i].adults);
-                if (hotel[i].children > 0) {
-                    $('<i class="fas fa-child"></i>').insertBefore(
-                        $(box).find(".children_multiplier")
-                    );
-                    $(box)
-                        .find(".children_multiplier")
-                        .text("x " + hotel[i].children);
-                }
+                    .text("x " + (m.adults_per_room + m.children_per_room));
             } else {
-                for (g = 0; g < hotel[i].adults; g++) {
+                for (g = 0; g < m.adults_per_room + m.children_per_room; g++) {
                     $(box)
                         .find(".room_guests_icon")
                         .append(' <i class="fas fa-user"></i>');
                 }
-                for (c = 0; c < hotel[i].children; c++) {
-                    $(box)
-                        .find(".room_guests_icon")
-                        .append('<i class="fas fa-child"></i>');
-                }
             }
-            $(box)
-                .find(".cancellation_policy")
-                .text(hotel[i].cancellation_policy);
+            if (hotel[i].board == "Room Only") {
+                $(box)
+                    .find(".board")
+                    .text("");
+            } else {
+                $(box)
+                    .find(".board")
+                    .text(hotel[i].board);
+            }
+            if (hotel[i].cancellation_policy == "Non Refundable rate") {
+                $(box)
+                    .find(".cancellation_policy")
+                    .text("");
+            } else {
+                $(box)
+                    .find(".cancellation_policy")
+                    .text(hotel[i].cancellation_policy);
+            }
             $(box)
                 .find(".price")
                 .text(hotel[i].price);

@@ -73,7 +73,7 @@
         </div>
         <div class='detail'>
             <span class='detail_tittle'>Number of Guests</span>
-            <span class='detail_content'>{{$h->adults_text ?? '2 adults' }}</span>
+            <span class='detail_content'>{{$h->adults_text}}{{$h->children > 0 ? ", " . $h->children_text : ""}}</span>
         </div>
         <div class='detail'>
             <span class='detail_tittle'>Rooms</span>
@@ -96,7 +96,7 @@
         <div class='detail'>
             <span class='detail_tittle'>Cancellation Policy</span>
             <span
-                class='detail_content'>{{isset($r) ? $MyLibrary->cancellation_policy($r['reservation']['booking']['hotel']['rooms'][0]['rates'][0]['cancellationPolicies'][0]['from'])  : 'Non-refundable rate'}}:
+                class='detail_content'>{{'Non-refundable rate'}}:
                 If cancelled, modified
                 or in case of
                 no-show, the total price of the reservation will not be refunded.</span>

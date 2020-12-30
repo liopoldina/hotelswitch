@@ -273,7 +273,7 @@
     }
 }
 
-@media (max-width: 450px) {
+@media (max-width: 480px) {
     .dates_wrapper,
     .guests_wrapper {
         flex-basis: 100%;

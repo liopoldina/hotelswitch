@@ -4,6 +4,24 @@ namespace App\Libraries;
 
 Class MyLibrary {
 
+    public static function number_text($number,$item) {
+        switch ($item) {
+            case "rooms":
+                $text = $number .  ($number == 1 ? " room" :" rooms");
+                break;
+            case "nights":
+                $text = $number .  ($number == 1 ? " night" :" nights");
+                break;
+            case "adults":
+                $text = $number .  ($number == 1 ? " adult" :" adults");
+                break;
+            case "children":
+                $text = $number .  ($number == 1 ? " child" :" children");
+                break; }
+
+        return $text;
+    }
+
 
     public static function set_stars_symbol($stars) {
         switch ($stars) {
@@ -49,19 +67,51 @@ Class MyLibrary {
                 break; }
 
         return $quality;
-    }  
+    } 
+    
+    public static function board($board_code){
+        switch ($board_code) {
+            case "RO":
+                $board="Room Only";
+                break;
+            case "BB":
+                $board="Breakfast included";
+                break;
+            }
 
-    public static function cancellation_policy($cancellation_deadline) { 
-        $time_to_deadline = (strtotime ($cancellation_deadline) - time())/60/60/24;
+        return $board;
+    }
+
+    public static function cancellation_policy_short($rate) {         
+        $days_left = (strtotime ($rate->cancellationPolicies[0]->from) - time())/60/60/24;
     
-        if ($time_to_deadline>1){$cancellation_policy = "Free Cancellation";}
-        else {$cancellation_policy = "Non Refundable rate";}
+        if ($days_left > 2 && $rate->cancellationPolicies[0]->amount ==  $rate->net ){
+            $description = "Free Cancellation";
+        }
+        else {
+            $description = "Non Refundable rate";
+        }
     
-        return $cancellation_policy;
+        return  $description;
+    }
+
+    public static function cancellation_policy($rate) { 
+        
+        $days_left = (strtotime ($rate["cancellationPolicies"][0]["from"]) - time())/60/60/24;
+        $deadline = date("g:ia \o\\n d M Y",strtotime($rate["cancellationPolicies"][0]["from"]));
+    
+        if ($days_left > 2 && $rate["cancellationPolicies"][0]["amount"] ==  $rate["net"] ){
+            $description = "Free Cancellation";
+            $extended_description = "Free Cancellation before " . $deadline; 
+        }
+        else {
+            $description = "Non Refundable rate";
+            $extended_description = "Non Refundable rate";
+        }
+    
+        return ["description" => $description, "extended_description"=>$extended_description, "deadline"=>$deadline, "days_left" => $days_left];
     }
     
-    
-
     public static function titleCase($string, $delimiters = array(" ", "-", ".", "'", "O'", "Mc"), $exceptions = array("or", "VIII", "–"))
     {
         /*

@@ -11,16 +11,28 @@ use App\Libraries\MyLibrary;
 
 use App\Repositories\ReservationsRepository;
 
+use Illuminate\Validation\ValidationException;
+
 class ReservationsController extends Controller
 {
     public function create()
     {
         $data = request()->validate([
             'rateKey' => 'string|max:200',
+            'adults' => 'numeric|min:1|max:8',
+            'children' => 'numeric|min:0|max:2',
         ]);
 
+        $m=  new \stdClass();
+        $m->adults = $data['adults'];
+        $m->children= $data['children'];
+
         $rate = ReservationsRepository::CheckRate($data['rateKey']); 
-        
+
+        if($m->adults + $m->children > ($rate->hotel->rooms[0]->rates[0]->adults + $rate->hotel->rooms[0]->rates[0]->children) * $rate->hotel->rooms[0]->rates[0]->rooms){
+            throw ValidationException::withMessages(['guests' => 'Room capacity excedded']);
+        }
+
         if (!isset($rate->hotel->rooms[0]->rates[0]->sellingRate)){   // set selling rate if not set
         $rate->hotel->rooms[0]->rates[0]->sellingRate =  round($rate->hotel->rooms[0]->rates[0]->net * 1.06,2);
         }
@@ -38,6 +50,7 @@ class ReservationsController extends Controller
         return view('Reservations.reservations_create',[
             'rate' => $rate,
             'h' => $h,
+            'm' => $m
         ]);
         
     }

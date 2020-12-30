@@ -61,7 +61,11 @@ class SearchRepository{
                     ],
                     "filter"=>[
                         "paymentType"=> "AT_WEB"
-                    ]
+                    ],
+                    "boards"=>[
+                        "included" => "true",
+                        "board"=> ["RO", "BB"]
+                    ],
                 ];
                 break;
 
@@ -81,7 +85,8 @@ class SearchRepository{
                     ],
                     "hotels" => [
                         "hotel"=> [$m->hotel_id]
-                    ],                    "accommodations"=> ["HOTEL"],
+                    ],                    
+                    "accommodations"=> ["HOTEL"],
                     "dailyRate"=>"true",
                     "reviews"=>[
                         [
@@ -93,7 +98,11 @@ class SearchRepository{
                     ],
                     "filter"=>[
                         "paymentType"=> "AT_WEB"
-                    ]
+                    ],
+                    "boards"=>[
+                        "included" => "true",
+                        "board"=> ["RO", "BB"]
+                    ],
                 ];
                 break;
 
@@ -148,25 +157,19 @@ class SearchRepository{
             $star_rating [$i] =  $star_rating [$i] . "EST";
         } 
 
-
-        if($m->filters["free_cancellation"] == "true"){ 
-        $filter['cancellation_policy'] = 'Free Cancellation';
-        }
-
         if($m->filters["sort"] == 'minRate'){$m->filters["sort"] = "rooms.0.rates.0.sellingRate";}
 
         if($m->filters["sort_order"] == 1){$sort_order = 'asc';}
         else{$sort_order = 'desc';}
     
-
         $inputs = DB::connection('hotelbeds')
                     ->table($m->collection_name)
                     ->whereBetween('rooms.0.rates.0.sellingRate',[$m->filters["price_range"]["minimum_price"]*$m->nights,$m->filters["price_range"]["maximum_price"]*$m->nights])
                     ->whereIn('categoryCode', $star_rating )
                     ->where('distance_center','<=', $m->filters["distance_center"])
                     ->where('score','>=', $m->filters["minimum_score"])
-                    ->when($m->filters["free_cancellation"] == "true", function ($query, $role) {
-        return $query->where('cancellation_policy', $role);})
+                    ->when($m->filters["free_cancellation"] == "true", function ($query) {
+        return $query->where('rooms.0.rates.0.cancellationPolicies.0.description', 'Free Cancellation');})
                     ->orderBy($m->filters["sort"], $sort_order )
                     ->skip($m->index)
                     ->take(10)
@@ -210,23 +213,32 @@ function transform_collection($response_json, $m){
         "auditData"=>  $response_json->auditData]];
     
     foreach($response_json->hotels->hotels as $hotel){
-    // string to float
+        
+        // string to float
         $hotel->minRate = (float) $hotel->minRate;
         $hotel->latitude = (float) $hotel->latitude;
         $hotel->longitude = (float) $hotel->longitude;
+        
         // calculate distance center
         if(!isset($m->lat)){
         [$m->lat, $m->lon]= MyLibrary::geocode($hotel->destinationName);
         }
         $hotel->distance_center = MyLibrary::distance($hotel->latitude, $hotel->longitude,$m->lat,$m->lon);
-        // cancellation policy
-        $hotel->cancellation_policy = MyLibrary::cancellation_policy($hotel->rooms[0]->rates[0]->cancellationPolicies[0]->from);
+        
         // score
         $hotel->score =  $hotel->reviews[0]->rate;
+        
         // top_pick score
         if(!isset($hotel->top_picks)){
             $hotel->top_picks = 50;
             }
+
+        // set cancellaton policy
+        $hotel->rooms[0]->rates[0]->cancellationPolicies[0]->description = "Non refundable rate"; //default
+
+        if (isset($hotel->rooms[0]->rates[0]->cancellationPolicies[0]->from)){   
+            $hotel->rooms[0]->rates[0]->cancellationPolicies[0]->description = MyLibrary::cancellation_policy_short($hotel->rooms[0]->rates[0]);         
+        }
        
         // sellingRate
         for($i=0; $i < count($hotel->rooms); $i++){
@@ -270,9 +282,11 @@ class Result {
     var $room_name;
     var $adults;
     var $children;
+    
+    var $board_code;
+    var $board;
     var $bed_type;
 
-    var $cancellation_deadline;
     var $cancellation_policy;
     var $payment_policy;
 
@@ -314,11 +328,12 @@ class Result {
                 $this->adults = $input["rooms"][0]["rates"][0]["adults"];
                 $this->children = $input["rooms"][0]["rates"][0]["children"];
 
+                $this->board_code = $input["rooms"][0]["rates"][0]["boardCode"];
+                $this->board = MyLibrary::board( $this->board_code);
+
                 $this->set_bed_type();
 
-                if (isset($input["rooms"][0]["rates"][0]["cancellationPolicies"][0]["from"])){
-                $this->cancellation_deadline = $input["rooms"][0]["rates"][0]["cancellationPolicies"][0]["from"];
-                $this->cancellation_policy = MyLibrary::cancellation_policy($this->cancellation_deadline);}
+                $this->cancellation_policy  =$input["rooms"][0]["rates"][0]["cancellationPolicies"][0]["description"];
                 
                 // $this->payment_policy = 'Prepayment';
 

@@ -29,8 +29,6 @@ class Hotel {
     var $check_out;
     var $nights;
     var $nights_text;
-    var $adults;
-    var $adults_text;
     var $rooms;
     var $rooms_text;
 
@@ -68,14 +66,8 @@ class Hotel {
     {           
                 // dynamic content
                 if($info["info"]["total"] > 0){ 
-                    $this->adults =$offer[0]["rooms"][0]["rates"][0]["adults"]; 
-                    $this->adults_text = $this->adults .  ($this->adults == 1 ? " adult" :" adults");
-
-                    $this->children =$offer[0]["rooms"][0]["rates"][0]["children"]; 
-                    $this->children_text = $this->children .  ($this->children == 1 ? " child" :" children");
-
                     $this->rooms = $offer[0]["rooms"][0]["rates"][0]["rooms"];
-                    $this->rooms_text = $this->rooms .  ($this->rooms == 1 ? " room" :" rooms");
+                    $this->rooms_text = MyLibrary::number_text($this->rooms,"rooms");
 
                     $this->score = $offer[0]["reviews"][0]["rate"] * 2;
                     $this->quality = MyLibrary::set_quality($this->score );
@@ -85,7 +77,7 @@ class Hotel {
     
                     if(isset($offer[0]["rooms"][0]["rates"][0]["taxes"]["allIncluded"])){
                         if($offer[0]["rooms"][0]["rates"][0]["taxes"]["allIncluded"] == false){
-                            $this->tourist_tax = intval($offer[0]["rooms"][0]["rates"][0]["taxes"]["taxes"][0]["amount"])/$this->adults;
+                            $this->tourist_tax = intval($offer[0]["rooms"][0]["rates"][0]["taxes"]["taxes"][0]["amount"])/$offer[0]["rooms"][0]["rates"][0]["adults"];
                         }
                     }
                 }
@@ -94,8 +86,8 @@ class Hotel {
                 $this->check_in=$info["info"]["checkIn"];
                 $this->check_out=$info["info"]["checkOut"];
                 $this->nights= (strtotime($this->check_out) - strtotime($this->check_in))/86400;
-                $this->nights_text = $this->nights . " nights";
-                if ($this->nights==1){$this->nights_text = $this->nights . " night";}
+                $this->nights_text = MyLibrary::number_text($this->nights,"nights");
+                
 
                 $this->name = $static["name"]["content"];
                 $this->stars = (int)$static["categoryCode"];
@@ -233,14 +225,6 @@ class Hotel {
     function get_offer($rooms,$static){
 
         for ($i=0; $i < count($rooms); $i++){
-            // occupancy text
-            $rooms[$i]["rates"][0]["adults_text"] = $rooms[$i]["rates"][0]["adults"] . " adults";
-
-            if($rooms[$i]["rates"][0]["children"]==0){
-                $rooms[$i]["rates"][0]["children_text"] = "";
-            }else{
-            $rooms[$i]["rates"][0]["children_text"] = ", " .  ($rooms[$i]["rates"][0]["children"]==1 ? "child" : "children");
-            }
 
             // get room images
             foreach($static["images"] as $image){
@@ -257,7 +241,7 @@ class Hotel {
                 $rooms[$i]["rates"][$n]["cancellationPolicies"][0]["description"] = "Non-refundable rate"; //default
     
                 if (isset($rooms[$i]["rates"][$n]["cancellationPolicies"][0]["from"])){   
-                $rooms[$i]["rates"][$n]["cancellationPolicies"][0]["description"] =  MyLibrary::cancellation_policy($rooms[$i]["rates"][$n]["cancellationPolicies"][0]["from"]);         
+                    $rooms[$i]["rates"][$n]["cancellationPolicies"][0] = array_merge($rooms[$i]["rates"][$n]["cancellationPolicies"][0], MyLibrary::cancellation_policy($rooms[$i]["rates"][$n]));         
                 }
             }
         }

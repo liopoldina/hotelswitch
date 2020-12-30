@@ -347,19 +347,11 @@
                                 <div class="room_name">{{ $hotel[$i]->room_number}} x {{ $hotel[$i]->room_name}}
                                     <div class="room_guests_icon">
                                         <span class="room_separator">-</span>
-                                        @if($hotel[$i]->adults > 3)
+                                        @if(($m->adults_per_room + $m->children_per_room)  > 3)
                                         <i class="fas fa-user"></i>
-                                        <span class="adults_multiplier">x {{$hotel[$i]->adults}}</span>
-                                        @if($hotel[$i]->children > 0)
-                                            <i class="fas fa-child"></i>
-                                            <span class="children_multiplier">x {{$hotel[$i]->children}}</span>
-                                        @endif
+                                        <span class="guests_multiplier">x {{($m->adults_per_room + $m->children_per_room)}}</span>
                                         @else
-                                        @for ($g = 0; $g < $hotel[$i]->adults; $g++)
-                                            <i class="fas fa-user"></i>
-                                        @endfor
-                                        @for ($c = 0; $c < $hotel[$i]->children; $c++)
-                                            {{-- <i class="fas fa-child"></i> --}}
+                                        @for ($g = 0; $g < ($m->adults_per_room + $m->children_per_room); $g++)
                                             <i class="fas fa-user"></i>
                                         @endfor
                                         @endif
@@ -374,10 +366,13 @@
                             </div>
                             <div class="rate_wrapper">
                                 <div class="rate_left">
-                                    <span class="bed_type">{{ $hotel[$i]->bed_type ?? '1 Double Bed' }}</span>
+                                    {{-- <span class="bed_type">{{ $hotel[$i]->bed_type}}</span> --}}
+                                    <div class="room_policy">
+                                        <span class="board">{{$hotel[$i]->board == "Room Only" ? "" : $hotel[$i]->board}}</span>
+                                    </div>
                                     <div class="room_policy">
                                         <span
-                                            class="cancellation_policy">{{ $hotel[$i]->cancellation_policy ?? 'Free cancellation' }}</span>
+                                            class="cancellation_policy">{{ $hotel[$i]->cancellation_policy == "Non Refundable rate" ? "" : $hotel[$i]->cancellation_policy}}</span>
                                         <span class="policy_separator"></span>
                                         <span class="payment_policy">{{ $hotel[$i]->payment_policy ?? '' }}</span>
                                     </div>

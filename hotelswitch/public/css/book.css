@@ -341,24 +341,30 @@ input[type="number"]::-webkit-outer-spin-button {
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
 }
 
+.room_name_wrapper {
+    display: flex;
+}
+
+.room_name_wrapper span:nth-child(1),
+.room_name_wrapper span:nth-child(2) {
+    margin-right: 3px;
+    font-weight: bold;
+}
+
 .room_name {
     font-weight: bold;
     font-size: 17px;
 }
 
-.room_capacity {
+.guests_icons {
     display: flex;
-    margin-bottom: auto;
-    padding-bottom: 5px;
-}
-
-.guests_icon img {
-    width: 12px;
-}
-
-.offer_guests {
-    font-size: 14px;
+    font-size: 15px;
     margin-left: 5px;
+}
+
+.guests_icons i {
+    margin-left: 2px;
+    margin-top: 1.5px;
 }
 
 .amenities {

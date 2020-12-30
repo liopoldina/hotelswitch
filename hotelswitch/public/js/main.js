@@ -184,26 +184,27 @@ $(function() {
 
     // 4) date_range_picker
     // get today date
+    var date_format = "DD MMM YYYY";
+
     var today = new Date();
-    var dd = String(today.getDate()).padStart(2, "0");
-    var mm = String(today.getMonth() + 1).padStart(2, "0"); //January is 0!
-    var yyyy = today.getFullYear();
-    today = mm + "/" + dd + "/" + yyyy;
+    var DD = String(today.getDate()).padStart(2, "0");
+    var MMM = today.toLocaleString("default", { month: "short" });
+    var YYYY = today.getFullYear();
+    today = DD + " " + MMM + " " + YYYY;
 
     // date_range_picker
-
     if ($("#date_range").val() == "") {
         // case homepage
         $("#date_range").daterangepicker({
             autoApply: true,
             minDate: today,
-            maxDate: "12/31/2021",
+            maxDate: "31 Dec 2022",
             endDate: moment().add(1, "days"),
             maxSpan: {
                 days: 27
             },
             locale: {
-                // format: "DD/MM/YY",
+                format: date_format
             }
         });
     } else {
@@ -212,12 +213,12 @@ $(function() {
             {
                 autoApply: true,
                 minDate: today,
-                maxDate: "12/31/2021",
+                maxDate: "31 Dec 2022",
                 maxSpan: {
                     days: 27
                 },
                 locale: {
-                    // format: "DD/MM/YY",
+                    format: date_format
                 }
             },
 

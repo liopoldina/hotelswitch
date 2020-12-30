@@ -764,7 +764,7 @@
 }
 
 .dates_input_update {
-    width: 245px;
+    width: 255px;
     height: 100%;
     padding: 20px 0px 0px 45px;
     font-size: 16px;
@@ -970,22 +970,10 @@
     margin-bottom: 9px;
 }
 
-.room_capacity_tittle {
-    font-size: 13px;
-    margin-bottom: 5px;
-    display: block;
-    font-weight: bold;
-}
-
 .room_capacity {
     margin-bottom: 12px;
     display: flex;
     align-items: baseline;
-}
-
-.room_capacity span {
-    font-size: 14px;
-    margin-left: 5px;
 }
 
 .room_guests_icon i {
@@ -1044,30 +1032,23 @@
 }
 
 .offer {
+    display: flex;
     margin-top: 15px;
     color: rgb(102, 102, 102);
 }
 
 .offer span {
-    margin-left: 3px;
+    margin-left: 8px;
     font-size: 14px;
 }
 
 .offer i {
-    width: 20px;
+    min-width: 20px;
     text-align: center;
 }
 
-.room_only {
-    color: rgb(102, 102, 102);
-}
-
-.breakfast_included {
+.green {
     color: var(--main-color-light);
-}
-
-.refundable {
-    color: rgb(46, 150, 169);
 }
 
 .rooms_left i {
@@ -1377,6 +1358,7 @@
     }
     .room_offer {
         width: fit-content;
+        max-width: 200px;
         align-self: center;
         padding-top: 0px;
         padding-bottom: 25px;

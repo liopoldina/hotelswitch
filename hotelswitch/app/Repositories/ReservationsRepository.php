@@ -145,42 +145,52 @@ class Hotel {
     var $icons;
 
     function __construct($static, $r)
-    {           
-                $this->check_in = $r->hotel->checkIn ??  $r["reservation"]["booking"]["hotel"]["checkIn"];
-                $this->check_out = $r->hotel->checkOut ??  $r["reservation"]["booking"]["hotel"]["checkOut"];
-                
-                $this->nights = (strtotime($this->check_out) - strtotime($this->check_in))/86400;
-                $this->nights_text = $this->nights .  ($this->nights == 1 ? " night" :" nights");
+    {          
+        if(isset($r->hotel)){
+            // book page
+            $this->check_in = $r->hotel->checkIn;
+            $this->check_out = $r->hotel->checkOut;
+            $this->rooms = $r->hotel->rooms[0]->rates[0]->rooms;
+            $this->adults = $r->hotel->rooms[0]->rates[0]->adults;
+            $this->children = $r->hotel->rooms[0]->rates[0]->children;
+        }else
+            {// confimation page
+            $this->check_in = $r["reservation"]["booking"]["hotel"]["checkIn"];
+            $this->check_out = $r["reservation"]["booking"]["hotel"]["checkOut"];
+            $this->rooms = $r["reservation"]["booking"]["hotel"]["rooms"][0]["rates"][0]["rooms"];
 
-                $this->rooms = $r->hotel->rooms[0]->rates[0]->rooms ?? $r["reservation"]["booking"]["hotel"]["rooms"][0]["rates"][0]["rooms"];
-                $this->rooms_text = $this->rooms .  ($this->adults == 1 ? " room" :" rooms");
+            foreach ($r["reservation"]["booking"]["hotel"]["rooms"][0]["paxes"] as $pax){
+                if($pax["type"] == "AD"){ $this->adults = $this->adults + 1;}
+                if($pax["type"] == "CH"){ $this->children = $this->children + 1;}
+            }
+        }
 
-                $this->adults = $r->hotel->rooms[0]->rates[0]->adults ?? $r["reservation"]["booking"]["hotel"]["rooms"][0]["rates"][0]["adults"];
-                $this->adults_text = $this->adults .  ($this->adults == 1 ? " adult" :" adults");
+        $this->nights = (strtotime($this->check_out) - strtotime($this->check_in))/86400;
+        $this->nights_text = $this->nights .  ($this->nights == 1 ? " night" :" nights");
+        $this->rooms_text = $this->rooms .  ($this->adults == 1 ? " room" :" rooms");
+        $this->adults_text = $this->adults .  ($this->adults == 1 ? " adult" :" adults");
+        $this->children_text = $this->children .  ($this->adults == 1 ? " child" :" children");
 
-                $this->children = $r->hotel->rooms[0]->rates[0]->children ?? $r["reservation"]["booking"]["hotel"]["rooms"][0]["rates"][0]["children"];
-                $this->children_text = $this->children .  ($this->adults == 1 ? " child" :" children");
+        $this->name = $static["name"]["content"];
+        $this->stars = (int)$static["categoryCode"];
+        $this->stars_symbol = MyLibrary::set_stars_symbol($this->stars );
 
-                $this->name = $static["name"]["content"];
-                $this->stars = (int)$static["categoryCode"];
-                $this->stars_symbol = MyLibrary::set_stars_symbol($this->stars );
+        $this->city=$static["city"]["content"];
+        $this->country =  $static["country"]['description']['content']; 
 
-                $this->city=$static["city"]["content"];
-                $this->country =  $static["country"]['description']['content']; 
+        $this->address = MyLibrary::titleCase($static["address"]["content"]).", ".MyLibrary::titleCase($this->city). ", " . $static["postalCode"] . ", " . $this->country;
 
-                $this->address = MyLibrary::titleCase($static["address"]["content"]).", ".MyLibrary::titleCase($this->city). ", " . $static["postalCode"] . ", " . $this->country;
+        $this->email = $static["email"];
+        $this->phone = $static["phones"][0]["phoneNumber"];
 
-                $this->email = $static["email"];
-                $this->phone = $static["phones"][0]["phoneNumber"];
+        $this->coords = ['lat'=>$static["coordinates"]["latitude"],'lon'=>$static["coordinates"]["longitude"]];
 
-                $this->coords = ['lat'=>$static["coordinates"]["latitude"],'lon'=>$static["coordinates"]["longitude"]];
+        $this->images = $static["images"];
 
-                $this->images = $static["images"];
+        $facilities_aux=$this->get_facilities($static["facilities"]); // instead of feeding $static["facilities"] to function get_policies, we feed $facilities_aux that is equal but already contains the description of the facility
+        $this->get_policies($facilities_aux);
 
-                $facilities_aux=$this->get_facilities($static["facilities"]); // instead of feeding $static["facilities"] to function get_policies, we feed $facilities_aux that is equal but already contains the description of the facility
-                $this->get_policies($facilities_aux);
-
-                $this->get_icons();
+        $this->get_icons();
 
     }
     

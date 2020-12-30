@@ -243,12 +243,12 @@
                     <div class="dates_boxes search_box">
                         <div class="dates_box">
                             <div class="box_title">Check-in</div>
-                            <div class="box_text">{{date("m/d/Y",strtotime($h->check_in))}}</div>
+                            <div class="box_text">{{date("d M Y",strtotime($h->check_in))}}</div>
                         </div>
                         <div class="box_divider"></div>
                         <div class="dates_box">
                             <div class="box_title">Checkout</div>
-                            <div class="box_text">{{date("m/d/Y",strtotime($h->check_out))}}</div>
+                            <div class="box_text">{{date("d M Y",strtotime($h->check_out))}}</div>
                         </div>
                     </div>
                     <div class="guests_box search_box">
@@ -291,17 +291,12 @@
                                             <span
                                                 class="room_name">{{$h->offer[$r]["rates"][0]["rooms"]}} x {{MyLibrary::titleCase($h->offer[$r]["name"])}}</span>
                                         </div>
-                                        <span class="room_capacity_tittle" >Room Capacity:</span>
                                         <div class="room_capacity">
                                             <div class="room_guests_icon">
-                                                @for($a=0; $a < $h->offer[$r]["rates"][0]["adults"]; $a++)
+                                                @for($a=0; $a < $h->offer[$r]["rates"][0]["adults"] + $h->offer[$r]["rates"][0]["children"] ; $a++)
                                                 <i class="fas fa-user" aria-hidden="true"></i>
                                                 @endfor
-                                                @for($c=0; $c < $h->offer[$r]["rates"][0]["children"]; $c++)
-                                                <i class="fas fa-child" aria-hidden="true"></i>
-                                                @endfor
                                             </div>
-                                            <span class="offer_guests">{{$h->offer[$r]["rates"][0]["adults_text"]}}{{$h->offer[$r]["rates"][0]["children_text"]}}</span>
                                         </div>
                                         <div class="more_details">
                                             <span>See room details</span>
@@ -329,32 +324,19 @@
                                         @for ($i=0; $i<count($h->offer[$r]["rates"]); $i++)
                                             <div class="offer_select">
                                                 <div class="room_offer">
-                                                    @if($h->offer[$r]["rates"][$i]["boardName"] == 'BED AND BREAKFAST')
-                                                        <div class="offer breakfast_included" name="board">
+                                                        <div class="offer {{$h->offer[$r]["rates"][$i]["boardCode"] == 'BB' ? "green" : ""}}" name="board">
+                                                            @if($h->offer[$r]["rates"][$i]["boardCode"] == 'BB')
                                                             <i class="fas fa-coffee" name="board_icon"></i>
-                                                            <span class="board_name">Breakfast included</span>
-                                                        </div>
-                                                    @else
-                                                        <div class="offer" name="board">
+                                                            @else
                                                             <i class="fas fa-bed" name="board_icon"></i>
-                                                            <span
-                                                                class="board_name">{{MyLibrary::titleCase($h->offer[$r]["rates"][$i]["boardName"])}}</span>
+                                                            @endif
+                                                            <span class="board_name">{{MyLibrary::board($h->offer[$r]["rates"][$i]["boardCode"])}}</span>
                                                         </div>
-                                                    @endif
-                                                    @if(MyLibrary::titleCase($h->offer[$r]["rates"][$i]["cancellationPolicies"][0]["description"])
-                                                    == 'Free cancellation')
-                                                        <div class="offer refundable" name="policy">
+                                                        <div class="offer {{$h->offer[$r]["rates"][$i]["cancellationPolicies"][0]["description"] == 'Free Cancellation' ? "green" : ""}}" name="policy">
                                                             <i class="fas fa-bookmark"></i>
                                                             <span
-                                                                class="policy">{{MyLibrary::titleCase($h->offer[$r]["rates"][$i]["cancellationPolicies"][0]["description"])}}</span>
+                                                                class="policy">{{$h->offer[$r]["rates"][$i]["cancellationPolicies"][0]["extended_description"]}}</span>
                                                         </div>
-                                                    @else
-                                                        <div class="offer" name="policy">
-                                                            <i class="fas fa-bookmark"></i>
-                                                            <span
-                                                                class="policy">{{MyLibrary::titleCase($h->offer[$r]["rates"][$i]["cancellationPolicies"][0]["description"])}}</span>
-                                                        </div>
-                                                    @endif
                                                     @if($h->offer[$r]["rates"][$i]["allotment"] <= 5)
                                                         <div class="offer rooms_left"
                                                              name="rooms_left">
@@ -369,12 +351,12 @@
                                                         <span class="room_total_price">€{{intval($h->offer[$r]["rates"][$i]["sellingRate"])}}</span>
                                                     </div>
                                                     <span class='nights_text'>for {{$h->offer[$r]["rates"][$i]["rooms"]}} {{$h->offer[$r]["rates"][$i]["rooms"]>1?"rooms": "room"}} for {{$h->nights_text}}</span>
-                                                    <a href="book?rateKey={{$h->offer[$r]["rates"][$i]["rateKey"] ?? ''}}" target="_blank">
+                                                    <a href="book?rateKey={{$h->offer[$r]["rates"][$i]["rateKey"] . "&adults=" . $m->adults . "&children=" . $m->children}}" target="_blank">
                                                         <button>Reserve</button>
                                                     </a>
                                                     <span class='price_per_night'>(<strong>{{round(intval($h->offer[$r]["rates"][$i]["sellingRate"])/($h->nights*$h->offer[$r]["rates"][$i]["rooms"]))}}€</strong> per night per room)</span>
-                                                    <span class='total_guests_text'>Total guests: </span>
-                                                    <span class='total_guests'>{{$h->adults_text . ($h->children > 0 ? ", ".$h->children_text : "")}} </span>
+                                                    <span class='total_guests_text'>Guests: </span>
+                                                    <span class='total_guests'>{{$m->adults_text . ($m->children > 0 ? ", ".$m->children_text : "")}} </span>
  
                                                 </div>
                                             </div>

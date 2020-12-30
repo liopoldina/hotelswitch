@@ -61,7 +61,7 @@
                     <div class='divider divider_no_border'></div>
                     <div class="date_box">
                         <span class='date_tittle'>Guests:</span>
-                        <span class='date'>{{$h->adults_text}}{{$h->children > 0 ? ", " . $h->children_text : ""}}</span>
+                        <span class='date'>{{$MyLibrary->number_text($m->adults,"adults")}}{{$m->children > 0 ? ", " . $MyLibrary->number_text($m->children, "children") : ""}}</span>
                     </div>
                 </div>
             </div>
@@ -178,10 +178,16 @@
                 <span>Step 2: Room details</span>
             </div>
             <div class="right_box">
-                <strong>{{$rate->hotel->rooms[0]->rates[0]->rooms}}</strong>
-                <strong>x</strong>
-                <span
-                    class='room_name'>{{$MyLibrary->titleCase($rate->hotel->rooms[0]->name)}}</span>
+                <div class="room_name_wrapper">
+                    <span>{{$rate->hotel->rooms[0]->rates[0]->rooms}}</span>
+                    <span>x</span>
+                    <span class='room_name'>{{$MyLibrary->titleCase($rate->hotel->rooms[0]->name)}}</span>
+                    <div class="guests_icons">
+                        @for($g=0; $g < $h->adults + $h->children; $g++)
+                            <i class="fas fa-user" aria-hidden="true"></i>
+                        @endfor
+                    </div>
+                </div>
                 <div class="amenities">
                     <div class="amenity">
                         <i class="fas fa-bath"></i>
@@ -210,13 +216,6 @@
                             alt="">
                     </div>
                     <div class="room_right">
-                        <div class="room_capacity">
-                            <div class="guests_icon">
-                                @for($g=0; $g < $h->adults; $g++)<img src="./images/search/guest_icon.png"
-                                        alt="guest_icon">@endfor
-                            </div>
-                            <span class="offer_guests">{{$h->adults_text}}{{$h->children > 0 ? ", " . $h->children_text : ""}}</span>
-                        </div>
                         <label for='special_requests'>Special Requests</label>
                         <textarea type="text" id='special_requests' name='special_requests' maxlength="350"></textarea>
                         @error('special_requests')

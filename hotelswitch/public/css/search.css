@@ -866,7 +866,7 @@ input:checked + .slider:before {
     padding: 0px 1px 3px;
 }
 
-.adults_multiplier {
+.guests_multiplier {
     margin-left: 2px;
     margin-right: 5px;
 }
@@ -881,7 +881,7 @@ input:checked + .slider:before {
 
 .rate_wrapper {
     display: flex;
-    margin-top: 8px;
+    margin-top: 10px;
 }
 
 .bed_type {
@@ -902,7 +902,7 @@ input:checked + .slider:before {
     font-size: 13px;
     font-weight: bold;
     color: #008009;
-    margin-top: 8px;
+    margin-bottom: 5px;
 }
 
 .policy_separator {
@@ -968,9 +968,6 @@ meter::-webkit-meter-optimum-value {
     .nights_guests,
     .bed_type {
         display: none;
-    }
-    .room_policy {
-        margin-top: 0px;
     }
     .hotel_book {
         margin-top: 20px;
