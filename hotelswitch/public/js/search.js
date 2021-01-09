@@ -379,14 +379,14 @@ $(function() {
                     .find(".board")
                     .text(hotel[i].board);
             }
-            if (hotel[i].cancellation_policy == "Non Refundable rate") {
+            if (hotel[i].cancellation_policy == "NRF") {
                 $(box)
                     .find(".cancellation_policy")
                     .text("");
             } else {
                 $(box)
                     .find(".cancellation_policy")
-                    .text(hotel[i].cancellation_policy);
+                    .text("Free Cancellation");
             }
             $(box)
                 .find(".price")

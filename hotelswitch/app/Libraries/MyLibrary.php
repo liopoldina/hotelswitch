@@ -82,34 +82,22 @@ Class MyLibrary {
         return $board;
     }
 
-    public static function cancellation_policy_short($rate) {         
+    public static function cancellation_policy($rate) {         
         $days_left = (strtotime ($rate->cancellationPolicies[0]->from) - time())/60/60/24;
+        $deadline = date("g:ia \o\\n d M Y",strtotime($rate->cancellationPolicies[0]->from));
     
-        if ($days_left > 2 && $rate->cancellationPolicies[0]->amount ==  $rate->net ){
-            $description = "Free Cancellation";
-        }
-        else {
-            $description = "Non Refundable rate";
-        }
     
-        return  $description;
-    }
+        if ($days_left > 2){
+            $rateClass = "RF";
+            $description = "Free Cancellation before " . $deadline; 
 
-    public static function cancellation_policy($rate) { 
-        
-        $days_left = (strtotime ($rate["cancellationPolicies"][0]["from"]) - time())/60/60/24;
-        $deadline = date("g:ia \o\\n d M Y",strtotime($rate["cancellationPolicies"][0]["from"]));
-    
-        if ($days_left > 2 && $rate["cancellationPolicies"][0]["amount"] ==  $rate["net"] ){
-            $description = "Free Cancellation";
-            $extended_description = "Free Cancellation before " . $deadline; 
         }
         else {
+            $rateClass = "NRF";
             $description = "Non Refundable rate";
-            $extended_description = "Non Refundable rate";
         }
     
-        return ["description" => $description, "extended_description"=>$extended_description, "deadline"=>$deadline, "days_left" => $days_left];
+        return  [$rateClass, $description];
     }
     
     public static function titleCase($string, $delimiters = array(" ", "-", ".", "'", "O'", "Mc"), $exceptions = array("or", "VIII", "–"))

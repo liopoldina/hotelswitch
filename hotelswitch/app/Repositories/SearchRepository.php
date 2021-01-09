@@ -28,84 +28,52 @@ class SearchRepository{
             'Accept-Encoding' => 'gzip',
             'Content-Type'    => 'application/json'
         ];
+
+        $body=[
+            "stay"=> [
+                "checkIn"  => $m->check_in,
+                "checkOut" => $m->check_out
+            ],
+            "occupancies"=> [
+                [
+                "rooms"   => $m->rooms,
+                "adults"  => $m->adults_per_room,
+                "children"=> $m->children_per_room
+                ]
+            ],
+            "accommodations"=> ["HOTEL"],
+            "dailyRate"=>"true",
+            "reviews"=>[
+                [
+                "type"=>"TRIPADVISOR",
+                "maxRate"=> 5,
+                "minRate"=> 1,
+                "minReviewCount"=> 100
+                ]
+            ],
+            "filter"=>[
+                "paymentType"=> "AT_WEB",
+                "maxRooms"=> 4
+            ],
+            "boards"=>[
+                "included" => "true",
+                "board"=> ["RO", "BB"]
+            ],
+        ];
         
         switch ($mode){
             case 'geolocation':
-                $body=[
-                    "stay"=> [
-                        "checkIn"  => $m->check_in,
-                        "checkOut" => $m->check_out
-                    ],
-                    "occupancies"=> [
-                        [
-                        "rooms"   => $m->rooms,
-                        "adults"  => $m->adults_per_room,
-                        "children"=> $m->children_per_room
-                        ]
-                    ],
-                    "geolocation" => [
+                $body["geolocation"]=[
                         "latitude"=> $m->lat,
                         "longitude"=> $m->lon,
                         "radius"=> 20,
                         "unit"=> "km"
-                    ],
-                    "accommodations"=> ["HOTEL"],
-                    "dailyRate"=>"true",
-                    "reviews"=>[
-                        [
-                        "type"=>"TRIPADVISOR",
-                        "maxRate"=> 5,
-                        "minRate"=> 1,
-                        "minReviewCount"=> 100
-                        ]
-                    ],
-                    "filter"=>[
-                        "paymentType"=> "AT_WEB"
-                    ],
-                    "boards"=>[
-                        "included" => "true",
-                        "board"=> ["RO", "BB"]
-                    ],
-                ];
+                        ];
                 break;
-
 
             case 'id':
-                $body=[
-                    "stay"=> [
-                        "checkIn"  => $m->check_in,
-                        "checkOut" => $m->check_out
-                    ],
-                    "occupancies"=> [
-                        [
-                        "rooms"   => $m->rooms,
-                        "adults"  => $m->adults_per_room,
-                        "children"=> $m->children_per_room
-                        ]
-                    ],
-                    "hotels" => [
-                        "hotel"=> [$m->hotel_id]
-                    ],                    
-                    "accommodations"=> ["HOTEL"],
-                    "dailyRate"=>"true",
-                    "reviews"=>[
-                        [
-                        "type"=>"TRIPADVISOR",
-                        "maxRate"=> 5,
-                        "minRate"=> 1,
-                        "minReviewCount"=> 100
-                        ]
-                    ],
-                    "filter"=>[
-                        "paymentType"=> "AT_WEB"
-                    ],
-                    "boards"=>[
-                        "included" => "true",
-                        "board"=> ["RO", "BB"]
-                    ],
-                ];
+                $body["hotels"] = ["hotel"=> [$m->hotel_id]];
                 break;
-
         }
         
         for ($i = 0; $i < $m->children_per_room; $i++){
@@ -233,24 +201,60 @@ function transform_collection($response_json, $m){
             $hotel->top_picks = 50;
             }
 
-        // set cancellaton policy
-        $hotel->rooms[0]->rates[0]->cancellationPolicies[0]->description = "Non refundable rate"; //default
-
-        if (isset($hotel->rooms[0]->rates[0]->cancellationPolicies[0]->from)){   
-            $hotel->rooms[0]->rates[0]->cancellationPolicies[0]->description = MyLibrary::cancellation_policy_short($hotel->rooms[0]->rates[0]);         
-        }
-       
         // sellingRate
         for($i=0; $i < count($hotel->rooms); $i++){
 
             for($n=0; $n < count($hotel->rooms[$i]->rates); $n++) {
 
-              // set selling rate if not defined
-              if (!isset($hotel->rooms[$i]->rates[$n]->sellingRate)){   
-                $hotel->rooms[$i]->rates[$n]->sellingRate = round($hotel->rooms[$i]->rates[$n]->net * 1.06,2);
+                // set selling rate if not defined
+                if (!isset($hotel->rooms[$i]->rates[$n]->sellingRate)){   
+                   $hotel->rooms[$i]->rates[$n]->sellingRate = round($hotel->rooms[$i]->rates[$n]->net * 1.06,2);
                 }
-                $hotel->rooms[$i]->rates[$n]->sellingRate = (float) $hotel->rooms[$i]->rates[$n]->sellingRate;  
+                $hotel->rooms[$i]->rates[$n]->sellingRate = (float) $hotel->rooms[$i]->rates[$n]->sellingRate; 
+
+                // set cancellaton policy
+                $hotel->rooms[$i]->rates[$n]->rateClass = "NRF"; //default
+                
+                if (isset($hotel->rooms[$i]->rates[$n]->cancellationPolicies[0]->from)){   
+                    [$hotel->rooms[$i]->rates[$n]->rateClass, $hotel->rooms[$i]->rates[$n]->cancellationPolicies[0]->description]  = MyLibrary::cancellation_policy($hotel->rooms[$i]->rates[$n]);         
+                }
+                
+                switch ($hotel->rooms[$i]->rates[$n]->boardCode . "_" . $hotel->rooms[$i]->rates[$n]->rateClass) {
+                    case "RO_NRF":
+                        if(!isset($RO_NRF)){$RO_NRF = $hotel->rooms[$i]->rates[$n];}
+                        elseif($hotel->rooms[$i]->rates[$n]->sellingRate < $RO_NRF->sellingRate){
+                            $RO_NRF = $hotel->rooms[$i]->rates[$n];   
+                        }                     
+                        break;
+                    case "RO_RF":
+                        if(!isset($RO_RF)){$RO_RF = $hotel->rooms[$i]->rates[$n];}
+                        elseif($hotel->rooms[$i]->rates[$n]->sellingRate < $RO_RF->sellingRate){
+                            $RO_RF = $hotel->rooms[$i]->rates[$n];   
+                        }      
+                        break;
+                    case "BB_NRF":
+                        if(!isset($BB_NRF)){$BB_NRF = $hotel->rooms[$i]->rates[$n];}
+                        elseif($hotel->rooms[$i]->rates[$n]->sellingRate < $BB_NRF->sellingRate){
+                            $BB_NRF = $hotel->rooms[$i]->rates[$n];   
+                        }                       
+                        break;
+                    case "BB_RF":
+                        if(!isset($BB_RF)){$BB_RF = $hotel->rooms[$i]->rates[$n];}
+                        elseif($hotel->rooms[$i]->rates[$n]->sellingRate < $BB_RF->sellingRate){
+                            $BB_RF = $hotel->rooms[$i]->rates[$n];   
+                        }       
+                        break;
+                }
             }
+            
+            $hotel->rooms[$i]->rates = [];
+
+            if(isset($RO_NRF)){ $hotel->rooms[$i]->rates[] = $RO_NRF;}
+            if(isset($RO_RF)){ $hotel->rooms[$i]->rates[] = $RO_RF;}
+            if(isset($BB_NRF)){ $hotel->rooms[$i]->rates[] = $BB_NRF;}
+            if(isset($BB_RF)){ $hotel->rooms[$i]->rates[] = $BB_RF;}
+
+            unset($RO_NRF, $RO_RF, $BB_NRF, $BB_RF);
 
         }
      
@@ -333,7 +337,7 @@ class Result {
 
                 $this->set_bed_type();
 
-                $this->cancellation_policy  =$input["rooms"][0]["rates"][0]["cancellationPolicies"][0]["description"];
+                $this->cancellation_policy  =$input["rooms"][0]["rates"][0]["rateClass"];
                 
                 // $this->payment_policy = 'Prepayment';
 

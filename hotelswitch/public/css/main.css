@@ -53,12 +53,6 @@ body {
         padding: 0px 10px;
     }
     .logo_img {
-        height: 34px !important;
-    }
-}
-
-@media (max-width: 360px) {
-    .logo_img {
         display: none;
     }
 }
@@ -78,7 +72,6 @@ body {
     margin-left: 5px;
     margin-top: 3px;
     display: flex;
-    align-items: baseline;
 }
 
 .logo_hotel {
@@ -92,6 +85,7 @@ body {
     font-size: 26px;
     color: var(--main-color-light);
     filter: brightness(150%);
+    text-transform: capitalize;
 }
 
 .logo_wrapper > img {
@@ -104,12 +98,36 @@ body {
     margin-left: auto;
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    flex: 0 1 250px;
 }
 
 .user_items {
     cursor: pointer;
+    padding: 0px 20px;
+}
+
+.user_items:first-child {
+    padding-left: 0px;
+}
+
+@media (max-width: 500px) {
+    .user_items {
+        padding: 0px 15px;
+    }
+}
+
+@media (max-width: 450px) {
+    .user_items {
+        padding: 0px 10px;
+    }
+    .user_items:last-child {
+        padding-right: 0px;
+    }
+}
+
+@media (max-width: 350px) {
+    .user_items {
+        padding: 0px 7px;
+    }
 }
 
 #currency {
@@ -317,7 +335,7 @@ body {
 }
 
 .copyright_wrapper {
-    font-size: 10px;
+    font-size: 10.5px;
     color: white;
     width: fit-content;
     margin: auto 0px;

@@ -372,7 +372,7 @@
                                     </div>
                                     <div class="room_policy">
                                         <span
-                                            class="cancellation_policy">{{ $hotel[$i]->cancellation_policy == "Non Refundable rate" ? "" : $hotel[$i]->cancellation_policy}}</span>
+                                            class="cancellation_policy">{{ $hotel[$i]->cancellation_policy == "NRF" ? "" :  "Free Cancellation"}}</span>
                                         <span class="policy_separator"></span>
                                         <span class="payment_policy">{{ $hotel[$i]->payment_policy ?? '' }}</span>
                                     </div>

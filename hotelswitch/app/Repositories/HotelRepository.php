@@ -233,15 +233,41 @@ class Hotel {
                         $rooms[$i]["images"][] = $image;
                     } 
             }
-    
-    
-            for ($n=0; $n < count($rooms[$i]["rates"]); $n++){
+            // get room facilities
+            foreach($static["rooms"] as $room) {
 
-                // set cancellaton policy
-                $rooms[$i]["rates"][$n]["cancellationPolicies"][0]["description"] = "Non-refundable rate"; //default
-    
-                if (isset($rooms[$i]["rates"][$n]["cancellationPolicies"][0]["from"])){   
-                    $rooms[$i]["rates"][$n]["cancellationPolicies"][0] = array_merge($rooms[$i]["rates"][$n]["cancellationPolicies"][0], MyLibrary::cancellation_policy($rooms[$i]["rates"][$n]));         
+                if($rooms[$i]["code"] == $room["roomCode"] && isset($room["roomFacilities"])){
+   
+                    for ($rf=0; $rf < count($room["roomFacilities"]); $rf++){
+
+                        $filter=[
+                            'facilityGroupCode'=> $room["roomFacilities"][$rf]["facilityGroupCode"],
+                            'code'=> $room["roomFacilities"][$rf]["facilityCode"]
+                            ];  
+                        
+                        $options = [ 'projection' => ['_id' => 0, 'code' => 1, 'description' => 1]];
+                
+                        $cursor_decode = Facilities::where($filter)->get();
+
+                        // room facilities
+                        if (isset($cursor_decode[0]["description"]["icon"])){
+                            $room["roomFacilities"][$rf]["description"] = $cursor_decode[0]["description"]["content"];
+                            $room["roomFacilities"][$rf]["icon"] = $cursor_decode[0]["description"]["icon"];
+
+                            $rooms[$i]["roomFacilities"][] = $room["roomFacilities"][$rf];
+                        }
+                        
+                        // room area
+                        if($room["roomFacilities"][$rf]["facilityCode"] == 295 ){
+                            $rooms[$i]['size'] = $room["roomFacilities"][$rf]["number"];
+                        }
+                    }
+
+                    // get roomStays
+                    $rooms[$i]["roomStays"] = $room["roomStays"];
+
+
+
                 }
             }
         }

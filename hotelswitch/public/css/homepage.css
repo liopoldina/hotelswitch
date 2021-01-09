@@ -247,14 +247,20 @@
     font-size: 32px;
     font-weight: bold;
     text-align: center;
+    padding: 0px 10px;
 }
 
-.why_tittle > span {
+.why_tittle > div {
+    display: inline-flex;
+}
+
+.why_tittle > div > span:nth-child(2) {
     font-weight: normal;
     color: var(--main-color-light);
+    text-transform: capitalize;
 }
 
-.why_tittle > sup {
+.why_tittle sup {
     font-size: 16px;
     color: var(--main-color-light);
 }

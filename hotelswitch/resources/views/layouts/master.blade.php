@@ -12,7 +12,8 @@
                 <a href="{{ route('homepage.index') }}">
                     <img class="logo_img" src="{{asset('images/header/logo.png')}}" alt="">
                     <div class="logo_text">
-                        <span class="logo_hotel">hotel</span><span class="logo_brand">Mind</span>
+                        <span class="logo_hotel">{{ env("BRAND_FIRST") }}</span>
+                        <span class="logo_brand">{{ env("BRAND_LAST") }}</span>
                     </div>
                 </a>
             </div>
@@ -20,9 +21,9 @@
                 <div class="user_items">
                     <a id="currency" href="#">€</a>
                 </div>
-                <div class="user_items">
+                {{-- <div class="user_items">
                     <img id="flag" src={{asset('images/header/bandeira.png')}} alt="idioma" />
-                </div>
+                </div> --}}
                 @guest
                 <div class="user_items header_buttons">
                     <a href="{{ route('register') }}">
@@ -75,12 +76,12 @@
         </div>
         <div class="second_footer">
             <div class="copyright_wrapper">
-                <span>Copyright &#169; 2020 HotelSwitch.com&#174; All rights reserved</span>
+                <span>Copyright &#169; 2021 {{env("APP_NAME")}}.com&#174; All rights reserved</span>
             </div>
             <div class="second_footer_links">
-                <a href="#">About HotelSwitch.com</a>
-                <a href="#">Terms of Service</a>
-                <a href="#">Privacy Policy</a>
+                <a href="#">About {{env("APP_NAME")}}.com</a>
+                <a href="{{ route('terms.index') }}">Terms & Conditions</a>
+                <a href="{{ route('privacy.index') }}">Privacy Policy</a>
             </div>
             <div class="center_auxiliar"></div>
         </div>

@@ -143,4 +143,38 @@ $(function() {
             .data("daterangepicker")
             .container.addClass("daterangepicker_update");
     }
+
+    // 4) Room Details Overlay
+    //open update
+    $(".room_image, .room_name, .more_details").click(function() {
+        $(this)
+            .parent()
+            .children(".details_overlay")
+            .css("display", "flex");
+        $("body").css("overflow", "hidden"); //disable scroll
+
+        // room details carrousel
+        $(this)
+            .parent()
+            .find(".room_images")
+            .slick({
+                swipe: false,
+                infinite: false
+            });
+    });
+    //close update
+    $(".room_close").click(function() {
+        $(this)
+            .parent()
+            .parent()
+            .css("display", "none");
+        $("body").css("overflow", "auto"); //enable scroll
+    });
+    //close update on clicked outside (on overlay)
+    $(document).mousedown(function(e) {
+        if ($(".details_overlay").is(e.target)) {
+            $(e.target).css("display", "none");
+            $("body").css("overflow", "auto"); //enable scroll
+        }
+    });
 });

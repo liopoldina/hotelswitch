@@ -42,6 +42,13 @@ Route::get('/autocomplete', 'Autocomplete\ExpediaController@index')->name('autoc
 //cover images
 Route::get('/cover_image', 'CoverImageController@show')->name('coverimage.show');
 
+// Privacy and Terms&Conditions
+Route::get('/privacy', 'Legal\PrivacyController@index')->name('privacy.index'); 
+Route::get('/terms', 'Legal\TermsController@index')->name('terms.index'); 
+
+
+
+
 // TEMPORARY ROUTES
 
 //see new useremail 

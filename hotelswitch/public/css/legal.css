@@ -1,0 +1,42 @@
+.legal_wrapper {
+    max-width: 1200px;
+    margin: 0px auto;
+    padding: 50px 50px;
+}
+
+h1 {
+    margin: 0px 0px 35px;
+    font-size: 28px;
+}
+
+h2 {
+    margin: 30px 0px 0px;
+    font-size: 17px;
+}
+
+p {
+    text-align: justify;
+    word-break: break-word;
+}
+
+p,
+ol,
+ul {
+    font-size: 15px;
+}
+
+li {
+    margin-bottom: 10px;
+}
+
+@media (max-width: 900px) {
+    .legal_wrapper {
+        padding: 40px 25px;
+    }
+}
+
+@media (max-width: 400px) {
+    .legal_wrapper {
+        padding: 30px 15px;
+    }
+}

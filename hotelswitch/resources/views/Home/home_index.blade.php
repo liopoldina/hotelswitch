@@ -81,8 +81,13 @@
         </div>
     </div>
     <div class='why_section'>
-        <div class="why_tittle">The hotel<span>Mind</span><sup>&#174</sup>
-            algorithm</div>
+        <div class="why_tittle">The
+            <div>
+                <span>{{env("BRAND_FIRST")}}</span> 
+                <span>{{env("BRAND_LAST")}}</span><sup>&#174</sup>
+            </div> 
+            algorithm
+        </div>
         <div class="why_element_wrapper">
             <div class=why_element>
                 <i class="fas fa-network-wired"></i>

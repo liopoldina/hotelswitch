@@ -10,6 +10,12 @@
     <link rel="stylesheet" href={{ asset('css/search_form.css') }} />
     <link rel="stylesheet" href={{ asset('css/hotel.css') }} />
     <script src={{asset('js/hammer.min.js')}}></script>
+    
+    {{-- slick carrousel --}}
+    <link rel="stylesheet" type="text/css" href={{ asset('slick/slick.css') }} />
+    <link rel="stylesheet" type="text/css" href={{ asset('slick/slick-theme.css') }} />
+    <script type="text/javascript" src={{ asset('slick/slick.min.js') }}></script>
+
     <script src={{ asset('js/hotel.js') }}></script>
     @append
 
