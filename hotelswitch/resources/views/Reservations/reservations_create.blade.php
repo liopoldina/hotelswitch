@@ -99,10 +99,10 @@
             <div class="box_tittle">
                 <span>Cancellation Policy</span>
             </div>
-            <span class='policy_tittle'>Non-refundable rate</span>
-            <span class='policy_text'>Please note, if cancelled, modified or in case of no-show, the total
+            <span class='policy_tittle'>{{$rate->hotel->rooms[0]->rates[0]->rateClass == "RF" ? "Refundable rate" : "Non-refundable rate"}}</span>
+            <span class='policy_text'>{{$rate->hotel->rooms[0]->rates[0]->rateClass == "RF" ? $rate->hotel->rooms[0]->rates[0]->cancellationPolicies[0]->description . "." : "Please note, if cancelled, modified or in case of no-show, the total
                 price of the reservation will
-                be charged.</span>
+                be charged."}}</span>
         </div>
         <div class="left_box">
             <div class="box_tittle">
@@ -189,26 +189,33 @@
                     </div>
                 </div>
                 <div class="amenities">
+                    @if(in_array("Wi-fi",$h->facilities["Internet"]))
                     <div class="amenity">
-                        <i class="fas fa-bath"></i>
-                        <span>Ensuite bathroom</span>
+                        <i class="fas fa-wifi"></i>
+                        <span>Wi-fi</span>
                     </div>
+                    @endif
+                    @if(in_array("Centrally regulated air conditioning",$h->facilities["Room Amenities"]) ||
+                    in_array("Individually adjustable air conditioning",$h->facilities["Room Amenities"]))
                     <div class="amenity">
-                        <i class="fas fa-fan" aria-hidden="true"></i>
-                        <span>Air conditioning</span>
+                        <i class="far fa-snowflake"></i>
+                        <span>Air Conditioning</span>
                     </div>
+                    @endif
+                    @if(in_array("Central heating",$h->facilities["Room Amenities"]) ||
+                    in_array("Individually adjustable heating",$h->facilities["Room Amenities"]))
                     <div class="amenity">
-                        <i class="fas fa-wifi" aria-hidden="true"></i>
-                        <span>Free Wi-fi</span>
+                        <i class="fas fa-temperature-high"></i>
+                        <span>Heating</span>
                     </div>
+                    @endif
+                    @if(in_array("TV",$h->facilities["Media & Technology"]) ||
+                    in_array("Individually adjustable heating",$h->facilities["Room Amenities"]))
                     <div class="amenity">
                         <i class="fas fa-tv"></i>
-                        <span>Flat-screen TV</span>
+                        <span>Cable TV</span>
                     </div>
-                    <div class="amenity">
-                        <i class="fas fa-volume-mute"></i>
-                        <span>Soundproofing</span>
-                    </div>
+                    @endif
                 </div>
                 <div class="room_box">
                     <div class="room_left">
@@ -311,8 +318,8 @@
             <div class='booking_terms'>
                 <span>Your booking is with the Hotel directly and by completing this booking you agree to have read
                     and
-                    accept the <em>Cancellation Policy</em> our <a href="">Terms of Service</a> and our <a
-                        href="">Privacy
+                    accept the <em>Cancellation Policy</em> our <a href="{{ route('terms.index') }}" target="_blank">Terms & Conditions</a> and our <a
+                        href="{{ route('privacy.index') }}" target="_blank">Privacy
                         Policy</a>.</span>
             </div>
             <div class="confirm_wrapper">

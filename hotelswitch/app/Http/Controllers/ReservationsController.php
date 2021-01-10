@@ -33,10 +33,6 @@ class ReservationsController extends Controller
             throw ValidationException::withMessages(['guests' => 'Room capacity excedded']);
         }
 
-        if (!isset($rate->hotel->rooms[0]->rates[0]->sellingRate)){   // set selling rate if not set
-        $rate->hotel->rooms[0]->rates[0]->sellingRate =  round($rate->hotel->rooms[0]->rates[0]->net * 1.06,2);
-        }
-        
         $h = ReservationsRepository::get_hotel($rate->hotel->code, $rate);
         
         // get room image

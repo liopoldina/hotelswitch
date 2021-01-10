@@ -42,9 +42,22 @@ class ReservationsRepository{
         ];
 
         $response = $client->request('POST', 'checkrates',  ['headers' => $headers,'json' => $body,]);
-        
-        return json_decode($response->getBody()->getContents());
-                
+
+        $rate = json_decode($response->getBody()->getContents());
+
+        // set selling rate if not set
+        if (!isset($rate->hotel->rooms[0]->rates[0]->sellingRate)){  
+            $rate->hotel->rooms[0]->rates[0]->sellingRate =  round($rate->hotel->rooms[0]->rates[0]->net * 1.06,2);
+            }
+    
+        // set cancellaton policy
+        $rate->hotel->rooms[0]->rates[0]->rateClass = "NRF"; //default
+ 
+        if (isset($rate->hotel->rooms[0]->rates[0]->cancellationPolicies[0]->from)){   
+            [$rate->hotel->rooms[0]->rates[0]->rateClass, $rate->hotel->rooms[0]->rates[0]->cancellationPolicies[0]->description]  = MyLibrary::cancellation_policy($rate->hotel->rooms[0]->rates[0]);         
+        }
+    
+        return $rate;         
     }
 
     public static function Book($data) {

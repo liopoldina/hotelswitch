@@ -26,7 +26,7 @@
             </div>
         </div>
         <div class="search_bar">
-            <form id="search" action="search" method="get" target="_blank">
+            <form id="search" action="search" method="get">
                 @csrf
                 <div class='destination_wrapper'>
                     <label class="icon_label" for="destination"> <i class="fas fa-map-marker-alt fa-lg"></i></label>

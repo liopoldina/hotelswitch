@@ -158,13 +158,15 @@ $(function() {
             .parent()
             .find(".room_images")
             .slick({
-                swipe: false,
-                infinite: false
+                dots: true,
+                swipe: true,
+                infinite: true
             });
     });
     //close update
     $(".room_close").click(function() {
         $(this)
+            .parent()
             .parent()
             .parent()
             .css("display", "none");

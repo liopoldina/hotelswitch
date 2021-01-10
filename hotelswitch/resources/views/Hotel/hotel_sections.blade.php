@@ -9,7 +9,7 @@
                 <span>Hotel Location</span>
             </div>
         </div>
-        <div class="location_rating">
+        {{-- <div class="location_rating">
             <div class="location_score">
                 <span>9.0</span>
             </div>
@@ -68,7 +68,7 @@
         <div class="point_of_interest">
             <span class="point_name">Torre de Belém</span>
             <span class="point_distance">7.08 km</span>
-        </div>
+        </div> --}}
     </div>
 </div>
 @endsection
@@ -100,16 +100,29 @@
                 </span>
             </div>
             <div class="spotlight_wrapper">
+                @if($h->distance_center <= 3)
                 <div class="spotlight">
-                    <i class="fas fa-hand-sparkles green" aria-hidden="true"></i><span>Excellent
-                        Cleanliness</span>
+                    <i class="far fa-building" aria-hidden="true"></i><span>Central</span>
                 </div>
+                @endif
+                @if(in_array("Wi-fi",$h->facilities["Internet"]))
                 <div class="spotlight">
-                    <i class="fas fa-wifi green" aria-hidden="true"></i><span>Free Wi-fi</span>
+                    <i class="fas fa-wifi"></i>
+                    <span>Free Wi-fi</span>
                 </div>
+                @endif
+                @if(in_array("Centrally regulated air conditioning",$h->facilities["Room Amenities"]) ||
+                in_array("Individually adjustable air conditioning",$h->facilities["Room Amenities"]))
                 <div class="spotlight">
-                    <i class="far fa-building green" aria-hidden="true"></i><span>City center</span>
+                    <i class="far fa-snowflake"></i>
+                    <span>Air Conditioning</span>
                 </div>
+                @endif
+                @if(in_array("Housekeeping",$h->facilities["Cleaning Services"]))
+                <div class="spotlight">
+                    <i class="fas fa-hand-sparkles" aria-hidden="true"></i><span>Housekeeping</span>
+                </div>
+                @endif
             </div>
         </div>
         <div class="head_map" id="map_wrapper">
@@ -187,21 +200,38 @@
             <span class="top_facilities_tittle">Most popular facilities
             </span>
             <div class="top_facilities_wrapper">
+                @if(in_array("Wi-fi",$h->facilities["Internet"]))
                 <div class="top_facility">
                     <i class="fas fa-wifi green"></i><span>Free Wi-fi</span>
                 </div>
+                @endif
+                @if(in_array("Car park",$h->facilities["Parking"]) || in_array("Garage",$h->facilities["Parking"]) )
                 <div class="top_facility">
                     <i class="fas fa-parking blue"></i><span>Private parking</span>
                 </div>
-                <div class="top_facility ">
+                @endif
+                @if(in_array("Room service",$h->facilities["Room Amenities"]))
+                <div class="top_facility">
                     <i class="fas fa-concierge-bell gold"></i><span>Room service</span>
                 </div>
-                <div class="top_facility ">
+                @endif
+                @if(in_array("Restaurant",$h->facilities["Food & Drink"]))
+                <div class="top_facility">
                     <i class="fas fa-utensils"></i><span>Restaurant</span>
                 </div>
-                <div class="top_facility ">
-                    <i class="fas fa-smoking-ban"></i><span>Non-smoking rooms</span>
+                @endif
+                @if(in_array("Transfer service",$h->facilities["Transportation"]))
+                <div class="top_facility">
+                    <i class="fas fa-bus-alt"></i><span>Transfer service</span>
                 </div>
+                @endif
+                @if(in_array("Centrally regulated air conditioning",$h->facilities["Room Amenities"]) ||
+                in_array("Individually adjustable air conditioning",$h->facilities["Room Amenities"]))
+                <div class="top_facility">
+                    <i class="far fa-snowflake"></i>
+                    <span>Air Conditioning</span>
+                </div>
+                @endif
             </div>
             <a href="#facilities">
                 <button>See All Facilities</button>
@@ -294,120 +324,143 @@
                                     <span>Wi-fi</span>
                                 </div>
                                 @endif
-                                @if(in_array("Individually adjustable air conditioning",$h->facilities["Room Amenities"]))
+                                @if(in_array("Centrally regulated air conditioning",$h->facilities["Room Amenities"]) ||
+                                in_array("Individually adjustable air conditioning",$h->facilities["Room Amenities"]))
                                 <div class="amenity">
                                     <i class="far fa-snowflake"></i>
                                     <span>Air Conditioning</span>
                                 </div>
                                 @endif
-                                @if(in_array("Central heating",$h->facilities["Room Amenities"]))
+                                @if(in_array("Central heating",$h->facilities["Room Amenities"]) ||
+                                in_array("Individually adjustable heating",$h->facilities["Room Amenities"]))
                                 <div class="amenity">
-                                    <i class="fas fa-temperature-high"></i>                         <span>Heating</span>
+                                    <i class="fas fa-temperature-high"></i> <span>Heating</span>
                                 </div>
                                 @endif
                                 @isset($h->offer[$r]["roomFacilities"])
-                                @foreach ($h->offer[$r]["roomFacilities"] as $roomFacility)
-                                <div class="amenity">
-                                    <i class="{{$roomFacility["icon"]}}"></i>
-                                    <span>{{$roomFacility["description"]}}</span>
-                                </div>
-                                @endforeach
-                                @endisset
-                                <ul class="room_ul">
-                                    <li class="room_li_price">The price shown is the final price for {{$h->rooms_text}}
-                                        for {{$h->nights_text}}
-                                    </li>
-                                    <li><strong>VAT already included</strong></li>
-                                    @isset($h->tourist_tax)
-                                    <li class="tourist_tax">At the accommodation you will have to pay the
-                                        touristic tax of €{{$h->tourist_tax }} per night not included in the
-                                        price.
-                                    </li>
+                                @for ( $f=0; $f < min(3,count($h->offer[$r]["roomFacilities"])); $f++)
+                                    <div class="amenity">
+                                        <i class="{{$h->offer[$r]["roomFacilities"][$f]["icon"]}}"></i>
+                                        <span>{{$h->offer[$r]["roomFacilities"][$f]["description"]}}</span>
+                                    </div>
+                                    @endfor
                                     @endisset
-                                </ul>
-                                <div class="details_overlay">
-                                    <div class="details_popup">
-                                        <div class="details-room-name">
-                                            <span>{{MyLibrary::titleCase($h->offer[$r]["name"])}}</span>
-                                        </div>
-                                        <div class="details-content">
-                                            @isset($h->offer[$r]["images"])
-                                            <div class="details_left">
-                                                <div class="slick room_images">
-                                                    @foreach($h->offer[$r]["images"] as $room_image)
-                                                    <div>
-                                                        <img src="http://photos.hotelbeds.com/giata/bigger/{{$room_image["path"]}}"
-                                                            alt="">
-                                                    </div>
-                                                    @endforeach
+                                    <ul class="room_ul">
+                                        <li class="room_li_price">The price shown is the final price for
+                                            {{$h->rooms_text}}
+                                            for {{$h->nights_text}}
+                                        </li>
+                                        <li><strong>VAT already included</strong></li>
+                                        @isset($h->tourist_tax)
+                                        <li class="tourist_tax">At the accommodation you will have to pay the
+                                            touristic tax of €{{$h->tourist_tax }} per night not included in the
+                                            price.
+                                        </li>
+                                        @endisset
+                                    </ul>
+                                    <div class="details_overlay">
+                                        <div class="details_popup">
+                                            <div class="details-header">
+                                                <span class="details-room-name">{{MyLibrary::titleCase($h->offer[$r]["name"])}}</span>
+                                                <div class="room_close">
+                                                    <div class="close"></div>
                                                 </div>
                                             </div>
-                                            @endisset
-                                            <div class="details_rigth">
-                                                @isset($h->offer[$r]["size"])
-                                                <div class="details-size">
-                                                    <i class="fas fa-ruler-combined"></i>
-                                                    <span>Room size: {{$h->offer[$r]["size"]}} m<sup>2</sup></span>
+                                            <div class="details-content">
+                                                @isset($h->offer[$r]["images"])
+                                                <div class="details_left">
+                                                    <div class="slick room_images">
+                                                        @foreach($h->offer[$r]["images"] as $room_image)
+                                                        <div>
+                                                            <img src="http://photos.hotelbeds.com/giata/bigger/{{$room_image["path"]}}"
+                                                                alt="">
+                                                        </div>
+                                                        @endforeach
+                                                    </div>
                                                 </div>
                                                 @endisset
-                                                @isset($h->offer[$r]["roomFacilities"])
-                                                <div class="room-facilities-wrapper">
-                                                    @foreach ($h->offer[$r]["roomFacilities"] as $roomFacility)
-                                                    <div class="amenity">
-                                                        <i class="{{$roomFacility["icon"]}}"></i>
-                                                        <span>{{$roomFacility["description"]}}</span>
+                                                <div class="details_rigth">
+                                                    @isset($h->offer[$r]["size"])
+                                                    <div class="details-size">
+                                                        <i class="fas fa-ruler-combined"></i>
+                                                        <span>Room size: {{$h->offer[$r]["size"]}} m<sup>2</sup></span>
                                                     </div>
-                                                    @endforeach
-                                                </div>
-                                                @endisset
-                                                <div class="room-facilities-wrapper">
-                                                    @if (!empty($h->facilities["Bedroom"]))
-                                                    <div class="facilities_group">
-                                                        <div class="facilitites_tittle">
-                                                            <i class="fas fa-bed"
-                                                                aria-hidden="true"></i><span>Bedroom</span>
+                                                    @endisset
+                                                    <div class="details-spotlight-wrapper">
+                                                        @if(in_array("Wi-fi",$h->facilities["Internet"]))
+                                                        <div class="room-spotlight">
+                                                            <i class="fas fa-wifi"></i>
+                                                            <span>Wi-fi</span>
                                                         </div>
-                                                        <ul class="facilities_list">
-                                                            @foreach ($h->facilities["Bedroom"] as $li)
-                                                            <li>{{$li}}</li>
-                                                            @endforeach
-                                                        </ul>
-                                                    </div>
-                                                    @endif
-                                                    @if (!empty($h->facilities["Room Amenities"]))
-                                                    <div class="facilities_group">
-                                                        <div class="facilitites_tittle">
-                                                            <i class="fas fa-bed"
-                                                                aria-hidden="true"></i><span>Room Amenities</span>
+                                                        @endif
+                                                        @if(in_array("Centrally regulated air conditioning",$h->facilities["Room Amenities"]) ||
+                                                        in_array("Individually adjustable air conditioning",$h->facilities["Room Amenities"]))
+                                                        <div class="room-spotlight">
+                                                            <i class="far fa-snowflake"></i>
+                                                            <span>Air Conditioning</span>
                                                         </div>
-                                                        <ul class="facilities_list">
-                                                            @foreach ($h->facilities["Room Amenities"] as $li)
-                                                            <li>{{$li}}</li>
-                                                            @endforeach
-                                                        </ul>
-                                                    </div>
-                                                    @endif
-                                                    @if (!empty($h->facilities["Bathroom"]))
-                                                    <div class="facilities_group">
-                                                        <div class="facilitites_tittle">
-                                                            <i class="fas fa-bath"
-                                                                aria-hidden="true"></i><span>Bathroom</span>
+                                                        @endif
+                                                        @if(in_array("Central heating",$h->facilities["Room Amenities"]) ||
+                                                        in_array("Individually adjustable heating",$h->facilities["Room Amenities"]))
+                                                        <div class="room-spotlight">
+                                                            <i class="fas fa-temperature-high"></i>
+                                                            <span>Heating</span>
                                                         </div>
-                                                        <ul class="facilities_list">
-                                                            @foreach ($h->facilities["Bathroom"] as $li)
-                                                            <li>{{$li}}</li>
-                                                            @endforeach
-                                                        </ul>
+                                                        @endif
+                                                        @isset($h->offer[$r]["roomFacilities"])
+                                                        @foreach ($h->offer[$r]["roomFacilities"] as $roomFacility)
+                                                        <div class="room-spotlight">
+                                                            <i class="{{$roomFacility["icon"]}}" aria-hidden="true"></i>
+                                                            <span>{{$roomFacility["description"]}}</span>
+                                                        </div>
+                                                        @endforeach
+                                                        @endisset
                                                     </div>
-                                                    @endif
+                                                    <div class="room-facilities-wrapper">
+                                                        @if (!empty($h->facilities["Bedroom"]))
+                                                        <div class="room-facilities-group">
+                                                            <div class="facilitites_tittle">
+                                                                <i class="fas fa-bed"
+                                                                    aria-hidden="true"></i><span>Bedroom</span>
+                                                            </div>
+                                                            <ul class="facilities_list">
+                                                                @foreach ($h->facilities["Bedroom"] as $li)
+                                                                <li>{{$li}}</li>
+                                                                @endforeach
+                                                            </ul>
+                                                        </div>
+                                                        @endif
+                                                        @if (!empty($h->facilities["Room Amenities"]))
+                                                        <div class="room-facilities-group">
+                                                            <div class="facilitites_tittle">
+                                                                <i class="fas fa-bed" aria-hidden="true"></i><span>Room
+                                                                    Amenities</span>
+                                                            </div>
+                                                            <ul class="facilities_list">
+                                                                @foreach ($h->facilities["Room Amenities"] as $li)
+                                                                <li>{{$li}}</li>
+                                                                @endforeach
+                                                            </ul>
+                                                        </div>
+                                                        @endif
+                                                        @if (!empty($h->facilities["Bathroom"]))
+                                                        <div class="room-facilities-group">
+                                                            <div class="facilitites_tittle">
+                                                                <i class="fas fa-bath"
+                                                                    aria-hidden="true"></i><span>Bathroom</span>
+                                                            </div>
+                                                            <ul class="facilities_list">
+                                                                @foreach ($h->facilities["Bathroom"] as $li)
+                                                                <li>{{$li}}</li>
+                                                                @endforeach
+                                                            </ul>
+                                                        </div>
+                                                        @endif
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div class="room_close">
-                                            <div class="close"></div>
                                         </div>
                                     </div>
-                                </div>
                             </div>
                             <div class="room_offers">
                                 @for ($i=0; $i<count($h->offer[$r]["rates"]); $i++)
@@ -446,8 +499,7 @@
                                         <span class='nights_text'>for {{$h->offer[$r]["rates"][$i]["rooms"]}}
                                             {{$h->offer[$r]["rates"][$i]["rooms"]>1?"rooms": "room"}} for
                                             {{$h->nights_text}}</span>
-                                        <a href="book?rateKey={{$h->offer[$r]["rates"][$i]["rateKey"] . "&adults=" . $m->adults . "&children=" . $m->children}}"
-                                            target="_blank">
+                                        <a href="book?rateKey={{$h->offer[$r]["rates"][$i]["rateKey"] . "&adults=" . $m->adults . "&children=" . $m->children}}">
                                             <button>Reserve</button>
                                         </a>
                                         <span

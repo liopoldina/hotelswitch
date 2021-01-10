@@ -261,6 +261,7 @@
 .spotlight i {
     width: 20px;
     text-align: center;
+    color: var(--main-color-light);
 }
 
 .spotlight span {
@@ -518,10 +519,6 @@
     margin-left: 10px;
 }
 
-.green {
-    color: var(--main-color);
-}
-
 .blue {
     color: rgb(10, 10, 143);
 }
@@ -604,6 +601,7 @@
     flex: 1 0 75px;
     max-width: 165px;
     padding-left: 20px;
+    -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
 }
 
 .dates_box {
@@ -680,8 +678,7 @@
     margin-bottom: 15px;
 }
 
-.update_close,
-.room_close {
+.update_close {
     height: 37px;
     width: 37px;
     position: absolute;
@@ -959,6 +956,7 @@
     height: 150px;
     margin-bottom: 12px;
     cursor: pointer;
+    -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
 }
 
 .room_image img {
@@ -1104,8 +1102,7 @@
 }
 
 .details_popup {
-    width: 90%;
-    max-width: 900px;
+    max-width: min(900px, 90%);
     background-color: rgb(242, 242, 242);
     padding: 0px 25px 25px;
     border-radius: 4px;
@@ -1114,13 +1111,33 @@
     height: fit-content;
 }
 
-.details-room-name {
-    font-size: 19px;
-    padding: 12.5px 25px;
+.details-header {
+    display: flex;
+    padding: 8px 10px 8px 25px;
     margin: 0px -25px 15px;
     border-radius: 4px 4px 0px 0px;
     background-color: var(--main-color-light);
     color: white;
+    align-items: center;
+}
+
+.details-room-name {
+    font-size: 19px;
+}
+
+.room_close {
+    height: 35px;
+    width: 35px;
+    background-color: whitesmoke;
+    border-radius: 150px;
+    box-shadow: 0 4px 9px rgba(0, 0, 0, 0.6);
+    cursor: pointer;
+    margin-left: auto;
+}
+
+.room_close .close {
+    left: calc(50% - 0.9px);
+    top: 7.3px;
 }
 
 .details-content {
@@ -1128,14 +1145,25 @@
     color: #444;
 }
 
+.details_left {
+    width: 50%;
+    display: flex;
+    justify-content: center;
+}
+
 .details_rigth {
-    margin-left: 45px;
+    padding-left: 45px;
 }
 
 .room_images,
 .slick-slide img {
-    width: 420px;
+    width: 100%;
+    max-width: 600px;
     height: 275px;
+}
+
+.slick-slide:focus {
+    outline: none;
 }
 
 .slick-prev,
@@ -1163,13 +1191,34 @@
     pointer-events: none;
 }
 
+.slick-dots li:only-child {
+    display: none;
+}
+
 .details-size {
-    margin-bottom: 25px;
+    margin-bottom: 20px;
 }
 
 .details-size span {
     font-size: 14px;
     margin-left: 5px;
+}
+
+.details-spotlight-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+}
+
+.room-spotlight {
+    margin-bottom: 8px;
+    margin-right: 8px;
+    font-size: 14px;
+    border-radius: 3px;
+    width: fit-content;
+    background-color: rgba(var(--main-color-rgb), 0.2);
+    padding: 5px 7px;
+    white-space: nowrap;
 }
 
 .room-facilities-wrapper {
@@ -1179,6 +1228,26 @@
 
 .room-facilities-wrapper:last-child {
     margin-bottom: 0px;
+}
+
+.room-facilities-group {
+    margin-bottom: 18px;
+}
+
+.room-facilities-group ul {
+    list-style: none;
+    padding-left: 0px;
+}
+
+.room-facilities-group li {
+    padding-left: 33px;
+    background-image: url(../images/hotel/check.svg);
+    background-repeat: no-repeat;
+    background-position: left 5px top 1px;
+    background-size: 10px auto, 100%;
+    font-size: 13px;
+    margin-bottom: 5px;
+    padding-right: 15px;
 }
 
 .no_avail_wrapper {
@@ -1383,6 +1452,39 @@
     }
 }
 
+@media (max-width: 800px) {
+    .details_popup {
+        max-width: unset;
+        width: 100%;
+        height: 100%;
+        border-radius: 0px;
+        overflow-y: scroll;
+        overflow-x: hidden;
+        align-self: flex-start;
+    }
+    .details-header {
+        border-radius: 0px;
+    }
+    .details-content {
+        flex-direction: column;
+    }
+    .details_left {
+        width: 100%;
+    }
+    .details_rigth {
+        width: 100%;
+        padding-left: 0px;
+        margin-top: 25px;
+    }
+    .room_images,
+    .slick-slide img {
+        height: 350px;
+    }
+    .room-facilities-wrapper {
+        column-count: 3;
+    }
+}
+
 @media (max-width: 790px) {
     .search_bar_update form {
         flex-direction: column;
@@ -1452,6 +1554,7 @@
         margin: 0px auto;
         height: unset;
         order: -1;
+        flex: 0;
     }
     .room_offer {
         width: fit-content;
@@ -1603,6 +1706,20 @@
     }
     .search_box {
         margin-right: 10px;
+    }
+}
+
+@media (max-width: 400px) {
+    .room-facilities-wrapper {
+        column-count: 2;
+    }
+    .slick-next,
+    .slick-prev {
+        display: none !important;
+    }
+    .room_images,
+    .slick-slide img {
+        height: 275px;
     }
 }
 

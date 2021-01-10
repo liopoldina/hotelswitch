@@ -44,6 +44,10 @@
     m = @json($m);
     @endisset
 
+    @isset($rate)
+    rate = @json($rate);
+    @endisset
+
 </script>
 
 @endsection

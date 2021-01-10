@@ -17,7 +17,7 @@ class HotelRepository{
         $info   = DB::connection('hotelbeds')->table($m->collection_name)->where('info', 'exists', true)->first();
         $offer  = DB::connection('hotelbeds')->table($m->collection_name)->where('code', $m->hotel_id)->get();
 
-        $h = new Hotel($Static_Hotel,$offer,$info);
+        $h = new Hotel($Static_Hotel,$offer,$info, $m);
         
         return $h;
     }
@@ -62,7 +62,7 @@ class Hotel {
 
     var $icons;
 
-    function __construct($static, $offer, $info)
+    function __construct($static, $offer, $info, $m)
     {           
                 // dynamic content
                 if($info["info"]["total"] > 0){ 
@@ -99,9 +99,7 @@ class Hotel {
                 $this->address = MyLibrary::titleCase($static["address"]["content"]).", ".MyLibrary::titleCase($this->city). ", " . $static["postalCode"] . ", " . $this->country;
 
                 $this->coords = ['lat'=>$static["coordinates"]["latitude"],'lon'=>$static["coordinates"]["longitude"]];
-                $this->city_coords = ['lat'=>38.71667,'lon'=>-9.13333];
-
-                $this->distance_center = round(MyLibrary::distance($this->coords["lat"],  $this->coords["lon"], $this->city_coords["lat"], $this->city_coords["lon"]),1). " km from center";
+                $this->distance_center = round(MyLibrary::distance($this->coords["lat"],  $this->coords["lon"], $m->lat, $m->lon),1). " km from center";
 
                 $this->get_images($static["images"]);
             
@@ -258,7 +256,7 @@ class Hotel {
                         }
                         
                         // room area
-                        if($room["roomFacilities"][$rf]["facilityCode"] == 295 ){
+                        if($room["roomFacilities"][$rf]["facilityCode"] == 295 && isset($room["roomFacilities"][$rf]["number"]) ){
                             $rooms[$i]['size'] = $room["roomFacilities"][$rf]["number"];
                         }
                     }
