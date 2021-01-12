@@ -143,6 +143,14 @@
     font-size: 15px;
 }
 
+.board_name {
+    margin-left: 8px;
+}
+
+.green {
+    color: var(--main-color-light);
+}
+
 .price_line {
     font-size: 13px;
     margin-bottom: 8px;

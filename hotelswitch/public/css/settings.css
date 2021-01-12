@@ -148,8 +148,8 @@ select:focus {
 
 .password_reset {
     color: #fff;
-    background-color: #3490dc;
-    border-color: #3490dc;
+    background-color: var(--main-color-light);
+    border-color: var(--main-color-light);
     padding: 7px 14px;
     border-radius: 3px;
     border: none;
@@ -157,7 +157,7 @@ select:focus {
 }
 
 .password_reset:hover {
-    background-color: #227dc7;
+    filter: brightness(110%);
 }
 
 @media (max-width: 600px) {

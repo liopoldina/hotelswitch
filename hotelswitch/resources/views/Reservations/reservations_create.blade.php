@@ -23,7 +23,7 @@
                 <img src="http://photos.hotelbeds.com/giata/bigger/{{ $h->images[0]["path"]  ?? '36/363373/363373a_hb_a_001.jpg'}}"
                     alt="">
                 <span
-                    class='hotel_name'>{{ $rate->hotel->name  ?? 'Rossio Garden Hotel'}}<sup>{{ $h->stars_symbol ?? '★★★'}}</sup></span>
+                    class='hotel_name'>{{ $r->hotel->name  ?? 'Rossio Garden Hotel'}}<sup>{{ $h->stars_symbol ?? '★★★'}}</sup></span>
                 <span
                     class='hotel_address'>{{ $h->address  ?? 'Rua Jardim do Regedor, 24, Lisboa, 1150-194, Portugal'}}</span>
                 {{-- <div class="score">
@@ -41,14 +41,14 @@
                     <div class="date_box">
                         <span class="date_tittle">Check-in</span>
                         <span
-                            class="date">{{ isset($rate) ? date("D j M Y",strtotime($rate->hotel->checkIn))  : 'Sun 11 Oct 2020'}}</span>
+                            class="date">{{ isset($r) ? date("D j M Y",strtotime($r->hotel->checkIn))  : 'Sun 11 Oct 2020'}}</span>
                         <span class="hour">From {{substr($h->policies['Check-in and check-out'][0]??'14:00',-5)}}</span>
                     </div>
                     <div class='divider'></div>
                     <div class="date_box">
                         <span class="date_tittle">Check-out</span>
                         <span
-                            class="date">{{ isset($rate) ? date("D j M Y",strtotime($rate->hotel->checkOut)) : 'Thu 15 Oct 2020'}}</span>
+                            class="date">{{ isset($r) ? date("D j M Y",strtotime($r->hotel->checkOut)) : 'Thu 15 Oct 2020'}}</span>
                         <span class="hour">Until
                             {{substr($h->policies['Check-in and check-out'][1]??'12:00',-5)}}</span>
                     </div>
@@ -71,11 +71,24 @@
                 <span>Room Selection</span>
             </div>
             <div class='room_type'>
-                <span>{{$rate->hotel->rooms[0]->rates[0]->rooms}}</span>
+                <span>{{$r->hotel->rooms[0]->rates[0]->rooms}}</span>
                 <span>x</span>
-                <span>{{$MyLibrary->titleCase($rate->hotel->rooms[0]->name)}}</span>
+                <span>{{$MyLibrary->titleCase($r->hotel->rooms[0]->name)}}</span>
             </div>
         </div>
+        @if($r->hotel->rooms[0]->rates[0]->boardCode == 'BB')
+        <div class="left_box">
+            <div class="box_tittle">
+                <span>Your Booking Includes</span>
+            </div>
+            <div class="offer green"
+                name="board">
+                <i class="fas fa-coffee" name="board_icon"></i>
+                <span
+                    class="board_name">Breakfast</span>
+            </div>
+        </div>
+        @endif
         <div class="left_box">
             <div class="box_tittle">
                 <span>Price Summary</span>
@@ -83,43 +96,44 @@
             <div class="price_line">
                 <span>1 Room</span>
                 <span>€
-                    {{isset($rate) ? round($rate->hotel->rooms[0]->rates[0]->sellingRate/1.06,2) : '54.57'}}</span>
+                    {{isset($r) ? round($r->hotel->rooms[0]->rates[0]->sellingRate/1.06,2) : '54.57'}}</span>
             </div>
             <div class="price_line">
                 <span>6% VAT</span>
                 <span>€
-                    {{isset($rate) ? round($rate->hotel->rooms[0]->rates[0]->sellingRate/1.06*0.06,2) : '3.27'}}</span>
+                    {{isset($r) ? round($r->hotel->rooms[0]->rates[0]->sellingRate/1.06*0.06,2) : '3.27'}}</span>
             </div>
             <div class="total_price">
                 <span>Total Price</span>
-                <span>€ {{isset($rate) ? $rate->hotel->rooms[0]->rates[0]->sellingRate : '57.84'}}</span>
+                <span>€ {{isset($r) ? $r->hotel->rooms[0]->rates[0]->sellingRate : '57.84'}}</span>
             </div>
         </div>
         <div class="left_box">
             <div class="box_tittle">
                 <span>Cancellation Policy</span>
             </div>
-            <span class='policy_tittle'>{{$rate->hotel->rooms[0]->rates[0]->rateClass == "RF" ? "Refundable rate" : "Non-refundable rate"}}</span>
-            <span class='policy_text'>{{$rate->hotel->rooms[0]->rates[0]->rateClass == "RF" ? $rate->hotel->rooms[0]->rates[0]->cancellationPolicies[0]->description . "." : "Please note, if cancelled, modified or in case of no-show, the total
+            <span class='policy_tittle {{$r->hotel->rooms[0]->rates[0]->rateClass == "RF" ? "green" : ""}}'>{{$r->hotel->rooms[0]->rates[0]->rateClass == "RF" ? "Refundable rate" : "Non-refundable rate"}}</span>
+            <span class='policy_text'>{{$r->hotel->rooms[0]->rates[0]->rateClass == "RF" ? $r->hotel->rooms[0]->rates[0]->cancellationPolicies[0]->description . "." : "Please note, if cancelled, modified or in case of no-show, the total
                 price of the reservation will
                 be charged."}}</span>
         </div>
+        @isset($h->tax)
         <div class="left_box">
             <div class="box_tittle">
                 <span>Additional Information</span>
             </div>
             <div class="additional_item">
                 <span class='additional_tittle'>City Tourist Tax</span>
-                <span class='additional_text'>On arrival to the property it is due the city tourist tax of 2€ per
-                    person per
-                    night.</span>
+                <span class='additional_text'>At the accommodation you will have to pay the
+                    city tourist tax totaling {{$h->tax }} not included in the room price.</span>
             </div>
         </div>
+        @endisset
     </div>
     <div class="right_content">
         <form id='booking_form' action="book" method='post'>
             @csrf
-            <input type="hidden" name="rateKey" value="{{$rate->hotel->rooms[0]->rates[0]->rateKey}}">
+            <input type="hidden" name="rateKey" value="{{$r->hotel->rooms[0]->rates[0]->rateKey}}">
             <div class="step">
                 <i class="fas fa-user"></i>
                 <span>Step 1: Your details</span>
@@ -179,9 +193,9 @@
             </div>
             <div class="right_box">
                 <div class="room_name_wrapper">
-                    <span>{{$rate->hotel->rooms[0]->rates[0]->rooms}}</span>
+                    <span>{{$r->hotel->rooms[0]->rates[0]->rooms}}</span>
                     <span>x</span>
-                    <span class='room_name'>{{$MyLibrary->titleCase($rate->hotel->rooms[0]->name)}}</span>
+                    <span class='room_name'>{{$MyLibrary->titleCase($r->hotel->rooms[0]->name)}}</span>
                     <div class="guests_icons">
                         @for($g=0; $g < $h->adults + $h->children; $g++)
                             <i class="fas fa-user" aria-hidden="true"></i>
@@ -219,7 +233,7 @@
                 </div>
                 <div class="room_box">
                     <div class="room_left">
-                        <img src="http://photos.hotelbeds.com/giata/bigger/{{$rate->hotel->rooms[0]->image ?? '41/419658/419658a_hb_ro_023.jpg'}}"
+                        <img src="http://photos.hotelbeds.com/giata/bigger/{{$r->hotel->rooms[0]->image ?? '41/419658/419658a_hb_ro_023.jpg'}}"
                             alt="">
                     </div>
                     <div class="room_right">

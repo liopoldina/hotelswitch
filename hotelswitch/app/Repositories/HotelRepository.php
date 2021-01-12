@@ -58,7 +58,7 @@ class Hotel {
 
     var $offer;
 
-    var $tourist_tax;
+    var $tax;
 
     var $icons;
 
@@ -77,7 +77,7 @@ class Hotel {
     
                     if(isset($offer[0]["rooms"][0]["rates"][0]["taxes"]["allIncluded"])){
                         if($offer[0]["rooms"][0]["rates"][0]["taxes"]["allIncluded"] == false){
-                            $this->tourist_tax = intval($offer[0]["rooms"][0]["rates"][0]["taxes"]["taxes"][0]["amount"])/$offer[0]["rooms"][0]["rates"][0]["adults"];
+                            $this->tax = $offer[0]["rooms"][0]["rates"][0]["taxes"]["taxes"][0]["amount"] . " " . $offer[0]["rooms"][0]["rates"][0]["taxes"]["taxes"][0]["currency"]  ;
                         }
                     }
                 }

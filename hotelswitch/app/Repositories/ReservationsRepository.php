@@ -43,21 +43,21 @@ class ReservationsRepository{
 
         $response = $client->request('POST', 'checkrates',  ['headers' => $headers,'json' => $body,]);
 
-        $rate = json_decode($response->getBody()->getContents());
+        $r = json_decode($response->getBody()->getContents());
 
         // set selling rate if not set
-        if (!isset($rate->hotel->rooms[0]->rates[0]->sellingRate)){  
-            $rate->hotel->rooms[0]->rates[0]->sellingRate =  round($rate->hotel->rooms[0]->rates[0]->net * 1.06,2);
+        if (!isset($r->hotel->rooms[0]->rates[0]->sellingRate)){  
+            $r->hotel->rooms[0]->rates[0]->sellingRate =  round($r->hotel->rooms[0]->rates[0]->net * 1.06,2);
             }
     
         // set cancellaton policy
-        $rate->hotel->rooms[0]->rates[0]->rateClass = "NRF"; //default
+        $r->hotel->rooms[0]->rates[0]->rateClass = "NRF"; //default
  
-        if (isset($rate->hotel->rooms[0]->rates[0]->cancellationPolicies[0]->from)){   
-            [$rate->hotel->rooms[0]->rates[0]->rateClass, $rate->hotel->rooms[0]->rates[0]->cancellationPolicies[0]->description]  = MyLibrary::cancellation_policy($rate->hotel->rooms[0]->rates[0]);         
+        if (isset($r->hotel->rooms[0]->rates[0]->cancellationPolicies[0]->from)){   
+            [$r->hotel->rooms[0]->rates[0]->rateClass, $r->hotel->rooms[0]->rates[0]->cancellationPolicies[0]->description]  = MyLibrary::cancellation_policy($r->hotel->rooms[0]->rates[0]);         
         }
     
-        return $rate;         
+        return $r;         
     }
 
     public static function Book($data) {
@@ -109,9 +109,22 @@ class ReservationsRepository{
         ];
 
         $response = $client->request('POST', 'bookings',  ['headers' => $headers,'json' => $body,]);
-        
-        return json_decode($response->getBody()->getContents());
-                
+
+        $r = json_decode($response->getBody()->getContents());
+
+        // set selling rate if not set
+        if(!isset($r->booking->hotel->rooms[0]->rates[0]->sellingRate)){
+            $r->booking->hotel->rooms[0]->rates[0]->sellingRate = round($r->booking->hotel->rooms[0]->rates[0]->net * 1.06,2);
+        }
+
+        // set cancellaton policy
+        $r->booking->hotel->rooms[0]->rates[0]->rateClass = "NRF"; //default
+
+        if (isset($r->booking->hotel->rooms[0]->rates[0]->cancellationPolicies[0]->from)){   
+            [$r->booking->hotel->rooms[0]->rates[0]->rateClass, $r->booking->hotel->rooms[0]->rates[0]->cancellationPolicies[0]->description]  = MyLibrary::cancellation_policy($r->booking->hotel->rooms[0]->rates[0]);         
+        }
+            
+        return $r;            
     }
 
     public static function get_hotel($hotel_id, $r){
@@ -166,6 +179,12 @@ class Hotel {
             $this->rooms = $r->hotel->rooms[0]->rates[0]->rooms;
             $this->adults = $r->hotel->rooms[0]->rates[0]->adults;
             $this->children = $r->hotel->rooms[0]->rates[0]->children;
+
+            if(isset($r->hotel->rooms[0]->rates[0]->taxes->allIncluded)){
+                if($r->hotel->rooms[0]->rates[0]->taxes->allIncluded == false){
+                    $this->tax = $r->hotel->rooms[0]->rates[0]->taxes->taxes[0]->amount . " " . $r->hotel->rooms[0]->rates[0]->taxes->taxes[0]->currency;
+                }
+            }
         }else
             {// confimation page
             $this->check_in = $r["reservation"]["booking"]["hotel"]["checkIn"];
@@ -175,6 +194,12 @@ class Hotel {
             foreach ($r["reservation"]["booking"]["hotel"]["rooms"][0]["paxes"] as $pax){
                 if($pax["type"] == "AD"){ $this->adults = $this->adults + 1;}
                 if($pax["type"] == "CH"){ $this->children = $this->children + 1;}
+            }
+
+            if(isset($r["reservation"]["booking"]["hotel"]["rooms"][0]["rates"][0]["taxes"]["allIncluded"])){
+                if($r["reservation"]["booking"]["hotel"]["rooms"][0]["rates"][0]["taxes"]["allIncluded"] == false){
+                    $this->tax = $r["reservation"]["booking"]["hotel"]["rooms"][0]["rates"][0]["taxes"]["taxes"][0]["amount"] . " " . $r["reservation"]["booking"]["hotel"]["rooms"][0]["rates"][0]["taxes"]["taxes"][0]["currency"];
+                }
             }
         }
 

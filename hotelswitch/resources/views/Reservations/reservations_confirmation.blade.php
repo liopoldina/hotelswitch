@@ -11,13 +11,13 @@
 @section('content')
 <div class="confirmation_wrapper">
     <div class='top'>
-        <div class='thank_you'> Thank you {{$r->first_name}}!</div>
+        <div class='thank_you'> Thank you {{$r["first_name"]}}!</div>
         <div class='congratulations'><i class="far fa-thumbs-up"></i>Congratulations! Your Booking is confirmed.
         </div>
         <button class='print' onclick="window.print()"><i class="fas fa-print"></i>Print your reservation</button>
         <ul class="fa-ul">
             <li><i class="fa-li fa fa-check"></i>We sent you a confirmation email to
-                <strong>{{$r->email}}</strong>
+                <strong>{{$r["email"]}}</strong>
             </li>
             <li><i
                     class="fa-li fa fa-check"></i><strong>{{$r['reservation']['booking']['hotel']['name']}}</strong>
@@ -94,12 +94,15 @@
                 class='detail_content'>{{date('D j  M  Y',strtotime($r['reservation']['booking']['hotel']['checkOut']))}}</span>
         </div>
         <div class='detail'>
+            <span class='detail_tittle'>Board</span>
+            <span
+                class='detail_content'>{{MyLibrary::board($r['reservation']['booking']['hotel']['rooms'][0]['rates'][0]['boardCode'])}}</span>
+        </div>
+        <div class='detail'>
             <span class='detail_tittle'>Cancellation Policy</span>
             <span
-                class='detail_content'>{{'Non-refundable rate'}}:
-                If cancelled, modified
-                or in case of
-                no-show, the total price of the reservation will not be refunded.</span>
+                class='detail_content'>{{$r["reservation"]["booking"]["hotel"]["rooms"][0]["rates"][0]["rateClass"] == "RF" ? $r["reservation"]["booking"]["hotel"]["rooms"][0]["rates"][0]["cancellationPolicies"][0]["description"] : "Non-refundable Rate: Please note that this is a non-refundable reservation and if cancelled, modified or
+                in case of no-show, the total price of the reservation will not be refunded."}}</span>
         </div>
         @isset($r['special_requests'])
         <div class='detail'>
@@ -134,10 +137,12 @@
         </div>
         <div class="price_info">The full amount of the reservation was already paid and the booking is confirmed.
         </div>
-        <div class="price_info">Please note that this is a non-refundable reservation and if cancelled, modified or
-            in case of no-show, the total price of the reservation will not be refunded.</div>
-        <div class="price_info">On arrival to the property it is due the city tourist
-            tax of 2€ per person per night which is not included in the price.</div>
+        <div class="price_info">{{$r["reservation"]["booking"]["hotel"]["rooms"][0]["rates"][0]["rateClass"] == "RF" ? $r["reservation"]["booking"]["hotel"]["rooms"][0]["rates"][0]["cancellationPolicies"][0]["description"] . ". Please note that after that date if cancelled, modified or
+            in case of no-show, the total price of the reservation will not be refunded." :"Please note that this is a non-refundable reservation and if cancelled, modified or
+            in case of no-show, the total price of the reservation will not be refunded."}}</div>
+        @isset($h->tax)
+        <div class="price_info">At the accommodation you will have to pay the city tourist tax totaling {{$h->tax }} not included in the room price.</div>
+        @endisset
         <div class="price_info">All Special Requests are subject to availability and additional
             charges may apply.</div>
         <div class="price_info">Guests are required to show identification upon check-in.</div>

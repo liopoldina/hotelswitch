@@ -27,24 +27,24 @@ class ReservationsController extends Controller
         $m->adults = $data['adults'];
         $m->children= $data['children'];
 
-        $rate = ReservationsRepository::CheckRate($data['rateKey']); 
+        $r = ReservationsRepository::CheckRate($data['rateKey']); 
 
-        if($m->adults + $m->children > ($rate->hotel->rooms[0]->rates[0]->adults + $rate->hotel->rooms[0]->rates[0]->children) * $rate->hotel->rooms[0]->rates[0]->rooms){
+        if($m->adults + $m->children > ($r->hotel->rooms[0]->rates[0]->adults + $r->hotel->rooms[0]->rates[0]->children) * $r->hotel->rooms[0]->rates[0]->rooms){
             throw ValidationException::withMessages(['guests' => 'Room capacity excedded']);
         }
 
-        $h = ReservationsRepository::get_hotel($rate->hotel->code, $rate);
+        $h = ReservationsRepository::get_hotel($r->hotel->code, $r);
         
         // get room image
         foreach($h->images as $image){
-            if(isset($image["roomCode"]) && $image["roomCode"] == $rate->hotel->rooms[0]->code){
-                $rate->hotel->rooms[0]->image = $image["path"];
+            if(isset($image["roomCode"]) && $image["roomCode"] == $r->hotel->rooms[0]->code){
+                $r->hotel->rooms[0]->image = $image["path"];
                 break;
             }
         }
         
         return view('Reservations.reservations_create',[
-            'rate' => $rate,
+            'r' => $r,
             'h' => $h,
             'm' => $m
         ]);
@@ -69,12 +69,7 @@ class ReservationsController extends Controller
         ]);
 
         // hotelbeds book
-        $reservation = ReservationsRepository::Book($data); 
-
-        // set selling rate if not set
-        if(!isset($reservation->booking->hotel->rooms[0]->rates[0]->sellingRate)){
-            $reservation->booking->hotel->rooms[0]->rates[0]->sellingRate = round($reservation->booking->hotel->rooms[0]->rates[0]->net * 1.06,2);
-        }
+        $r = ReservationsRepository::Book($data); 
 
         // generate id
         $permitted_chars = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
@@ -84,7 +79,7 @@ class ReservationsController extends Controller
         Reservation::create(
             [
             'id' => $id,
-            'reservation' => $reservation 
+            'reservation' => $r 
             ] +
             $data
         );
@@ -99,19 +94,14 @@ class ReservationsController extends Controller
             'id' => 'string|min:200|max:300',
         ]);
 
-        $reservation = Reservation::find($data['id']);
-
-        if(isset($reservation)){
-            
-            $h = ReservationsRepository::get_hotel($reservation["reservation"]["booking"]["hotel"]["code"], $reservation);
-            
-            return view('Reservations.reservations_confirmation',[
-                'r' => $reservation,
-                'h'=> $h,
-                ]);
-        }else{ 
-            // template
-            return view('Reservations.reservations_confirmation');
-        }
+        $r = Reservation::find($data['id'])->toArray();
+      
+        $h = ReservationsRepository::get_hotel($r["reservation"]["booking"]["hotel"]["code"], $r);
+        
+        return view('Reservations.reservations_confirmation',[
+            'r' => $r,
+            'h'=> $h,
+            ]);
+       
     }
 }

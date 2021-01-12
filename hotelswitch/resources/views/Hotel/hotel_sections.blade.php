@@ -351,10 +351,9 @@
                                             for {{$h->nights_text}}
                                         </li>
                                         <li><strong>VAT already included</strong></li>
-                                        @isset($h->tourist_tax)
+                                        @isset($h->tax)
                                         <li class="tourist_tax">At the accommodation you will have to pay the
-                                            touristic tax of €{{$h->tourist_tax }} per night not included in the
-                                            price.
+                                            city tourist tax totaling {{$h->tax }} not included in the room price.
                                         </li>
                                         @endisset
                                     </ul>
