@@ -140,12 +140,12 @@ class SearchRepository{
         return $query->where('rooms.0.rates.0.cancellationPolicies.0.description', 'Free Cancellation');})
                     ->orderBy($m->filters["sort"], $sort_order )
                     ->skip($m->index)
-                    ->take(10)
+                    ->take($m->take ?? 10)
                     ->get();
 
 
         foreach ($inputs as $input){
-            $hotel[] = new Result($input,$m);
+            $hotel[] = new Result($input);
         }
 
         if (isset($hotel)){
@@ -299,7 +299,7 @@ class Result {
     var $id;
     
     // construct
-    function __construct($input,$m){ 
+    function __construct($input){ 
                 $this->id = $input["code"];
                 $this->search_cover_photo = "http://photos.hotelbeds.com/giata/bigger/" . substr(str_pad($this->id, 6, '0', STR_PAD_LEFT), 0, -4) . "/" . str_pad($this->id, 6, '0', STR_PAD_LEFT) . "/" . str_pad($this->id, 6, '0', STR_PAD_LEFT) .  "a_hb_a_001.jpg";  //Time  0.8s
 
@@ -322,8 +322,7 @@ class Result {
                 // $this->district = $input["district"];
 
                 $this->coords = ['lat'=>$input["latitude"],'lon'=>$input["longitude"]];
-                $this->distance_center = round(MyLibrary::distance(
-                    $this->coords["lat"],  $this->coords["lon"], $m->lat, $m->lon),1). " km from center";
+                $this->distance_center = round( $input["distance_center"],1). " km from center";
                  
                 if(isset($input["top_picks"])){ $this->pick_score =  $input["top_picks"];}
 

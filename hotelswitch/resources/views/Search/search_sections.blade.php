@@ -307,11 +307,14 @@
             @endphp
 
             @for ($i = 0; $i < $nr_results; $i++)
-                <div class="hotelbox" id="hotelbox">
+                <div class="hotelbox">
                     <div class="hotel_photo">
+                        <a class="link" href='hotel?hotel_id={{ $hotel[$i]->id ?? '' }}&m={{ isset($m) ? json_encode($m) : '' }}'
+                            target="_blank">
                         <img src={{ $hotel[$i]->search_cover_photo ?? './images/search/hotel_cover.jpg' }}
                             class="search_cover_photo loading_image" alt="hotel_cover" data-hotel-id={{ $hotel[$i]->id }}
                             data-index=1 data-type-index=0 onerror=image_error(this) />
+                        </a>
                     </div>
                     <div class="hotel_content">
                         <div class="hotel_head">
@@ -343,42 +346,45 @@
                             <span class="distance_center"> {{ $hotel[$i]->distance_center}}</span>
                         </div>
                         <div class="hotel_room">
-                            <div class="room_title">
-                                <div class="room_name">{{ $hotel[$i]->room_number}} x {{ $hotel[$i]->room_name}}
-                                    <div class="room_guests_icon">
-                                        <span class="room_separator">-</span>
-                                        @if(($m->adults_per_room + $m->children_per_room)  > 3)
-                                        <i class="fas fa-user"></i>
-                                        <span class="guests_multiplier">x {{($m->adults_per_room + $m->children_per_room)}}</span>
-                                        @else
-                                        @for ($g = 0; $g < ($m->adults_per_room + $m->children_per_room); $g++)
+                            <a class="link" href='hotel?hotel_id={{ $hotel[$i]->id ?? '' }}&m={{ isset($m) ? json_encode($m) : '' }}'
+                                target="_blank">
+                                <div class="room_title">
+                                    <div class="room_name">{{ $hotel[$i]->room_number}} x {{ $hotel[$i]->room_name}}
+                                        <div class="room_guests_icon">
+                                            <span class="room_separator">-</span>
+                                            @if(($m->adults_per_room + $m->children_per_room)  > 3)
                                             <i class="fas fa-user"></i>
-                                        @endfor
-                                        @endif
+                                            <span class="guests_multiplier">x {{($m->adults_per_room + $m->children_per_room)}}</span>
+                                            @else
+                                            @for ($g = 0; $g < ($m->adults_per_room + $m->children_per_room); $g++)
+                                                <i class="fas fa-user"></i>
+                                            @endfor
+                                            @endif
+                                        </div>
+                                    </div>
+                                    <div class="nights_guests">
+                                        <span class="nights">{{ $m->nights_text}}</span>
+                                        <span>, </span>
+                                        <span class="adults">{{ $m->adults > 1 ? $m->adults . " adults" : $m->adults . " adult"   }}</span>
+                                        <span class="children">{{ $m->children > 1 ? ", " . $m->children . " children" : ($m->children == 1 ? ", " . $m->children . " child" : "") }}</span>
                                     </div>
                                 </div>
-                                <div class="nights_guests">
-                                    <span class="nights">{{ $m->nights_text}}</span>
-                                    <span>, </span>
-                                    <span class="adults">{{ $m->adults > 1 ? $m->adults . " adults" : $m->adults . " adult"   }}</span>
-                                    <span class="children">{{ $m->children > 1 ? ", " . $m->children . " children" : ($m->children == 1 ? ", " . $m->children . " child" : "") }}</span>
-                                </div>
-                            </div>
-                            <div class="rate_wrapper">
-                                <div class="rate_left">
-                                    {{-- <span class="bed_type">{{ $hotel[$i]->bed_type}}</span> --}}
-                                    <div class="room_policy">
-                                        <span class="board">{{$hotel[$i]->board == "Room Only" ? "" : $hotel[$i]->board}}</span>
+                                <div class="rate_wrapper">
+                                    <div class="rate_left">
+                                        {{-- <span class="bed_type">{{ $hotel[$i]->bed_type}}</span> --}}
+                                        <div class="room_policy">
+                                            <span class="board">{{$hotel[$i]->board == "Room Only" ? "" : $hotel[$i]->board}}</span>
+                                        </div>
+                                        <div class="room_policy">
+                                            <span
+                                                class="cancellation_policy">{{ $hotel[$i]->cancellation_policy == "NRF" ? "" :  "Free Cancellation"}}</span>
+                                            <span class="policy_separator"></span>
+                                            <span class="payment_policy">{{ $hotel[$i]->payment_policy ?? '' }}</span>
+                                        </div>
                                     </div>
-                                    <div class="room_policy">
-                                        <span
-                                            class="cancellation_policy">{{ $hotel[$i]->cancellation_policy == "NRF" ? "" :  "Free Cancellation"}}</span>
-                                        <span class="policy_separator"></span>
-                                        <span class="payment_policy">{{ $hotel[$i]->payment_policy ?? '' }}</span>
-                                    </div>
+                                    <span class="price">{{ $hotel[$i]->price ?? '€99' }}</span>
                                 </div>
-                                <span class="price">{{ $hotel[$i]->price ?? '€99' }}</span>
-                            </div>
+                            </a>
                         </div>
                         <div class="hotel_book">
                             <a class="link"

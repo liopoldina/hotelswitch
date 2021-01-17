@@ -89,11 +89,17 @@ class SearchController extends Controller
         switch ($mode){
             case "page":
                 $m->index = $m->next_index;
+                $m->take = 10;
                 break;
         
             case "filter":
                 $m->index = 0;
-                break;        
+                $m->take = 10;
+                break; 
+
+            case "map":
+                $m->take = 500;
+                break;           
         }
 
         [$hotel,$m] = SearchRepository::get_results($m);
