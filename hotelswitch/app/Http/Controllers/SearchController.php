@@ -77,13 +77,27 @@ class SearchController extends Controller
         
         $m = (object) $data->m;
         $mode = $data->mode;
-        
-        $m->next_index=(int)$m->next_index;
-        $m->filters["sort_order"] = (float) $m->filters["sort_order"];
-        $m->filters["price_range"]["maximum_price"]=(float)$m->filters["price_range"]["maximum_price"];
-        $m->filters["price_range"]["minimum_price"]=(float)$m->filters["price_range"]["minimum_price"];
-        $m->filters["distance_center"]=(float)$m->filters["distance_center"];
-        $m->filters["minimum_score"]=(float)$m->filters["minimum_score"];
+
+        $m->next_index = (int)($m->next_index ?? 0);
+
+        if(isset( $m->filters)){
+            $m->filters["sort_order"] = (float) $m->filters["sort_order"];
+            $m->filters["price_range"]["maximum_price"]=(float)$m->filters["price_range"]["maximum_price"];
+            $m->filters["price_range"]["minimum_price"]=(float)$m->filters["price_range"]["minimum_price"];
+            $m->filters["distance_center"]=(float)$m->filters["distance_center"];
+            $m->filters["minimum_score"]=(float)$m->filters["minimum_score"];
+        }
+        else{
+            $m->index = 0;
+            $m->filters["sort"]= 'minRate';
+            $m->filters["sort_order"] = 1;
+            $m->filters["price_range"]["maximum_price"]=999;
+            $m->filters["price_range"]["minimum_price"]=0;
+            $m->filters["stars"]="5,4,3,2,1";
+            $m->filters["distance_center"]=50;
+            $m->filters["free_cancellation"]=false;
+            $m->filters["minimum_score"]=0;
+        }
 
 
         switch ($mode){

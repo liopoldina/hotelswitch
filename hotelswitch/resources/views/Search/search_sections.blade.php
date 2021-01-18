@@ -256,10 +256,10 @@
         </div>
         <div class="search_top">
             <div class="destination_header_wrapper">
-                <span class="destination_header">{{ $m->destination ?? 'Lisbon, Portugal' }} </span>
+                <span class="destination_header">{{ $m->destination}} </span>
                 <span class="sort_by">Sort by:</span>
             </div>
-            <div class="map_wrapper" id="map_wrapper">
+            <div class="map_wrapper">
                 <div class="position_icon">
                     <i class="fas fa-map-marker-alt fa-lg"></i>
                 </div>
@@ -309,9 +309,9 @@
             @for ($i = 0; $i < $nr_results; $i++)
                 <div class="hotelbox">
                     <div class="hotel_photo">
-                        <a class="link" href='hotel?hotel_id={{ $hotel[$i]->id ?? '' }}&m={{ isset($m) ? json_encode($m) : '' }}'
+                        <a class="link" href='hotel?hotel_id={{ $hotel[$i]->id}}&m={{json_encode($m)}}'
                             target="_blank">
-                        <img src={{ $hotel[$i]->search_cover_photo ?? './images/search/hotel_cover.jpg' }}
+                        <img src={{ $hotel[$i]->search_cover_photo}}
                             class="search_cover_photo loading_image" alt="hotel_cover" data-hotel-id={{ $hotel[$i]->id }}
                             data-index=1 data-type-index=0 onerror=image_error(this) />
                         </a>
@@ -319,34 +319,34 @@
                     <div class="hotel_content">
                         <div class="hotel_head">
                             <a class="link_name"
-                                href='hotel?hotel_id={{ $hotel[$i]->id ?? '' }}&m={{ isset($m) ? json_encode($m) : '' }}'
+                                href='hotel?hotel_id={{ $hotel[$i]->id}}&m={{json_encode($m)}}'
                                 target="_blank">
-                                <div class="name">{{ $hotel[$i]->name ?? 'Hotel Royal Sample' }}
+                                <div class="name">{{ $hotel[$i]->name}}
                                     <div class="stars">
-                                        {{ $hotel[$i]->stars_symbol ?? '★★★★★' }}
+                                        {{ $hotel[$i]->stars_symbol}}
                                     </div>
                                 </div>
                             </a>
                             <div class="quality_score_wrapper">
                                 <div class="quality_nr_reviews">
-                                    <span class="quality">{{ $hotel[$i]->quality ?? 'Good' }}</span>
-                                    <span class="nr_reviews">{{ $hotel[$i]->nr_reviews ?? '1,654' }} reviews</span>
+                                    <span class="quality">{{ $hotel[$i]->quality}}</span>
+                                    <span class="nr_reviews">{{ $hotel[$i]->nr_reviews}} reviews</span>
                                 </div>
                                 <div class="score_wrapper">
                                     <img src={{ asset('images/search/tripadvisor_logo.png') }} alt="tripadvisor_logo">
                                     <span class="score"><strong
-                                            class="score_value">{{ number_format($hotel[$i]->score, 1) ?? '4.5' }}</strong>/5.0</span>
+                                            class="score_value">{{ number_format($hotel[$i]->score, 1)}}</strong>/5.0</span>
                                 </div>
                             </div>
                         </div>
                         <div class="address_wrapper">
-                            <span class="district">{{ $hotel[$i]->district ?? '' }}</span>
+                            <span class="district">{{ $hotel[$i]->district}}</span>
                             <span class="city">{{ $hotel[$i]->city}}</span>
                             <span class="address_separator">.</span>
                             <span class="distance_center"> {{ $hotel[$i]->distance_center}}</span>
                         </div>
                         <div class="hotel_room">
-                            <a class="link" href='hotel?hotel_id={{ $hotel[$i]->id ?? '' }}&m={{ isset($m) ? json_encode($m) : '' }}'
+                            <a class="link" href='hotel?hotel_id={{ $hotel[$i]->id }}&m={{json_encode($m)}}'
                                 target="_blank">
                                 <div class="room_title">
                                     <div class="room_name">{{ $hotel[$i]->room_number}} x {{ $hotel[$i]->room_name}}
@@ -376,19 +376,16 @@
                                             <span class="board">{{$hotel[$i]->board == "Room Only" ? "" : $hotel[$i]->board}}</span>
                                         </div>
                                         <div class="room_policy">
-                                            <span
-                                                class="cancellation_policy">{{ $hotel[$i]->cancellation_policy == "NRF" ? "" :  "Free Cancellation"}}</span>
-                                            <span class="policy_separator"></span>
-                                            <span class="payment_policy">{{ $hotel[$i]->payment_policy ?? '' }}</span>
+                                            <span class="cancellation_policy">{{ $hotel[$i]->cancellation_policy == "NRF" ? "" :  "Free Cancellation"}}</span>
                                         </div>
                                     </div>
-                                    <span class="price">{{ $hotel[$i]->price ?? '€99' }}</span>
+                                    <span class="price">{{ $hotel[$i]->price}}</span>
                                 </div>
                             </a>
                         </div>
                         <div class="hotel_book">
                             <a class="link"
-                                href='hotel?hotel_id={{ $hotel[$i]->id ?? '' }}&m={{ isset($m) ? json_encode($m) : '' }}'
+                                href='hotel?hotel_id={{ $hotel[$i]->id}}&m={{json_encode($m)}}'
                                 target="_blank">
                                 <button>Select Room</button>
                             </a>

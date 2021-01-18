@@ -292,7 +292,6 @@ class Result {
     var $bed_type;
 
     var $cancellation_policy;
-    var $payment_policy;
 
     var $price;
 
@@ -338,8 +337,6 @@ class Result {
 
                 $this->cancellation_policy  =$input["rooms"][0]["rates"][0]["rateClass"];
                 
-                // $this->payment_policy = 'Prepayment';
-
                 $this->price = "€" . round($input["rooms"][0]["rates"][0]["sellingRate"]);
                     
                 $this->sanitize();

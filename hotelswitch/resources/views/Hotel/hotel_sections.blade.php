@@ -1,7 +1,7 @@
 @section('left_hotel')
 <div id="hotel_left">
     <div class="location">
-        <div class="map_wrapper" id="map_wrapper">
+        <div class="hotel_map_wrapper">
             <div class="position_icon">
                 <i class="fas fa-map-marker-alt fa-2x"></i>
             </div>
@@ -84,7 +84,7 @@
     <div class="head">
         <div class="head_tittle">
             <div class="tittle">
-                <span class="name">{{$h->name}}</span>
+                <span class="hotel-name">{{$h->name}}</span>
                 <div class="stars_wrapper">
                     <span class="stars">{{$h->stars_symbol}}</span>
                 </div>
@@ -125,7 +125,7 @@
                 @endif
             </div>
         </div>
-        <div class="head_map" id="map_wrapper">
+        <div class="head_map">
             <div class="head_map_icon">
                 <i class="fas fa-map-marker-alt fa-lg" aria-hidden="true"></i>
             </div>
@@ -180,8 +180,8 @@
                     <span>reviews</span>
                 </div>
             </div>
-            <div class="score_wrapper">
-                <span class="score">{{$h->score}}</span>
+            <div class="hotel_score_wrapper">
+                <span>{{$h->score}}</span>
             </div>
         </div>
     </div>
@@ -297,8 +297,8 @@
                                         alt="">
                                 </div>
                                 @endisset
-                                <div class="room_name">
-                                    <span class="room_name">{{$h->offer[$r]["rates"][0]["rooms"]}} x
+                                <div class="hotel_room_name">
+                                    <span>{{$h->offer[$r]["rates"][0]["rooms"]}} x
                                         {{MyLibrary::titleCase($h->offer[$r]["name"])}}</span>
                                 </div>
                                 <div class="room_capacity">
@@ -654,5 +654,99 @@
             <div class="close"></div>
         </div>
     </div>
+</div>
+@endsection
+
+@section('hotelbox')
+<div class="hotelbox">
+    <div class="hotel_photo">
+        <a class="link" href=''
+            target="_blank">
+        <img src="" class="search_cover_photo loading_image" alt="hotel_cover" data-hotel-id=""
+            data-index=1 data-type-index=0 onerror="" />
+        </a>
+    </div>
+    <div class="hotel_content">
+        <div class="hotel_head">
+            <a class="link_name"
+                href=''
+                target="_blank">
+                <div class="name">
+                    <div class="stars">
+                    </div>
+                </div>
+            </a>
+            <div class="quality_score_wrapper">
+                <div class="quality_nr_reviews">
+                    <span class="quality"></span>
+                    <span class="nr_reviews"> reviews</span>
+                </div>
+                <div class="score_wrapper">
+                    <img src={{ asset('images/search/tripadvisor_logo.png') }} alt="tripadvisor_logo">
+                    <span class="score"><strong
+                            class="score_value"></strong>/5.0</span>
+                </div>
+            </div>
+        </div>
+        <div class="address_wrapper">
+            <span class="district"></span>
+            <span class="city"></span>
+            <span class="address_separator">.</span>
+            <span class="distance_center"></span>
+        </div>
+        <div class="hotel_room">
+            <a class="link" href=''
+                target="_blank">
+                <div class="room_title">
+                    <div class="room_name">
+                        <div class="room_guests_icon">
+                            <span class="room_separator">-</span>
+                            @if(($m->adults_per_room + $m->children_per_room)  > 3)
+                            <i class="fas fa-user"></i>
+                            <span class="guests_multiplier">x {{($m->adults_per_room + $m->children_per_room)}}</span>
+                            @else
+                            @for ($g = 0; $g < ($m->adults_per_room + $m->children_per_room); $g++)
+                                <i class="fas fa-user"></i>
+                            @endfor
+                            @endif
+                        </div>
+                    </div>
+                    <div class="nights_guests">
+                        <span class="nights">{{ $m->nights_text}}</span>
+                        <span>, </span>
+                        <span class="adults">{{ $m->adults > 1 ? $m->adults . " adults" : $m->adults . " adult"   }}</span>
+                        <span class="children">{{ $m->children > 1 ? ", " . $m->children . " children" : ($m->children == 1 ? ", " . $m->children . " child" : "") }}</span>
+                    </div>
+                </div>
+                <div class="rate_wrapper">
+                    <div class="rate_left">
+                        <div class="room_policy">
+                            <span class="board"></span>
+                        </div>
+                        <div class="room_policy">
+                            <span class="cancellation_policy"></span>
+                        </div>
+                    </div>
+                    <span class="price"></span>
+                </div>
+            </a>
+        </div>
+        <div class="hotel_book">
+            <a class="link"
+                href=''
+                target="_blank">
+                <button>Select Room</button>
+            </a>
+        </div>
+    </div>
+        <div class="deal_wrapper">
+            <meter min="0" low="33" high="66" max="100" optimum="100"
+                value=""></meter>
+            <div class="pick_tittle">
+                <span class="hotel_bold">Deal</span>
+                <span class="score_text">Score</span>
+            </div>
+            <span class="pick_score"></span>
+        </div>
 </div>
 @endsection

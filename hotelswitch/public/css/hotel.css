@@ -8,7 +8,7 @@
     padding: 15px;
 }
 
-.map_wrapper {
+.hotel_map_wrapper {
     position: relative;
     height: 90px;
     width: 100%;
@@ -20,14 +20,14 @@
     border: 1px solid transparent;
 }
 
-.map_wrapper:hover,
+.hotel_map_wrapper:hover,
 .head_map:hover {
     border: 1px solid var(--main-color-light);
     box-shadow: 0 0 5px var(--main-color-light);
 }
 
-.map_wrapper:hover .map_text,
-.map_wrapper:hover .fa-map-marker-alt,
+.hotel_map_wrapper:hover .map_text,
+.hotel_map_wrapper:hover .fa-map-marker-alt,
 .head_map:hover .map_text,
 .head_map:hover .fa-map-marker-alt {
     color: var(--main-color-light);
@@ -195,7 +195,7 @@
     width: fit-content;
 }
 
-.name {
+.hotel-name {
     float: left;
     font-size: 24px;
     font-weight: bold;
@@ -444,7 +444,7 @@
     float: right;
 }
 
-.score_wrapper {
+.hotel_score_wrapper {
     float: right;
     height: 35px;
     width: 35px;
@@ -456,11 +456,11 @@
     display: flex;
 }
 
-.score_wrapper:hover {
+.hotel_score_wrapper:hover {
     background-color: var(--main-color-light);
 }
 
-.score_wrapper span {
+.hotel_score_wrapper span {
     margin: auto;
 }
 
@@ -966,7 +966,7 @@
     border-radius: 2px;
 }
 
-.room_name {
+.hotel_room_name {
     font-size: 20px;
     font-weight: bold;
     margin-bottom: 9px;
@@ -1378,6 +1378,22 @@
 .rule_content i {
     width: 30px;
     margin: 0px 5px;
+}
+
+.map_left {
+    display: none !important;
+}
+
+.map-filter-button {
+    display: none !important;
+}
+
+.hotelbox {
+    display: none;
+}
+
+#map .hotelbox {
+    display: flex;
 }
 
 @media (max-width: 1000px) {

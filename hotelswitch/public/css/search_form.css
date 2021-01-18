@@ -260,21 +260,6 @@
     .search_button > button {
         height: 100%;
     }
-    .map_left {
-        display: none;
-    }
-    .map_popup {
-        height: 100%;
-        width: 100%;
-        border-radius: 0px;
-    }
-    #map {
-        border-radius: 0px;
-    }
-    .map_close {
-        top: 5px;
-        right: 5px;
-    }
 }
 
 @media (max-width: 480px) {

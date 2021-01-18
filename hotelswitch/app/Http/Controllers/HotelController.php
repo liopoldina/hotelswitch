@@ -27,6 +27,7 @@ class HotelController extends Controller
         // case directly from search results
         $m = json_decode($data->m);
         $m->hotel_id =intval($data->hotel_id);
+        $m->filters=[];
         } 
         else{
         // case loading hotel page with just id (needs to get collection first)
