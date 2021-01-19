@@ -149,6 +149,7 @@ $(function() {
                 select: function(event, ui) {
                     event.preventDefault();
                     $("#destination").val(ui.item.label); // display the label
+                    $("#place_id").val(ui.item.place_id);
                     $("#lat").val(ui.item.coords.lat);
                     $("#lon").val(ui.item.coords.lon);
                     $(event.target).autocomplete("close");
@@ -162,7 +163,8 @@ $(function() {
                         method: "GET",
                         dataType: "json",
                         data: {
-                            name: request.term
+                            name: request.term,
+                            session: $("#autocomplete_session").val()
                         },
                         success: function(res) {
                             cb(res);

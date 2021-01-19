@@ -8,9 +8,7 @@ class HomepageController extends Controller
 {
     public function index()
     {
-
-       return view('Home.home_index');
-  
+        return view('Home.home_index');
     }
     
 }

@@ -37,7 +37,7 @@ Route::get('/settings', 'Account\SettingsController@index')->name('settings');
 Route::put('/settings', 'Account\SettingsController@update')->name('settings.update');
 
 //autocomplete
-Route::get('/autocomplete', 'Autocomplete\ExpediaController@index')->name('autocomplete.index');
+Route::get('/autocomplete', 'Autocomplete\AutoCompleteController@index')->name('autocomplete.index');
 
 //cover images
 Route::get('/cover_image', 'CoverImageController@show')->name('coverimage.show');

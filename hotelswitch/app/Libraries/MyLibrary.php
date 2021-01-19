@@ -156,6 +156,27 @@ Class MyLibrary {
            return $angle * $earthRadius;
     }
     
+
+
+    public static function placeCoords($sessiontoken, $place_id)
+    {   
+        $key ='AIzaSyByN9fh3nvC4R9vn7G6BkNRnhoPbKYdMwk';
+
+        $url="https://maps.googleapis.com/maps/api/place/details/json?fields=geometry" .
+        "&key=" . $key . 
+        "&sessiontoken=" . $sessiontoken .
+        "&place_id=" . $place_id;
+
+        $json=file_get_contents($url);
+        
+        $json = json_decode ($json);
+
+        $lat = $json->result->geometry->location->lat;
+        $lon = $json->result->geometry->location->lng;
+
+        return [$lat, $lon];
+    }
+
     // function to geocode address, it will return false if unable to geocode address
     public static function geocode($address){
         

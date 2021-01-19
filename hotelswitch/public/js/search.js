@@ -438,7 +438,6 @@ $(function() {
                 !$(".filter_wrapper").is(e.target) &&
                 $(".filter_wrapper").has(e.target).length === 0
             ) {
-                console.log("close");
                 map_close();
             }
         }
@@ -467,6 +466,8 @@ $(function() {
             for (let i = 0; i < markers.length; i++) {
                 markers[i].setMap(null); // clear markers
             }
+
+            markers = [];
 
             hotels_map = result["hotels"];
 
@@ -667,7 +668,6 @@ function image_error(image) {
             }
         });
         image.onerror = "";
-        console.log("laravel image");
     }
     return true;
 }

@@ -10,6 +10,8 @@
                     <input type="text" id="destination" name="destination" value='{{ $m->destination ?? '' }}'
                         placeholder="where are you travelling to?" class="ui-autocomplete-input bar_box destination_input"
                         autocomplete="off" required="">
+                    <input type="hidden" id="place_id" name="place_id" value="">
+                    <input type="hidden" id="autocomplete_session" name="autocomplete_session" value={{rand(0,9999999999)}}>
                     <input type="hidden" id="lat" name="lat" value='{{ $m->lat ?? '' }}' />
                     <input type="hidden" id="lon" name="lon" value='{{ $m->lon ?? '' }}' />
                 </div>

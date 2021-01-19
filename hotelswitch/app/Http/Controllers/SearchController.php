@@ -17,6 +17,8 @@ class SearchController extends Controller
 
         $data = (object) request()->validate([
             'destination' => 'required|string|max:255',
+            'place_id' => 'nullable|string',
+            'autocomplete_session' =>  'nullable|numeric|min:1|max:9999999999',
             'lat' => 'min:-90|max:90',
             'lon' => 'min:-180|max:180',
             'date_range' => 'string',
@@ -33,10 +35,15 @@ class SearchController extends Controller
             $m->lat =  $data->lat;
             $m->lon =  $data->lon;
             $m->destination = $data->destination;
+
+            if($m->lat == 0 && $m->lon == 0){
+                [$m->lat, $m->lon] = MyLibrary::placeCoords($data->autocomplete_session,$data->place_id);
+            }
         } else {
             // case from city link (just with destination name)
             [$m->lat, $m->lon,  $m->destination] = MyLibrary::geocode($data->destination);
         }
+        
     
        // formats and completes $m with defaults attributes if missing
         $m = MRepository::m($m); 
