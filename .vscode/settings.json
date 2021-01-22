@@ -1,6 +1,0 @@
-{
-    "python.pythonPath": "C:\\wamp64\\bin\\anaconda3\\python.exe",
-    "python.linting.pylintEnabled": true,
-    "python.linting.enabled": true,
-    "python.linting.pylamaEnabled": false
-}
