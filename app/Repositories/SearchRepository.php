@@ -101,7 +101,9 @@ class SearchRepository{
         }
         
         if(count($hotels) > 1){
-        $process = new Process(['python', 'C:\wamp64\www\hotelswitch\science\client.py',$m->collection_name]);
+
+        $process = new Process(['python', base_path('science/client.py'),$m->collection_name]);
+
         $process->run();
 
         // executes after the command finishes
