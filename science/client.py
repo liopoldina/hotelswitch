@@ -1,8 +1,7 @@
 import socket
 import sys
 
-# python client.py 38.7123_-9.13833_2020-10-25_2020-10-26_1_2_0
-# python client.py 38.7123_-9.13833_2020-11-02_2020-11-05_1_2_0
+# python client.py 38.7222524_-9.1393366_2021-03-01_2021-03-04_1_2_0
 
 data = sys.argv[1]
 
@@ -14,8 +13,8 @@ s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 s.connect((HOST, PORT))
 s.sendall(data.encode('utf-8'))
 
-R2 = s.recv(bufsize).decode()
+msg = s.recv(bufsize).decode()
 
-print(R2)
+print(msg)
 
 s.close()

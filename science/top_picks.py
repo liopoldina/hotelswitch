@@ -91,4 +91,4 @@ def top_picks(collection):
     return str(r2_predictions)
 
 
-print(top_picks("38.7222524_-9.1393366_2021-03-01_2021-03-04_1_2_0"))
+# print(top_picks("38.7222524_-9.1393366_2021-03-01_2021-03-04_1_2_0"))

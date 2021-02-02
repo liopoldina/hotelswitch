@@ -26,7 +26,13 @@ while True:
         conn.close()
         sys.exit()
     else:
-        R2 = tp.top_picks(data)
-        conn.sendall(R2.encode('utf-8'))
+        try:
+            R2 = tp.top_picks(data)
+            conn.sendall(R2.encode('utf-8'))
+        except:
+            msg = "erro"
+            conn.sendall(msg.encode('utf-8'))
 
-# pythonw.exe server.py
+# Start Server
+# Linux: python server.py &
+# Windows: pythonw.exe server.py
