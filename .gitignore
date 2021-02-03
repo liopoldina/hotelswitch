@@ -12,3 +12,4 @@ yarn-error.log
 /.idea
 /.vscode
 serverpy_boot.bat
+science/__pycache__
