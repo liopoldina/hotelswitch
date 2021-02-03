@@ -14,6 +14,7 @@ class Static_Hotel extends Eloquent
 
     //    The primary key associated with the table.      
     protected $primaryKey = 'code';
+    protected $keyType = 'int';
 
     //    Timestamps 
     const UPDATED_AT = 'lastUpdate'; // customize colum name
