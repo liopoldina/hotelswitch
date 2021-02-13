@@ -7,8 +7,8 @@
     <link rel="stylesheet" href={{ asset('css/search.css') }} />
     <link rel="stylesheet" href={{ asset('css/search_form.css') }} />
     <script src={{ asset('js/search.js') }}></script>
-    <script async defer
-        src='https://maps.googleapis.com/maps/api/js?key=AIzaSyByN9fh3nvC4R9vn7G6BkNRnhoPbKYdMwk&callback=initMap'>
+    <script defer
+        src='https://maps.googleapis.com/maps/api/js?key=AIzaSyByN9fh3nvC4R9vn7G6BkNRnhoPbKYdMwk'>
     </script>
 @append
 

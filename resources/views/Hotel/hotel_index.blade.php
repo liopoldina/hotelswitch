@@ -16,8 +16,8 @@
 
     <script src={{ asset('js/search.js') }}></script>
     <script src={{ asset('js/hotel.js') }}></script>
-    <script async defer
-        src='https://maps.googleapis.com/maps/api/js?key=AIzaSyByN9fh3nvC4R9vn7G6BkNRnhoPbKYdMwk&callback=initMap'>
+    <script defer
+        src='https://maps.googleapis.com/maps/api/js?key=AIzaSyByN9fh3nvC4R9vn7G6BkNRnhoPbKYdMwk'>
     </script>
     @append
 

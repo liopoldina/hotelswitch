@@ -119,6 +119,7 @@ class SearchController extends Controller
                 break; 
 
             case "map":
+                $m->index = 0;
                 $m->take = 500;
                 break;           
         }

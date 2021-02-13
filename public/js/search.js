@@ -404,6 +404,7 @@ $(function() {
     }
 
     // 9) Map
+    initMap();
 
     //open map
     $(
