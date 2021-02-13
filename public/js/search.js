@@ -638,7 +638,7 @@ function image_error(image) {
     index_string = String(index).padStart(3, "0");
 
     image.src =
-        "http://photos.hotelbeds.com/giata/bigger/" +
+        "https://photos.hotelbeds.com/giata/bigger/" +
         id.substring(0, 2) +
         "/" +
         id +

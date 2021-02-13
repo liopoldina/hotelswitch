@@ -293,7 +293,7 @@
                                 @isset($h->offer[$r]["images"])
                                 <div class="room_image">
                                     <img class="room_img"
-                                        src="http://photos.hotelbeds.com/giata/bigger/{{$h->offer[$r]["images"][0]["path"] ?? "36/363373/363373a_hb_ro_008.jpg"}}"
+                                        src="https://photos.hotelbeds.com/giata/bigger/{{$h->offer[$r]["images"][0]["path"] ?? "36/363373/363373a_hb_ro_008.jpg"}}"
                                         alt="">
                                 </div>
                                 @endisset
@@ -371,7 +371,7 @@
                                                     <div class="slick room_images">
                                                         @foreach($h->offer[$r]["images"] as $room_image)
                                                         <div>
-                                                            <img src="http://photos.hotelbeds.com/giata/bigger/{{$room_image["path"]}}"
+                                                            <img src="https://photos.hotelbeds.com/giata/bigger/{{$room_image["path"]}}"
                                                                 alt="">
                                                         </div>
                                                         @endforeach

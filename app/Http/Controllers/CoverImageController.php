@@ -19,7 +19,7 @@ class CoverImageController extends Controller
                 ->where('code', intval($data->hotel_id))
                 ->pluck('images')[0];
 
-       return "http://photos.hotelbeds.com/giata/bigger/" . $image[0]["path"] ;
+       return "https://photos.hotelbeds.com/giata/bigger/" . $image[0]["path"] ;
   
     }
     

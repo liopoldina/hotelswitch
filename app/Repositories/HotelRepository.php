@@ -114,8 +114,8 @@ class Hotel {
     
     function get_images($images){
         foreach ($images as $image) {
-            $this->images[]= "http://photos.hotelbeds.com/giata/bigger/" . $image["path"];
-            $this->images_min[]= "http://photos.hotelbeds.com/giata/small/" . $image["path"];
+            $this->images[]= "https://photos.hotelbeds.com/giata/bigger/" . $image["path"];
+            $this->images_min[]= "https://photos.hotelbeds.com/giata/small/" . $image["path"];
         }   
     }
 

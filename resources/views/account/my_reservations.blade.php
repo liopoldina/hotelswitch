@@ -28,7 +28,7 @@
                     </div>
                     <div class="booking_wrapper">
                         <div class="reservation_left">
-                            <img src="http://photos.hotelbeds.com/giata/bigger/{{$r['h']->images[0]['path'] ?? '00/008327/008327a_hb_r_004.jpg'}}"
+                            <img src="https://photos.hotelbeds.com/giata/bigger/{{$r['h']->images[0]['path'] ?? '00/008327/008327a_hb_r_004.jpg'}}"
                                 alt="">
                         </div>
                         <div class='reservation_right'>

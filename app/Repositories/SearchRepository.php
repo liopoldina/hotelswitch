@@ -302,14 +302,14 @@ class Result {
     // construct
     function __construct($input){ 
                 $this->id = $input["code"];
-                $this->search_cover_photo = "http://photos.hotelbeds.com/giata/bigger/" . substr(str_pad($this->id, 6, '0', STR_PAD_LEFT), 0, -4) . "/" . str_pad($this->id, 6, '0', STR_PAD_LEFT) . "/" . str_pad($this->id, 6, '0', STR_PAD_LEFT) .  "a_hb_a_001.jpg";  //Time  0.8s
+                $this->search_cover_photo = "https://photos.hotelbeds.com/giata/bigger/" . substr(str_pad($this->id, 6, '0', STR_PAD_LEFT), 0, -4) . "/" . str_pad($this->id, 6, '0', STR_PAD_LEFT) . "/" . str_pad($this->id, 6, '0', STR_PAD_LEFT) .  "a_hb_a_001.jpg";  //Time  0.8s
 
                 // $this->images = DB::connection('mongodb_static') 
                 // ->table("hotels")
                 // ->where('code',   $this->id)
                 // ->pluck('images')[0];
 
-                // $this->search_cover_photo = "http://photos.hotelbeds.com/giata/bigger/" .$this->images[0]['path']; //Time  4.5s
+                // $this->search_cover_photo = "https://photos.hotelbeds.com/giata/bigger/" .$this->images[0]['path']; //Time  4.5s
 
                 $this->name = $input["name"];
                 $this->stars = (int)$input["categoryName"];

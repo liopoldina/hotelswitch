@@ -31,7 +31,7 @@
         </ul>
     </div>
     <div class="hotel_wrapper">
-        <img src="http://photos.hotelbeds.com/giata/bigger/{{ $h->images[0]["path"]  ?? '36/363373/363373a_hb_a_001.jpg'}}"
+        <img src="https://photos.hotelbeds.com/giata/bigger/{{ $h->images[0]["path"]  ?? '36/363373/363373a_hb_a_001.jpg'}}"
             alt="">
         <div class="hotel_info">
             <div class='hotel_name'>{{$r['reservation']['booking']['hotel']['name'] ?? 'Royal Hotel'}}

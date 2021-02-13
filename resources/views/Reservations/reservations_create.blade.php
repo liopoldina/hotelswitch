@@ -20,7 +20,7 @@
                 <div class="box_tittle">
                     <span>Property Details</span>
                 </div>
-                <img src="http://photos.hotelbeds.com/giata/bigger/{{ $h->images[0]["path"]  ?? '36/363373/363373a_hb_a_001.jpg'}}"
+                <img src="https://photos.hotelbeds.com/giata/bigger/{{ $h->images[0]["path"]  ?? '36/363373/363373a_hb_a_001.jpg'}}"
                     alt="">
                 <span
                     class='hotel_name'>{{ $r->hotel->name  ?? 'Rossio Garden Hotel'}}<sup>{{ $h->stars_symbol ?? '★★★'}}</sup></span>
@@ -233,7 +233,7 @@
                 </div>
                 <div class="room_box">
                     <div class="room_left">
-                        <img src="http://photos.hotelbeds.com/giata/bigger/{{$r->hotel->rooms[0]->image ?? '41/419658/419658a_hb_ro_023.jpg'}}"
+                        <img src="https://photos.hotelbeds.com/giata/bigger/{{$r->hotel->rooms[0]->image ?? '41/419658/419658a_hb_ro_023.jpg'}}"
                             alt="">
                     </div>
                     <div class="room_right">
