@@ -238,6 +238,8 @@ class Hotel {
         $cursor_decode =  FacilityGroups::all();
     
         $this->facilities = array();
+        $this->icons = new \stdClass();
+        $this->icons->facility_groups = [];
     
         foreach ($cursor_decode as $facility_group){
         $this->facilities[$facility_group["FacilityGroup"]]=array();

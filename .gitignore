@@ -13,3 +13,4 @@ yarn-error.log
 /.vscode
 serverpy_boot.bat
 science/__pycache__
+/public/info.php
